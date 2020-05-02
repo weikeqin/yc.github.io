@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。 在具体更换域名前的测试中，发现github.com还是比coding.net好用。  (1) 博客">
+<meta name="keywords" content="network">
+<meta property="og:type" content="article">
+<meta property="og:title" content="域名重定向 hexo博客更换域名">
+<meta property="og:url" content="http://weikeqin.com/2020/03/02/domain-redirection/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。 在具体更换域名前的测试中，发现github.com还是比coding.net好用。  (1) 博客">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-05-02T17:06:31.137Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="域名重定向 hexo博客更换域名">
+<meta name="twitter:description" content="在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。 在具体更换域名前的测试中，发现github.com还是比coding.net好用。  (1) 博客">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.com/2020/03/02/domain-redirection/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>域名重定向 hexo博客更换域名 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/03/02/domain-redirection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">域名重定向 hexo博客更换域名
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-02 09:31:53" itemprop="dateCreated datePublished" datetime="2020-03-02T09:31:53+08:00">2020-03-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/02/domain-redirection/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2020/03/02/domain-redirection/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/03/02/domain-redirection/" class="leancloud_visitors" data-flag-title="域名重定向 hexo博客更换域名">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。<br> 在具体更换域名前的测试中，发现github.com还是比coding.net好用。<br><br></p>
+</blockquote>
+<h1 id="1-博客域名更换"><a href="#1-博客域名更换" class="headerlink" title="(1) 博客域名更换"></a>(1) 博客域名更换</h1><blockquote>
+<p> 域名的重定向的方法有 1.域名转发    2.301重定向    3.JS跳转<br> 方法一，域名注册商支持域名转发功能才行！国内的绝大部分域名注册商不支持。<br> 方法二，是Web 服务器给访问老域名的请求返回一个 301 或者 302，然后跳转到新域名上。 由于使用的是 github.com coding.net 的page服务，这个方法也不可行。<br> 方法三，使用js跳转。具体方法如下。</p>
+</blockquote>
+<h2 id="1-1-index-html"><a href="#1-1-index-html" class="headerlink" title="(1.1) index.html"></a>(1.1) index.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>新域名 https://weikeqin.com<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span> 跳转中，访问新域名站点 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://weikeqin.com"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span> https://weikeqin.com <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"><span class="built_in">console</span>.log(<span class="string">"index.html"</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"><span class="built_in">window</span>.location.href = <span class="string">"https://weikeqin.com"</span>;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="1-2-404-html"><a href="#1-2-404-html" class="headerlink" title="(1.2) 404.html"></a>(1.2) 404.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">/*! purl v2.3.1 | MIT */</span> </span></span><br><span class="line"><span class="javascript">    <span class="comment">/** http://cdn.bootcss.com/purl/2.3.1/purl.min.js */</span></span></span><br><span class="line"><span class="javascript">    (<span class="function"><span class="keyword">function</span> (<span class="params">factory</span>) </span>&#123; <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">"function"</span> &amp;&amp; define.amd) &#123; define(factory) &#125; <span class="keyword">else</span> &#123; <span class="built_in">window</span>.purl = factory() &#125; &#125;)(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">var</span> tag2attr = &#123; <span class="attr">a</span>: <span class="string">"href"</span>, <span class="attr">img</span>: <span class="string">"src"</span>, <span class="attr">form</span>: <span class="string">"action"</span>, <span class="attr">base</span>: <span class="string">"href"</span>, <span class="attr">script</span>: <span class="string">"src"</span>, <span class="attr">iframe</span>: <span class="string">"src"</span>, <span class="attr">link</span>: <span class="string">"href"</span> &#125;, key = [<span class="string">"source"</span>, <span class="string">"protocol"</span>, <span class="string">"authority"</span>, <span class="string">"userInfo"</span>, <span class="string">"user"</span>, <span class="string">"password"</span>, <span class="string">"host"</span>, <span class="string">"port"</span>, <span class="string">"relative"</span>, <span class="string">"path"</span>, <span class="string">"directory"</span>, <span class="string">"file"</span>, <span class="string">"query"</span>, <span class="string">"fragment"</span>], aliases = &#123; <span class="attr">anchor</span>: <span class="string">"fragment"</span> &#125;, parser = &#123; <span class="attr">strict</span>: <span class="regexp">/^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/</span>, <span class="attr">loose</span>: <span class="regexp">/^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/</span> &#125;, isint = <span class="regexp">/^[0-9]+$/</span>; <span class="function"><span class="keyword">function</span> <span class="title">parseUri</span>(<span class="params">url, strictMode</span>) </span>&#123; <span class="keyword">var</span> str = <span class="built_in">decodeURI</span>(url), res = parser[strictMode || <span class="literal">false</span> ? <span class="string">"strict"</span> : <span class="string">"loose"</span>].exec(str), uri = &#123; <span class="attr">attr</span>: &#123;&#125;, <span class="attr">param</span>: &#123;&#125;, <span class="attr">seg</span>: &#123;&#125; &#125;, i = <span class="number">14</span>; <span class="keyword">while</span> (i--) &#123; uri.attr[key[i]] = res[i] || <span class="string">""</span> &#125; uri.param[<span class="string">"query"</span>] = parseString(uri.attr[<span class="string">"query"</span>]); uri.param[<span class="string">"fragment"</span>] = parseString(uri.attr[<span class="string">"fragment"</span>]); uri.seg[<span class="string">"path"</span>] = uri.attr.path.replace(<span class="regexp">/^\/+|\/+$/g</span>, <span class="string">""</span>).split(<span class="string">"/"</span>); uri.seg[<span class="string">"fragment"</span>] = uri.attr.fragment.replace(<span class="regexp">/^\/+|\/+$/g</span>, <span class="string">""</span>).split(<span class="string">"/"</span>); uri.attr[<span class="string">"base"</span>] = uri.attr.host ? (uri.attr.protocol ? uri.attr.protocol + <span class="string">"://"</span> + uri.attr.host : uri.attr.host) + (uri.attr.port ? <span class="string">":"</span> + uri.attr.port : <span class="string">""</span>) : <span class="string">""</span>; <span class="keyword">return</span> uri &#125; <span class="function"><span class="keyword">function</span> <span class="title">getAttrName</span>(<span class="params">elm</span>) </span>&#123; <span class="keyword">var</span> tn = elm.tagName; <span class="keyword">if</span> (<span class="keyword">typeof</span> tn !== <span class="string">"undefined"</span>) <span class="keyword">return</span> tag2attr[tn.toLowerCase()]; <span class="keyword">return</span> tn &#125; <span class="function"><span class="keyword">function</span> <span class="title">promote</span>(<span class="params">parent, key</span>) </span>&#123; <span class="keyword">if</span> (parent[key].length === <span class="number">0</span>) <span class="keyword">return</span> parent[key] = &#123;&#125;; <span class="keyword">var</span> t = &#123;&#125;; <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> parent[key]) t[i] = parent[key][i]; parent[key] = t; <span class="keyword">return</span> t &#125; <span class="function"><span class="keyword">function</span> <span class="title">parse</span>(<span class="params">parts, parent, key, val</span>) </span>&#123; <span class="keyword">var</span> part = parts.shift(); <span class="keyword">if</span> (!part) &#123; <span class="keyword">if</span> (isArray(parent[key])) &#123; parent[key].push(val) &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"object"</span> == <span class="keyword">typeof</span> parent[key]) &#123; parent[key] = val &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"undefined"</span> == <span class="keyword">typeof</span> parent[key]) &#123; parent[key] = val &#125; <span class="keyword">else</span> &#123; parent[key] = [parent[key], val] &#125; &#125; <span class="keyword">else</span> &#123; <span class="keyword">var</span> obj = parent[key] = parent[key] || []; <span class="keyword">if</span> (<span class="string">"]"</span> == part) &#123; <span class="keyword">if</span> (isArray(obj)) &#123; <span class="keyword">if</span> (<span class="string">""</span> !== val) obj.push(val) &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"object"</span> == <span class="keyword">typeof</span> obj) &#123; obj[keys(obj).length] = val &#125; <span class="keyword">else</span> &#123; obj = parent[key] = [parent[key], val] &#125; &#125; <span class="keyword">else</span> <span class="keyword">if</span> (~part.indexOf(<span class="string">"]"</span>)) &#123; part = part.substr(<span class="number">0</span>, part.length - <span class="number">1</span>); <span class="keyword">if</span> (!isint.test(part) &amp;&amp; isArray(obj)) obj = promote(parent, key); parse(parts, obj, part, val) &#125; <span class="keyword">else</span> &#123; <span class="keyword">if</span> (!isint.test(part) &amp;&amp; isArray(obj)) obj = promote(parent, key); parse(parts, obj, part, val) &#125; &#125; &#125; <span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">parent, key, val</span>) </span>&#123; <span class="keyword">if</span> (~key.indexOf(<span class="string">"]"</span>)) &#123; <span class="keyword">var</span> parts = key.split(<span class="string">"["</span>); parse(parts, parent, <span class="string">"base"</span>, val) &#125; <span class="keyword">else</span> &#123; <span class="keyword">if</span> (!isint.test(key) &amp;&amp; isArray(parent.base)) &#123; <span class="keyword">var</span> t = &#123;&#125;; <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> parent.base) t[k] = parent.base[k]; parent.base = t &#125; <span class="keyword">if</span> (key !== <span class="string">""</span>) &#123; set(parent.base, key, val) &#125; &#125; <span class="keyword">return</span> parent &#125; <span class="function"><span class="keyword">function</span> <span class="title">parseString</span>(<span class="params">str</span>) </span>&#123; <span class="keyword">return</span> reduce(<span class="built_in">String</span>(str).split(<span class="regexp">/&amp;|;/</span>), <span class="function"><span class="keyword">function</span> (<span class="params">ret, pair</span>) </span>&#123; <span class="keyword">try</span> &#123; pair = <span class="built_in">decodeURIComponent</span>(pair.replace(<span class="regexp">/\+/g</span>, <span class="string">" "</span>)) &#125; <span class="keyword">catch</span> (e) &#123; &#125; <span class="keyword">var</span> eql = pair.indexOf(<span class="string">"="</span>), brace = lastBraceInKey(pair), key = pair.substr(<span class="number">0</span>, brace || eql), val = pair.substr(brace || eql, pair.length); val = val.substr(val.indexOf(<span class="string">"="</span>) + <span class="number">1</span>, val.length); <span class="keyword">if</span> (key === <span class="string">""</span>) &#123; key = pair; val = <span class="string">""</span> &#125; <span class="keyword">return</span> merge(ret, key, val) &#125;, &#123; <span class="attr">base</span>: &#123;&#125; &#125;).base &#125; <span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">obj, key, val</span>) </span>&#123; <span class="keyword">var</span> v = obj[key]; <span class="keyword">if</span> (<span class="keyword">typeof</span> v === <span class="string">"undefined"</span>) &#123; obj[key] = val &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isArray(v)) &#123; v.push(val) &#125; <span class="keyword">else</span> &#123; obj[key] = [v, val] &#125; &#125; <span class="function"><span class="keyword">function</span> <span class="title">lastBraceInKey</span>(<span class="params">str</span>) </span>&#123; <span class="keyword">var</span> len = str.length, brace, c; <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123; c = str[i]; <span class="keyword">if</span> (<span class="string">"]"</span> == c) brace = <span class="literal">false</span>; <span class="keyword">if</span> (<span class="string">"["</span> == c) brace = <span class="literal">true</span>; <span class="keyword">if</span> (<span class="string">"="</span> == c &amp;&amp; !brace) <span class="keyword">return</span> i &#125; &#125; <span class="function"><span class="keyword">function</span> <span class="title">reduce</span>(<span class="params">obj, accumulator</span>) </span>&#123; <span class="keyword">var</span> i = <span class="number">0</span>, l = obj.length &gt;&gt; <span class="number">0</span>, curr = <span class="built_in">arguments</span>[<span class="number">2</span>]; <span class="keyword">while</span> (i &lt; l) &#123; <span class="keyword">if</span> (i <span class="keyword">in</span> obj) curr = accumulator.call(<span class="literal">undefined</span>, curr, obj[i], i, obj); ++i &#125; <span class="keyword">return</span> curr &#125; <span class="function"><span class="keyword">function</span> <span class="title">isArray</span>(<span class="params">vArg</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(vArg) === <span class="string">"[object Array]"</span> &#125; <span class="function"><span class="keyword">function</span> <span class="title">keys</span>(<span class="params">obj</span>) </span>&#123; <span class="keyword">var</span> key_array = []; <span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) &#123; <span class="keyword">if</span> (obj.hasOwnProperty(prop)) key_array.push(prop) &#125; <span class="keyword">return</span> key_array &#125; <span class="function"><span class="keyword">function</span> <span class="title">purl</span>(<span class="params">url, strictMode</span>) </span>&#123; <span class="keyword">if</span> (<span class="built_in">arguments</span>.length === <span class="number">1</span> &amp;&amp; url === <span class="literal">true</span>) &#123; strictMode = <span class="literal">true</span>; url = <span class="literal">undefined</span> &#125; strictMode = strictMode || <span class="literal">false</span>; url = url || <span class="built_in">window</span>.location.toString(); <span class="keyword">return</span> &#123; <span class="attr">data</span>: parseUri(url, strictMode), <span class="attr">attr</span>: <span class="function"><span class="keyword">function</span> (<span class="params">attr</span>) </span>&#123; attr = aliases[attr] || attr; <span class="keyword">return</span> <span class="keyword">typeof</span> attr !== <span class="string">"undefined"</span> ? <span class="keyword">this</span>.data.attr[attr] : <span class="keyword">this</span>.data.attr &#125;, <span class="attr">param</span>: <span class="function"><span class="keyword">function</span> (<span class="params">param</span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">typeof</span> param !== <span class="string">"undefined"</span> ? <span class="keyword">this</span>.data.param.query[param] : <span class="keyword">this</span>.data.param.query &#125;, <span class="attr">fparam</span>: <span class="function"><span class="keyword">function</span> (<span class="params">param</span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">typeof</span> param !== <span class="string">"undefined"</span> ? <span class="keyword">this</span>.data.param.fragment[param] : <span class="keyword">this</span>.data.param.fragment &#125;, <span class="attr">segment</span>: <span class="function"><span class="keyword">function</span> (<span class="params">seg</span>) </span>&#123; <span class="keyword">if</span> (<span class="keyword">typeof</span> seg === <span class="string">"undefined"</span>) &#123; <span class="keyword">return</span> <span class="keyword">this</span>.data.seg.path &#125; <span class="keyword">else</span> &#123; seg = seg &lt; <span class="number">0</span> ? <span class="keyword">this</span>.data.seg.path.length + seg : seg - <span class="number">1</span>; <span class="keyword">return</span> <span class="keyword">this</span>.data.seg.path[seg] &#125; &#125;, <span class="attr">fsegment</span>: <span class="function"><span class="keyword">function</span> (<span class="params">seg</span>) </span>&#123; <span class="keyword">if</span> (<span class="keyword">typeof</span> seg === <span class="string">"undefined"</span>) &#123; <span class="keyword">return</span> <span class="keyword">this</span>.data.seg.fragment &#125; <span class="keyword">else</span> &#123; seg = seg &lt; <span class="number">0</span> ? <span class="keyword">this</span>.data.seg.fragment.length + seg : seg - <span class="number">1</span>; <span class="keyword">return</span> <span class="keyword">this</span>.data.seg.fragment[seg] &#125; &#125; &#125; &#125; purl.jQuery = <span class="function"><span class="keyword">function</span> (<span class="params">$</span>) </span>&#123; <span class="keyword">if</span> ($ != <span class="literal">null</span>) &#123; $.fn.url = <span class="function"><span class="keyword">function</span> (<span class="params">strictMode</span>) </span>&#123; <span class="keyword">var</span> url = <span class="string">""</span>; <span class="keyword">if</span> (<span class="keyword">this</span>.length) &#123; url = $(<span class="keyword">this</span>).attr(getAttrName(<span class="keyword">this</span>[<span class="number">0</span>])) || <span class="string">""</span> &#125; <span class="keyword">return</span> purl(url, strictMode) &#125;; $.url = purl &#125; &#125;; purl.jQuery(<span class="built_in">window</span>.jQuery); <span class="keyword">return</span> purl &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(<span class="string">"404.html"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> url = purl();</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (url.attr(<span class="string">'host'</span>) == <span class="string">'weikeqin.cn'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> old_url = url.attr(<span class="string">'source'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> new_url = old_url.replace(<span class="string">'weikeqin.cn'</span>, <span class="string">"weikeqin.com"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"old_url = "</span> + old_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"new_url = "</span> + new_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.replace(new_url);</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (url.attr(<span class="string">'host'</span>) == <span class="string">'www.weikeqin.cn'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> old_url = url.attr(<span class="string">'source'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> new_url = old_url.replace(<span class="string">'www.weikeqin.cn'</span>, <span class="string">"weikeqin.com"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"old_url = "</span> + old_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"new_url = "</span> + new_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.replace(new_url);</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (url.attr(<span class="string">'host'</span>) == <span class="string">'weikeqin.github.io'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> old_url = url.attr(<span class="string">'source'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> new_url = old_url.replace(<span class="string">'weikeqin.github.io/weikeqin.cn.github.io'</span>, <span class="string">"weikeqin.com"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"old_url = "</span> + old_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"new_url = "</span> + new_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.replace(new_url);</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (url.attr(<span class="string">'host'</span>) == <span class="string">'www.weikeqin.github.io'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> old_url = url.attr(<span class="string">'source'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> new_url = old_url.replace(<span class="string">'www.weikeqin.github.io/weikeqin.cn.github.io'</span>, <span class="string">"weikeqin.com"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"old_url = "</span> + old_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"new_url = "</span> + new_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.replace(new_url);</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.href = <span class="string">"http://weikeqin.com"</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="1-3-一些思考"><a href="#1-3-一些思考" class="headerlink" title="(1.3) 一些思考"></a>(1.3) 一些思考</h2><blockquote>
+<p> 为什么要分成两个文件 index.html 和 404.html，放一个文件不是更好吗？<br> 其实可以放一个文件里。 但是当脚本有问题的时候或者非正常流程时，分成两个文件会比一个文件更好。<br> 如果脚本有问题，index.html出错的时候(测试的时候遇到了)，有404.html兜底。 (这种情况在开发的时候，或者部署前就可以发现。)<br> 遇到一些域外的情况，404.html文件可以兜底。<br> 分成两个文件是从架构和模块化的角度考虑。</p>
+</blockquote>
+<blockquote>
+<p> js跳转脚本里为什么要加console.log日志<br> 为了排查问题方便 (一般情况下用不到)<br><br></p>
+</blockquote>
+<h1 id="2-具体实施"><a href="#2-具体实施" class="headerlink" title="(2) 具体实施"></a>(2) 具体实施</h1><blockquote>
+<p> 用的是万网的域名，weikeqin.cn和weikeqin.com用的都是coding.net的page服务。(实际更复杂)<br> 修改后，weikeqin.cn会用github.com的pages服务，weikeqin.com会用coding.net的pages服务。<br> 准备重定向脚本，在github pages服务准备好。<br> 修改域名解析，在 <code>域名控制台-&gt;解析设置</code> 里 把weikeqin.cn 解析到coding.net改成github.com </p>
+</blockquote>
+<blockquote>
+<p> 回滚方案，如果有问题，修改域名解析，把 weikeqin.cn域名解析重新修改成coding.net对应的配置即可。</p>
+</blockquote>
+<p>  其实在实施前准备了很多测试，具体步骤忽略。</p>
+<h1 id="3-测试"><a href="#3-测试" class="headerlink" title="(3) 测试"></a>(3) 测试</h1><p>  <a href="http://weikeqin.cn/" target="_blank" rel="noopener">http://weikeqin.cn/</a><br>  <a href="https://weikeqin.cn/" target="_blank" rel="noopener">https://weikeqin.cn/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Navigated to http://weikeqin.cn/</span><br><span class="line">(index):12 index.html</span><br><span class="line">Navigated to https://weikeqin.com/</span><br></pre></td></tr></table></figure>
+<p>  <a href="http://weikeqin.cn/2017/03/16/git-notes/" target="_blank" rel="noopener">http://weikeqin.cn/2017/03/16/git-notes/</a><br>  <a href="https://weikeqin.cn/2017/03/16/git-notes/" target="_blank" rel="noopener">https://weikeqin.cn/2017/03/16/git-notes/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET http://weikeqin.cn/2017/03/16/git-notes/ 404 (Not Found)</span><br><span class="line">/2017/03/16/git-notes/:1 A cookie associated with a cross-site resource at http://hm.baidu.com/ was set without the `SameSite` attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with `SameSite=None` and `Secure`. You can review cookies in developer tools under Application&gt;Storage&gt;Cookies and see more details at https://www.chromestatus.com/feature/5088147346030592 and https://www.chromestatus.com/feature/5633521622188032.</span><br><span class="line">/2017/03/16/git-notes/:1 A cookie associated with a cross-site resource at http://baidu.com/ was set without the `SameSite` attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with `SameSite=None` and `Secure`. You can review cookies in developer tools under Application&gt;Storage&gt;Cookies and see more details at https://www.chromestatus.com/feature/5088147346030592 and https://www.chromestatus.com/feature/5633521622188032.</span><br><span class="line">Navigated to http://weikeqin.cn/2017/03/16/git-notes/</span><br><span class="line">VM62:7 404.html</span><br><span class="line">VM62:12 old_url = http://weikeqin.cn/2017/03/16/git-notes/</span><br><span class="line">VM62:13 new_url = http://weikeqin.com/2017/03/16/git-notes/</span><br><span class="line">Navigated to http://weikeqin.com/2017/03/16/git-notes/</span><br></pre></td></tr></table></figure>
+<p>  可以看到 weikeqin.cn 重定向到 weikeqin.com 了</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.jianshu.com/p/2c31cfb6c9b1" target="_blank" rel="noopener">Github Pages页面重定向到新网址，实现域名跳转</a><br>[2] <a href="https://github.com/HeTianCong/HeTianCong.github.io" target="_blank" rel="noopener">HeTianCong.github.io</a><br>[3] <a href="https://blog.meow.page/2019/04/08/setup-after-changing-my-hexo-blog-domain/" target="_blank" rel="noopener">在更换 hexo 博客的域名后需要做的配置工作</a><br>[4] <a href="https://github.com/weikeqin/weikeqin.cn.github.io" target="_blank" rel="noopener">weikeqin.cn.github.io</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/network/" rel="tag"># network</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/23/github-search/" rel="next" title="github搜索">
+                <i class="fa fa-chevron-left"></i> github搜索
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/14/design-pattern/" rel="prev" title="设计模式">
+                设计模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">163</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-博客域名更换"><span class="nav-number">1.</span> <span class="nav-text">(1) 博客域名更换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-index-html"><span class="nav-number">1.1.</span> <span class="nav-text">(1.1) index.html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-404-html"><span class="nav-number">1.2.</span> <span class="nav-text">(1.2) 404.html</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-一些思考"><span class="nav-number">1.3.</span> <span class="nav-text">(1.3) 一些思考</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-具体实施"><span class="nav-number">2.</span> <span class="nav-text">(2) 具体实施</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-测试"><span class="nav-number">3.</span> <span class="nav-text">(3) 测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

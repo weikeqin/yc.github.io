@@ -5,9 +5,9 @@
   <subtitle>天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://weikeqin.cn/"/>
+  <link href="http://weikeqin.com/"/>
   <updated>2020-05-01T04:07:23.158Z</updated>
-  <id>http://weikeqin.cn/</id>
+  <id>http://weikeqin.com/</id>
   
   <author>
     <name>WKQ</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>vim-notes</title>
-    <link href="http://weikeqin.cn/2020/04/18/vim-notes/"/>
-    <id>http://weikeqin.cn/2020/04/18/vim-notes/</id>
+    <link href="http://weikeqin.com/2020/04/18/vim-notes/"/>
+    <id>http://weikeqin.com/2020/04/18/vim-notes/</id>
     <published>2020-04-18T06:49:16.000Z</published>
     <updated>2020-05-01T04:07:23.158Z</updated>
     
@@ -39,8 +39,8 @@
   
   <entry>
     <title>vs-code-notes</title>
-    <link href="http://weikeqin.cn/2020/04/18/vs-code-notes/"/>
-    <id>http://weikeqin.cn/2020/04/18/vs-code-notes/</id>
+    <link href="http://weikeqin.com/2020/04/18/vs-code-notes/"/>
+    <id>http://weikeqin.com/2020/04/18/vs-code-notes/</id>
     <published>2020-04-18T06:49:06.000Z</published>
     <updated>2020-05-01T04:07:41.981Z</updated>
     
@@ -60,8 +60,8 @@
   
   <entry>
     <title>cache-notes</title>
-    <link href="http://weikeqin.cn/2020/04/06/cache-notes/"/>
-    <id>http://weikeqin.cn/2020/04/06/cache-notes/</id>
+    <link href="http://weikeqin.com/2020/04/06/cache-notes/"/>
+    <id>http://weikeqin.com/2020/04/06/cache-notes/</id>
     <published>2020-04-06T01:22:49.000Z</published>
     <updated>2020-04-06T01:24:14.703Z</updated>
     
@@ -76,17 +76,17 @@
     
     </summary>
     
-      <category term="cache" scheme="http://weikeqin.cn/categories/cache/"/>
+      <category term="cache" scheme="http://weikeqin.com/categories/cache/"/>
     
     
-      <category term="cache" scheme="http://weikeqin.cn/tags/cache/"/>
+      <category term="cache" scheme="http://weikeqin.com/tags/cache/"/>
     
   </entry>
   
   <entry>
     <title>JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack</title>
-    <link href="http://weikeqin.cn/2020/03/28/jvm-performance-tuning-monitoring-tool/"/>
-    <id>http://weikeqin.cn/2020/03/28/jvm-performance-tuning-monitoring-tool/</id>
+    <link href="http://weikeqin.com/2020/03/28/jvm-performance-tuning-monitoring-tool/"/>
+    <id>http://weikeqin.com/2020/03/28/jvm-performance-tuning-monitoring-tool/</id>
     <published>2020-03-28T02:16:25.000Z</published>
     <updated>2020-03-30T15:37:10.124Z</updated>
     
@@ -128,19 +128,19 @@
     
     </summary>
     
-      <category term="java" scheme="http://weikeqin.cn/categories/java/"/>
+      <category term="java" scheme="http://weikeqin.com/categories/java/"/>
     
     
-      <category term="java" scheme="http://weikeqin.cn/tags/java/"/>
+      <category term="java" scheme="http://weikeqin.com/tags/java/"/>
     
-      <category term="jvm" scheme="http://weikeqin.cn/tags/jvm/"/>
+      <category term="jvm" scheme="http://weikeqin.com/tags/jvm/"/>
     
   </entry>
   
   <entry>
     <title>chrome-notes</title>
-    <link href="http://weikeqin.cn/2020/03/20/chrome-notes/"/>
-    <id>http://weikeqin.cn/2020/03/20/chrome-notes/</id>
+    <link href="http://weikeqin.com/2020/03/20/chrome-notes/"/>
+    <id>http://weikeqin.com/2020/03/20/chrome-notes/</id>
     <published>2020-03-20T02:29:03.000Z</published>
     <updated>2020-03-20T02:36:24.087Z</updated>
     
@@ -160,8 +160,8 @@
   
   <entry>
     <title>设计模式</title>
-    <link href="http://weikeqin.cn/2020/03/14/design-pattern/"/>
-    <id>http://weikeqin.cn/2020/03/14/design-pattern/</id>
+    <link href="http://weikeqin.com/2020/03/14/design-pattern/"/>
+    <id>http://weikeqin.com/2020/03/14/design-pattern/</id>
     <published>2020-03-14T08:55:56.000Z</published>
     <updated>2020-03-28T08:39:39.666Z</updated>
     
@@ -182,17 +182,45 @@
     
     </summary>
     
-      <category term="pattern" scheme="http://weikeqin.cn/categories/pattern/"/>
+      <category term="pattern" scheme="http://weikeqin.com/categories/pattern/"/>
     
     
-      <category term="pattern" scheme="http://weikeqin.cn/tags/pattern/"/>
+      <category term="pattern" scheme="http://weikeqin.com/tags/pattern/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>域名重定向 hexo博客更换域名</title>
+    <link href="http://weikeqin.com/2020/03/02/domain-redirection/"/>
+    <id>http://weikeqin.com/2020/03/02/domain-redirection/</id>
+    <published>2020-03-02T01:31:53.000Z</published>
+    <updated>2020-05-02T17:06:31.137Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p> 在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。<br> 在具体更换域名前的测试中，发现github.com还是比coding.net好用。<br><br></p></blockquote><h1 id="1-博客域名更换"><a href="#1-博客域名更换" class="headerlink" title="(1) 博客域名更换"></a>(1) 博客域名更换</h1><blockquote><p> 域名的重定向的方法有 1.域名转发    2.301重定向    3.JS跳转<br> 方法一，域名注册商支持域名转发功能才行！国内的绝大部分域名注册商不支持。<br> 方法二，是Web 服务器给访问老域名的请求返回一个 301 或者 302，然后跳转到新域名上。 由于使用的是 github.com coding.net 的page服务，这个方法也不可行。<br> 方法三，使用js跳转。具体方法如下。</p></blockquote><h2 id="1-1-index-html"><a href="#1-1-index-html" class="headerlink" title="(1.1) index.html"></a>(1.1) index.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>新域名 https://weikeqin.com<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span> 跳转中，访问新域名站点 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://weikeqin.com"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span> https://weikeqin.com <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"><span class="built_in">console</span>.log(<span class="string">"index.html"</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"><span class="built_in">window</span>.location.href = <span class="string">"https://weikeqin.com"</span>;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="1-2-404-html"><a href="#1-2-404-html" class="headerlink" title="(1.2) 404.html"></a>(1.2) 404.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">/*! purl v2.3.1 | MIT */</span> </span></span><br><span class="line"><span class="javascript">    <span class="comment">/** http://cdn.bootcss.com/purl/2.3.1/purl.min.js */</span></span></span><br><span class="line"><span class="javascript">    (<span class="function"><span class="keyword">function</span> (<span class="params">factory</span>) </span>&#123; <span class="keyword">if</span> (<span class="keyword">typeof</span> define === <span class="string">"function"</span> &amp;&amp; define.amd) &#123; define(factory) &#125; <span class="keyword">else</span> &#123; <span class="built_in">window</span>.purl = factory() &#125; &#125;)(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="keyword">var</span> tag2attr = &#123; <span class="attr">a</span>: <span class="string">"href"</span>, <span class="attr">img</span>: <span class="string">"src"</span>, <span class="attr">form</span>: <span class="string">"action"</span>, <span class="attr">base</span>: <span class="string">"href"</span>, <span class="attr">script</span>: <span class="string">"src"</span>, <span class="attr">iframe</span>: <span class="string">"src"</span>, <span class="attr">link</span>: <span class="string">"href"</span> &#125;, key = [<span class="string">"source"</span>, <span class="string">"protocol"</span>, <span class="string">"authority"</span>, <span class="string">"userInfo"</span>, <span class="string">"user"</span>, <span class="string">"password"</span>, <span class="string">"host"</span>, <span class="string">"port"</span>, <span class="string">"relative"</span>, <span class="string">"path"</span>, <span class="string">"directory"</span>, <span class="string">"file"</span>, <span class="string">"query"</span>, <span class="string">"fragment"</span>], aliases = &#123; <span class="attr">anchor</span>: <span class="string">"fragment"</span> &#125;, parser = &#123; <span class="attr">strict</span>: <span class="regexp">/^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/</span>, <span class="attr">loose</span>: <span class="regexp">/^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/</span> &#125;, isint = <span class="regexp">/^[0-9]+$/</span>; <span class="function"><span class="keyword">function</span> <span class="title">parseUri</span>(<span class="params">url, strictMode</span>) </span>&#123; <span class="keyword">var</span> str = <span class="built_in">decodeURI</span>(url), res = parser[strictMode || <span class="literal">false</span> ? <span class="string">"strict"</span> : <span class="string">"loose"</span>].exec(str), uri = &#123; <span class="attr">attr</span>: &#123;&#125;, <span class="attr">param</span>: &#123;&#125;, <span class="attr">seg</span>: &#123;&#125; &#125;, i = <span class="number">14</span>; <span class="keyword">while</span> (i--) &#123; uri.attr[key[i]] = res[i] || <span class="string">""</span> &#125; uri.param[<span class="string">"query"</span>] = parseString(uri.attr[<span class="string">"query"</span>]); uri.param[<span class="string">"fragment"</span>] = parseString(uri.attr[<span class="string">"fragment"</span>]); uri.seg[<span class="string">"path"</span>] = uri.attr.path.replace(<span class="regexp">/^\/+|\/+$/g</span>, <span class="string">""</span>).split(<span class="string">"/"</span>); uri.seg[<span class="string">"fragment"</span>] = uri.attr.fragment.replace(<span class="regexp">/^\/+|\/+$/g</span>, <span class="string">""</span>).split(<span class="string">"/"</span>); uri.attr[<span class="string">"base"</span>] = uri.attr.host ? (uri.attr.protocol ? uri.attr.protocol + <span class="string">"://"</span> + uri.attr.host : uri.attr.host) + (uri.attr.port ? <span class="string">":"</span> + uri.attr.port : <span class="string">""</span>) : <span class="string">""</span>; <span class="keyword">return</span> uri &#125; <span class="function"><span class="keyword">function</span> <span class="title">getAttrName</span>(<span class="params">elm</span>) </span>&#123; <span class="keyword">var</span> tn = elm.tagName; <span class="keyword">if</span> (<span class="keyword">typeof</span> tn !== <span class="string">"undefined"</span>) <span class="keyword">return</span> tag2attr[tn.toLowerCase()]; <span class="keyword">return</span> tn &#125; <span class="function"><span class="keyword">function</span> <span class="title">promote</span>(<span class="params">parent, key</span>) </span>&#123; <span class="keyword">if</span> (parent[key].length === <span class="number">0</span>) <span class="keyword">return</span> parent[key] = &#123;&#125;; <span class="keyword">var</span> t = &#123;&#125;; <span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> parent[key]) t[i] = parent[key][i]; parent[key] = t; <span class="keyword">return</span> t &#125; <span class="function"><span class="keyword">function</span> <span class="title">parse</span>(<span class="params">parts, parent, key, val</span>) </span>&#123; <span class="keyword">var</span> part = parts.shift(); <span class="keyword">if</span> (!part) &#123; <span class="keyword">if</span> (isArray(parent[key])) &#123; parent[key].push(val) &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"object"</span> == <span class="keyword">typeof</span> parent[key]) &#123; parent[key] = val &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"undefined"</span> == <span class="keyword">typeof</span> parent[key]) &#123; parent[key] = val &#125; <span class="keyword">else</span> &#123; parent[key] = [parent[key], val] &#125; &#125; <span class="keyword">else</span> &#123; <span class="keyword">var</span> obj = parent[key] = parent[key] || []; <span class="keyword">if</span> (<span class="string">"]"</span> == part) &#123; <span class="keyword">if</span> (isArray(obj)) &#123; <span class="keyword">if</span> (<span class="string">""</span> !== val) obj.push(val) &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"object"</span> == <span class="keyword">typeof</span> obj) &#123; obj[keys(obj).length] = val &#125; <span class="keyword">else</span> &#123; obj = parent[key] = [parent[key], val] &#125; &#125; <span class="keyword">else</span> <span class="keyword">if</span> (~part.indexOf(<span class="string">"]"</span>)) &#123; part = part.substr(<span class="number">0</span>, part.length - <span class="number">1</span>); <span class="keyword">if</span> (!isint.test(part) &amp;&amp; isArray(obj)) obj = promote(parent, key); parse(parts, obj, part, val) &#125; <span class="keyword">else</span> &#123; <span class="keyword">if</span> (!isint.test(part) &amp;&amp; isArray(obj)) obj = promote(parent, key); parse(parts, obj, part, val) &#125; &#125; &#125; <span class="function"><span class="keyword">function</span> <span class="title">merge</span>(<span class="params">parent, key, val</span>) </span>&#123; <span class="keyword">if</span> (~key.indexOf(<span class="string">"]"</span>)) &#123; <span class="keyword">var</span> parts = key.split(<span class="string">"["</span>); parse(parts, parent, <span class="string">"base"</span>, val) &#125; <span class="keyword">else</span> &#123; <span class="keyword">if</span> (!isint.test(key) &amp;&amp; isArray(parent.base)) &#123; <span class="keyword">var</span> t = &#123;&#125;; <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> parent.base) t[k] = parent.base[k]; parent.base = t &#125; <span class="keyword">if</span> (key !== <span class="string">""</span>) &#123; set(parent.base, key, val) &#125; &#125; <span class="keyword">return</span> parent &#125; <span class="function"><span class="keyword">function</span> <span class="title">parseString</span>(<span class="params">str</span>) </span>&#123; <span class="keyword">return</span> reduce(<span class="built_in">String</span>(str).split(<span class="regexp">/&amp;|;/</span>), <span class="function"><span class="keyword">function</span> (<span class="params">ret, pair</span>) </span>&#123; <span class="keyword">try</span> &#123; pair = <span class="built_in">decodeURIComponent</span>(pair.replace(<span class="regexp">/\+/g</span>, <span class="string">" "</span>)) &#125; <span class="keyword">catch</span> (e) &#123; &#125; <span class="keyword">var</span> eql = pair.indexOf(<span class="string">"="</span>), brace = lastBraceInKey(pair), key = pair.substr(<span class="number">0</span>, brace || eql), val = pair.substr(brace || eql, pair.length); val = val.substr(val.indexOf(<span class="string">"="</span>) + <span class="number">1</span>, val.length); <span class="keyword">if</span> (key === <span class="string">""</span>) &#123; key = pair; val = <span class="string">""</span> &#125; <span class="keyword">return</span> merge(ret, key, val) &#125;, &#123; <span class="attr">base</span>: &#123;&#125; &#125;).base &#125; <span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">obj, key, val</span>) </span>&#123; <span class="keyword">var</span> v = obj[key]; <span class="keyword">if</span> (<span class="keyword">typeof</span> v === <span class="string">"undefined"</span>) &#123; obj[key] = val &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isArray(v)) &#123; v.push(val) &#125; <span class="keyword">else</span> &#123; obj[key] = [v, val] &#125; &#125; <span class="function"><span class="keyword">function</span> <span class="title">lastBraceInKey</span>(<span class="params">str</span>) </span>&#123; <span class="keyword">var</span> len = str.length, brace, c; <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len; ++i) &#123; c = str[i]; <span class="keyword">if</span> (<span class="string">"]"</span> == c) brace = <span class="literal">false</span>; <span class="keyword">if</span> (<span class="string">"["</span> == c) brace = <span class="literal">true</span>; <span class="keyword">if</span> (<span class="string">"="</span> == c &amp;&amp; !brace) <span class="keyword">return</span> i &#125; &#125; <span class="function"><span class="keyword">function</span> <span class="title">reduce</span>(<span class="params">obj, accumulator</span>) </span>&#123; <span class="keyword">var</span> i = <span class="number">0</span>, l = obj.length &gt;&gt; <span class="number">0</span>, curr = <span class="built_in">arguments</span>[<span class="number">2</span>]; <span class="keyword">while</span> (i &lt; l) &#123; <span class="keyword">if</span> (i <span class="keyword">in</span> obj) curr = accumulator.call(<span class="literal">undefined</span>, curr, obj[i], i, obj); ++i &#125; <span class="keyword">return</span> curr &#125; <span class="function"><span class="keyword">function</span> <span class="title">isArray</span>(<span class="params">vArg</span>) </span>&#123; <span class="keyword">return</span> <span class="built_in">Object</span>.prototype.toString.call(vArg) === <span class="string">"[object Array]"</span> &#125; <span class="function"><span class="keyword">function</span> <span class="title">keys</span>(<span class="params">obj</span>) </span>&#123; <span class="keyword">var</span> key_array = []; <span class="keyword">for</span> (<span class="keyword">var</span> prop <span class="keyword">in</span> obj) &#123; <span class="keyword">if</span> (obj.hasOwnProperty(prop)) key_array.push(prop) &#125; <span class="keyword">return</span> key_array &#125; <span class="function"><span class="keyword">function</span> <span class="title">purl</span>(<span class="params">url, strictMode</span>) </span>&#123; <span class="keyword">if</span> (<span class="built_in">arguments</span>.length === <span class="number">1</span> &amp;&amp; url === <span class="literal">true</span>) &#123; strictMode = <span class="literal">true</span>; url = <span class="literal">undefined</span> &#125; strictMode = strictMode || <span class="literal">false</span>; url = url || <span class="built_in">window</span>.location.toString(); <span class="keyword">return</span> &#123; <span class="attr">data</span>: parseUri(url, strictMode), <span class="attr">attr</span>: <span class="function"><span class="keyword">function</span> (<span class="params">attr</span>) </span>&#123; attr = aliases[attr] || attr; <span class="keyword">return</span> <span class="keyword">typeof</span> attr !== <span class="string">"undefined"</span> ? <span class="keyword">this</span>.data.attr[attr] : <span class="keyword">this</span>.data.attr &#125;, <span class="attr">param</span>: <span class="function"><span class="keyword">function</span> (<span class="params">param</span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">typeof</span> param !== <span class="string">"undefined"</span> ? <span class="keyword">this</span>.data.param.query[param] : <span class="keyword">this</span>.data.param.query &#125;, <span class="attr">fparam</span>: <span class="function"><span class="keyword">function</span> (<span class="params">param</span>) </span>&#123; <span class="keyword">return</span> <span class="keyword">typeof</span> param !== <span class="string">"undefined"</span> ? <span class="keyword">this</span>.data.param.fragment[param] : <span class="keyword">this</span>.data.param.fragment &#125;, <span class="attr">segment</span>: <span class="function"><span class="keyword">function</span> (<span class="params">seg</span>) </span>&#123; <span class="keyword">if</span> (<span class="keyword">typeof</span> seg === <span class="string">"undefined"</span>) &#123; <span class="keyword">return</span> <span class="keyword">this</span>.data.seg.path &#125; <span class="keyword">else</span> &#123; seg = seg &lt; <span class="number">0</span> ? <span class="keyword">this</span>.data.seg.path.length + seg : seg - <span class="number">1</span>; <span class="keyword">return</span> <span class="keyword">this</span>.data.seg.path[seg] &#125; &#125;, <span class="attr">fsegment</span>: <span class="function"><span class="keyword">function</span> (<span class="params">seg</span>) </span>&#123; <span class="keyword">if</span> (<span class="keyword">typeof</span> seg === <span class="string">"undefined"</span>) &#123; <span class="keyword">return</span> <span class="keyword">this</span>.data.seg.fragment &#125; <span class="keyword">else</span> &#123; seg = seg &lt; <span class="number">0</span> ? <span class="keyword">this</span>.data.seg.fragment.length + seg : seg - <span class="number">1</span>; <span class="keyword">return</span> <span class="keyword">this</span>.data.seg.fragment[seg] &#125; &#125; &#125; &#125; purl.jQuery = <span class="function"><span class="keyword">function</span> (<span class="params">$</span>) </span>&#123; <span class="keyword">if</span> ($ != <span class="literal">null</span>) &#123; $.fn.url = <span class="function"><span class="keyword">function</span> (<span class="params">strictMode</span>) </span>&#123; <span class="keyword">var</span> url = <span class="string">""</span>; <span class="keyword">if</span> (<span class="keyword">this</span>.length) &#123; url = $(<span class="keyword">this</span>).attr(getAttrName(<span class="keyword">this</span>[<span class="number">0</span>])) || <span class="string">""</span> &#125; <span class="keyword">return</span> purl(url, strictMode) &#125;; $.url = purl &#125; &#125;; purl.jQuery(<span class="built_in">window</span>.jQuery); <span class="keyword">return</span> purl &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(<span class="string">"404.html"</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> url = purl();</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> (url.attr(<span class="string">'host'</span>) == <span class="string">'weikeqin.cn'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> old_url = url.attr(<span class="string">'source'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> new_url = old_url.replace(<span class="string">'weikeqin.cn'</span>, <span class="string">"weikeqin.com"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"old_url = "</span> + old_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"new_url = "</span> + new_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.replace(new_url);</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (url.attr(<span class="string">'host'</span>) == <span class="string">'www.weikeqin.cn'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> old_url = url.attr(<span class="string">'source'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> new_url = old_url.replace(<span class="string">'www.weikeqin.cn'</span>, <span class="string">"weikeqin.com"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"old_url = "</span> + old_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"new_url = "</span> + new_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.replace(new_url);</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (url.attr(<span class="string">'host'</span>) == <span class="string">'weikeqin.github.io'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> old_url = url.attr(<span class="string">'source'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> new_url = old_url.replace(<span class="string">'weikeqin.github.io/weikeqin.cn.github.io'</span>, <span class="string">"weikeqin.com"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"old_url = "</span> + old_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"new_url = "</span> + new_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.replace(new_url);</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (url.attr(<span class="string">'host'</span>) == <span class="string">'www.weikeqin.github.io'</span>) &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> old_url = url.attr(<span class="string">'source'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> new_url = old_url.replace(<span class="string">'www.weikeqin.github.io/weikeqin.cn.github.io'</span>, <span class="string">"weikeqin.com"</span>);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"old_url = "</span> + old_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">console</span>.log(<span class="string">"new_url = "</span> + new_url);</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.replace(new_url);</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.location.href = <span class="string">"http://weikeqin.com"</span>;</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure><p><br></p><h2 id="1-3-一些思考"><a href="#1-3-一些思考" class="headerlink" title="(1.3) 一些思考"></a>(1.3) 一些思考</h2><blockquote><p> 为什么要分成两个文件 index.html 和 404.html，放一个文件不是更好吗？<br> 其实可以放一个文件里。 但是当脚本有问题的时候或者非正常流程时，分成两个文件会比一个文件更好。<br> 如果脚本有问题，index.html出错的时候(测试的时候遇到了)，有404.html兜底。 (这种情况在开发的时候，或者部署前就可以发现。)<br> 遇到一些域外的情况，404.html文件可以兜底。<br> 分成两个文件是从架构和模块化的角度考虑。</p></blockquote><blockquote><p> js跳转脚本里为什么要加console.log日志<br> 为了排查问题方便 (一般情况下用不到)<br><br></p></blockquote><h1 id="2-具体实施"><a href="#2-具体实施" class="headerlink" title="(2) 具体实施"></a>(2) 具体实施</h1><blockquote><p> 用的是万网的域名，weikeqin.cn和weikeqin.com用的都是coding.net的page服务。(实际更复杂)<br> 修改后，weikeqin.cn会用github.com的pages服务，weikeqin.com会用coding.net的pages服务。<br> 准备重定向脚本，在github pages服务准备好。<br> 修改域名解析，在 <code>域名控制台-&gt;解析设置</code> 里 把weikeqin.cn 解析到coding.net改成github.com </p></blockquote><blockquote><p> 回滚方案，如果有问题，修改域名解析，把 weikeqin.cn域名解析重新修改成coding.net对应的配置即可。</p></blockquote><p>  其实在实施前准备了很多测试，具体步骤忽略。</p><h1 id="3-测试"><a href="#3-测试" class="headerlink" title="(3) 测试"></a>(3) 测试</h1><p>  <a href="http://weikeqin.cn/" target="_blank" rel="noopener">http://weikeqin.cn/</a><br>  <a href="https://weikeqin.cn/" target="_blank" rel="noopener">https://weikeqin.cn/</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Navigated to http://weikeqin.cn/</span><br><span class="line">(index):12 index.html</span><br><span class="line">Navigated to https://weikeqin.com/</span><br></pre></td></tr></table></figure><p>  <a href="http://weikeqin.cn/2017/03/16/git-notes/" target="_blank" rel="noopener">http://weikeqin.cn/2017/03/16/git-notes/</a><br>  <a href="https://weikeqin.cn/2017/03/16/git-notes/" target="_blank" rel="noopener">https://weikeqin.cn/2017/03/16/git-notes/</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET http://weikeqin.cn/2017/03/16/git-notes/ 404 (Not Found)</span><br><span class="line">/2017/03/16/git-notes/:1 A cookie associated with a cross-site resource at http://hm.baidu.com/ was set without the `SameSite` attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with `SameSite=None` and `Secure`. You can review cookies in developer tools under Application&gt;Storage&gt;Cookies and see more details at https://www.chromestatus.com/feature/5088147346030592 and https://www.chromestatus.com/feature/5633521622188032.</span><br><span class="line">/2017/03/16/git-notes/:1 A cookie associated with a cross-site resource at http://baidu.com/ was set without the `SameSite` attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with `SameSite=None` and `Secure`. You can review cookies in developer tools under Application&gt;Storage&gt;Cookies and see more details at https://www.chromestatus.com/feature/5088147346030592 and https://www.chromestatus.com/feature/5633521622188032.</span><br><span class="line">Navigated to http://weikeqin.cn/2017/03/16/git-notes/</span><br><span class="line">VM62:7 404.html</span><br><span class="line">VM62:12 old_url = http://weikeqin.cn/2017/03/16/git-notes/</span><br><span class="line">VM62:13 new_url = http://weikeqin.com/2017/03/16/git-notes/</span><br><span class="line">Navigated to http://weikeqin.com/2017/03/16/git-notes/</span><br></pre></td></tr></table></figure><p>  可以看到 weikeqin.cn 重定向到 weikeqin.com 了</p><h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.jianshu.com/p/2c31cfb6c9b1" target="_blank" rel="noopener">Github Pages页面重定向到新网址，实现域名跳转</a><br>[2] <a href="https://github.com/HeTianCong/HeTianCong.github.io" target="_blank" rel="noopener">HeTianCong.github.io</a><br>[3] <a href="https://blog.meow.page/2019/04/08/setup-after-changing-my-hexo-blog-domain/" target="_blank" rel="noopener">在更换 hexo 博客的域名后需要做的配置工作</a><br>[4] <a href="https://github.com/weikeqin/weikeqin.cn.github.io" target="_blank" rel="noopener">weikeqin.cn.github.io</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt; 在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。&lt;br&gt; 在具体更换域名前的测试中，发现github.com还是比coding.net好用。&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;1-博客域名更换&quot;&gt;&lt;a href=&quot;#1-博客域名更换&quot; class=&quot;headerlink&quot; title=&quot;(1) 博客域名更换&quot;&gt;&lt;/a&gt;(1) 博客域名更换&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt; 域名的重定向的方法有 1.域名转发    2.301重定向    3.JS跳转&lt;br&gt; 方法一，域名注册商支持域名转发功能才行！国内的绝大部分域名注册商不支持。&lt;br&gt; 方法二，是Web 服务器给访问老域名的请求返回一个 301 或者 302，然后跳转到新域名上。 由于使用的是 github.com coding.net 的page服务，这个方法也不可行。&lt;br&gt; 方法三，使用js跳转。具体方法如下。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;1-1-index-html&quot;&gt;&lt;a href=&quot;#1-1-index-html&quot; class=&quot;headerlink&quot; title=&quot;(1.1) index.html&quot;&gt;&lt;/a&gt;(1.1) index.html&lt;/h2&gt;&lt;figure class=&quot;highlight html&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;&amp;lt;!DOCTYPE html&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;html&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;head&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;meta&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;charset&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;UTF-8&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;title&lt;/span&gt;&amp;gt;&lt;/span&gt;新域名 https://weikeqin.com&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;title&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;head&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;body&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt; 跳转中，访问新域名站点 &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;href&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;https://weikeqin.com&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;target&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;_blank&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt; https://weikeqin.com &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;a&lt;/span&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;p&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;body&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;javascript&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&quot;index.html&quot;&lt;/span&gt;)&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;javascript&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.location.href = &lt;span class=&quot;string&quot;&gt;&quot;https://weikeqin.com&quot;&lt;/span&gt;;&lt;/span&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;script&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;html&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="network" scheme="http://weikeqin.com/categories/network/"/>
+    
+    
+      <category term="network" scheme="http://weikeqin.com/tags/network/"/>
     
   </entry>
   
   <entry>
     <title>github搜索</title>
-    <link href="http://weikeqin.cn/2020/02/23/github-search/"/>
-    <id>http://weikeqin.cn/2020/02/23/github-search/</id>
+    <link href="http://weikeqin.com/2020/02/23/github-search/"/>
+    <id>http://weikeqin.com/2020/02/23/github-search/</id>
     <published>2020-02-23T08:17:57.000Z</published>
     <updated>2020-02-25T07:34:18.215Z</updated>
     
@@ -212,17 +240,17 @@
     
     </summary>
     
-      <category term="tools" scheme="http://weikeqin.cn/categories/tools/"/>
+      <category term="tools" scheme="http://weikeqin.com/categories/tools/"/>
     
     
-      <category term="tools" scheme="http://weikeqin.cn/tags/tools/"/>
+      <category term="tools" scheme="http://weikeqin.com/tags/tools/"/>
     
   </entry>
   
   <entry>
     <title>mysql explain 详解</title>
-    <link href="http://weikeqin.cn/2020/02/05/mysql-explain/"/>
-    <id>http://weikeqin.cn/2020/02/05/mysql-explain/</id>
+    <link href="http://weikeqin.com/2020/02/05/mysql-explain/"/>
+    <id>http://weikeqin.com/2020/02/05/mysql-explain/</id>
     <published>2020-02-05T02:50:15.000Z</published>
     <updated>2020-02-11T04:17:34.982Z</updated>
     
@@ -236,17 +264,17 @@
     
     </summary>
     
-      <category term="mysql" scheme="http://weikeqin.cn/categories/mysql/"/>
+      <category term="mysql" scheme="http://weikeqin.com/categories/mysql/"/>
     
     
-      <category term="mysql" scheme="http://weikeqin.cn/tags/mysql/"/>
+      <category term="mysql" scheme="http://weikeqin.com/tags/mysql/"/>
     
   </entry>
   
   <entry>
     <title>Java内存模型</title>
-    <link href="http://weikeqin.cn/2020/02/03/java-mermory-model/"/>
-    <id>http://weikeqin.cn/2020/02/03/java-mermory-model/</id>
+    <link href="http://weikeqin.com/2020/02/03/java-mermory-model/"/>
+    <id>http://weikeqin.com/2020/02/03/java-mermory-model/</id>
     <published>2020-02-03T02:34:22.000Z</published>
     <updated>2020-02-11T04:06:42.882Z</updated>
     
@@ -259,19 +287,19 @@
     
     </summary>
     
-      <category term="java" scheme="http://weikeqin.cn/categories/java/"/>
+      <category term="java" scheme="http://weikeqin.com/categories/java/"/>
     
     
-      <category term="java" scheme="http://weikeqin.cn/tags/java/"/>
+      <category term="java" scheme="http://weikeqin.com/tags/java/"/>
     
-      <category term="concurrent" scheme="http://weikeqin.cn/tags/concurrent/"/>
+      <category term="concurrent" scheme="http://weikeqin.com/tags/concurrent/"/>
     
   </entry>
   
   <entry>
     <title>java并发编程</title>
-    <link href="http://weikeqin.cn/2020/02/02/java-concurrent-programming/"/>
-    <id>http://weikeqin.cn/2020/02/02/java-concurrent-programming/</id>
+    <link href="http://weikeqin.com/2020/02/02/java-concurrent-programming/"/>
+    <id>http://weikeqin.com/2020/02/02/java-concurrent-programming/</id>
     <published>2020-02-02T14:07:56.000Z</published>
     <updated>2020-02-11T04:06:29.194Z</updated>
     
@@ -285,19 +313,19 @@
     
     </summary>
     
-      <category term="java" scheme="http://weikeqin.cn/categories/java/"/>
+      <category term="java" scheme="http://weikeqin.com/categories/java/"/>
     
     
-      <category term="java" scheme="http://weikeqin.cn/tags/java/"/>
+      <category term="java" scheme="http://weikeqin.com/tags/java/"/>
     
-      <category term="concurrent" scheme="http://weikeqin.cn/tags/concurrent/"/>
+      <category term="concurrent" scheme="http://weikeqin.com/tags/concurrent/"/>
     
   </entry>
   
   <entry>
     <title>新冠形病毒疫情传染数据模拟</title>
-    <link href="http://weikeqin.cn/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/"/>
-    <id>http://weikeqin.cn/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/</id>
+    <link href="http://weikeqin.com/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/"/>
+    <id>http://weikeqin.com/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/</id>
     <published>2020-02-02T07:42:33.000Z</published>
     <updated>2020-02-17T08:09:43.687Z</updated>
     
@@ -327,17 +355,17 @@
     
     </summary>
     
-      <category term="data" scheme="http://weikeqin.cn/categories/data/"/>
+      <category term="data" scheme="http://weikeqin.com/categories/data/"/>
     
     
-      <category term="data" scheme="http://weikeqin.cn/tags/data/"/>
+      <category term="data" scheme="http://weikeqin.com/tags/data/"/>
     
   </entry>
   
   <entry>
     <title>elasticsearch 映射和分析</title>
-    <link href="http://weikeqin.cn/2020/01/21/elasticsearch-mapping-analysis/"/>
-    <id>http://weikeqin.cn/2020/01/21/elasticsearch-mapping-analysis/</id>
+    <link href="http://weikeqin.com/2020/01/21/elasticsearch-mapping-analysis/"/>
+    <id>http://weikeqin.com/2020/01/21/elasticsearch-mapping-analysis/</id>
     <published>2020-01-21T02:12:46.000Z</published>
     <updated>2020-01-21T11:23:04.898Z</updated>
     
@@ -351,17 +379,17 @@
     
     </summary>
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/categories/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/categories/elasticsearch/"/>
     
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/tags/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/tags/elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>elasticsearch-search</title>
-    <link href="http://weikeqin.cn/2020/01/20/elasticsearch-search/"/>
-    <id>http://weikeqin.cn/2020/01/20/elasticsearch-search/</id>
+    <link href="http://weikeqin.com/2020/01/20/elasticsearch-search/"/>
+    <id>http://weikeqin.com/2020/01/20/elasticsearch-search/</id>
     <published>2020-01-20T10:22:49.000Z</published>
     <updated>2020-01-21T03:36:44.808Z</updated>
     
@@ -378,17 +406,17 @@
     
     </summary>
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/categories/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/categories/elasticsearch/"/>
     
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/tags/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/tags/elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>elasticsearch 分布式文档存储</title>
-    <link href="http://weikeqin.cn/2020/01/20/elasticsearch-distributed-docs/"/>
-    <id>http://weikeqin.cn/2020/01/20/elasticsearch-distributed-docs/</id>
+    <link href="http://weikeqin.com/2020/01/20/elasticsearch-distributed-docs/"/>
+    <id>http://weikeqin.com/2020/01/20/elasticsearch-distributed-docs/</id>
     <published>2020-01-20T08:41:10.000Z</published>
     <updated>2020-01-21T02:50:21.416Z</updated>
     
@@ -404,17 +432,17 @@
     
     </summary>
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/categories/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/categories/elasticsearch/"/>
     
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/tags/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/tags/elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>elasticsearch 数据输入和输出</title>
-    <link href="http://weikeqin.cn/2020/01/20/elasticsearch-data-in-data-out/"/>
-    <id>http://weikeqin.cn/2020/01/20/elasticsearch-data-in-data-out/</id>
+    <link href="http://weikeqin.com/2020/01/20/elasticsearch-data-in-data-out/"/>
+    <id>http://weikeqin.com/2020/01/20/elasticsearch-data-in-data-out/</id>
     <published>2020-01-20T03:26:55.000Z</published>
     <updated>2020-01-21T02:50:09.684Z</updated>
     
@@ -432,17 +460,17 @@
     
     </summary>
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/categories/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/categories/elasticsearch/"/>
     
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/tags/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/tags/elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>elasticsearch-restful-api</title>
-    <link href="http://weikeqin.cn/2020/01/19/elasticsearch-restful-api/"/>
-    <id>http://weikeqin.cn/2020/01/19/elasticsearch-restful-api/</id>
+    <link href="http://weikeqin.com/2020/01/19/elasticsearch-restful-api/"/>
+    <id>http://weikeqin.com/2020/01/19/elasticsearch-restful-api/</id>
     <published>2020-01-19T08:56:47.000Z</published>
     <updated>2020-04-18T08:43:19.052Z</updated>
     
@@ -459,17 +487,17 @@
     
     </summary>
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/categories/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/categories/elasticsearch/"/>
     
     
-      <category term="elasticsearch" scheme="http://weikeqin.cn/tags/elasticsearch/"/>
+      <category term="elasticsearch" scheme="http://weikeqin.com/tags/elasticsearch/"/>
     
   </entry>
   
   <entry>
     <title>分布式锁</title>
-    <link href="http://weikeqin.cn/2019/12/29/distributed-lock/"/>
-    <id>http://weikeqin.cn/2019/12/29/distributed-lock/</id>
+    <link href="http://weikeqin.com/2019/12/29/distributed-lock/"/>
+    <id>http://weikeqin.com/2019/12/29/distributed-lock/</id>
     <published>2019-12-29T13:39:47.000Z</published>
     <updated>2020-01-19T03:19:16.402Z</updated>
     
@@ -482,19 +510,19 @@
     
     </summary>
     
-      <category term="distributed" scheme="http://weikeqin.cn/categories/distributed/"/>
+      <category term="distributed" scheme="http://weikeqin.com/categories/distributed/"/>
     
     
-      <category term="distributed" scheme="http://weikeqin.cn/tags/distributed/"/>
+      <category term="lock" scheme="http://weikeqin.com/tags/lock/"/>
     
-      <category term="lock" scheme="http://weikeqin.cn/tags/lock/"/>
+      <category term="distributed" scheme="http://weikeqin.com/tags/distributed/"/>
     
   </entry>
   
   <entry>
     <title>MySQL数据库开发规范</title>
-    <link href="http://weikeqin.cn/2019/11/20/mysql-norm/"/>
-    <id>http://weikeqin.cn/2019/11/20/mysql-norm/</id>
+    <link href="http://weikeqin.com/2019/11/20/mysql-norm/"/>
+    <id>http://weikeqin.com/2019/11/20/mysql-norm/</id>
     <published>2019-11-20T10:40:11.000Z</published>
     <updated>2019-12-17T13:57:26.564Z</updated>
     
@@ -512,15 +540,15 @@
     
     </summary>
     
-      <category term="mysql" scheme="http://weikeqin.cn/categories/mysql/"/>
+      <category term="mysql" scheme="http://weikeqin.com/categories/mysql/"/>
     
     
   </entry>
   
   <entry>
     <title>linux-memory-notes</title>
-    <link href="http://weikeqin.cn/2019/11/18/linux-memory-notes/"/>
-    <id>http://weikeqin.cn/2019/11/18/linux-memory-notes/</id>
+    <link href="http://weikeqin.com/2019/11/18/linux-memory-notes/"/>
+    <id>http://weikeqin.com/2019/11/18/linux-memory-notes/</id>
     <published>2019-11-18T07:09:02.000Z</published>
     <updated>2020-03-16T02:36:25.916Z</updated>
     
@@ -541,31 +569,10 @@
     
     </summary>
     
-      <category term="linux" scheme="http://weikeqin.cn/categories/linux/"/>
+      <category term="linux" scheme="http://weikeqin.com/categories/linux/"/>
     
     
-      <category term="linux" scheme="http://weikeqin.cn/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>gradle-download-install</title>
-    <link href="http://weikeqin.cn/2019/11/18/gradle-download-install/"/>
-    <id>http://weikeqin.cn/2019/11/18/gradle-download-install/</id>
-    <published>2019-11-18T03:44:54.000Z</published>
-    <updated>2019-12-17T13:57:26.554Z</updated>
-    
-    <content type="html"><![CDATA[<p><code>export PATH=$PATH:/Users/weikeqin1/SoftWare/gradle-6.0/bin</code></p><p><code>%GRADLE_HOME%/bin</code></p><h1 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h1><h2 id="gradle-SSL-peer-shut-down-incorrectly"><a href="#gradle-SSL-peer-shut-down-incorrectly" class="headerlink" title="gradle   SSL peer shut down incorrectly"></a>gradle   SSL peer shut down incorrectly</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Caused by: org.gradle.internal.resource.transport.http.HttpRequestException: Could not GET &apos;https://d29vzk4ow07wi7.cloudfront.net/70915a3f0ef4243d4630ea23219f5445fac82700?response-content-disposition=attachment%3Bfilename%3D%22gradle-core-1.5.0.jar%22&amp;Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHAqOi8vZDI5dnprNG93MDd3aTcuY2xvdWRmcm9udC5uZXQvNzA5MTVhM2YwZWY0MjQzZDQ2MzBlYTIzMjE5ZjU0NDVmYWM4MjcwMD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWF0dGFjaG1lbnQlM0JmaWxlbmFtZSUzRCUyMmdyYWRsZS1jb3JlLTEuNS4wLmphciUyMiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTU3NDA0OTI4NH0sIklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifX19XX0_&amp;Signature=PHZOaWL0~35J849nq~FwS02Mi5fX8vhbhJRz5scXG1-19xso8v0xWPj6oyh7Ku9q8~I6ypEAdaI1eNDGQwl2VOcffRUm5fDXlclmdZUB4O~ZgA535OgXD3iv4n0Ht37uIrbsnpPad1WHy7qUFZzlS1BDA9hxDMLnXACL7rNeNiWea-Q8t5hwbCGkKi6ucdOSa8quedY7iH~biP0HxeKcQY242-HFjbByCaa8jZTcghdgIVVBnrIA8almCFttc6hTa1jy2OcTvWzm22Ty~jvfTKeBW9H3ApHty4BRHeyo7oU4YHOJCRMwtMuynQWgGwGH13zRnX~3HHfcka8L1qigEw__&amp;Key-Pair-Id=APKAIFKFWOMXM2UMTSFA&apos;.</span><br><span class="line">at org.gradle.internal.resource.transport.http.HttpClientHelper.performRequest(HttpClientHelper.java:99)</span><br><span class="line"></span><br><span class="line">Caused by: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake</span><br><span class="line">at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:994)</span><br><span class="line">at org.apache.http.conn.ssl.SSLConnectionSocketFactory.createLayeredSocket(SSLConnectionSocketFactory.java:436)</span><br><span class="line"></span><br><span class="line">Caused by: java.io.EOFException: SSL peer shut down incorrectly</span><br><span class="line">at sun.security.ssl.InputRecord.read(InputRecord.java:505)</span><br></pre></td></tr></table></figure><p>  在 <code>jcenter()</code> 下 添加 <code>maven { url &quot;http://jcenter.bintray.com&quot; }</code> 即可</p><a id="more"></a>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// Top-level build file where you can add configuration options common to all sub-projects/modules.</span><br><span class="line"></span><br><span class="line">buildscript &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        maven&#123; url &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos; &#125;</span><br><span class="line">        maven&#123; url &apos;http://maven.aliyun.com/nexus/content/repositories/jcenter&apos;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    dependencies &#123;</span><br><span class="line">        //classpath &apos;com.android.tools.build:gradle:1.+&apos;</span><br><span class="line">        classpath &apos;com.android.tools.build:gradle:2.4.0-alpha6&apos;</span><br><span class="line"></span><br><span class="line">        // NOTE: Do not place your application dependencies here; they belong</span><br><span class="line">        // in the individual module build.gradle files</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        maven&#123; url &apos;http://maven.aliyun.com/nexus/content/groups/public/&apos; &#125;</span><br><span class="line">        maven&#123; url &apos;http://maven.aliyun.com/nexus/content/repositories/jcenter&apos;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="The-android-gradle-plugin-version-2-4-0-alpha6-is-too-old-please-update-to-the-latest-version"><a href="#The-android-gradle-plugin-version-2-4-0-alpha6-is-too-old-please-update-to-the-latest-version" class="headerlink" title="The android gradle plugin version 2.4.0-alpha6 is too old, please update to the latest version."></a>The android gradle plugin version 2.4.0-alpha6 is too old, please update to the latest version.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The android gradle plugin version 2.4.0-alpha6 is too old, please update to the latest version.</span><br><span class="line"></span><br><span class="line">To override this check from the command line please set the ANDROID_DAILY_OVERRIDE environment variable to &quot;9f2969bc0d30c60a0b363c667a7529c45a3f76d7&quot;</span><br></pre></td></tr></table></figure><h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://gradle.org/install/" target="_blank" rel="noopener">gradle.org</a><br>[2] <a href="https://www.cnblogs.com/yangshifu/p/9801659.html" target="_blank" rel="noopener">gradle配置国内镜像</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;code&gt;export PATH=$PATH:/Users/weikeqin1/SoftWare/gradle-6.0/bin&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;%GRADLE_HOME%/bin&lt;/code&gt;&lt;/p&gt;
-&lt;h1 id=&quot;Error&quot;&gt;&lt;a href=&quot;#Error&quot; class=&quot;headerlink&quot; title=&quot;Error&quot;&gt;&lt;/a&gt;Error&lt;/h1&gt;&lt;h2 id=&quot;gradle-SSL-peer-shut-down-incorrectly&quot;&gt;&lt;a href=&quot;#gradle-SSL-peer-shut-down-incorrectly&quot; class=&quot;headerlink&quot; title=&quot;gradle   SSL peer shut down incorrectly&quot;&gt;&lt;/a&gt;gradle   SSL peer shut down incorrectly&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Caused by: org.gradle.internal.resource.transport.http.HttpRequestException: Could not GET &amp;apos;https://d29vzk4ow07wi7.cloudfront.net/70915a3f0ef4243d4630ea23219f5445fac82700?response-content-disposition=attachment%3Bfilename%3D%22gradle-core-1.5.0.jar%22&amp;amp;Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHAqOi8vZDI5dnprNG93MDd3aTcuY2xvdWRmcm9udC5uZXQvNzA5MTVhM2YwZWY0MjQzZDQ2MzBlYTIzMjE5ZjU0NDVmYWM4MjcwMD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWF0dGFjaG1lbnQlM0JmaWxlbmFtZSUzRCUyMmdyYWRsZS1jb3JlLTEuNS4wLmphciUyMiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTU3NDA0OTI4NH0sIklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifX19XX0_&amp;amp;Signature=PHZOaWL0~35J849nq~FwS02Mi5fX8vhbhJRz5scXG1-19xso8v0xWPj6oyh7Ku9q8~I6ypEAdaI1eNDGQwl2VOcffRUm5fDXlclmdZUB4O~ZgA535OgXD3iv4n0Ht37uIrbsnpPad1WHy7qUFZzlS1BDA9hxDMLnXACL7rNeNiWea-Q8t5hwbCGkKi6ucdOSa8quedY7iH~biP0HxeKcQY242-HFjbByCaa8jZTcghdgIVVBnrIA8almCFttc6hTa1jy2OcTvWzm22Ty~jvfTKeBW9H3ApHty4BRHeyo7oU4YHOJCRMwtMuynQWgGwGH13zRnX~3HHfcka8L1qigEw__&amp;amp;Key-Pair-Id=APKAIFKFWOMXM2UMTSFA&amp;apos;.&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	at org.gradle.internal.resource.transport.http.HttpClientHelper.performRequest(HttpClientHelper.java:99)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Caused by: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:994)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.createLayeredSocket(SSLConnectionSocketFactory.java:436)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Caused by: java.io.EOFException: SSL peer shut down incorrectly&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	at sun.security.ssl.InputRecord.read(InputRecord.java:505)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;  在 &lt;code&gt;jcenter()&lt;/code&gt; 下 添加 &lt;code&gt;maven { url &amp;quot;http://jcenter.bintray.com&amp;quot; }&lt;/code&gt; 即可&lt;/p&gt;
-    
-    </summary>
-    
+      <category term="linux" scheme="http://weikeqin.com/tags/linux/"/>
     
   </entry>
   

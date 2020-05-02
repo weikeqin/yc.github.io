@@ -115,7 +115,7 @@
   <meta name="description" content="不积跬步无以至千里">
 <meta property="og:type" content="website">
 <meta property="og:title" content="沧海一粟">
-<meta property="og:url" content="http://weikeqin.cn/page/2/index.html">
+<meta property="og:url" content="http://weikeqin.com/page/2/index.html">
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="不积跬步无以至千里">
 <meta property="og:locale" content="zh-CN">
@@ -130,7 +130,7 @@
 
 
 
-  <link rel="canonical" href="http://weikeqin.cn/page/2/">
+  <link rel="canonical" href="http://weikeqin.com/page/2/">
 
 
 
@@ -370,7 +370,188 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/02/java-concurrent-programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/02/java-concurrent-programming/" itemprop="url">
+                  java并发编程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-02 22:07:56" itemprop="dateCreated datePublished" datetime="2020-02-02T22:07:56+08:00">2020-02-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/02/java-concurrent-programming/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2020/02/02/java-concurrent-programming/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/02/02/java-concurrent-programming/" class="leancloud_visitors" data-flag-title="java并发编程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>  并发编程最早的应用领域就是操作系统的实现。</p>
+<p>  随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。</p>
+<p>  Java 里 synchronized、wait()/notify() 相关的知识很琐碎，看懂难，会用更难。但实际上 synchronized、wait()、notify() 不过是操作系统领域里管程模型的一种实现而已，Java SDK 并发包里的条件变量 Condition 也是管程里的概念，synchronized、wait()/notify()、条件变量这些知识如果单独理解，自然是管中窥豹。但是如果站在管程这个理论模型的高度，你就会发现这些知识原来这么简单，同时用起来也就得心应手了。管程作为一种解决并发问题的模型，是继信号量模型之后的一项重大创新，它与信号量在逻辑上是等价的（可以用管程实现信号量，也可以用信号量实现管程），但是相比之下管程更易用。而且，很多编程语言都支持管程，搞懂管程，对学习其他很多语言的并发编程有很大帮助。然而，很多人急于学习 Java 并发编程技术，却忽略了技术背后的理论和模型，而理论和模型却往往比具体的技术更为重要。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/02/02/java-concurrent-programming/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -567,7 +748,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2020/01/21/elasticsearch-mapping-analysis/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/21/elasticsearch-mapping-analysis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -748,7 +929,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2020/01/20/elasticsearch-search/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/20/elasticsearch-search/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -932,7 +1113,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2020/01/20/elasticsearch-distributed-docs/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/20/elasticsearch-distributed-docs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1115,7 +1296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2020/01/20/elasticsearch-data-in-data-out/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/20/elasticsearch-data-in-data-out/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1300,7 +1481,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2020/01/19/elasticsearch-restful-api/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/19/elasticsearch-restful-api/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1484,7 +1665,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/12/29/distributed-lock/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/12/29/distributed-lock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1664,7 +1845,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/11/20/mysql-norm/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/20/mysql-norm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1849,7 +2030,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/11/18/linux-memory-notes/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/18/linux-memory-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -2086,170 +2267,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/11/18/gradle-download-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/18/gradle-download-install/" itemprop="url">
-                  gradle-download-install
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-11-18 11:44:54" itemprop="dateCreated datePublished" datetime="2019-11-18T11:44:54+08:00">2019-11-18</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/11/18/gradle-download-install/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/11/18/gradle-download-install/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/11/18/gradle-download-install/" class="leancloud_visitors" data-flag-title="gradle-download-install">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><code>export PATH=$PATH:/Users/weikeqin1/SoftWare/gradle-6.0/bin</code></p>
-<p><code>%GRADLE_HOME%/bin</code></p>
-<h1 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h1><h2 id="gradle-SSL-peer-shut-down-incorrectly"><a href="#gradle-SSL-peer-shut-down-incorrectly" class="headerlink" title="gradle   SSL peer shut down incorrectly"></a>gradle   SSL peer shut down incorrectly</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Caused by: org.gradle.internal.resource.transport.http.HttpRequestException: Could not GET &apos;https://d29vzk4ow07wi7.cloudfront.net/70915a3f0ef4243d4630ea23219f5445fac82700?response-content-disposition=attachment%3Bfilename%3D%22gradle-core-1.5.0.jar%22&amp;Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHAqOi8vZDI5dnprNG93MDd3aTcuY2xvdWRmcm9udC5uZXQvNzA5MTVhM2YwZWY0MjQzZDQ2MzBlYTIzMjE5ZjU0NDVmYWM4MjcwMD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWF0dGFjaG1lbnQlM0JmaWxlbmFtZSUzRCUyMmdyYWRsZS1jb3JlLTEuNS4wLmphciUyMiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTU3NDA0OTI4NH0sIklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifX19XX0_&amp;Signature=PHZOaWL0~35J849nq~FwS02Mi5fX8vhbhJRz5scXG1-19xso8v0xWPj6oyh7Ku9q8~I6ypEAdaI1eNDGQwl2VOcffRUm5fDXlclmdZUB4O~ZgA535OgXD3iv4n0Ht37uIrbsnpPad1WHy7qUFZzlS1BDA9hxDMLnXACL7rNeNiWea-Q8t5hwbCGkKi6ucdOSa8quedY7iH~biP0HxeKcQY242-HFjbByCaa8jZTcghdgIVVBnrIA8almCFttc6hTa1jy2OcTvWzm22Ty~jvfTKeBW9H3ApHty4BRHeyo7oU4YHOJCRMwtMuynQWgGwGH13zRnX~3HHfcka8L1qigEw__&amp;Key-Pair-Id=APKAIFKFWOMXM2UMTSFA&apos;.</span><br><span class="line">	at org.gradle.internal.resource.transport.http.HttpClientHelper.performRequest(HttpClientHelper.java:99)</span><br><span class="line"></span><br><span class="line">Caused by: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake</span><br><span class="line">	at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:994)</span><br><span class="line">	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.createLayeredSocket(SSLConnectionSocketFactory.java:436)</span><br><span class="line"></span><br><span class="line">Caused by: java.io.EOFException: SSL peer shut down incorrectly</span><br><span class="line">	at sun.security.ssl.InputRecord.read(InputRecord.java:505)</span><br></pre></td></tr></table></figure>
-<p>  在 <code>jcenter()</code> 下 添加 <code>maven { url &quot;http://jcenter.bintray.com&quot; }</code> 即可</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/11/18/gradle-download-install/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2297,7 +2314,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-count">163</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

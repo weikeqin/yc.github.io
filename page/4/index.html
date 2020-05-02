@@ -115,7 +115,7 @@
   <meta name="description" content="不积跬步无以至千里">
 <meta property="og:type" content="website">
 <meta property="og:title" content="沧海一粟">
-<meta property="og:url" content="http://weikeqin.cn/page/4/index.html">
+<meta property="og:url" content="http://weikeqin.com/page/4/index.html">
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="不积跬步无以至千里">
 <meta property="og:locale" content="zh-CN">
@@ -130,7 +130,7 @@
 
 
 
-  <link rel="canonical" href="http://weikeqin.cn/page/4/">
+  <link rel="canonical" href="http://weikeqin.com/page/4/">
 
 
 
@@ -370,7 +370,230 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/08/18/java-core-technology-36-lectures/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/09/05/mysql-lock-table-solution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/05/mysql-lock-table-solution/" itemprop="url">
+                  MySQL 锁表后快速解决方法 及 锁表原因
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-05 22:14:48" itemprop="dateCreated datePublished" datetime="2019-09-05T22:14:48+08:00">2019-09-05</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/05/mysql-lock-table-solution/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/09/05/mysql-lock-table-solution/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/09/05/mysql-lock-table-solution/" class="leancloud_visitors" data-flag-title="MySQL 锁表后快速解决方法 及 锁表原因">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>  前几天同事在晚上上线的时候执行sql语句造成锁表，想总结一下以避免后续发生。</p>
+<h1 id="1-遇到锁表快速解决办法"><a href="#1-遇到锁表快速解决办法" class="headerlink" title="(1)  遇到锁表快速解决办法"></a>(1)  遇到锁表快速解决办法</h1><p>　　依次执行1-6步，运行第6步生成的语句即可。</p>
+<p>　　如果特别着急，运行 1  2  6 步 以及第6步生成的kill语句 即可。  </p>
+<p>  1.　<strong> 第1步　查看表是否在使用。</strong></p>
+<blockquote>
+<p> <code>show open tables where in_use &gt; 0 ;</code><br>如果查询结果为空。则证明表没有在使用。结束。</p>
+</blockquote>
+<blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  show open tables where in_use &gt; 0 ;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 如果查询结果不为空，继续后续的步骤。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  show open tables where in_use &gt; 0 ;</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">| Database | Table | In_use | Name_locked |</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">| test     | t     |      1 |           0 |</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>2.　<strong> 第2步　查看数据库当前的进程，看一下有无正在执行的慢SQL记录线程。  </strong></p>
+<blockquote>
+<p> <code>show  processlist;</code></p>
+</blockquote>
+<p>3.　<strong> 第3步　当前运行的所有事务  </strong></p>
+<blockquote>
+<p><code>SELECT * FROM information_schema.INNODB_TRX;</code></p>
+</blockquote>
+<p>4.　<strong> 第4步　当前出现的锁  </strong></p>
+<blockquote>
+<p><code>SELECT * FROM information_schema.INNODB_LOCKs;</code></p>
+</blockquote>
+<p>5.　<strong> 第5步　锁等待的对应关系 </strong></p>
+<blockquote>
+<p><code>SELECT * FROM information_schema.INNODB_LOCK_waits;</code></p>
+</blockquote>
+<blockquote>
+<p> 看事务表INNODB_TRX，里面是否有正在锁定的事务线程，看看ID是否在show processlist里面的sleep线程中，如果是，就证明这个sleep的线程事务一直没有commit或者rollback而是卡住了，我们需要手动kill掉。<br> 搜索的结果是在事务表发现了很多任务，这时候最好都kill掉。</p>
+</blockquote>
+<p>6.　<strong> 第6步　批量删除事务表中的事务 </strong></p>
+<blockquote>
+<p> 这里用的方法是：通过information_schema.processlist表中的连接信息生成需要处理掉的MySQL连接的语句临时文件，然后执行临时文件中生成的指令。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">concat</span>(<span class="string">'KILL '</span>,<span class="keyword">id</span>,<span class="string">';'</span>) </span><br><span class="line"><span class="keyword">FROM</span> information_schema.processlist p </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span>  information_schema.INNODB_TRX x </span><br><span class="line"><span class="keyword">ON</span> p.id=x.trx_mysql_thread_id </span><br><span class="line"><span class="keyword">WHERE</span> db=<span class="string">'test'</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p> 记得修改对应的数据库名。</p>
+</blockquote>
+<blockquote>
+<p> 这个语句执行后结果如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  SELECT concat('KILL ',id,';')  FROM information_schema.processlist p  INNER JOIN  information_schema.INNODB_TRX x  ON p.id=x.trx_mysql_thread_id  WHERE db='test';</span><br><span class="line">+<span class="comment">------------------------+</span></span><br><span class="line">| concat('<span class="keyword">KILL</span> <span class="string">',id,'</span>;') |</span><br><span class="line">+<span class="comment">------------------------+</span></span><br><span class="line">| <span class="keyword">KILL</span> <span class="number">42</span>;               |</span><br><span class="line">| <span class="keyword">KILL</span> <span class="number">40</span>;               |</span><br><span class="line">+<span class="comment">------------------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p> 执行结果里的两个kill语句即可解决锁表。</p>
+</blockquote>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/09/05/mysql-lock-table-solution/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/18/java-core-technology-36-lectures/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -560,7 +783,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/08/18/orientdb-config/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/18/orientdb-config/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -739,7 +962,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/08/18/java-jdbc-prepared-statement/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/18/java-jdbc-prepared-statement/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -919,7 +1142,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/08/18/java-concurrent/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/18/java-concurrent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1104,7 +1327,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/08/12/kafka-notes/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/12/kafka-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1283,7 +1506,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/07/26/hbase-install-config-note/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/26/hbase-install-config-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1466,7 +1689,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/07/08/java-bio-nio-aio/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/08/java-bio-nio-aio/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1650,7 +1873,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/07/03/springcloud-note/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/03/springcloud-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1835,7 +2058,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/06/30/orientdb-sql/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/06/30/orientdb-sql/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -2053,185 +2276,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/05/13/seckill-system/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/13/seckill-system/" itemprop="url">
-                  秒杀系统
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-05-13 19:51:49" itemprop="dateCreated datePublished" datetime="2019-05-13T19:51:49+08:00">2019-05-13</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/13/seckill-system/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/05/13/seckill-system/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2019/05/13/seckill-system/" class="leancloud_visitors" data-flag-title="秒杀系统">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="秒杀系统"><a href="#秒杀系统" class="headerlink" title="秒杀系统"></a>秒杀系统</h1><p>  秒杀其实主要解决两个问题，一个是并发读，一个是并发写</p>
-<p>  并发读的核心优化理念是尽量减少用户到服务端来“读”数据，或者让他们读更少的数据；并发写的处理原则也一样，它要求我们在数据库层面独立出来一个库，做特殊的处理。另外，我们还要针对秒杀系统做一些保护，针对意料之外的情况设计兜底方案，以防止最坏的情况发生。</p>
-<p>  所谓“稳”，就是整个系统架构要满足高可用，流量符合预期时肯定要稳定，就是超出预期时也同样不能掉链子，你要保证秒杀活动顺利完成，即秒杀商品顺利地卖出去，这个是最基本的前提。<br>  然后就是“准”，就是秒杀 10 台 iPhone，那就只能成交 10 台，多一台少一台都不行。一旦库存不对，那平台就要承担损失，所以“准”就是要求保证数据的一致性。<br>  最后再看“快”，“快”其实很好理解，它就是说系统的性能要足够高，否则你怎么支撑这么大的流量呢？不光是服务端要做极致的性能优化，而且在整个请求链路上都要做协同的优化，每个地方快一点，整个系统就完美了。</p>
-<p>所以从技术角度上看“稳、准、快”，就对应了我们架构上的高可用、一致性和高性能的要求，我们的专栏也将主要围绕这几个方面来展开，具体如下。<br>  秒杀涉及大量的并发读和并发写，因此支持高并发访问这点非常关键。本专栏将从设计数据的动静分离方案、热点的发现与隔离、请求的削峰与分层过滤、服务端的极致优化这 4 个方面重点介绍。<br>  秒杀中商品减库存的实现方式同样关键。可想而知，有限数量的商品在同一时刻被很多倍的请求同时来减库存，减库存又分为“拍下减库存”“付款减库存”以及预扣等几种，在大并发更新的过程中都要保证数据的准确性，其难度可想而知。因此，我将用一篇文章来专门讲解如何设计秒杀减库存方案。<br>  虽然我介绍了很多极致的优化思路，但现实中总难免出现一些我们考虑不到的情况，所以要保证系统的高可用和正确性，我们还要设计一个 PlanB 来兜底，以便在最坏情况发生时仍然能够从容应对。专栏的最后，我将带你思考可以从哪些环节来设计兜底方案。</p>
-<h1 id="架构原则"><a href="#架构原则" class="headerlink" title="架构原则"></a>架构原则</h1><p>  架构原则：“4 要 1 不要”</p>
-<h2 id="1-数据要尽量少"><a href="#1-数据要尽量少" class="headerlink" title="1. 数据要尽量少"></a>1. 数据要尽量少</h2><p>  为啥“数据要尽量少”呢？<br>  1) 数据在网络上传输需要时间<br>  2) 不管是请求数据还是返回数据都需要服务器做处理<br>  3) 服务器在写网络时通常都要做压缩和字符编码，这些都非常消耗 CPU<br>  所以减少传输的数据量可以显著减少 CPU 的使用。</p>
-<p>  例如，我们可以简化秒杀页面的大小，去掉不必要的页面装修效果，等等。<br>  其次，“数据要尽量少”还要求系统依赖的数据能少就少，包括系统完成某些业务逻辑需要读取和保存的数据，这些数据一般是和后台服务以及数据库打交道的。调用其他服务会涉及数据的序列化和反序列化，而这也是 CPU 的一大杀手，同样也会增加延时。而且，数据库本身也容易成为一个瓶颈，所以和数据库打交道越少越好，数据越简单、越小则越好。</p>
-<h2 id="2-请求数要尽量少"><a href="#2-请求数要尽量少" class="headerlink" title="2. 请求数要尽量少"></a>2. 请求数要尽量少</h2><p>  用户请求的页面返回后，浏览器渲染这个页面还要包含其他的额外请求，比如说，这个页面依赖的 CSS/JavaScript、图片，以及 Ajax 请求等等都定义为“额外请求”，这些额外请求应该尽量少。因为浏览器每发出一个请求都多少会有一些消耗，例如建立连接要做三次握手，有的时候有页面依赖或者连接数限制，一些请求（例如 JavaScript）还需要串行加载等。另外，如果不同请求的域名不一样的话，还涉及这些域名的 DNS 解析，可能会耗时更久。所以你要记住的是，减少请求数可以显著减少以上这些因素导致的资源消耗。</p>
-<p>  例如，减少请求数最常用的一个实践就是合并 CSS 和 JavaScript 文件，把多个 JavaScript 文件合并成一个文件，在 URL 中用逗号隔开（??module-preview/index.xtpl.js,module-jhs/index.xtpl.js,module-focus/index.xtpl.js）。这种方式在服务端仍然是单个文件各自存放，只是服务端会有一个组件解析这个 URL，然后动态把这些文件合并起来一起返回。  </p>
-<h2 id="3-路径要尽量短-调用链"><a href="#3-路径要尽量短-调用链" class="headerlink" title="3. 路径要尽量短(调用链)"></a>3. 路径要尽量短(调用链)</h2><p>  所谓“路径”，就是用户发出请求到返回数据这个过程中，需求经过的中间的节点数。</p>
-<p>  通常，这些节点可以表示为一个系统或者一个新的 Socket 连接（比如代理服务器只是创建一个新的 Socket 连接来转发请求）。每经过一个节点，一般都会产生一个新的 Socket 连接。</p>
-<p>  所以缩短请求路径不仅可以增加可用性，同样可以有效提升性能（减少中间节点可以减少数据的序列化与反序列化），并减少延时（可以减少网络传输耗时）。</p>
-<p>  要缩短访问路径有一种办法，就是多个相互强依赖的应用合并部署在一起，把远程过程调用（RPC）变成 JVM 内部之间的方法调用。在《大型网站技术架构演进与性能优化》一书中，我也有一章介绍了这种技术的详细实现。</p>
-<h2 id="4-依赖要尽量少"><a href="#4-依赖要尽量少" class="headerlink" title="4. 依赖要尽量少"></a>4. 依赖要尽量少</h2><p>  所谓依赖，指的是要完成一次用户请求必须依赖的系统或者服务，这里的依赖指的是强依赖。</p>
-<p>  举个例子，比如说你要展示秒杀页面，而这个页面必须强依赖商品信息、用户信息，还有其他如优惠券、成交列表等这些对秒杀不是非要不可的信息（弱依赖），这些弱依赖在紧急情况下就可以去掉。</p>
-<p>  要减少依赖，我们可以给系统进行分级，比如 0 级系统、1 级系统、2 级系统、3 级系统，0 级系统如果是最重要的系统，那么 0 级系统强依赖的系统也同样是最重要的系统，以此类推。</p>
-<p>  注意，0 级系统要尽量减少对 1 级系统的强依赖，防止重要的系统被不重要的系统拖垮。例如支付系统是 0 级系统，而优惠券是 1 级系统的话，在极端情况下可以把优惠券给降级，防止支付系统被优惠券这个 1 级系统给拖垮。</p>
-<h2 id="5-不要有单点"><a href="#5-不要有单点" class="headerlink" title="5. 不要有单点"></a>5. 不要有单点</h2><p>  系统中的单点可以说是系统架构上的一个大忌，因为单点意味着没有备份，风险不可控，我们设计分布式系统最重要的原则就是“消除单点”。</p>
-<p>  那如何避免单点呢？我认为关键点是避免将服务的状态和机器绑定，即把服务无状态化，这样服务就可以在机器中随意移动。</p>
-<p>  把秒杀系统独立出来单独打造一个系统，这样可以有针对性地做优化，例如这个独立出来的系统就减少了店铺装修的功能，减少了页面的复杂度；<br>  在系统部署上也独立做一个机器集群，这样秒杀的大流量就不会影响到正常的商品购买集群的机器负载；<br>  将热点数据（如库存数据）单独放到一个缓存系统中，以提高“读性能”；<br>  增加秒杀答题，防止有秒杀器抢单。</p>
-<p>  例如秒杀的场景来说，不同QPS量级下瓶颈也会不一样，<br>  10w级别可能瓶颈就在数据读取上，通过增加缓存一般就能解决，<br>  如果要到100w那么，可能服务端的网络可能都是瓶颈，所以要把大部分的静态数据放到cdn上甚至缓存在浏览器里<br>  所以要做架构升级，还是主要要分析在预估的QPS下，整个系统的瓶颈会在什么地方，要针对这起瓶颈来重新设计架构方案</p>
-<p>  详情、购物车、交易、优惠、库存、物流</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[0] <a href="https://time.geekbang.org/column/article/40153" target="_blank" rel="noopener">开篇词 | 秒杀系统架构设计都有哪些关键点？</a><br>[1] <a href="https://time.geekbang.org/column/article/40726" target="_blank" rel="noopener">01 | 设计秒杀系统时应该注意的5个架构原则</a><br>[2] <a href="https://time.geekbang.org/column/article/40727" target="_blank" rel="noopener">02 | 如何才能做好动静分离？有哪些方案可选？</a><br>[3] <a href="https://time.geekbang.org/column/article/40729" target="_blank" rel="noopener">03 | 二八原则：有针对性地处理好系统的“热点数据”</a><br>[4] <a href="https://time.geekbang.org/column/article/40736" target="_blank" rel="noopener">04 | 流量削峰这事应该怎么做？</a><br>[5] <a href="https://time.geekbang.org/column/article/40742" target="_blank" rel="noopener">05 | 影响性能的因素有哪些？又该如何提高系统的性能？</a><br>[6] <a href="https://time.geekbang.org/column/article/40743" target="_blank" rel="noopener">06 | 秒杀系统“减库存”设计的核心逻辑</a><br>[7] <a href="https://time.geekbang.org/column/article/40744" target="_blank" rel="noopener">07 | 准备Plan B：如何设计兜底方案?</a><br>[8] <a href="https://time.geekbang.org/column/article/68247" target="_blank" rel="noopener">08 | 答疑解惑：缓存失效的策略应该怎么定？</a><br>[9] 《大型网站技术架构演进》</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2279,7 +2323,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-count">163</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
