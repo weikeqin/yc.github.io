@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="看到一篇新闻，MariaDB 完成 C 轮 2700 万美金融资，阿里巴巴领投，看了以后觉得MariaDB挺眼熟的，就查了一下，然后感觉这个挺有意思，试了试。而且对于像谷歌、亚马逊、FaceBook、微软、Twitter、阿里巴巴等这种公司，我觉得他们使用的产品很有可能在将来会比较流行。 11 月 2 日，MariaDB 宣布完成由阿里巴巴领投的 C 轮 2700 万美元的融资。融资完成后，Mar">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MariaDB 笔记">
+<meta property="og:url" content="http://weikeqin.cn/2017/11/05/mariadb-notes/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="看到一篇新闻，MariaDB 完成 C 轮 2700 万美金融资，阿里巴巴领投，看了以后觉得MariaDB挺眼熟的，就查了一下，然后感觉这个挺有意思，试了试。而且对于像谷歌、亚马逊、FaceBook、微软、Twitter、阿里巴巴等这种公司，我觉得他们使用的产品很有可能在将来会比较流行。 11 月 2 日，MariaDB 宣布完成由阿里巴巴领投的 C 轮 2700 万美元的融资。融资完成后，Mar">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-04T06:36:52.375Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MariaDB 笔记">
+<meta name="twitter:description" content="看到一篇新闻，MariaDB 完成 C 轮 2700 万美金融资，阿里巴巴领投，看了以后觉得MariaDB挺眼熟的，就查了一下，然后感觉这个挺有意思，试了试。而且对于像谷歌、亚马逊、FaceBook、微软、Twitter、阿里巴巴等这种公司，我觉得他们使用的产品很有可能在将来会比较流行。 11 月 2 日，MariaDB 宣布完成由阿里巴巴领投的 C 轮 2700 万美元的融资。融资完成后，Mar">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/11/05/mariadb-notes/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MariaDB 笔记 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/11/05/mariadb-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MariaDB 笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-11-05 09:46:39" itemprop="dateCreated datePublished" datetime="2017-11-05T09:46:39+08:00">2017-11-05</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/database/" itemprop="url" rel="index"><span itemprop="name">database</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/05/mariadb-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/11/05/mariadb-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/11/05/mariadb-notes/" class="leancloud_visitors" data-flag-title="MariaDB 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>看到一篇新闻，MariaDB 完成 C 轮 2700 万美金融资，阿里巴巴领投，看了以后觉得MariaDB挺眼熟的，就查了一下，然后感觉这个挺有意思，试了试。<br>而且对于像谷歌、亚马逊、FaceBook、微软、Twitter、阿里巴巴等这种公司，我觉得他们使用的产品很有可能在将来会比较流行。</p>
+<p>11 月 2 日，MariaDB 宣布完成由阿里巴巴领投的 C 轮 2700 万美元的融资。融资完成后，MariaDB 社区将具备更强的实力参与数据库日益激烈的竞争。<br>MariaDB 是一家欧洲公司，其开发维护的 MariaDB 数据库是最受欢迎的开源数据库之一。总部位于芬兰赫尔辛基，在瑞典和美国设有办事处，拥有大约 1200 万名全球数据库用户。包括 booking.com、惠普、维珍移动、维基百科等。<br>MariaDB 是作为 MySQL 的一个分支。MySQL 被甲骨文收购后，MySQL 之父 Monty 为保证有一个始终开源的兼容 MySQL 的分支可用，创立了 MariaDB，名称来自其女儿 Maria 的名字。目前 MariaDB 在 Gartner 统计中是发展最快的开源数据库。</p>
+<p>MariaDB数据库管理系统是MySQL的一个分支，主要由开源社区在维护，采用GPL授权许可 MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。在存储引擎方面，使用XtraDB（英语：XtraDB）来代替MySQL的InnoDB。 MariaDB由MySQL的创始人Michael Widenius（英语：Michael Widenius）主导开发，他早前曾以10亿美元的价格，将自己创建的公司MySQL AB卖给了SUN，此后，随着SUN被甲骨文收购，MySQL的所有权也落入Oracle的手中。MariaDB名称来自Michael Widenius的女儿Maria的名字。<br>MariaDB基于事务的Maria存储引擎，替换了MySQL的MyISAM存储引擎，它使用了Percona的 XtraDB，InnoDB的变体，分支的开发者希望提供访问即将到来的MySQL 5.4 InnoDB性能。这个版本还包括了 PrimeBase XT (PBXT) 和 FederatedX存储引擎。</p>
+<h1 id="安装-MariaDB"><a href="#安装-MariaDB" class="headerlink" title="安装 MariaDB"></a>安装 MariaDB</h1><p>我的MariaDB解压在 <code>C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64</code> 目录下，想把数据放到 <code>D:/ProfessionalSoftWare/MariaDB/data</code> 目录下，所以需要把解压完 <code>C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\data</code> 目录下的所有文件复制到 <code>D:/ProfessionalSoftWare/MariaDB/data</code><br>如果不复制，会在启动的时候报 <code>发生系统错误 1067</code> 的错误，原因是 <code>Fatal error: Can&#39;t open and lock privilege tables: Table &#39;mysql.user&#39; doesn&#39;t exist</code> </p>
+<h2 id="安装服务"><a href="#安装服务" class="headerlink" title="安装服务"></a>安装服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\bin</span><br><span class="line">λ mysqld.exe --install MariaDB  --defaults-file=&quot;C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\my.ini&quot;</span><br><span class="line">Service successfully installed.</span><br></pre></td></tr></table></figure>
+<h2 id="移除服务"><a href="#移除服务" class="headerlink" title="移除服务"></a>移除服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\bin</span><br><span class="line">λ mysqld.exe --remove MariaDB</span><br><span class="line">Service successfully removed.</span><br></pre></td></tr></table></figure>
+<h2 id="启动MariaDB服务"><a href="#启动MariaDB服务" class="headerlink" title="启动MariaDB服务"></a>启动MariaDB服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\bin</span><br><span class="line">λ net start MariaDB</span><br><span class="line">MariaDB 服务正在启动 .</span><br><span class="line">MariaDB 服务已经启动成功。</span><br></pre></td></tr></table></figure>
+<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionSofware\Mariadb\Mariadb-10.2\bin</span><br><span class="line">λ mysqladmin -u root password &quot;root&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionSofware\Mariadb\Mariadb-10.2\bin</span><br><span class="line">λ mysqld --console</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] mysqld (mysqld 10.2.10-MariaDB) starting as process 10168 ...</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Uses event mutexes</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Compressed tables use zlib 1.2.3</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Number of pools: 1</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Using generic crc32 instructions</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Completed initialization of buffer pool</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Highest supported file format is Barracuda.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: 128 out of 128 rollback segments are active.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Creating shared tablespace for temporary tables</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Setting file &apos;.\ibtmp1&apos; size to 12 MB. Physically writing the file full; Please wait ...</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: File &apos;.\ibtmp1&apos; size is now 12 MB.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Waiting for purge to start</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: 5.7.20 started; log sequence number 1619987</span><br><span class="line">2017-11-05 10:10:18 9084 [Note] InnoDB: Loading buffer pool(s) from C:\ProfessionSofware\Mariadb\Mariadb-10.2\data\ib_buffer_pool</span><br><span class="line">2017-11-05 10:10:18 9084 [Note] InnoDB: Buffer pool(s) load completed at 171104 10:10:18</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] Plugin &apos;FEEDBACK&apos; is disabled.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] Server socket created on IP: &apos;::&apos;.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] Reading of all Master_info entries succeded</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] Added new Master_info &apos;&apos; to hash table</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] mysqld: ready for connections.</span><br><span class="line">Version: &apos;10.2.10-MariaDB&apos;  socket: &apos;&apos;  port: 3306  mariadb.org binary distribution</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2017-11-05 11:00:24 10868 [Note] mysqld (unknown): Normal shutdown</span><br><span class="line"></span><br><span class="line">2017-11-05 11:00:24 10868 [Note] Event Scheduler: Purging the queue. 0 events</span><br><span class="line">2017-11-05 11:00:24 8456 [Note] InnoDB: FTS optimize thread exiting.</span><br><span class="line">2017-11-05 11:00:24 10868 [Note] InnoDB: Starting shutdown...</span><br><span class="line">2017-11-05 11:00:24 9084 [Note] InnoDB: Dumping buffer pool(s) to C:\ProfessionSofware\Mariadb\Mariadb-10.2\data\ib_buffer_pool</span><br><span class="line">2017-11-05 11:00:24 9084 [Note] InnoDB: Buffer pool(s) dump completed at 171104 11:00:24</span><br><span class="line">2017-11-05 11:00:25 10868 [Note] InnoDB: Shutdown completed; log sequence number 1620015</span><br><span class="line">2017-11-05 11:00:25 10868 [Note] InnoDB: Removed temporary tablespace data file: &quot;ibtmp1&quot;</span><br><span class="line">2017-11-05 11:00:25 10868 [Note] mysqld: Shutdown complete</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionSofware\Mariadb\Mariadb-10.2\bin</span><br><span class="line">λ net start mariadb</span><br><span class="line">MariaDB 服务正在启动 .</span><br><span class="line">MariaDB 服务已经启动成功。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:\ProfessionSofware\Mariadb\Mariadb-10.2\bin</span><br><span class="line">λ net stop mariadb</span><br><span class="line">MariaDB 服务正在停止.</span><br><span class="line">MariaDB 服务已成功停止。</span><br></pre></td></tr></table></figure>
+<h1 id="my-ini-配置"><a href="#my-ini-配置" class="headerlink" title="my.ini 配置"></a>my.ini 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">#datadir=C:/ProfessionalSoftware/MariaDB/MariaDB-10.3/data</span><br><span class="line">datadir=D:/ProfessionalSoftWare/MariaDB/MariaDB-10.3/data</span><br><span class="line">port=3306</span><br><span class="line">#character-set-server=utf8</span><br><span class="line"># utf8mb4 is a superset of utf8</span><br><span class="line">character-set-server=utf8mb4</span><br><span class="line"></span><br><span class="line"># mkdir for every database</span><br><span class="line">innodb_file_per_table=1</span><br><span class="line"></span><br><span class="line"># ignore lowercase</span><br><span class="line">lower_case_table_names=1</span><br><span class="line"></span><br><span class="line"># all import biggest 1024M file to mysql</span><br><span class="line">max_allowed_packet=1024M</span><br><span class="line"></span><br><span class="line">innodb_buffer_pool_size=1017M</span><br><span class="line"></span><br><span class="line">#log</span><br><span class="line"># Binary Log</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line"># if query_time &gt; 1s sql will log</span><br><span class="line">long_query_time=1</span><br><span class="line"># if query is slow, query will log   version 5.6</span><br><span class="line">slow-query-log=1</span><br><span class="line">slow-query-log-file=D:/ProfessionalSoftWare/MariaDB/MariaDB-10.3/log/slow_query.log</span><br><span class="line">general_log=ON</span><br><span class="line">general_log_file=D:/ProfessionalSoftWare/MariaDB/MariaDB-10.3/log/all_query.log</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">port=3306</span><br><span class="line">plugin-dir=C:/ProfessionalSoftware/MariaDB/MariaDB-10.3/lib/plugin</span><br><span class="line">#default-character-set = utf8</span><br><span class="line"># utf8mb4 is a superset of utf8</span><br><span class="line">default-character-set = utf8mb4</span><br></pre></td></tr></table></figure>
+<h1 id="程序中使用"><a href="#程序中使用" class="headerlink" title="程序中使用"></a>程序中使用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mariadb.jdbc&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mariadb-java-client&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.1.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">driverClassName = org.mariadb.jdbc.Driver</span><br><span class="line">url = jdbc:mariadb://localhost:3306/DB&amp;useSSL=true&amp;trustServerCertificate=true</span><br><span class="line">user = admin</span><br><span class="line">password = admin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connection connection = DriverManager.getConnection(&quot;jdbc:mariadb://localhost:3306/DB?user=root&amp;password=myPassword&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">final HikariDataSource ds = new HikariDataSource();</span><br><span class="line">ds.setMaximumPoolSize(20);</span><br><span class="line">ds.setDriverClassName(&quot;org.mariadb.jdbc.Driver&quot;);</span><br><span class="line">ds.setJdbcUrl(&quot;jdbc:mariadb://localhost:3306/db&quot;);</span><br><span class="line">ds.addDataSourceProperty(&quot;user&quot;, &quot;root&quot;);</span><br><span class="line">ds.addDataSourceProperty(&quot;password&quot;, &quot;myPassword&quot;);</span><br><span class="line">ds.setAutoCommit(false);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">jdbc:(mysql|mariadb):[replication:|failover:|sequential:|aurora:]//&lt;hostDescription&gt;[,&lt;hostDescription&gt;...]/[database][?&lt;key1&gt;=&lt;value1&gt;[&amp;&lt;key2&gt;=&lt;value2&gt;]]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;1.7.25&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;1.2.3&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line"></span><br><span class="line">    &lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;</span><br><span class="line">        &lt;encoder class=&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&gt;</span><br><span class="line">            &lt;pattern&gt;%d&#123;yyyy-MM-dd HH:mm:ss&#125; [%thread] %-5level %logger&#123;36&#125; - %msg%n&lt;/pattern&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;logger name=&quot;org.mariadb.jdbc&quot; level=&quot;trace&quot; additivity=&quot;false&quot;&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;STDOUT&quot;/&gt;</span><br><span class="line">    &lt;/logger&gt;</span><br><span class="line"></span><br><span class="line">    &lt;root level=&quot;error&quot;&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;STDOUT&quot;/&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line"></span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://mariadb.org/" target="_blank" rel="noopener">mariadb官网</a><br>[2] <a href="https://mariadb.com/kb/zh-cn/" target="_blank" rel="noopener">mariadb中文资料</a><br>[3] <a href="https://mariadb.com/kb/zh-cn/installing-mariadb-windows-zip-packages/" target="_blank" rel="noopener">mariadb zip包安装</a><br>[4] <a href="https://mariadb.com/kb/zh-cn/mysql_install_dbexe/" target="_blank" rel="noopener">mysql_install_dbexe</a><br>[5] <a href="https://dev.mysql.com/doc/refman/5.5/en/windows-install-archive.html" target="_blank" rel="noopener">mysql windows intall archive</a><br>[6] <a href="https://mariadb.com/kb/zh-cn/installing-mariadb-msi-packages-on-windows/" target="_blank" rel="noopener">在Windows下用 MSI 包安装 MariaDB</a><br>[7] <a href="https://mariadb.com/kb/zh-cn/installing-mariadb-alongside-mysql/" target="_blank" rel="noopener">安装 MariaDB 并同时运行 MySQL</a><br>[8] <a href="https://mariadb.com/kb/zh-cn/how-can-i-upgrade-from-mysql-to-mariadb/" target="_blank" rel="noopener">怎样从MySQL升级到 MariaDB？</a><br>[9] <a href="https://mariadb.com/kb/en/library/upgrading-mariadb-on-windows/" target="_blank" rel="noopener">升级mariadb</a><br>[10] <a href="https://mariadb.com/kb/en/library/java-connector-using-maven/" target="_blank" rel="noopener">java-connector-using-maven</a><br>[11] <a href="https://mariadb.com/kb/en/library/failover-and-high-availability-with-mariadb-connector-j/" target="_blank" rel="noopener">failover-and-high-availability-with-mariadb-connector-j</a><br>[12] <a href="https://mariadb.com/kb/en/library/option-batchmultisend-description/" target="_blank" rel="noopener">option-batchmultisend-description</a><br>[13] <a href="https://mariadb.com/kb/zh-cn/setting-character-sets-and-collations/" target="_blank" rel="noopener">设置字符集和排序规则</a><br>[14] <a href="https://mariadb.com/kb/zh-cn/general-query-log/" target="_blank" rel="noopener">一般查询日志</a><br>[15] <a href="https://mariadb.com/kb/zh-cn/cache-index/" target="_blank" rel="noopener">索引-缓存</a><br>[16] <a href="http://eastblueps.blogspot.com/2015/03/windowszip-noinstallmariadb.html" target="_blank" rel="noopener">在Windows安裝Zip (noinstall)版本的MariaDB</a><br>[17] <a href="http://www.blogjava.net/hongjunli/archive/2010/05/21/321582.html" target="_blank" rel="noopener">Windows下如何安装MariaDB</a><br>[18] <a href="https://blog.csdn.net/joyous/article/details/78641361" target="_blank" rel="noopener">Windows 下 MariaDB (zip 免安装) 的手动安装与使用</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/30/filddler-notes/" rel="next" title="Filddler 笔记">
+                <i class="fa fa-chevron-left"></i> Filddler 笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/10/crawler-sogou/" rel="prev" title="爬取 搜狗">
+                爬取 搜狗 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装-MariaDB"><span class="nav-number">1.</span> <span class="nav-text">安装 MariaDB</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装服务"><span class="nav-number">1.1.</span> <span class="nav-text">安装服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#移除服务"><span class="nav-number">1.2.</span> <span class="nav-text">移除服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动MariaDB服务"><span class="nav-number">1.3.</span> <span class="nav-text">启动MariaDB服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加用户"><span class="nav-number">1.4.</span> <span class="nav-text">添加用户</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#my-ini-配置"><span class="nav-number">2.</span> <span class="nav-text">my.ini 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#程序中使用"><span class="nav-number">3.</span> <span class="nav-text">程序中使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

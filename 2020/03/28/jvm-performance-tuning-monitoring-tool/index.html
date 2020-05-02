@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近测试环境总是莫名的出问题，然后部署服务的容器里除了服务打印的日志，没有其它信息，想看看是什么原因导致服务很卡，是不是有哪块代码占用内存高。 代码执行缓慢、OutOfMemoryError，内存不足、内存泄露、线程死锁、锁争用（Lock Contention）、Java进程消耗CPU过高 都可以使用JDK的命令行工具排查。   (1) JDK的命令行工具  jps、jstat、jinfo、j">
+<meta name="keywords" content="java,jvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack">
+<meta property="og:url" content="http://weikeqin.cn/2020/03/28/jvm-performance-tuning-monitoring-tool/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="最近测试环境总是莫名的出问题，然后部署服务的容器里除了服务打印的日志，没有其它信息，想看看是什么原因导致服务很卡，是不是有哪块代码占用内存高。 代码执行缓慢、OutOfMemoryError，内存不足、内存泄露、线程死锁、锁争用（Lock Contention）、Java进程消耗CPU过高 都可以使用JDK的命令行工具排查。   (1) JDK的命令行工具  jps、jstat、jinfo、j">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-30T15:37:10.124Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack">
+<meta name="twitter:description" content="最近测试环境总是莫名的出问题，然后部署服务的容器里除了服务打印的日志，没有其它信息，想看看是什么原因导致服务很卡，是不是有哪块代码占用内存高。 代码执行缓慢、OutOfMemoryError，内存不足、内存泄露、线程死锁、锁争用（Lock Contention）、Java进程消耗CPU过高 都可以使用JDK的命令行工具排查。   (1) JDK的命令行工具  jps、jstat、jinfo、j">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2020/03/28/jvm-performance-tuning-monitoring-tool/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2020/03/28/jvm-performance-tuning-monitoring-tool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-28 10:16:25" itemprop="dateCreated datePublished" datetime="2020-03-28T10:16:25+08:00">2020-03-28</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/03/28/jvm-performance-tuning-monitoring-tool/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2020/03/28/jvm-performance-tuning-monitoring-tool/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/03/28/jvm-performance-tuning-monitoring-tool/" class="leancloud_visitors" data-flag-title="JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 最近测试环境总是莫名的出问题，然后部署服务的容器里除了服务打印的日志，没有其它信息，想看看是什么原因导致服务很卡，是不是有哪块代码占用内存高。<br> 代码执行缓慢、OutOfMemoryError，内存不足、内存泄露、线程死锁、锁争用（Lock Contention）、Java进程消耗CPU过高 都可以使用JDK的命令行工具排查。</p>
+</blockquote>
+<p><br></p>
+<h1 id="1-JDK的命令行工具"><a href="#1-JDK的命令行工具" class="headerlink" title="(1) JDK的命令行工具"></a>(1) JDK的命令行工具</h1><blockquote>
+<p> jps、jstat、jinfo、jmap、jhat、jstack、hprof<br>jps : 虚拟机进程状况工具<br>jstat : 虚拟机统计信息监视工具<br>jinfo : Java 配置信息工具<br>jmap : Java 内存映像工具<br>jhat : 虚拟机堆转储快照分析工具<br>jstack : Java 堆栈跟踪工具</p>
+</blockquote>
+<blockquote>
+<p> jps将打印所有正在运行的 Java 进程。<br> jstat允许用户查看目标 Java 进程的类加载、即时编译以及垃圾回收相关的信息。它常用于检测垃圾回收问题以及内存泄漏问题。<br> jmap允许用户统计目标 Java 进程的堆中存放的 Java 对象，并将它们导出成二进制文件。<br> jinfo将打印目标 Java 进程的配置参数，并能够改动其中 manageabe 的参数。<br> jstack将打印目标 Java 进程中各个线程的栈轨迹、线程状态、锁状况等信息。它还将自动检测死锁。<br> jcmd则是一把瑞士军刀，可以用来实现前面除了jstat之外所有命令的功能。</p>
+</blockquote>
+<p>Java虚拟机的监控及诊断工具-GUI</p>
+<blockquote>
+<p>JConsole : Java 监视与管理控制台<br>VisualVM : 多合一故障处理工具<br>eclipse MAT<br>JMC<br>JITWatch</p>
+</blockquote>
+<p><br></p>
+<h1 id="2-虚拟机进程状况工具-jps-JVM-Process-Status-Tool"><a href="#2-虚拟机进程状况工具-jps-JVM-Process-Status-Tool" class="headerlink" title="(2) 虚拟机进程状况工具 jps (JVM Process Status Tool)"></a>(2) 虚拟机进程状况工具 jps (JVM Process Status Tool)</h1><blockquote>
+<p> jps主要用来输出JVM中运行的进程状态信息。<br> jps命令使用Java启动器来查找传递给main方法的类名和参数。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -help</span><br><span class="line">usage: jps [-help]</span><br><span class="line">       jps [-q] [-mlvV] [&lt;hostid&gt;]</span><br><span class="line"></span><br><span class="line">Definitions:</span><br><span class="line">    &lt;hostid&gt;:      &lt;hostname&gt;[:&lt;port&gt;]</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="2-1-jps命令"><a href="#2-1-jps命令" class="headerlink" title="(2.1) jps命令"></a>(2.1) jps命令</h2><blockquote>
+<p>jps命令用于输出JVM中运行的进程状态信息。可以获取到进程的pid、全限定名、传入main方法的参数、传入JVM的参数 等。</p>
+</blockquote>
+<blockquote>
+<p>语法格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps [ options ] [ hostid ]</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>  如果不指定hostid就默认为当前主机或服务器。</p>
+<p>  详细信息见 <code>man jps</code></p>
+<h3 id="2-1-1-jps-不加参数"><a href="#2-1-1-jps-不加参数" class="headerlink" title="(2.1.1) jps 不加参数"></a>(2.1.1) jps 不加参数</h3><blockquote>
+<p> 在本地主机上搜索检测到的JVM。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps</span><br><span class="line">14916 Jps</span><br><span class="line">13050 Elasticsearch</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="2-1-2-jps-q"><a href="#2-1-2-jps-q" class="headerlink" title="(2.1.2) jps -q"></a>(2.1.2) jps -q</h3><blockquote>
+<p>不输出类名、Jar名和传入main方法的参数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -q</span><br><span class="line">15059</span><br><span class="line">13050</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-3-jps-m"><a href="#2-1-3-jps-m" class="headerlink" title="(2.1.3) jps -m"></a>(2.1.3) jps -m</h3><blockquote>
+<p>显示传递给main方法的参数。对于嵌入式JVM，输出可能为null。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -m</span><br><span class="line">15092 Jps -m</span><br><span class="line">13050 Elasticsearch -d</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-4-jps-l"><a href="#2-1-4-jps-l" class="headerlink" title="(2.1.4) jps -l"></a>(2.1.4) jps -l</h3><blockquote>
+<p>输出main类或Jar的全限定名</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -l</span><br><span class="line">15139 sun.tools.jps.Jps</span><br><span class="line">13050 org.elasticsearch.bootstrap.Elasticsearch</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-5-jps-v"><a href="#2-1-5-jps-v" class="headerlink" title="(2.1.5) jps -v"></a>(2.1.5) jps -v</h3><blockquote>
+<p>显示传递给JVM的参数。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -v</span><br><span class="line">15157 Jps -Denv.class.path=.:/home/wkq/software/jdk1.8.0_172/lib/dt.jar:/home/wkq/software/jdk1.8.0_172/lib/tools.jar -Dapplication.home=/home/wkq/software/jdk1.8.0_172 -Xms8m</span><br><span class="line">13050 Elasticsearch -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Djava.io.tmpdir=/tmp/elasticsearch-5035355569386013893 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=data -XX:ErrorFile=logs/hs_err_pid%p.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -XX:+PrintGCApplicationStoppedTime -Xloggc:logs/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=32 -XX:GCLogFileSize=64m -Des.path.home=/home/wkq/software/elasticsearch-6.6.2 -Des.path.conf=/home/wkq/software/elasticsearch-6.6.2/config -Des.distribution.flavor=default -Des.distribution.type=tar</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="2-1-6-jps-V"><a href="#2-1-6-jps-V" class="headerlink" title="(2.1.6) jps -V"></a>(2.1.6) jps -V</h3><blockquote>
+<p>禁止输出类名，JAR全限定名和传递给main方法的参数的输出，从而产生仅本地JVM标识符的列表。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -V</span><br><span class="line">15204 Jps</span><br><span class="line">13050 Elasticsearch</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-常用jps命令"><a href="#2-2-常用jps命令" class="headerlink" title="(2.2) 常用jps命令"></a>(2.2) 常用jps命令</h2><h3 id="2-2-1-jps-lm"><a href="#2-2-1-jps-lm" class="headerlink" title="(2.2.1) jps -lm"></a>(2.2.1) jps -lm</h3><blockquote>
+<p>显示 pid、全限定名、传递给main方法的参数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -lm</span><br><span class="line">17539 sun.tools.jps.Jps -lm</span><br><span class="line">13050 org.elasticsearch.bootstrap.Elasticsearch -d</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-2-jps-lvm"><a href="#2-2-2-jps-lvm" class="headerlink" title="(2.2.2) jps -lvm"></a>(2.2.2) jps -lvm</h3><blockquote>
+<p>显示 pid、全限定名、传递给main方法的参数、传递给JVM的参数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -lvm</span><br><span class="line">13050 org.elasticsearch.bootstrap.Elasticsearch -d -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Djava.io.tmpdir=/tmp/elasticsearch-5035355569386013893 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=data -XX:ErrorFile=logs/hs_err_pid%p.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -XX:+PrintGCApplicationStoppedTime -Xloggc:logs/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=32 -XX:GCLogFileSize=64m -Des.path.home=/home/wkq/software/elasticsearch-6.6.2 -Des.path.conf=/home/wkq/software/elasticsearch-6.6.2/config -Des.distribution.flavor=default -Des.distribution.type=tar</span><br><span class="line">17567 sun.tools.jps.Jps -lvm -Denv.class.path=.:/home/wkq/software/jdk1.8.0_172/lib/dt.jar:/home/wkq/software/jdk1.8.0_172/lib/tools.jar -Dapplication.home=/home/wkq/software/jdk1.8.0_172 -Xms8m</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h1 id="3-虚拟机统计信息监视工具-jstat-JVM-Statics-Monitoring-Tool"><a href="#3-虚拟机统计信息监视工具-jstat-JVM-Statics-Monitoring-Tool" class="headerlink" title="(3) 虚拟机统计信息监视工具 jstat (JVM Statics Monitoring Tool)"></a>(3) 虚拟机统计信息监视工具 jstat (JVM Statics Monitoring Tool)</h1><blockquote>
+<p> jstat是用于监视虚拟机各种运行状态信息的命令行工具。</p>
+</blockquote>
+<h2 id="3-1-jstat命令"><a href="#3-1-jstat命令" class="headerlink" title="(3.1) jstat命令"></a>(3.1) jstat命令</h2><blockquote>
+<p> 语法格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jstat [ generalOption | outputOptions vmid [ interval[s|ms] [ count ] ]</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>  详细信息见 <code>man jstat</code></p>
+<h3 id="3-1-1-jstat命令"><a href="#3-1-1-jstat命令" class="headerlink" title="(3.1.1) jstat命令"></a>(3.1.1) jstat命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -help</span><br><span class="line">Usage: jstat -help|-options</span><br><span class="line">       jstat -&lt;option&gt; [-t] [-h&lt;lines&gt;] &lt;vmid&gt; [&lt;interval&gt; [&lt;count&gt;]]</span><br><span class="line"></span><br><span class="line">Definitions:</span><br><span class="line">  &lt;option&gt;      An option reported by the -options option</span><br><span class="line">  &lt;vmid&gt;        Virtual Machine Identifier. A vmid takes the following form:</span><br><span class="line">                     &lt;lvmid&gt;[@&lt;hostname&gt;[:&lt;port&gt;]]</span><br><span class="line">                Where &lt;lvmid&gt; is the local vm identifier for the target</span><br><span class="line">                Java virtual machine, typically a process id; &lt;hostname&gt; is</span><br><span class="line">                the name of the host running the target Java virtual machine;</span><br><span class="line">                and &lt;port&gt; is the port number for the rmiregistry on the</span><br><span class="line">                target host. See the jvmstat documentation for a more complete</span><br><span class="line">                description of the Virtual Machine Identifier.</span><br><span class="line">  &lt;lines&gt;       Number of samples between header lines.</span><br><span class="line">  &lt;interval&gt;    Sampling interval. The following forms are allowed:</span><br><span class="line">                    &lt;n&gt;[&quot;ms&quot;|&quot;s&quot;]</span><br><span class="line">                Where &lt;n&gt; is an integer and the suffix specifies the units as</span><br><span class="line">                milliseconds(&quot;ms&quot;) or seconds(&quot;s&quot;). The default units are &quot;ms&quot;.</span><br><span class="line">  &lt;count&gt;       Number of samples to take before terminating.</span><br><span class="line">  -J&lt;flag&gt;      Pass &lt;flag&gt; directly to the runtime system.</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -options</span><br><span class="line">-class</span><br><span class="line">-compiler</span><br><span class="line">-gc</span><br><span class="line">-gccapacity</span><br><span class="line">-gccause</span><br><span class="line">-gcmetacapacity</span><br><span class="line">-gcnew</span><br><span class="line">-gcnewcapacity</span><br><span class="line">-gcold</span><br><span class="line">-gcoldcapacity</span><br><span class="line">-gcutil</span><br><span class="line">-printcompilation</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h3 id="3-1-1-jstat-class-13050"><a href="#3-1-1-jstat-class-13050" class="headerlink" title="(3.1.1) jstat -class 13050"></a>(3.1.1) jstat -class 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -class 13050</span><br><span class="line">Loaded  Bytes  Unloaded  Bytes     Time</span><br><span class="line"> 15177 27005.8       41    49.7      24.44</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-2-jstat-compiler-13050"><a href="#3-1-2-jstat-compiler-13050" class="headerlink" title="(3.1.2) jstat -compiler 13050"></a>(3.1.2) jstat -compiler 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$  jstat -compiler 13050</span><br><span class="line">Compiled Failed Invalid   Time   FailedType FailedMethod</span><br><span class="line">    7469      0       0    43.18          0</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-3-jstat-gc-13050"><a href="#3-1-3-jstat-gc-13050" class="headerlink" title="(3.1.3) jstat -gc 13050"></a>(3.1.3) jstat -gc 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gc 13050</span><br><span class="line"> S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">8512.0 8512.0  0.0    24.5  68160.0   6380.0   963392.0   61694.4   77732.0 71385.7 11984.0 9862.8     69    2.112   6      0.286    2.397</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>原文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0C</td>
+<td>年轻代中第一个survivor 的容量  (kB)</td>
+<td>Current survivor space 0 capacity (kB).</td>
+</tr>
+<tr>
+<td>S1C</td>
+<td>年轻代中第二个survivor 的容量  (kB)</td>
+<td>Current survivor space 1 capacity (kB).</td>
+</tr>
+<tr>
+<td>S0U</td>
+<td>年轻代中第一个survivor 已使用空间   (kB)</td>
+<td>Survivor space 0 utilization (kB).</td>
+</tr>
+<tr>
+<td>S1U</td>
+<td>年轻代中第二个survivor已使用空间   (kB)</td>
+<td>Survivor space 1 utilization (kB).</td>
+</tr>
+<tr>
+<td>EC</td>
+<td>年轻代中 Eden space 的容量  (kB)</td>
+<td>Current eden space capacity (kB).</td>
+</tr>
+<tr>
+<td>EU</td>
+<td>年轻代中Eden space 目前已使用空间  (kB)</td>
+<td>Eden space utilization (kB).</td>
+</tr>
+<tr>
+<td>OC</td>
+<td>Old space的容量  (kB)</td>
+<td>Current old space capacity (kB).</td>
+</tr>
+<tr>
+<td>OU</td>
+<td>Old space 已使用空间  (kB)</td>
+<td>Old space utilization (kB).</td>
+</tr>
+<tr>
+<td>MC</td>
+<td>Metaspace 的容量  (kB)</td>
+<td>Metaspace capacity (kB).</td>
+</tr>
+<tr>
+<td>MU</td>
+<td>Metaspace 已使用空间  (kB)</td>
+<td>Metacspace utilization (kB).</td>
+</tr>
+<tr>
+<td>CCSC</td>
+<td>Compressed class spcage 容量 (kB)</td>
+<td>Compressed class space capacity (kB).</td>
+</tr>
+<tr>
+<td>CCSU</td>
+<td>Compressed class spcage 已使用空间 (kB)</td>
+<td>Compressed class space used (kB).</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时年轻代中gc次数</td>
+<td>Number of young generation garbage collection events.</td>
+</tr>
+<tr>
+<td>YGCT</td>
+<td>从应用程序启动到采样时年轻代中gc所用时间 (s)</td>
+<td>Young generation garbage collection time.</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时old代 (全gc) gc次数</td>
+<td>Number of full GC events.</td>
+</tr>
+<tr>
+<td>FGCT</td>
+<td>从应用程序启动到采样时old代 (全gc) gc所用时间 (s)</td>
+<td>Full garbage collection time.</td>
+</tr>
+<tr>
+<td>GCT</td>
+<td>从应用程序启动到采样时gc用的总时间 (s)</td>
+<td>Total garbage collection time.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-1-4-jstat-gccapacity-13050"><a href="#3-1-4-jstat-gccapacity-13050" class="headerlink" title="(3.1.4) jstat -gccapacity 13050"></a>(3.1.4) jstat -gccapacity 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gccapacity 13050</span><br><span class="line"> NGCMN    NGCMX     NGC     S0C   S1C       EC      OGCMN      OGCMX       OGC         OC       MCMN     MCMX      MC     CCSMN    CCSMX     CCSC    YGC    FGC</span><br><span class="line"> 85184.0  85184.0  85184.0 8512.0 8512.0  68160.0   963392.0   963392.0   963392.0   963392.0      0.0 1116160.0  77732.0      0.0 1048576.0  11984.0     69     6</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-5-jstat-gccause-13050"><a href="#3-1-5-jstat-gccause-13050" class="headerlink" title="(3.1.5) jstat -gccause 13050"></a>(3.1.5) jstat -gccause 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gccause 13050</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT    LGCC                 GCC</span><br><span class="line">  0.00   0.29  11.90   6.40  91.84  82.30     69    2.112     6    0.286    2.397 Allocation Failure   No GC</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-6-jstat-gcmetacapacity-13050"><a href="#3-1-6-jstat-gcmetacapacity-13050" class="headerlink" title="(3.1.6) jstat -gcmetacapacity 13050"></a>(3.1.6) jstat -gcmetacapacity 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gcmetacapacity 13050</span><br><span class="line">   MCMN       MCMX        MC       CCSMN      CCSMX       CCSC     YGC   FGC    FGCT     GCT</span><br><span class="line">       0.0  1116160.0    77732.0        0.0  1048576.0    11984.0    69     6    0.286    2.397</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-7-jstat-gcnew-13050"><a href="#3-1-7-jstat-gcnew-13050" class="headerlink" title="(3.1.7) jstat -gcnew 13050"></a>(3.1.7) jstat -gcnew 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gcnew 13050</span><br><span class="line"> S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT</span><br><span class="line">8512.0 8512.0    0.0   24.5  6   6 4256.0  68160.0  13229.3     69    2.112</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-8-jstat-gcnewcapacity-13050"><a href="#3-1-8-jstat-gcnewcapacity-13050" class="headerlink" title="(3.1.8) jstat -gcnewcapacity 13050"></a>(3.1.8) jstat -gcnewcapacity 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gcnewcapacity 13050</span><br><span class="line">  NGCMN      NGCMX       NGC      S0CMX     S0C     S1CMX     S1C       ECMX        EC      YGC   FGC</span><br><span class="line">   85184.0    85184.0    85184.0   8512.0   8512.0   8512.0   8512.0    68160.0    68160.0    69     6</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-9-jstat-gcold-13050"><a href="#3-1-9-jstat-gcold-13050" class="headerlink" title="(3.1.9) jstat -gcold 13050"></a>(3.1.9) jstat -gcold 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gcold 13050</span><br><span class="line">   MC       MU      CCSC     CCSU       OC          OU       YGC    FGC    FGCT     GCT</span><br><span class="line"> 77732.0  71385.7  11984.0   9862.8    963392.0     61694.4     69     6    0.286    2.397</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-10-jstat-gcoldcapacity-13050"><a href="#3-1-10-jstat-gcoldcapacity-13050" class="headerlink" title="(3.1.10) jstat -gcoldcapacity 13050"></a>(3.1.10) jstat -gcoldcapacity 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gcoldcapacity 13050</span><br><span class="line">   OGCMN       OGCMX        OGC         OC       YGC   FGC    FGCT     GCT</span><br><span class="line">   963392.0    963392.0    963392.0    963392.0    69     6    0.286    2.397</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="3-1-11-jstat-gcutil-13050"><a href="#3-1-11-jstat-gcutil-13050" class="headerlink" title="(3.1.11) jstat -gcutil 13050"></a>(3.1.11) jstat -gcutil 13050</h3><blockquote>
+<p>垃圾回收状态摘要</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gcutil 13050</span><br><span class="line">  S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">  0.00   0.29  24.37   6.40  91.84  82.30     69    2.112     6    0.286    2.397</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>原文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S0</td>
+<td>年轻代中第一个survivor 已使用的占当前容量百分比</td>
+<td>Survivor space 0 utilization as a percentage of the space’s current capacity.</td>
+</tr>
+<tr>
+<td>S1</td>
+<td>年轻代中第二个survivor 已使用的占当前容量百分比</td>
+<td>Survivor space 1 utilization as a percentage of the space’s current capacity.</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Eden space 中Eden 已使用的占当前容量百分比</td>
+<td>Eden space utilization as a percentage of the space’s current capacity.</td>
+</tr>
+<tr>
+<td>O</td>
+<td>Old space  已使用的占当前容量百分比</td>
+<td>Old space utilization as a percentage of the space’s current capacity.</td>
+</tr>
+<tr>
+<td>M</td>
+<td>Metaspace 已使用的占当前容量百分比</td>
+<td>Metaspace utilization as a percentage of the space’s current capacity.</td>
+</tr>
+<tr>
+<td>CCS</td>
+<td>Compressed class  空间利用率</td>
+<td>Compressed class space utilization as a percentage.</td>
+</tr>
+<tr>
+<td>YGC</td>
+<td>从应用程序启动到采样时 young generation gc次数</td>
+<td>Number of young generation GC events.</td>
+</tr>
+<tr>
+<td>YGCT</td>
+<td>从应用程序启动到采样时Young gc所用时间(s)</td>
+<td>Young generation garbage collection time.</td>
+</tr>
+<tr>
+<td>FGC</td>
+<td>从应用程序启动到采样时Full gc次数</td>
+<td>Number of full GC events.</td>
+</tr>
+<tr>
+<td>FGCT</td>
+<td>从应用程序启动到采样时Full gc所用时间(s)</td>
+<td>Full garbage collection time.</td>
+</tr>
+<tr>
+<td>GCT</td>
+<td>从应用程序启动到采样时gc用的总时间(s)</td>
+<td>Total garbage collection time.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-1-12-jstat-printcompilation-13050"><a href="#3-1-12-jstat-printcompilation-13050" class="headerlink" title="(3.1.12) jstat -printcompilation 13050"></a>(3.1.12) jstat -printcompilation 13050</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -printcompilation 13050</span><br><span class="line">Compiled  Size  Type Method</span><br><span class="line">    7469     63    1 org/apache/logging/log4j/spi/AbstractLogger trace</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h2 id="3-2-常用jstat命令"><a href="#3-2-常用jstat命令" class="headerlink" title="(3.2) 常用jstat命令"></a>(3.2) 常用jstat命令</h2><h3 id="3-2-1-jstat-gc-h5-t-13050-1000-10"><a href="#3-2-1-jstat-gc-h5-t-13050-1000-10" class="headerlink" title="(3.2.1) jstat -gc -h5 -t 13050  1000 10"></a>(3.2.1) jstat -gc -h5 -t 13050  1000 10</h3><blockquote>
+<p>分析进程id为13050的gc情况，每隔1000ms打印一次记录，打印10次停止，每5行后打印指标头部<br>-gc 查看gc情况<br>-h5 每5行后打印指标头部<br>-t 进程启动时间<br>13050 进程id 也就是linux的pid<br>1000 每隔1000ms打印一次<br>10 共打印10行</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gc -h5 -t 13050  1000 10</span><br><span class="line">Timestamp        S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">       217492.5 8512.0 8512.0  0.0    77.3  68160.0  13154.8   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">       217493.7 8512.0 8512.0  0.0    77.3  68160.0  13154.8   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">       217494.7 8512.0 8512.0  0.0    77.3  68160.0  14055.9   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">       217495.7 8512.0 8512.0  0.0    77.3  68160.0  14055.9   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">       217496.7 8512.0 8512.0  0.0    77.3  68160.0  14055.9   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">Timestamp        S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">       217497.7 8512.0 8512.0  0.0    77.3  68160.0  14055.9   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">       217498.7 8512.0 8512.0  0.0    77.3  68160.0  14055.9   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">       217499.7 8512.0 8512.0  0.0    77.3  68160.0  14055.9   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">       217500.7 8512.0 8512.0  0.0    77.3  68160.0  14055.9   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">       217501.7 8512.0 8512.0  0.0    77.3  68160.0  14068.0   963392.0   60728.2   77732.0 71386.5 11984.0 9862.9    133    2.921   8      0.947    3.868</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 我们可以比较 Java 进程的启动时间以及总 GC 时间（GCT 列），或者两次测量的间隔时间以及总 GC 时间的增量，来得出 GC 时间占运行时间的比例。如果该比例超过 20%，则说明目前堆的压力较大；如果该比例超过 90%，则说明堆里几乎没有可用空间，随时都可能抛出 OOM 异常。</p>
+</blockquote>
+<h3 id="3-2-2-jstat-gcutil-h5-t-13050-1000-10"><a href="#3-2-2-jstat-gcutil-h5-t-13050-1000-10" class="headerlink" title="(3.2.2) jstat -gcutil -h5 -t 13050  1000 10"></a>(3.2.2) jstat -gcutil -h5 -t 13050  1000 10</h3><blockquote>
+<p>分析进程id为13050的gcutil情况，每隔1000ms打印一次记录，打印15次停止，每5行后打印指标头部<br>-gcutil 查看gcutil情况<br>-h5 每5行后打印指标头部<br>-t 进程启动时间<br>13050 进程id 也就是linux的pid<br>1000 每隔1000ms打印一次<br>10 共打印10行</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstat -gcutil -h5 -t 13050  1000 10</span><br><span class="line">Timestamp         S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">       217569.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">       217570.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">       217571.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">       217572.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">       217573.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">Timestamp         S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT</span><br><span class="line">       217574.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">       217575.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">       217576.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">       217577.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">       217578.9   0.00   0.91  23.55   6.30  91.84  82.30    133    2.921     8    0.947    3.868</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h1 id="4-Java配置信息工具-jinfo-Java-Configuration-Info"><a href="#4-Java配置信息工具-jinfo-Java-Configuration-Info" class="headerlink" title="(4) Java配置信息工具 jinfo (Java Configuration Info )"></a>(4) Java配置信息工具 jinfo (Java Configuration Info )</h1><blockquote>
+<p>jinfo是实时查看和调整虚拟机各项参数的工具</p>
+</blockquote>
+<h2 id="4-1-jinfo命令"><a href="#4-1-jinfo命令" class="headerlink" title="(4.1) jinfo命令"></a>(4.1) jinfo命令</h2><p>语法格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo [ option ] pid</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -help</span><br><span class="line">Usage:</span><br><span class="line">    jinfo [option] &lt;pid&gt;</span><br><span class="line">        (to connect to running process)</span><br><span class="line">    jinfo [option] &lt;executable &lt;core&gt;</span><br><span class="line">        (to connect to a core file)</span><br><span class="line">    jinfo [option] [server_id@]&lt;remote server IP or hostname&gt;</span><br><span class="line">        (to connect to remote debug server)</span><br><span class="line"></span><br><span class="line">where &lt;option&gt; is one of:</span><br><span class="line">    -flag &lt;name&gt;         to print the value of the named VM flag</span><br><span class="line">    -flag [+|-]&lt;name&gt;    to enable or disable the named VM flag</span><br><span class="line">    -flag &lt;name&gt;=&lt;value&gt; to set the named VM flag to the given value</span><br><span class="line">    -flags               to print VM flags</span><br><span class="line">    -sysprops            to print Java system properties</span><br><span class="line">    &lt;no option&gt;          to print both of the above</span><br><span class="line">    -h | -help           to print this help message</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -option</span><br><span class="line">Usage:</span><br><span class="line">    jinfo [option] &lt;pid&gt;</span><br><span class="line">        (to connect to running process)</span><br><span class="line">    jinfo [option] &lt;executable &lt;core&gt;</span><br><span class="line">        (to connect to a core file)</span><br><span class="line">    jinfo [option] [server_id@]&lt;remote server IP or hostname&gt;</span><br><span class="line">        (to connect to remote debug server)</span><br><span class="line"></span><br><span class="line">where &lt;option&gt; is one of:</span><br><span class="line">    -flag &lt;name&gt;         to print the value of the named VM flag</span><br><span class="line">    -flag [+|-]&lt;name&gt;    to enable or disable the named VM flag</span><br><span class="line">    -flag &lt;name&gt;=&lt;value&gt; to set the named VM flag to the given value</span><br><span class="line">    -flags               to print VM flags</span><br><span class="line">    -sysprops            to print Java system properties</span><br><span class="line">    &lt;no option&gt;          to print both of the above</span><br><span class="line">    -h | -help           to print this help message</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<p>  如果遇到 <code>Error attaching to process: sun.jvm.hotspot.debugger.DebuggerException: Can&#39;t attach to the process: ptrace(PTRACE_ATTACH, ..) failed for : Operation not permitted</code>，执行 <code>echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope</code>命令即可</p>
+<h3 id="4-1-1-jinfo-pid"><a href="#4-1-1-jinfo-pid" class="headerlink" title="(4.1.1) jinfo pid"></a>(4.1.1) jinfo pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo 13050</span><br><span class="line">Attaching to process ID 13050, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.172-b11</span><br><span class="line">Java System Properties:</span><br><span class="line"></span><br><span class="line">jna.platform.library.path = /usr/lib64:/lib64:/usr/lib:/lib:/usr/lib64/dyninst:/usr/lib64/mysql</span><br><span class="line">java.runtime.name = Java(TM) SE Runtime Environment</span><br><span class="line">sun.boot.library.path = /home/wkq/software/jdk1.8.0_172/jre/lib/amd64</span><br><span class="line">java.vm.version = 25.172-b11</span><br><span class="line">es.path.home = /home/wkq/software/elasticsearch-6.6.2</span><br><span class="line">log4j.shutdownHookEnabled = false</span><br><span class="line">java.vendor.url = http://java.oracle.com/</span><br><span class="line">java.vm.vendor = Oracle Corporation</span><br><span class="line">path.separator = :</span><br><span class="line">file.encoding.pkg = sun.io</span><br><span class="line">java.vm.name = Java HotSpot(TM) 64-Bit Server VM</span><br><span class="line">jna.loaded = true</span><br><span class="line">sun.os.patch.level = unknown</span><br><span class="line">user.country = US</span><br><span class="line">sun.java.launcher = SUN_STANDARD</span><br><span class="line">es.networkaddress.cache.negative.ttl = 10</span><br><span class="line">jna.nosys = true</span><br><span class="line">java.vm.specification.name = Java Virtual Machine Specification</span><br><span class="line">user.dir = /home/wkq/software/elasticsearch-6.6.2</span><br><span class="line">java.runtime.version = 1.8.0_172-b11</span><br><span class="line">java.awt.graphicsenv = sun.awt.X11GraphicsEnvironment</span><br><span class="line">java.endorsed.dirs = /home/wkq/software/jdk1.8.0_172/jre/lib/endorsed</span><br><span class="line">os.arch = amd64</span><br><span class="line">java.io.tmpdir = /tmp/elasticsearch-5035355569386013893</span><br><span class="line">line.separator =</span><br><span class="line"></span><br><span class="line">es.networkaddress.cache.ttl = 60</span><br><span class="line">es.logs.node_name = elasticsearch_001_data</span><br><span class="line">java.vm.specification.vendor = Oracle Corporation</span><br><span class="line">os.name = Linux</span><br><span class="line">io.netty.noKeySetOptimization = true</span><br><span class="line">sun.jnu.encoding = ANSI_X3.4-1968</span><br><span class="line">jnidispatch.path = /tmp/elasticsearch-5035355569386013893/jna-117789/jna8829728915470247279.tmp</span><br><span class="line">java.library.path = /usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib</span><br><span class="line">sun.nio.ch.bugLevel =</span><br><span class="line">es.logs.cluster_name = elasticsearch_test</span><br><span class="line">java.specification.name = Java Platform API Specification</span><br><span class="line">java.class.version = 52.0</span><br><span class="line">sun.management.compiler = HotSpot 64-Bit Tiered Compilers</span><br><span class="line">os.version = 3.10.0-957.21.3.el7.x86_64</span><br><span class="line">user.home = /home/wkq</span><br><span class="line">user.timezone = Asia/Shanghai</span><br><span class="line">java.awt.printerjob = sun.print.PSPrinterJob</span><br><span class="line">file.encoding = UTF-8</span><br><span class="line">java.specification.version = 1.8</span><br><span class="line">es.distribution.type = tar</span><br><span class="line">io.netty.recycler.maxCapacityPerThread = 0</span><br><span class="line">user.name = wkq</span><br><span class="line">es.logs.base_path = /home/wkq/software/elasticsearch-6.6.2/logs</span><br><span class="line">java.class.path =  </span><br><span class="line">es.path.conf = /home/wkq/software/elasticsearch-6.6.2/config</span><br><span class="line">java.vm.specification.version = 1.8</span><br><span class="line">java.home = /home/wkq/software/jdk1.8.0_172/jre</span><br><span class="line">sun.java.command = org.elasticsearch.bootstrap.Elasticsearch -d</span><br><span class="line">sun.arch.data.model = 64</span><br><span class="line">io.netty.noUnsafe = true</span><br><span class="line">user.language = en</span><br><span class="line">java.specification.vendor = Oracle Corporation</span><br><span class="line">awt.toolkit = sun.awt.X11.XToolkit</span><br><span class="line">java.vm.info = mixed mode</span><br><span class="line">java.version = 1.8.0_172</span><br><span class="line">java.ext.dirs = /home/wkq/software/jdk1.8.0_172/jre/lib/ext:/usr/java/packages/lib/ext</span><br><span class="line">sun.boot.class.path =  </span><br><span class="line">java.awt.headless = true</span><br><span class="line">java.vendor = Oracle Corporation</span><br><span class="line">file.separator = /</span><br><span class="line">java.vendor.url.bug = http://bugreport.sun.com/bugreport/</span><br><span class="line">es.distribution.flavor = default</span><br><span class="line">sun.io.unicode.encoding = UnicodeLittle</span><br><span class="line">sun.cpu.endian = little</span><br><span class="line">log4j2.disable.jmx = true</span><br><span class="line">sun.cpu.isalist =</span><br><span class="line"></span><br><span class="line">VM Flags:</span><br><span class="line">Non-default VM flags: -XX:+AlwaysPreTouch -XX:CICompilerCount=2 -XX:CMSInitiatingOccupancyFraction=75 -XX:ErrorFile=null -XX:GCLogFileSize=67108864 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=null -XX:InitialHeapSize=1073741824 -XX:MaxHeapSize=1073741824 -XX:MaxNewSize=87228416 -XX:MaxTenuringThreshold=6 -XX:MinHeapDeltaBytes=196608 -XX:NewSize=87228416 -XX:NumberOfGCLogFiles=32 -XX:OldPLABSize=16 -XX:OldSize=986513408 -XX:-OmitStackTraceInFastThrow -XX:+PrintGC -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintTenuringDistribution -XX:ThreadStackSize=1024 -XX:+UseCMSInitiatingOccupancyOnly -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseConcMarkSweepGC -XX:+UseGCLogFileRotation -XX:+UseParNewGC</span><br><span class="line">Command line:  -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Djava.io.tmpdir=/tmp/elasticsearch-5035355569386013893 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=data -XX:ErrorFile=logs/hs_err_pid%p.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -XX:+PrintGCApplicationStoppedTime -Xloggc:logs/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=32 -XX:GCLogFileSize=64m -Des.path.home=/home/wkq/software/elasticsearch-6.6.2 -Des.path.conf=/home/wkq/software/elasticsearch-6.6.2/config -Des.distribution.flavor=default -Des.distribution.type=tar</span><br><span class="line"></span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-2-jinfo-flag-MaxMetaspaceSize-pid"><a href="#4-1-2-jinfo-flag-MaxMetaspaceSize-pid" class="headerlink" title="(4.1.2) jinfo -flag MaxMetaspaceSize pid"></a>(4.1.2) jinfo -flag MaxMetaspaceSize pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flag MaxMetaspaceSize 13050</span><br><span class="line">-XX:MaxMetaspaceSize=18446744073709547520</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-3-jinfo-flag-ThreadStackSize-pid"><a href="#4-1-3-jinfo-flag-ThreadStackSize-pid" class="headerlink" title="(4.1.3) jinfo -flag ThreadStackSize pid"></a>(4.1.3) jinfo -flag ThreadStackSize pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flag ThreadStackSize 13050</span><br><span class="line">-XX:ThreadStackSize=1024</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-4-jinfo-flag-MaxNewSize-pid"><a href="#4-1-4-jinfo-flag-MaxNewSize-pid" class="headerlink" title="(4.1.4) jinfo -flag MaxNewSize pid"></a>(4.1.4) jinfo -flag MaxNewSize pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flag MaxNewSize 13050</span><br><span class="line">-XX:MaxNewSize=87228416</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-5-jinfo-flag-CMSInitiatingOccupancyFraction-pid"><a href="#4-1-5-jinfo-flag-CMSInitiatingOccupancyFraction-pid" class="headerlink" title="(4.1.5) jinfo -flag CMSInitiatingOccupancyFraction pid"></a>(4.1.5) jinfo -flag CMSInitiatingOccupancyFraction pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flag CMSInitiatingOccupancyFraction 13050</span><br><span class="line">-XX:CMSInitiatingOccupancyFraction=75</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-6-查看所有JVM参数-java-XX-PrintFlagsInitial"><a href="#4-1-6-查看所有JVM参数-java-XX-PrintFlagsInitial" class="headerlink" title="(4.1.6) 查看所有JVM参数 java -XX:+PrintFlagsInitial"></a>(4.1.6) 查看所有JVM参数 java -XX:+PrintFlagsInitial</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ java -XX:+PrintFlagsInitial</span><br><span class="line">[Global flags]</span><br><span class="line">    uintx AdaptiveSizeDecrementScaleFactor          = 4                                   &#123;product&#125;</span><br><span class="line">    uintx AdaptiveSizeMajorGCDecayTimeScale         = 10                                  &#123;product&#125;</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">     intx WorkAroundNPTLTimedWaitHang               = 1                                   &#123;product&#125;</span><br><span class="line">    uintx YoungGenerationSizeIncrement              = 20                                  &#123;product&#125;</span><br><span class="line">    uintx YoungGenerationSizeSupplement             = 80                                  &#123;product&#125;</span><br><span class="line">    uintx YoungGenerationSizeSupplementDecay        = 8                                   &#123;product&#125;</span><br><span class="line">    uintx YoungPLABSize                             = 4096                                &#123;product&#125;</span><br><span class="line">     bool ZeroTLAB                                  = false                               &#123;product&#125;</span><br><span class="line">     intx hashCode                                  = 5                                   &#123;product&#125;</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-7-查看所有支持动态修改的JVM参数-java-XX-PrintFlagsInitial-grep-manageable"><a href="#4-1-7-查看所有支持动态修改的JVM参数-java-XX-PrintFlagsInitial-grep-manageable" class="headerlink" title="(4.1.7) 查看所有支持动态修改的JVM参数 java -XX:+PrintFlagsInitial | grep manageable"></a>(4.1.7) 查看所有支持动态修改的JVM参数 java -XX:+PrintFlagsInitial | grep manageable</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ java -XX:+PrintFlagsInitial | grep manageable</span><br><span class="line">     intx CMSAbortablePrecleanWaitMillis            = 100                                 &#123;manageable&#125;</span><br><span class="line">     intx CMSTriggerInterval                        = -1                                  &#123;manageable&#125;</span><br><span class="line">     intx CMSWaitDuration                           = 2000                                &#123;manageable&#125;</span><br><span class="line">     bool HeapDumpAfterFullGC                       = false                               &#123;manageable&#125;</span><br><span class="line">     bool HeapDumpBeforeFullGC                      = false                               &#123;manageable&#125;</span><br><span class="line">     bool HeapDumpOnOutOfMemoryError                = false                               &#123;manageable&#125;</span><br><span class="line">    ccstr HeapDumpPath                              =                                     &#123;manageable&#125;</span><br><span class="line">    uintx MaxHeapFreeRatio                          = 70                                  &#123;manageable&#125;</span><br><span class="line">    uintx MinHeapFreeRatio                          = 40                                  &#123;manageable&#125;</span><br><span class="line">     bool PrintClassHistogram                       = false                               &#123;manageable&#125;</span><br><span class="line">     bool PrintClassHistogramAfterFullGC            = false                               &#123;manageable&#125;</span><br><span class="line">     bool PrintClassHistogramBeforeFullGC           = false                               &#123;manageable&#125;</span><br><span class="line">     bool PrintConcurrentLocks                      = false                               &#123;manageable&#125;</span><br><span class="line">     bool PrintGC                                   = false                               &#123;manageable&#125;</span><br><span class="line">     bool PrintGCDateStamps                         = false                               &#123;manageable&#125;</span><br><span class="line">     bool PrintGCDetails                            = false                               &#123;manageable&#125;</span><br><span class="line">     bool PrintGCID                                 = false                               &#123;manageable&#125;</span><br><span class="line">     bool PrintGCTimeStamps                         = false                               &#123;manageable&#125;</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="4-1-7-调整JVM参数-布尔类型"><a href="#4-1-7-调整JVM参数-布尔类型" class="headerlink" title="(4.1.7) 调整JVM参数-布尔类型"></a>(4.1.7) 调整JVM参数-布尔类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo -flag [+|-]&lt;name&gt; PID</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flag +PrintGC 13050</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flag +PrintGCDetails 13050</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果没报错则代表生效，加完以后可以通过 <code>jinfo -flags 13050</code> 验证</p>
+</blockquote>
+<h3 id="4-1-8-调整JVM参数-数字-字符串类型"><a href="#4-1-8-调整JVM参数-数字-字符串类型" class="headerlink" title="(4.1.8) 调整JVM参数-数字/字符串类型"></a>(4.1.8) 调整JVM参数-数字/字符串类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jinfo -flag &lt;name&gt;=&lt;value&gt; PID</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flag MaxHeapFreeRatio=65 13050</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>没报错相当于修改成功，但是怎么验证是否生效，可以通过 <code>jinfo -flags 13050</code> 验证  </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flags 13050</span><br><span class="line">Attaching to process ID 13050, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.172-b11</span><br><span class="line">Non-default VM flags: -XX:+AlwaysPreTouch -XX:CICompilerCount=2 -XX:CMSInitiatingOccupancyFraction=75 -XX:ErrorFile=null -XX:GCLogFileSize=67108864 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=null -XX:InitialHeapSize=1073741824 -XX:MaxHeapFreeRatio=65 -XX:MaxHeapSize=1073741824 -XX:MaxNewSize=87228416 -XX:MaxTenuringThreshold=6 -XX:MinHeapDeltaBytes=196608 -XX:NewSize=87228416 -XX:NumberOfGCLogFiles=32 -XX:OldPLABSize=16 -XX:OldSize=986513408 -XX:-OmitStackTraceInFastThrow -XX:+PrintGC -XX:+PrintGCApplicationStoppedTime -XX:+PrintGCDateStamps -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintTenuringDistribution -XX:ThreadStackSize=1024 -XX:+UseCMSInitiatingOccupancyOnly -XX:+UseCompressedClassPointers -XX:+UseCompressedOops -XX:+UseConcMarkSweepGC -XX:+UseGCLogFileRotation -XX:+UseParNewGC</span><br><span class="line">Command line:  -Xms1g -Xmx1g -XX:+UseConcMarkSweepGC -XX:CMSInitiatingOccupancyFraction=75 -XX:+UseCMSInitiatingOccupancyOnly -Des.networkaddress.cache.ttl=60 -Des.networkaddress.cache.negative.ttl=10 -XX:+AlwaysPreTouch -Xss1m -Djava.awt.headless=true -Dfile.encoding=UTF-8 -Djna.nosys=true -XX:-OmitStackTraceInFastThrow -Dio.netty.noUnsafe=true -Dio.netty.noKeySetOptimization=true -Dio.netty.recycler.maxCapacityPerThread=0 -Dlog4j.shutdownHookEnabled=false -Dlog4j2.disable.jmx=true -Djava.io.tmpdir=/tmp/elasticsearch-5035355569386013893 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=data -XX:ErrorFile=logs/hs_err_pid%p.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -XX:+PrintGCApplicationStoppedTime -Xloggc:logs/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=32 -XX:GCLogFileSize=64m -Des.path.home=/home/wkq/software/elasticsearch-6.6.2 -Des.path.conf=/home/wkq/software/elasticsearch-6.6.2/config -Des.distribution.flavor=default -Des.distribution.type=tar</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<p>  通过 <code>jinfo -flags 13050</code> 获取的结果可以看到 </p>
+<blockquote>
+<p>出现 Command failed in target VM 则表示这个flag参数不支持<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jinfo -flag ErrorFile=/home/wkq/es_error_file 13050</span><br><span class="line">Exception in thread &quot;main&quot; com.sun.tools.attach.AttachOperationFailedException: flag &apos;ErrorFile&apos; cannot be changed</span><br><span class="line"></span><br><span class="line">	at sun.tools.attach.LinuxVirtualMachine.execute(LinuxVirtualMachine.java:229)</span><br><span class="line">	at sun.tools.attach.HotSpotVirtualMachine.executeCommand(HotSpotVirtualMachine.java:261)</span><br><span class="line">	at sun.tools.attach.HotSpotVirtualMachine.setFlag(HotSpotVirtualMachine.java:234)</span><br><span class="line">	at sun.tools.jinfo.JInfo.flag(JInfo.java:134)</span><br><span class="line">	at sun.tools.jinfo.JInfo.main(JInfo.java:81)</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p><br><br><br></p>
+<h1 id="5-Java内存映像工具-jmap"><a href="#5-Java内存映像工具-jmap" class="headerlink" title="(5) Java内存映像工具 jmap"></a>(5) Java内存映像工具 jmap</h1><blockquote>
+<p> Jmap是一个可以输出所有内存中对象的工具，甚至可以将VM 中的heap，以二进制输出成文本。打印出某个java进程（使用pid）内存内的，所有‘对象’的情况（如：产生那些对象，及其数量）。</p>
+</blockquote>
+<h2 id="5-1-jmap命令"><a href="#5-1-jmap命令" class="headerlink" title="(5.1) jmap命令"></a>(5.1) jmap命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jmap -help</span><br><span class="line">Usage:</span><br><span class="line">    jmap [option] &lt;pid&gt;</span><br><span class="line">        (to connect to running process)</span><br><span class="line">    jmap [option] &lt;executable &lt;core&gt;</span><br><span class="line">        (to connect to a core file)</span><br><span class="line">    jmap [option] [server_id@]&lt;remote server IP or hostname&gt;</span><br><span class="line">        (to connect to remote debug server)</span><br><span class="line"></span><br><span class="line">where &lt;option&gt; is one of:</span><br><span class="line">    &lt;none&gt;               to print same info as Solaris pmap</span><br><span class="line">    -heap                to print java heap summary</span><br><span class="line">    -histo[:live]        to print histogram of java object heap; if the &quot;live&quot;</span><br><span class="line">                         suboption is specified, only count live objects</span><br><span class="line">    -clstats             to print class loader statistics</span><br><span class="line">    -finalizerinfo       to print information on objects awaiting finalization</span><br><span class="line">    -dump:&lt;dump-options&gt; to dump java heap in hprof binary format</span><br><span class="line">                         dump-options:</span><br><span class="line">                           live         dump only live objects; if not specified,</span><br><span class="line">                                        all objects in the heap are dumped.</span><br><span class="line">                           format=b     binary format</span><br><span class="line">                           file=&lt;file&gt;  dump heap to &lt;file&gt;</span><br><span class="line">                         Example: jmap -dump:live,format=b,file=heap.bin &lt;pid&gt;</span><br><span class="line">    -F                   force. Use with -dump:&lt;dump-options&gt; &lt;pid&gt; or -histo</span><br><span class="line">                         to force a heap dump or histogram when &lt;pid&gt; does not</span><br><span class="line">                         respond. The &quot;live&quot; suboption is not supported</span><br><span class="line">                         in this mode.</span><br><span class="line">    -h | -help           to print this help message</span><br><span class="line">    -J&lt;flag&gt;             to pass &lt;flag&gt; directly to the runtime system</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jmap -options</span><br><span class="line">Usage:</span><br><span class="line">    jmap [option] &lt;pid&gt;</span><br><span class="line">        (to connect to running process)</span><br><span class="line">    jmap [option] &lt;executable &lt;core&gt;</span><br><span class="line">        (to connect to a core file)</span><br><span class="line">    jmap [option] [server_id@]&lt;remote server IP or hostname&gt;</span><br><span class="line">        (to connect to remote debug server)</span><br><span class="line"></span><br><span class="line">where &lt;option&gt; is one of:</span><br><span class="line">    &lt;none&gt;               to print same info as Solaris pmap</span><br><span class="line">    -heap                to print java heap summary</span><br><span class="line">    -histo[:live]        to print histogram of java object heap; if the &quot;live&quot;</span><br><span class="line">                         suboption is specified, only count live objects</span><br><span class="line">    -clstats             to print class loader statistics</span><br><span class="line">    -finalizerinfo       to print information on objects awaiting finalization</span><br><span class="line">    -dump:&lt;dump-options&gt; to dump java heap in hprof binary format</span><br><span class="line">                         dump-options:</span><br><span class="line">                           live         dump only live objects; if not specified,</span><br><span class="line">                                        all objects in the heap are dumped.</span><br><span class="line">                           format=b     binary format</span><br><span class="line">                           file=&lt;file&gt;  dump heap to &lt;file&gt;</span><br><span class="line">                         Example: jmap -dump:live,format=b,file=heap.bin &lt;pid&gt;</span><br><span class="line">    -F                   force. Use with -dump:&lt;dump-options&gt; &lt;pid&gt; or -histo</span><br><span class="line">                         to force a heap dump or histogram when &lt;pid&gt; does not</span><br><span class="line">                         respond. The &quot;live&quot; suboption is not supported</span><br><span class="line">                         in this mode.</span><br><span class="line">    -h | -help           to print this help message</span><br><span class="line">    -J&lt;flag&gt;             to pass &lt;flag&gt; directly to the runtime system</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 更多详细信息参考 <code>man jmap</code></p>
+</blockquote>
+<h3 id="5-1-1-jmap-pid"><a href="#5-1-1-jmap-pid" class="headerlink" title="(5.1.1) jmap pid"></a>(5.1.1) jmap pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jmap 13050</span><br><span class="line">Attaching to process ID 13050, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.172-b11</span><br><span class="line">0x0000000000400000	7K	/home/wkq/software/jdk1.8.0_172/bin/java</span><br><span class="line">0x00007fb911271000	49K	/home/wkq/software/jdk1.8.0_172/jre/lib/amd64/libmanagement.so</span><br><span class="line">0x00007fb91167a000	86K	/usr/lib64/libgcc_s-4.8.5-20150702.so.1</span><br><span class="line">0x00007fb911890000	251K	/home/wkq/software/jdk1.8.0_172/jre/lib/amd64/libsunec.so</span><br><span class="line">0x00007fb9242c2000	112K	/home/wkq/software/jdk1.8.0_172/jre/lib/amd64/libnet.so</span><br><span class="line">0x00007fb9244d9000	91K	/home/wkq/software/jdk1.8.0_172/jre/lib/amd64/libnio.so</span><br><span class="line">0x00007fb94065d000	125K	/home/wkq/software/jdk1.8.0_172/jre/lib/amd64/libzip.so</span><br><span class="line">0x00007fb940879000	60K	/usr/lib64/libnss_files-2.17.so</span><br><span class="line">0x00007fb940a8c000	221K	/home/wkq/software/jdk1.8.0_172/jre/lib/amd64/libjava.so</span><br><span class="line">0x00007fb940cb8000	64K	/home/wkq/software/jdk1.8.0_172/jre/lib/amd64/libverify.so</span><br><span class="line">0x00007fb940ec7000	43K	/usr/lib64/librt-2.17.so</span><br><span class="line">0x00007fb9410cf000	1115K	/usr/lib64/libm-2.17.so</span><br><span class="line">0x00007fb9413d1000	16667K	/home/wkq/software/jdk1.8.0_172/jre/lib/amd64/server/libjvm.so</span><br><span class="line">0x00007fb9423d2000	2068K	/usr/lib64/libc-2.17.so</span><br><span class="line">0x00007fb942793000	19K	/usr/lib64/libdl-2.17.so</span><br><span class="line">0x00007fb942997000	101K	/home/wkq/software/jdk1.8.0_172/lib/amd64/jli/libjli.so</span><br><span class="line">0x00007fb942bad000	140K	/usr/lib64/libpthread-2.17.so</span><br><span class="line">0x00007fb942dc9000	155K	/usr/lib64/ld-2.17.so</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="5-1-2-jmap-dump-live-format-b-file-file-path"><a href="#5-1-2-jmap-dump-live-format-b-file-file-path" class="headerlink" title="(5.1.2) jmap -dump:[live,] format=b, file=file_path"></a>(5.1.2) jmap -dump:[live,] format=b, file=file_path</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jmap -dump:live,format=b,file=13050.log 13050</span><br><span class="line">Dumping heap to /home/wkq/13050.log ...</span><br><span class="line">Heap dump file created</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="5-1-3-jmap-finalizerinfo-pid"><a href="#5-1-3-jmap-finalizerinfo-pid" class="headerlink" title="(5.1.3) jmap -finalizerinfo pid"></a>(5.1.3) jmap -finalizerinfo pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jmap -finalizerinfo 13050</span><br><span class="line">Attaching to process ID 13050, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.172-b11</span><br><span class="line">Number of objects pending for finalization: 0</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="5-1-4-jmap-heap-pid"><a href="#5-1-4-jmap-heap-pid" class="headerlink" title="(5.1.4) jmap -heap pid"></a>(5.1.4) jmap -heap pid</h3><blockquote>
+<p> jmap -heap pid<br> jmap-J-d64 -heap pid</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jmap -heap 13050</span><br><span class="line">Attaching to process ID 13050, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.172-b11</span><br><span class="line"></span><br><span class="line">using parallel threads in the new generation.</span><br><span class="line">using thread-local object allocation.</span><br><span class="line">Concurrent Mark-Sweep GC</span><br><span class="line"></span><br><span class="line">Heap Configuration:</span><br><span class="line">   MinHeapFreeRatio         = 40</span><br><span class="line">   MaxHeapFreeRatio         = 70</span><br><span class="line">   MaxHeapSize              = 1073741824 (1024.0MB)</span><br><span class="line">   NewSize                  = 87228416 (83.1875MB)</span><br><span class="line">   MaxNewSize               = 87228416 (83.1875MB)</span><br><span class="line">   OldSize                  = 986513408 (940.8125MB)</span><br><span class="line">   NewRatio                 = 2</span><br><span class="line">   SurvivorRatio            = 8</span><br><span class="line">   MetaspaceSize            = 21807104 (20.796875MB)</span><br><span class="line">   CompressedClassSpaceSize = 1073741824 (1024.0MB)</span><br><span class="line">   MaxMetaspaceSize         = 17592186044415 MB</span><br><span class="line">   G1HeapRegionSize         = 0 (0.0MB)</span><br><span class="line"></span><br><span class="line">Heap Usage:</span><br><span class="line">New Generation (Eden + 1 Survivor Space):</span><br><span class="line">   capacity = 78512128 (74.875MB)</span><br><span class="line">   used     = 7022576 (6.6972503662109375MB)</span><br><span class="line">   free     = 71489552 (68.17774963378906MB)</span><br><span class="line">   8.94457477958055% used</span><br><span class="line">Eden Space:</span><br><span class="line">   capacity = 69795840 (66.5625MB)</span><br><span class="line">   used     = 7022576 (6.6972503662109375MB)</span><br><span class="line">   free     = 62773264 (59.86524963378906MB)</span><br><span class="line">   10.061596794307512% used</span><br><span class="line">From Space:</span><br><span class="line">   capacity = 8716288 (8.3125MB)</span><br><span class="line">   used     = 0 (0.0MB)</span><br><span class="line">   free     = 8716288 (8.3125MB)</span><br><span class="line">   0.0% used</span><br><span class="line">To Space:</span><br><span class="line">   capacity = 8716288 (8.3125MB)</span><br><span class="line">   used     = 0 (0.0MB)</span><br><span class="line">   free     = 8716288 (8.3125MB)</span><br><span class="line">   0.0% used</span><br><span class="line">concurrent mark-sweep generation:</span><br><span class="line">   capacity = 986513408 (940.8125MB)</span><br><span class="line">   used     = 62168384 (59.28839111328125MB)</span><br><span class="line">   free     = 924345024 (881.5241088867188MB)</span><br><span class="line">   6.301828591061582% used</span><br><span class="line"></span><br><span class="line">22982 interned Strings occupying 3212304 bytes.</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="5-1-5-jmap-histo-pid"><a href="#5-1-5-jmap-histo-pid" class="headerlink" title="(5.1.5) jmap -histo pid"></a>(5.1.5) jmap -histo pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jmap -histo 13050 | more</span><br><span class="line"></span><br><span class="line"> num     #instances         #bytes  class name</span><br><span class="line">----------------------------------------------</span><br><span class="line">   1:        258021       20550728  [C</span><br><span class="line">   2:        432469       13839008  java.util.HashMap$Node</span><br><span class="line">   3:        228108        5474592  java.lang.String</span><br><span class="line">   4:         38596        4839800  [Ljava.util.HashMap$Node;</span><br><span class="line">   5:         86202        4137696  java.util.HashMap</span><br><span class="line">   6:         21464        2574920  [B</span><br><span class="line">   7:         74456        2382592  java.util.Collections$UnmodifiableMap</span><br><span class="line">   8:         12306        2118456  [I</span><br><span class="line">   9:         30839        1957320  [Ljava.lang.Object;</span><br><span class="line">  10:         15798        1730136  java.lang.Class</span><br><span class="line">  11:         52294        1673408  java.util.concurrent.ConcurrentHashMap$Node</span><br><span class="line">  12:         24594         787008  java.util.AbstractList$Itr</span><br><span class="line">  13:         49038         784608  org.elasticsearch.common.lucene.LoggerInfoStream$$Lambda$3048/931367447</span><br><span class="line">  14:         24519         784608  org.elasticsearch.index.engine.Engine$$Lambda$3100/1060530393</span><br><span class="line">  15:         23576         754432  java.lang.ref.WeakReference</span><br><span class="line">  16:         30639         735336  java.util.Arrays$ArrayList</span><br><span class="line">  17:         24519         588456  [Lorg.elasticsearch.common.lease.Releasable;</span><br><span class="line">  18:         24519         588456  org.elasticsearch.index.engine.Engine$Searcher</span><br><span class="line">  19:          8132         585504  java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask</span><br><span class="line">  20:          9564         535584  java.lang.invoke.MemberName</span><br><span class="line">  21:          6052         532576  java.lang.reflect.Method</span><br><span class="line">  22:         33099         529584  java.lang.Object</span><br></pre></td></tr></table></figure>
+<h3 id="5-1-6-jmap-clstats-pid"><a href="#5-1-6-jmap-clstats-pid" class="headerlink" title="(5.1.6) jmap -clstats pid"></a>(5.1.6) jmap -clstats pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jmap -clstats 13050</span><br><span class="line">Attaching to process ID 13050, please wait...</span><br><span class="line">Debugger attached successfully.</span><br><span class="line">Server compiler detected.</span><br><span class="line">JVM version is 25.172-b11</span><br><span class="line">finding class loader instances ..</span><br><span class="line">done.</span><br><span class="line">computing per loader stat ..done.</span><br><span class="line">please wait.. computing liveness.liveness analysis may be inaccurate ...</span><br><span class="line">class_loader	classes	bytes	parent_loader	alive?	type</span><br><span class="line"></span><br><span class="line">&lt;bootstrap&gt;	2353	4122324	  null  	live	&lt;internal&gt;</span><br><span class="line">0x00000000c5fa9378	1	714	  null  	dead	org/elasticsearch/painless/lookup/PainlessLookupBuilder$BridgeLoader@0x00000001003f45d0</span><br><span class="line">0x00000000c5fa9878	1	714	  null  	dead	org/elasticsearch/painless/lookup/PainlessLookupBuilder$BridgeLoader@0x00000001003f45d0</span><br><span class="line">0x00000000c58b8708	0	0	0x00000000c544a3d0	dead	org/elasticsearch/plugins/ExtendedPluginsClassLoader@0x0000000100263e90</span><br><span class="line">0x00000000c5ab86a8	1	1471	0x00000000c544a3d0	dead	sun/reflect/DelegatingClassLoader@0x000000010000a028</span><br><span class="line">0x00000000c5ac4b28	11	20182	0x00000000c5c12600	dead	java/net/FactoryURLClassLoader@0x0000000100259738</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">total = 86	11582	19740221	    N/A    	alive=1, dead=85	    N/A</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 省略部分详细信息</p>
+</blockquote>
+<p><br><br><br></p>
+<h1 id="6-虚拟机堆转储快照分析工具-jhat"><a href="#6-虚拟机堆转储快照分析工具-jhat" class="headerlink" title="(6) 虚拟机堆转储快照分析工具 jhat"></a>(6) 虚拟机堆转储快照分析工具 jhat</h1><p><br><br><br></p>
+<h1 id="7-Java堆栈跟踪工具-jstack-Java-Stack-Trace"><a href="#7-Java堆栈跟踪工具-jstack-Java-Stack-Trace" class="headerlink" title="(7) Java堆栈跟踪工具 jstack (Java Stack Trace)"></a>(7) Java堆栈跟踪工具 jstack (Java Stack Trace)</h1><blockquote>
+<p> jstack主要用来查看某个Java进程内的线程堆栈信息。<br>在实际运行中，往往一次 dump的信息，还不足以确认问题。建议产生三次 dump信息，如果每次 dump都指向同一个问题，我们才确定问题的典型性。 </p>
+</blockquote>
+<h2 id="7-1-jstack命令"><a href="#7-1-jstack命令" class="headerlink" title="(7.1) jstack命令"></a>(7.1) jstack命令</h2><figure class="highlight plain"><figcaption><span>~]$ jstack -help</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Usage:</span><br><span class="line">    jstack [-l] &lt;pid&gt;</span><br><span class="line">        (to connect to running process)</span><br><span class="line">    jstack -F [-m] [-l] &lt;pid&gt;</span><br><span class="line">        (to connect to a hung process)</span><br><span class="line">    jstack [-m] [-l] &lt;executable&gt; &lt;core&gt;</span><br><span class="line">        (to connect to a core file)</span><br><span class="line">    jstack [-m] [-l] [server_id@]&lt;remote server IP or hostname&gt;</span><br><span class="line">        (to connect to a remote debug server)</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -F  to force a thread dump. Use when jstack &lt;pid&gt; does not respond (process is hung)</span><br><span class="line">    -m  to print both java and native frames (mixed mode)</span><br><span class="line">    -l  long listing. Prints additional information about locks</span><br><span class="line">    -h or -help to print this help message</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstack -options</span><br><span class="line">Usage:</span><br><span class="line">    jstack [-l] &lt;pid&gt;</span><br><span class="line">        (to connect to running process)</span><br><span class="line">    jstack -F [-m] [-l] &lt;pid&gt;</span><br><span class="line">        (to connect to a hung process)</span><br><span class="line">    jstack [-m] [-l] &lt;executable&gt; &lt;core&gt;</span><br><span class="line">        (to connect to a core file)</span><br><span class="line">    jstack [-m] [-l] [server_id@]&lt;remote server IP or hostname&gt;</span><br><span class="line">        (to connect to a remote debug server)</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">    -F  to force a thread dump. Use when jstack &lt;pid&gt; does not respond (process is hung)</span><br><span class="line">    -m  to print both java and native frames (mixed mode)</span><br><span class="line">    -l  long listing. Prints additional information about locks</span><br><span class="line">    -h or -help to print this help message</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="7-1-1-jstack-pid"><a href="#7-1-1-jstack-pid" class="headerlink" title="(7.1.1) jstack pid"></a>(7.1.1) jstack pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstack  13050</span><br><span class="line">2020-03-29 08:55:30</span><br><span class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.172-b11 mixed mode):</span><br><span class="line"></span><br><span class="line">&quot;Attach Listener&quot; #48 daemon prio=9 os_prio=0 tid=0x00007fb90805b800 nid=0x1c9f waiting on condition [0x0000000000000000]</span><br><span class="line">   java.lang.Thread.State: RUNNABLE</span><br><span class="line"></span><br><span class="line">&quot;elasticsearch[elasticsearch_001_data][flush][T#1]&quot; #47 daemon prio=5 os_prio=0 tid=0x00007fb93c693800 nid=0x376c waiting on condition [0x00007fb8fd520000]</span><br><span class="line">   java.lang.Thread.State: WAITING (parking)</span><br><span class="line">	at sun.misc.Unsafe.park(Native Method)</span><br><span class="line">	- parking to wait for  &lt;0x00000000c600d388&gt; (a org.elasticsearch.common.util.concurrent.EsExecutors$ExecutorScalingQueue)</span><br><span class="line">...</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h3 id="7-1-2-jstack-l-pid"><a href="#7-1-2-jstack-l-pid" class="headerlink" title="(7.1.2) jstack -l pid"></a>(7.1.2) jstack -l pid</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jstack -l 13050</span><br><span class="line">2020-03-29 23:09:50</span><br><span class="line">Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.172-b11 mixed mode):</span><br><span class="line"></span><br><span class="line">&quot;elasticsearch[elasticsearch_001_data][generic][T#8]&quot; #51 daemon prio=5 os_prio=0 tid=0x00007fb93df68000 nid=0x77cf waiting on condition [0x00007fb8ff934000]</span><br><span class="line">   java.lang.Thread.State: TIMED_WAITING (parking)</span><br><span class="line">	at sun.misc.Unsafe.park(Native Method)</span><br><span class="line">	- parking to wait for  &lt;0x00000000c5ed5f70&gt; (a org.elasticsearch.common.util.concurrent.EsExecutors$ExecutorScalingQueue)</span><br><span class="line">	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:215)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   Locked ownable synchronizers:</span><br><span class="line">	- None</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&quot;Attach Listener&quot; #48 daemon prio=9 os_prio=0 tid=0x00007fb90805b800 nid=0x1c9f waiting on condition [0x0000000000000000]</span><br><span class="line">   java.lang.Thread.State: RUNNABLE</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&quot;VM Thread&quot; os_prio=0 tid=0x00007fb93c0b5000 nid=0x32ff runnable</span><br><span class="line"></span><br><span class="line">&quot;Gang worker#0 (Parallel GC Threads)&quot; os_prio=0 tid=0x00007fb93c01d000 nid=0x32fd runnable</span><br><span class="line"></span><br><span class="line">&quot;Concurrent Mark-Sweep GC Thread&quot; os_prio=0 tid=0x00007fb93c040000 nid=0x32fe runnable</span><br><span class="line"></span><br><span class="line">&quot;VM Periodic Task Thread&quot; os_prio=0 tid=0x00007fb93c103800 nid=0x3307 waiting on condition</span><br><span class="line"></span><br><span class="line">JNI global references: 8827</span><br><span class="line"></span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h1 id="8-Java监视与管理控制台-JConsole-Java-Monitoring-and-Managerment-Console"><a href="#8-Java监视与管理控制台-JConsole-Java-Monitoring-and-Managerment-Console" class="headerlink" title="(8) Java监视与管理控制台 JConsole (Java Monitoring and Managerment Console)"></a>(8) Java监视与管理控制台 JConsole (Java Monitoring and Managerment Console)</h1><p><br><br><br></p>
+<h1 id="9-多合一故障处理工具-VisuaIVM-All-in-One-Java-Troubleshooting-Tool"><a href="#9-多合一故障处理工具-VisuaIVM-All-in-One-Java-Troubleshooting-Tool" class="headerlink" title="(9) 多合一故障处理工具 VisuaIVM (All-in-One Java Troubleshooting Tool)"></a>(9) 多合一故障处理工具 VisuaIVM (All-in-One Java Troubleshooting Tool)</h1><blockquote>
+<p>VisuaIVM (All-in-One Java Troubleshooting Tool) 是到目前为止随JDK发布的功能最强大的运行监视和故障处理程序。</p>
+</blockquote>
+<p><br><br><br></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] 《深入理解JAVA虚拟机: JVM高级特性与最佳实践》 周志明<br>[2] <a href="https://my.oschina.net/feichexia/blog/196575" target="_blank" rel="noopener">JVM性能调优监控工具jps、jstack、jmap、jhat、jstat、hprof使用详解</a><br>[3] <a href="https://www.cnblogs.com/tulianghui/p/5914535.html" target="_blank" rel="noopener">JAVA JPS 命令详解</a><br>[4] <a href="https://blog.csdn.net/ouyang111222/article/details/53688986" target="_blank" rel="noopener">jstat使用详解（分析JVM的使用情况）</a><br>[5] <a href="https://www.cnblogs.com/duanxz/p/10240899.html" target="_blank" rel="noopener">使用Java监控工具出现 Can’t attach to the process</a><br>[6] <a href="https://my.oschina.net/javamaster/blog/1833908" target="_blank" rel="noopener">JVM系列：jinfo命令详解</a><br>[7] <a href="https://blog.csdn.net/zhaozheng7758/article/details/8623530" target="_blank" rel="noopener">jmap命令详解</a><br>[8] <a href="https://blog.csdn.net/zhaozheng7758/article/details/8623535" target="_blank" rel="noopener">jstack命令详解</a><br>[9] <a href="https://time.geekbang.org/column/article/40520" target="_blank" rel="noopener">深入拆解Java虚拟机 - 30 | Java虚拟机的监控及诊断工具（命令行篇）</a><br>[10] <a href="https://docs.oracle.com/en/java/javase/11/tools/monitoring-tools-and-commands.html" target="_blank" rel="noopener">oracle monitoring-tools-and-commands</a><br>[11] <a href="https://time.geekbang.org/column/article/40821" target="_blank" rel="noopener">深入拆解Java虚拟机 - 31 | Java虚拟机的监控及诊断工具（GUI篇）</a><br>[12] <a href="https://visualvm.github.io/index.html" target="_blank" rel="noopener">visualvm</a><br>[13] <a href="https://github.com/AdoptOpenJDK/jitwatch" target="_blank" rel="noopener">jitwatch</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/jvm/" rel="tag"># jvm</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/20/chrome-notes/" rel="next" title="chrome-notes">
+                <i class="fa fa-chevron-left"></i> chrome-notes
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/06/cache-notes/" rel="prev" title="cache-notes">
+                cache-notes <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-JDK的命令行工具"><span class="nav-number">1.</span> <span class="nav-text">(1) JDK的命令行工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-虚拟机进程状况工具-jps-JVM-Process-Status-Tool"><span class="nav-number">2.</span> <span class="nav-text">(2) 虚拟机进程状况工具 jps (JVM Process Status Tool)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-jps命令"><span class="nav-number">2.1.</span> <span class="nav-text">(2.1) jps命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-jps-不加参数"><span class="nav-number">2.1.1.</span> <span class="nav-text">(2.1.1) jps 不加参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-jps-q"><span class="nav-number">2.1.2.</span> <span class="nav-text">(2.1.2) jps -q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-jps-m"><span class="nav-number">2.1.3.</span> <span class="nav-text">(2.1.3) jps -m</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-jps-l"><span class="nav-number">2.1.4.</span> <span class="nav-text">(2.1.4) jps -l</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-5-jps-v"><span class="nav-number">2.1.5.</span> <span class="nav-text">(2.1.5) jps -v</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-6-jps-V"><span class="nav-number">2.1.6.</span> <span class="nav-text">(2.1.6) jps -V</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-常用jps命令"><span class="nav-number">2.2.</span> <span class="nav-text">(2.2) 常用jps命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-jps-lm"><span class="nav-number">2.2.1.</span> <span class="nav-text">(2.2.1) jps -lm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-jps-lvm"><span class="nav-number">2.2.2.</span> <span class="nav-text">(2.2.2) jps -lvm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-虚拟机统计信息监视工具-jstat-JVM-Statics-Monitoring-Tool"><span class="nav-number">3.</span> <span class="nav-text">(3) 虚拟机统计信息监视工具 jstat (JVM Statics Monitoring Tool)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-jstat命令"><span class="nav-number">3.1.</span> <span class="nav-text">(3.1) jstat命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-jstat命令"><span class="nav-number">3.1.1.</span> <span class="nav-text">(3.1.1) jstat命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-1-jstat-class-13050"><span class="nav-number">3.1.2.</span> <span class="nav-text">(3.1.1) jstat -class 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-2-jstat-compiler-13050"><span class="nav-number">3.1.3.</span> <span class="nav-text">(3.1.2) jstat -compiler 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-3-jstat-gc-13050"><span class="nav-number">3.1.4.</span> <span class="nav-text">(3.1.3) jstat -gc 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-4-jstat-gccapacity-13050"><span class="nav-number">3.1.5.</span> <span class="nav-text">(3.1.4) jstat -gccapacity 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-5-jstat-gccause-13050"><span class="nav-number">3.1.6.</span> <span class="nav-text">(3.1.5) jstat -gccause 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-6-jstat-gcmetacapacity-13050"><span class="nav-number">3.1.7.</span> <span class="nav-text">(3.1.6) jstat -gcmetacapacity 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-7-jstat-gcnew-13050"><span class="nav-number">3.1.8.</span> <span class="nav-text">(3.1.7) jstat -gcnew 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-8-jstat-gcnewcapacity-13050"><span class="nav-number">3.1.9.</span> <span class="nav-text">(3.1.8) jstat -gcnewcapacity 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-9-jstat-gcold-13050"><span class="nav-number">3.1.10.</span> <span class="nav-text">(3.1.9) jstat -gcold 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-10-jstat-gcoldcapacity-13050"><span class="nav-number">3.1.11.</span> <span class="nav-text">(3.1.10) jstat -gcoldcapacity 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-11-jstat-gcutil-13050"><span class="nav-number">3.1.12.</span> <span class="nav-text">(3.1.11) jstat -gcutil 13050</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-12-jstat-printcompilation-13050"><span class="nav-number">3.1.13.</span> <span class="nav-text">(3.1.12) jstat -printcompilation 13050</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-常用jstat命令"><span class="nav-number">3.2.</span> <span class="nav-text">(3.2) 常用jstat命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-jstat-gc-h5-t-13050-1000-10"><span class="nav-number">3.2.1.</span> <span class="nav-text">(3.2.1) jstat -gc -h5 -t 13050  1000 10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-2-jstat-gcutil-h5-t-13050-1000-10"><span class="nav-number">3.2.2.</span> <span class="nav-text">(3.2.2) jstat -gcutil -h5 -t 13050  1000 10</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Java配置信息工具-jinfo-Java-Configuration-Info"><span class="nav-number">4.</span> <span class="nav-text">(4) Java配置信息工具 jinfo (Java Configuration Info )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-jinfo命令"><span class="nav-number">4.1.</span> <span class="nav-text">(4.1) jinfo命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-jinfo-pid"><span class="nav-number">4.1.1.</span> <span class="nav-text">(4.1.1) jinfo pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-jinfo-flag-MaxMetaspaceSize-pid"><span class="nav-number">4.1.2.</span> <span class="nav-text">(4.1.2) jinfo -flag MaxMetaspaceSize pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-3-jinfo-flag-ThreadStackSize-pid"><span class="nav-number">4.1.3.</span> <span class="nav-text">(4.1.3) jinfo -flag ThreadStackSize pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-4-jinfo-flag-MaxNewSize-pid"><span class="nav-number">4.1.4.</span> <span class="nav-text">(4.1.4) jinfo -flag MaxNewSize pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-5-jinfo-flag-CMSInitiatingOccupancyFraction-pid"><span class="nav-number">4.1.5.</span> <span class="nav-text">(4.1.5) jinfo -flag CMSInitiatingOccupancyFraction pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-6-查看所有JVM参数-java-XX-PrintFlagsInitial"><span class="nav-number">4.1.6.</span> <span class="nav-text">(4.1.6) 查看所有JVM参数 java -XX:+PrintFlagsInitial</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-7-查看所有支持动态修改的JVM参数-java-XX-PrintFlagsInitial-grep-manageable"><span class="nav-number">4.1.7.</span> <span class="nav-text">(4.1.7) 查看所有支持动态修改的JVM参数 java -XX:+PrintFlagsInitial | grep manageable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-7-调整JVM参数-布尔类型"><span class="nav-number">4.1.8.</span> <span class="nav-text">(4.1.7) 调整JVM参数-布尔类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-8-调整JVM参数-数字-字符串类型"><span class="nav-number">4.1.9.</span> <span class="nav-text">(4.1.8) 调整JVM参数-数字/字符串类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Java内存映像工具-jmap"><span class="nav-number">5.</span> <span class="nav-text">(5) Java内存映像工具 jmap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-jmap命令"><span class="nav-number">5.1.</span> <span class="nav-text">(5.1) jmap命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-1-jmap-pid"><span class="nav-number">5.1.1.</span> <span class="nav-text">(5.1.1) jmap pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-2-jmap-dump-live-format-b-file-file-path"><span class="nav-number">5.1.2.</span> <span class="nav-text">(5.1.2) jmap -dump:[live,] format=b, file=file_path</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-3-jmap-finalizerinfo-pid"><span class="nav-number">5.1.3.</span> <span class="nav-text">(5.1.3) jmap -finalizerinfo pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-4-jmap-heap-pid"><span class="nav-number">5.1.4.</span> <span class="nav-text">(5.1.4) jmap -heap pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-5-jmap-histo-pid"><span class="nav-number">5.1.5.</span> <span class="nav-text">(5.1.5) jmap -histo pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-6-jmap-clstats-pid"><span class="nav-number">5.1.6.</span> <span class="nav-text">(5.1.6) jmap -clstats pid</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-虚拟机堆转储快照分析工具-jhat"><span class="nav-number">6.</span> <span class="nav-text">(6) 虚拟机堆转储快照分析工具 jhat</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-Java堆栈跟踪工具-jstack-Java-Stack-Trace"><span class="nav-number">7.</span> <span class="nav-text">(7) Java堆栈跟踪工具 jstack (Java Stack Trace)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-jstack命令"><span class="nav-number">7.1.</span> <span class="nav-text">(7.1) jstack命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-1-jstack-pid"><span class="nav-number">7.1.1.</span> <span class="nav-text">(7.1.1) jstack pid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-2-jstack-l-pid"><span class="nav-number">7.1.2.</span> <span class="nav-text">(7.1.2) jstack -l pid</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-Java监视与管理控制台-JConsole-Java-Monitoring-and-Managerment-Console"><span class="nav-number">8.</span> <span class="nav-text">(8) Java监视与管理控制台 JConsole (Java Monitoring and Managerment Console)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-多合一故障处理工具-VisuaIVM-All-in-One-Java-Troubleshooting-Tool"><span class="nav-number">9.</span> <span class="nav-text">(9) 多合一故障处理工具 VisuaIVM (All-in-One Java Troubleshooting Tool)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">10.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

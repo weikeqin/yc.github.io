@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="爬虫(Spider)，反爬虫(Anti-Spider)，反反爬虫(Anti-Anti-Spider)，这之间的斗争恢宏壮阔… Day 1 小莫想要某站上所有的电影，写了标准的爬虫(基于HttpClient库)，不断地遍历某站的电影列表页面，根据 Html 分析电影名字存进自己的数据库。这个站点的运维小黎发现某个时间段请求量陡增，分析日志发现都是 IP(1.1.1.1)这个用户，并且 userage">
+<meta name="keywords" content="crawler,spider">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫 笔记">
+<meta property="og:url" content="http://weikeqin.cn/2017/10/12/web-crawler-notes/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="爬虫(Spider)，反爬虫(Anti-Spider)，反反爬虫(Anti-Anti-Spider)，这之间的斗争恢宏壮阔… Day 1 小莫想要某站上所有的电影，写了标准的爬虫(基于HttpClient库)，不断地遍历某站的电影列表页面，根据 Html 分析电影名字存进自己的数据库。这个站点的运维小黎发现某个时间段请求量陡增，分析日志发现都是 IP(1.1.1.1)这个用户，并且 userage">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.lining0806.com/category/spider/">
+<meta property="og:updated_time" content="2019-07-03T12:31:21.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫 笔记">
+<meta name="twitter:description" content="爬虫(Spider)，反爬虫(Anti-Spider)，反反爬虫(Anti-Anti-Spider)，这之间的斗争恢宏壮阔… Day 1 小莫想要某站上所有的电影，写了标准的爬虫(基于HttpClient库)，不断地遍历某站的电影列表页面，根据 Html 分析电影名字存进自己的数据库。这个站点的运维小黎发现某个时间段请求量陡增，分析日志发现都是 IP(1.1.1.1)这个用户，并且 userage">
+<meta name="twitter:image" content="http://www.lining0806.com/category/spider/">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/10/12/web-crawler-notes/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>爬虫 笔记 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/10/12/web-crawler-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">爬虫 笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-10-12 17:27:07" itemprop="dateCreated datePublished" datetime="2017-10-12T17:27:07+08:00">2017-10-12</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/12/web-crawler-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/10/12/web-crawler-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/12/web-crawler-notes/" class="leancloud_visitors" data-flag-title="爬虫 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>爬虫(Spider)，反爬虫(Anti-Spider)，反反爬虫(Anti-Anti-Spider)，这之间的斗争恢宏壮阔…</p>
+<p>Day 1 小莫想要某站上所有的电影，写了标准的爬虫(基于HttpClient库)，不断地遍历某站的电影列表页面，根据 Html 分析电影名字存进自己的数据库。这个站点的运维小黎发现某个时间段请求量陡增，分析日志发现都是 IP(1.1.1.1)这个用户，并且 useragent 还是 JavaClient1.6 ，基于这两点判断非人类后直接在Nginx 服务器上封杀。</p>
+<p>Day 2 小莫电影只爬了一半，于是也针对性的变换了下策略：1. useragent 模仿百度(“Baiduspider…”)，2. IP每爬半个小时就换一个IP代理。小黎也发现了对应的变化，于是在 Nginx 上设置了一个频率限制，每分钟超过120次请求的再屏蔽IP。 同时考虑到百度家的爬虫有可能会被误伤，想想市场部门每月几十万的投放，于是写了个脚本，通过 hostname 检查下这个 ip 是不是真的百度家的，对这些 ip 设置一个白名单。</p>
+<p>Day 3 小莫发现了新的限制后，想着我也不急着要这些数据，留给服务器慢慢爬吧，于是修改了代码，随机1-3秒爬一次，爬10次休息10秒，每天只在8-12，18-20点爬，隔几天还休息一下。小黎看着新的日志头都大了，再设定规则不小心会误伤真实用户，于是准备换了一个思路，当3个小时的总请求超过50次的时候弹出一个验证码弹框，没有准确正确输入的话就把 IP 记录进黑名单。</p>
+<a id="more"></a>
+<p>Day 4 小莫看到验证码有些傻脸了，不过也不是没有办法，先去学习了图像识别（关键词 PIL，tesseract），再对验证码进行了二值化，分词，模式训练之后，识别了小黎的验证码（关于验证码，验证码的识别，验证码的反识别也是一个恢弘壮丽的斗争史，这里先不展开….），之后爬虫又跑了起来。小黎是个不折不挠的好同学，看到验证码被攻破后，和开发同学商量了变化下开发模式，数据并不再直接渲染，而是由前端同学异步获取，并且通过 js 的加密库生成动态的 token，同时加密库再进行混淆（比较重要的步骤的确有网站这样做，参见微博的登陆流程）。</p>
+<p>Day5混淆过的加密库就没有办法了么？当然不是，可以慢慢调试，找到加密原理，不过小莫不准备用这么耗时耗力的方法，他放弃了基于 HttpClient的爬虫，选择了内置浏览器引擎的爬虫(关键词：PhantomJS，Selenium)，在浏览器引擎中js 加密脚本算出了正确的结果，又一次拿到了对方的数据。小黎：…..</p>
+<p>爬虫与发爬虫的斗争还在继续。<br>不过实际应用时候，一般大家做到根据 IP 限制频次就结束了，除非很核心的数据，不会再进行更多的验证，毕竟工程的问题一半是成本的问题。<br>至于高效部分，一些 Tips：<br>1.尽量减少请求次数，能抓列表页就不抓详情页<br>2.不要只看 Web 网站，还有 App 和 H5，他们的反爬虫措施一般比较少<br>3.如果真的对性能要求很高，可以考虑多线程(一些成熟的框架如 scrapy都已支持)，甚至分布式</p>
+<p><img src="http://www.lining0806.com/category/spider/" alt></p>
+<p>本文来自携程酒店研发部研发经理崔广宇在第三期【携程技术微分享】上的分享</p>
+<p>  你被爬虫侵扰过么？当你看到“爬虫”两个字的时候，是不是已经有点血脉贲张的感觉了？千万要忍耐，稍稍做点什么，就可以在名义上让他们胜利，实际上让他们受损失。</p>
+<h1 id="一、为什么要反爬虫"><a href="#一、为什么要反爬虫" class="headerlink" title="一、为什么要反爬虫"></a>一、为什么要反爬虫</h1><h2 id="1、爬虫占总PV比例较高，这样浪费钱（尤其是三月份爬虫）。"><a href="#1、爬虫占总PV比例较高，这样浪费钱（尤其是三月份爬虫）。" class="headerlink" title="1、爬虫占总PV比例较高，这样浪费钱（尤其是三月份爬虫）。"></a>1、爬虫占总PV比例较高，这样浪费钱（尤其是三月份爬虫）。</h2><p>三月份爬虫是个什么概念呢？每年的三月份我们会迎接一次爬虫高峰期。</p>
+<p>最初我们百思不得其解。直到有一次，四月份的时候，我们删除了一个url，然后有个爬虫不断的爬取url，导致大量报错，测试开始找我们麻烦。我们只好特意为这个爬虫发布了一次站点，把删除的url又恢复回去了。</p>
+<p>但是当时我们的一个组员表示很不服，说，我们不能干掉爬虫，也就罢了，还要专门为它发布，这实在是太没面子了。于是出了个主意，说：url可以上，但是，绝对不给真实数据。</p>
+<p>于是我们就把一个静态文件发布上去了。报错停止了，爬虫没有停止，也就是说对方并不知道东西都是假的。这个事情给了我们一个很大的启示，也直接成了我们反爬虫技术的核心：变更。</p>
+<p>后来有个学生来申请实习。我们看了简历发现她爬过携程。后来面试的时候确认了下，果然她就是四月份害我们发布的那个家伙。不过因为是个妹子，技术也不错，后来就被我们招安了。现在已经快正式入职了。</p>
+<p>后来我们一起讨论的时候，她提到了，有大量的硕士在写论文的时候会选择爬取OTA数据，并进行舆情分析。因为五月份交论文，所以嘛，大家都是读过书的，你们懂的，前期各种DotA，LOL，到了三月份了，来不及了，赶紧抓数据，四月份分析一下，五月份交论文。就是这么个节奏。</p>
+<h2 id="2、公司可免费查询的资源被批量抓走，丧失竞争力，这样少赚钱。"><a href="#2、公司可免费查询的资源被批量抓走，丧失竞争力，这样少赚钱。" class="headerlink" title="2、公司可免费查询的资源被批量抓走，丧失竞争力，这样少赚钱。"></a>2、公司可免费查询的资源被批量抓走，丧失竞争力，这样少赚钱。</h2><p>OTA的价格可以在非登录状态下直接被查询，这个是底线。如果强制登陆，那么可以通过封杀账号的方式让对方付出代价，这也是很多网站的做法。但是我们不能强制对方登录。那么如果没有反爬虫，对方就可以批量复制我们的信息，我们的竞争力就会大大减少。</p>
+<p>竞争对手可以抓到我们的价格，时间长了用户就会知道，只需要去竞争对手那里就可以了，没必要来携程。这对我们是不利的。</p>
+<h2 id="3、爬虫是否涉嫌违法？-如果是的话，是否可以起诉要求赔偿？这样可以赚钱。"><a href="#3、爬虫是否涉嫌违法？-如果是的话，是否可以起诉要求赔偿？这样可以赚钱。" class="headerlink" title="3、爬虫是否涉嫌违法？ 如果是的话，是否可以起诉要求赔偿？这样可以赚钱。"></a>3、爬虫是否涉嫌违法？ 如果是的话，是否可以起诉要求赔偿？这样可以赚钱。</h2><p>这个问题我特意咨询了法务，最后发现这在国内还是个擦边球，就是有可能可以起诉成功，也可能完全无效。所以还是需要用技术手段来做最后的保障。</p>
+<h1 id="二、反什么样的爬虫"><a href="#二、反什么样的爬虫" class="headerlink" title="二、反什么样的爬虫"></a>二、反什么样的爬虫</h1><h2 id="1、十分低级的应届毕业生"><a href="#1、十分低级的应届毕业生" class="headerlink" title="1、十分低级的应届毕业生"></a>1、十分低级的应届毕业生</h2><p>开头我们提到的三月份爬虫，就是一个十分明显的例子。应届毕业生的爬虫通常简单粗暴，根本不管服务器压力，加上人数不可预测，很容易把站点弄挂。</p>
+<p>顺便说下，通过爬携程来获取offer这条路已经行不通了。因为我们都知道，第一个说漂亮女人像花的人，是天才。而第二个。。。你们懂的吧？</p>
+<h2 id="2、十分低级的创业小公司"><a href="#2、十分低级的创业小公司" class="headerlink" title="2、十分低级的创业小公司"></a>2、十分低级的创业小公司</h2><p>现在的创业公司越来越多，也不知道是被谁忽悠的然后大家创业了发现不知道干什么好，觉得大数据比较热，就开始做大数据。</p>
+<p>分析程序全写差不多了，发现自己手头没有数据。</p>
+<p>怎么办？写爬虫爬啊。于是就有了不计其数的小爬虫，出于公司生死存亡的考虑，不断爬取数据。</p>
+<h2 id="3、不小心写错了没人去停止的失控小爬虫"><a href="#3、不小心写错了没人去停止的失控小爬虫" class="headerlink" title="3、不小心写错了没人去停止的失控小爬虫"></a>3、不小心写错了没人去停止的失控小爬虫</h2><p>携程上的点评有的时候可能高达60%的访问量是爬虫。我们已经选择直接封锁了，它们依然孜孜不倦地爬取。</p>
+<p>什么意思呢？就是说，他们根本爬不到任何数据，除了http code是200以外，一切都是不对的，可是爬虫依然不停止这个很可能就是一些托管在某些服务器上的小爬虫，已经无人认领了，依然在辛勤地工作着。</p>
+<h2 id="4、成型的商业对手"><a href="#4、成型的商业对手" class="headerlink" title="4、成型的商业对手"></a>4、成型的商业对手</h2><p>这个是最大的对手，他们有技术，有钱，要什么有什么，如果和你死磕，你就只能硬着头皮和他死磕。</p>
+<h2 id="5、抽风的搜索引擎"><a href="#5、抽风的搜索引擎" class="headerlink" title="5、抽风的搜索引擎"></a>5、抽风的搜索引擎</h2><p>大家不要以为搜索引擎都是好人，他们也有抽风的时候，而且一抽风就会导致服务器性能下降，请求量跟网络攻击没什么区别。</p>
+<h1 id="三、什么是爬虫和反爬虫"><a href="#三、什么是爬虫和反爬虫" class="headerlink" title="三、什么是爬虫和反爬虫"></a>三、什么是爬虫和反爬虫</h1><p>因为反爬虫暂时是个较新的领域，因此有些定义要自己下。我们内部定义是这样的：</p>
+<p>爬虫：使用任何技术手段，批量获取网站信息的一种方式。关键在于批量。<br>反爬虫：使用任何技术手段，阻止别人批量获取自己网站信息的一种方式。关键也在于批量。<br>误伤：在反爬虫的过程中，错误的将普通用户识别为爬虫。误伤率高的反爬虫策略，效果再好也不能用。<br>拦截：成功地阻止爬虫访问。这里会有拦截率的概念。通常来说，拦截率越高的反爬虫策略，误伤的可能性就越高。因此需要做个权衡。<br>资源：机器成本与人力成本的总和。<br>这里要切记，人力成本也是资源，而且比机器更重要。因为，根据摩尔定律，机器越来越便宜。而根据IT行业的发展趋势，程序员工资越来越贵。因此，让对方加班才是王道，机器成本并不是特别值钱。</p>
+<h1 id="四、知己知彼：如何编写简单爬虫"><a href="#四、知己知彼：如何编写简单爬虫" class="headerlink" title="四、知己知彼：如何编写简单爬虫"></a>四、知己知彼：如何编写简单爬虫</h1><p>要想做反爬虫，我们首先需要知道如何写个简单的爬虫。</p>
+<p>目前网络上搜索到的爬虫资料十分有限，通常都只是给一段python代码。python是一门很好的语言，但是用来针对有反爬虫措施的站点做爬虫，真的不是最优选择。</p>
+<p>更讽刺的是，通常搜到的python爬虫代码都会使用一个lynx的user-agent。你们应该怎么处理这个user-agent，就不用我来说了吧？</p>
+<p>通常编写爬虫需要经过这么几个过程：</p>
+<p>分析页面请求格式<br>创建合适的http请求<br>批量发送http请求，获取数据<br>举个例子，直接查看携程生产url。在详情页点击“确定”按钮，会加载价格。假设价格是你想要的，那么抓出网络请求之后，哪个请求才是你想要的结果呢？</p>
+<p>答案出乎意料的简单，你只需要用根据网络传输数据量进行倒序排列即可。因为其他的迷惑性的url再多再复杂，开发人员也不会舍得加数据量给他。</p>
+<h1 id="五、知己知彼：如何编写高级爬虫"><a href="#五、知己知彼：如何编写高级爬虫" class="headerlink" title="五、知己知彼：如何编写高级爬虫"></a>五、知己知彼：如何编写高级爬虫</h1><p>那么爬虫进阶应该如何做呢？通常所谓的进阶有以下几种：</p>
+<h2 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h2><p>通常会有一些教材告诉你，为了爬取效率，需要把爬虫分布式部署到多台机器上。这完全是骗人的。分布式唯一的作用是：防止对方封IP。封IP是终极手段，效果非常好，当然，误伤起用户也是非常爽的。</p>
+<h2 id="模拟JavaScript"><a href="#模拟JavaScript" class="headerlink" title="模拟JavaScript"></a>模拟JavaScript</h2><p>有些教程会说，模拟javascript，抓取动态网页，是进阶技巧。但是其实这只是个很简单的功能。因为，如果对方没有反爬虫，你完全可以直接抓ajax本身，而无需关心js怎么处理的。如果对方有反爬虫，那么javascript必然十分复杂，重点在于分析，而不仅仅是简单的模拟。</p>
+<p>换句话说：这应该是基本功。</p>
+<h2 id="PhantomJs"><a href="#PhantomJs" class="headerlink" title="PhantomJs"></a>PhantomJs</h2><p>这个是一个极端的例子。这个东西本意是用来做自动测试的，结果因为效果很好，很多人拿来做爬虫。但是这个东西有个硬伤，就是：效率。此外PhantomJs也是可以被抓到的，出于多方面原因，这里暂时不讲。　</p>
+<h1 id="六、不同级别爬虫的优缺点"><a href="#六、不同级别爬虫的优缺点" class="headerlink" title="六、不同级别爬虫的优缺点"></a>六、不同级别爬虫的优缺点</h1><p>越是低级的爬虫，越容易被封锁，但是性能好，成本低。越是高级的爬虫，越难被封锁，但是性能低，成本也越高。</p>
+<p>当成本高到一定程度，我们就可以无需再对爬虫进行封锁。经济学上有个词叫边际效应。付出成本高到一定程度，收益就不是很多了。</p>
+<p>那么如果对双方资源进行对比，我们就会发现，无条件跟对方死磕，是不划算的。应该有个黄金点，超过这个点，那就让它爬好了。毕竟我们反爬虫不是为了面子，而是为了商业因素。</p>
+<h1 id="七、如何设计一个反爬虫系统-常规架构"><a href="#七、如何设计一个反爬虫系统-常规架构" class="headerlink" title="七、如何设计一个反爬虫系统(常规架构)"></a>七、如何设计一个反爬虫系统(常规架构)</h1><p>有个朋友曾经给过我这样一个架构：</p>
+<p>1、对请求进行预处理，便于识别；<br>2、识别是否是爬虫；<br>3、针对识别结果，进行适当的处理；</p>
+<p>当时我觉得，听起来似乎很有道理，不愧是架构，想法就是和我们不一样。后来我们真正做起来反应过来不对了。因为：</p>
+<p>如果能识别出爬虫，哪还有那么多废话？想怎么搞它就怎么搞它。如果识别不出来爬虫，你对谁做适当处理？</p>
+<p>三句话里面有两句是废话，只有一句有用的，而且还没给出具体实施方式。那么：这种架构(师)有什么用？</p>
+<p>因为当前存在一个架构师崇拜问题，所以很多创业小公司以架构师名义招开发。给出的title都是：初级架构师，架构师本身就是个高级岗位，为什么会有初级架构。这就相当于：初级将军/初级司令。</p>
+<p>最后去了公司，发现十个人，一个CTO，九个架构师，而且可能你自己是初级架构师，其他人还是高级架构师。不过初级架构师还不算坑爹了，有些小创业公司还招CTO做开发呢。</p>
+<h2 id="传统反爬虫手段"><a href="#传统反爬虫手段" class="headerlink" title="传统反爬虫手段"></a>传统反爬虫手段</h2><p>1、后台对访问进行统计，如果单个IP访问超过阈值，予以封锁。</p>
+<p>这个虽然效果还不错，但是其实有两个缺陷，一个是非常容易误伤普通用户，另一个就是，IP其实不值钱，几十块钱甚至有可能买到几十万个IP。所以总体来说是比较亏的。不过针对三月份呢爬虫，这点还是非常有用的。</p>
+<p>2、后台对访问进行统计，如果单个session访问超过阈值，予以封锁。</p>
+<p>这个看起来更高级了一些，但是其实效果更差，因为session完全不值钱，重新申请一个就可以了。</p>
+<p>3、后台对访问进行统计，如果单个userAgent访问超过阈值，予以封锁。</p>
+<p>这个是大招，类似于抗生素之类的，效果出奇的好，但是杀伤力过大，误伤非常严重，使用的时候要非常小心。至今为止我们也就只短暂封杀过mac下的火狐。</p>
+<p>4、以上的组合</p>
+<p>组合起来能力变大，误伤率下降，在遇到低级爬虫的时候，还是比较好用的。</p>
+<p>由以上我们可以看出，其实爬虫反爬虫是个游戏，RMB玩家才最牛逼。因为上面提到的方法，效果均一般，所以还是用JavaScript比较靠谱。</p>
+<p>也许有人会说：javascript做的话，不是可以跳掉前端逻辑，直接拉服务吗？怎么会靠谱呢？因为啊，我是一个标题党啊。JavaScript不仅仅是做前端。跳过前端不等于跳过JavaScript。也就是说：我们的服务器是nodejs做的。</p>
+<p>思考题：我们写代码的时候，最怕碰到什么代码？什么代码不好调试？<br>eval</p>
+<p>eval已经臭名昭著了，它效率低下，可读性糟糕。正是我们所需要的。</p>
+<p>goto</p>
+<p>js对goto支持并不好，因此需要自己实现goto。</p>
+<p>混淆</p>
+<p>目前的minify工具通常是minify成abcd之类简单的名字，这不符合我们的要求。我们可以minify成更好用的，比如阿拉伯语。为什么呢？ 因为阿拉伯语有的时候是从左向右写，有的时候是从右向左写，还有的时候是从下向上写。除非对方雇个阿拉伯程序员，否则非头疼死不可。</p>
+<p>不稳定代码</p>
+<p>什么bug不容易修？不容易重现的bug不好修。因此，我们的代码要充满不确定性，每次都不一样。</p>
+<p>代码演示</p>
+<p>下载代码本身，可以更容易理解。这里简短介绍下思路：</p>
+<p>纯JAVASCRIPT反爬虫DEMO，通过更改连接地址，来让对方抓取到错误价格。这种方法简单，但是如果对方针对性的来查看，十分容易被发现。<br>纯JAVASCRIPT反爬虫DEMO，更改key。这种做法简单，不容易被发现。但是可以通过有意爬取错误价格的方式来实现。<br>纯JAVASCRIPT反爬虫DEMO，更改动态key。这种方法可以让更改key的代价变为0，因此代价更低。<br>纯JAVASCRIPT反爬虫DEMO，十分复杂的更改key。这种方法，可以让对方很难分析，如果加了后续提到的浏览器检测，更难被爬取。<br>到此为止。</p>
+<p>前面我们提到了边际效应，就是说，可以到此为止了。后续再投入人力就得不偿失了。除非有专门的对手与你死磕。不过这个时候就是为了尊严而战，不是为了商业因素了。</p>
+<p>浏览器检测</p>
+<p>针对不同的浏览器，我们的检测方式是不一样的。</p>
+<p>IE 检测bug；<br>FF 检测对标准的严格程度；<br>Chrome 检测强大特性。</p>
+<h1 id="八、我抓到你了——然后该怎么办"><a href="#八、我抓到你了——然后该怎么办" class="headerlink" title="八、我抓到你了——然后该怎么办"></a>八、我抓到你了——然后该怎么办</h1><p>不会引发生产事件——直接拦截</p>
+<p>可能引发生产事件——给假数据(也叫投毒)</p>
+<p>此外还有一些发散性的思路。例如是不是可以在响应里做SQL注入？毕竟是对方先动的手。不过这个问题法务没有给具体回复，也不容易和她解释。因此暂时只是设想而已。</p>
+<p>1、技术压制</p>
+<p>我们都知道，DotA AI里有个de命令，当AI被击杀后，它获取经验的倍数会提升。因此，前期杀AI太多，AI会一身神装，无法击杀。</p>
+<p>正确的做法是，压制对方等级，但是不击杀。反爬虫也是一样的，不要一开始就搞太过分，逼人家和你死磕。</p>
+<p>2、心理战</p>
+<p>挑衅、怜悯、嘲讽、猥琐。</p>
+<p>以上略过不提，大家领会精神即可。</p>
+<p>3、放水</p>
+<p>这个可能是是最高境界了。</p>
+<p>程序员都不容易，做爬虫的尤其不容易。可怜可怜他们给他们一小口饭吃吧。没准过几天你就因为反爬虫做得好，改行做爬虫了。</p>
+<p>比如，前一阵子就有人找我问我会不会做爬虫。。。。。我这么善良的人，能说不会吗？？？？</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://segmentfault.com/a/1190000012293292" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012293292</a>    如果有人问你爬虫抓取技术的门道，请叫他来看这篇文章<br>[2] <a href="https://segmentfault.com/a/1190000005840672" target="_blank" rel="noopener">https://segmentfault.com/a/1190000005840672</a>    关于反爬虫，看这一篇就够了<br>[3] <a href="http://techshow.ctrip.com/archives/2213.html" target="_blank" rel="noopener">http://techshow.ctrip.com/archives/2213.html</a>    那些你不知道的爬虫反爬虫套路<br>[4] <a href="http://dp.imysql.com:8080/2013/05/13/nginx-limit-req-to-limit-spider.html" target="_blank" rel="noopener">http://dp.imysql.com:8080/2013/05/13/nginx-limit-req-to-limit-spider.html</a>    修改配置nginx，限制无良爬虫频率<br>[5] <a href="https://www.bbsmax.com/A/LPdoG2jd3a/" target="_blank" rel="noopener">https://www.bbsmax.com/A/LPdoG2jd3a/</a>    基于webmagic的爬虫项目经验小结<br>[6] <a href="http://www.oschina.net/project/tag/64/spider?lang=0&amp;os=0&amp;sort=view&amp;" target="_blank" rel="noopener">http://www.oschina.net/project/tag/64/spider?lang=0&amp;os=0&amp;sort=view&amp;</a>    网络爬虫<br>[7] <a href="https://zhuanlan.zhihu.com/p/22097627" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/22097627</a>    几篇入门级的爬虫相关文章<br>[8] <a href="https://zhuanlan.zhihu.com/p/20334680" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/20334680</a>    一看就明白的爬虫入门讲解-基础理论篇（上篇）<br>[9] <a href="https://zhuanlan.zhihu.com/p/20336750?refer=zhugeio" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/20336750?refer=zhugeio</a>    一看就明白的爬虫入门讲解-基础理论篇（下篇）<br>[10] <a href="http://www.bijishequ.com/detail/535159?p=" target="_blank" rel="noopener">http://www.bijishequ.com/detail/535159?p=</a>    爬虫与反爬虫的博弈<br>[11] <a href="https://www.zhihu.com/question/28168585" target="_blank" rel="noopener">https://www.zhihu.com/question/28168585</a><br>[12] <a href="https://zhuanlan.zhihu.com/p/20410446" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/20410446</a><br>[13] <a href="https://zhuanlan.zhihu.com/p/20413379" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/20413379</a><br>[14] <a href="https://zhuanlan.zhihu.com/p/20413828" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/20413828</a><br>[15] <a href="https://www.liaoxuefeng.com/article/001509844125769eafbb65df0a04430a2d010a24a945bfa000" target="_blank" rel="noopener">https://www.liaoxuefeng.com/article/001509844125769eafbb65df0a04430a2d010a24a945bfa000</a>    使用Nginx过滤网络爬虫</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/crawler/" rel="tag"># crawler</a>
+          
+            <a href="/tags/spider/" rel="tag"># spider</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/21/crawler-xiecheng/" rel="next" title="爬取 携程">
+                <i class="fa fa-chevron-left"></i> 爬取 携程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/16/druid-db-pool-config-java/" rel="prev" title="Druid 连接池 配置 (java无框架)">
+                Druid 连接池 配置 (java无框架) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、为什么要反爬虫"><span class="nav-number">1.</span> <span class="nav-text">一、为什么要反爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、爬虫占总PV比例较高，这样浪费钱（尤其是三月份爬虫）。"><span class="nav-number">1.1.</span> <span class="nav-text">1、爬虫占总PV比例较高，这样浪费钱（尤其是三月份爬虫）。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、公司可免费查询的资源被批量抓走，丧失竞争力，这样少赚钱。"><span class="nav-number">1.2.</span> <span class="nav-text">2、公司可免费查询的资源被批量抓走，丧失竞争力，这样少赚钱。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、爬虫是否涉嫌违法？-如果是的话，是否可以起诉要求赔偿？这样可以赚钱。"><span class="nav-number">1.3.</span> <span class="nav-text">3、爬虫是否涉嫌违法？ 如果是的话，是否可以起诉要求赔偿？这样可以赚钱。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二、反什么样的爬虫"><span class="nav-number">2.</span> <span class="nav-text">二、反什么样的爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1、十分低级的应届毕业生"><span class="nav-number">2.1.</span> <span class="nav-text">1、十分低级的应届毕业生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2、十分低级的创业小公司"><span class="nav-number">2.2.</span> <span class="nav-text">2、十分低级的创业小公司</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3、不小心写错了没人去停止的失控小爬虫"><span class="nav-number">2.3.</span> <span class="nav-text">3、不小心写错了没人去停止的失控小爬虫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4、成型的商业对手"><span class="nav-number">2.4.</span> <span class="nav-text">4、成型的商业对手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5、抽风的搜索引擎"><span class="nav-number">2.5.</span> <span class="nav-text">5、抽风的搜索引擎</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、什么是爬虫和反爬虫"><span class="nav-number">3.</span> <span class="nav-text">三、什么是爬虫和反爬虫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、知己知彼：如何编写简单爬虫"><span class="nav-number">4.</span> <span class="nav-text">四、知己知彼：如何编写简单爬虫</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、知己知彼：如何编写高级爬虫"><span class="nav-number">5.</span> <span class="nav-text">五、知己知彼：如何编写高级爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式"><span class="nav-number">5.1.</span> <span class="nav-text">分布式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模拟JavaScript"><span class="nav-number">5.2.</span> <span class="nav-text">模拟JavaScript</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PhantomJs"><span class="nav-number">5.3.</span> <span class="nav-text">PhantomJs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#六、不同级别爬虫的优缺点"><span class="nav-number">6.</span> <span class="nav-text">六、不同级别爬虫的优缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#七、如何设计一个反爬虫系统-常规架构"><span class="nav-number">7.</span> <span class="nav-text">七、如何设计一个反爬虫系统(常规架构)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#传统反爬虫手段"><span class="nav-number">7.1.</span> <span class="nav-text">传统反爬虫手段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#八、我抓到你了——然后该怎么办"><span class="nav-number">8.</span> <span class="nav-text">八、我抓到你了——然后该怎么办</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">9.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

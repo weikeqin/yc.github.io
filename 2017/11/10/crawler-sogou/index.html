@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="重要参数SUID、SNUID、SUVSUID  SUID具体的含义可以自行百度，这里只讲述它生成的过程。当我们访问sogou搜索首页的时候，Set-Cookie中便会生成一个SUID参数的内容，除非重启浏览器，不然短时间内SUID并不会改变。SUID的值应该是sogou服务端随便分配的，只有当重新开启一个session时它的值才会更新。 SNUID  SNUID是sogou反爬虫的重点，sogou">
+<meta name="keywords" content="crawler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬取 搜狗">
+<meta property="og:url" content="http://weikeqin.cn/2017/11/10/crawler-sogou/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="重要参数SUID、SNUID、SUVSUID  SUID具体的含义可以自行百度，这里只讲述它生成的过程。当我们访问sogou搜索首页的时候，Set-Cookie中便会生成一个SUID参数的内容，除非重启浏览器，不然短时间内SUID并不会改变。SUID的值应该是sogou服务端随便分配的，只有当重新开启一个session时它的值才会更新。 SNUID  SNUID是sogou反爬虫的重点，sogou">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-03T12:31:21.637Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬取 搜狗">
+<meta name="twitter:description" content="重要参数SUID、SNUID、SUVSUID  SUID具体的含义可以自行百度，这里只讲述它生成的过程。当我们访问sogou搜索首页的时候，Set-Cookie中便会生成一个SUID参数的内容，除非重启浏览器，不然短时间内SUID并不会改变。SUID的值应该是sogou服务端随便分配的，只有当重新开启一个session时它的值才会更新。 SNUID  SNUID是sogou反爬虫的重点，sogou">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/11/10/crawler-sogou/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>爬取 搜狗 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/11/10/crawler-sogou/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">爬取 搜狗
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-11-10 15:34:29" itemprop="dateCreated datePublished" datetime="2017-11-10T15:34:29+08:00">2017-11-10</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/10/crawler-sogou/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/11/10/crawler-sogou/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/11/10/crawler-sogou/" class="leancloud_visitors" data-flag-title="爬取 搜狗">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="重要参数SUID、SNUID、SUV"><a href="#重要参数SUID、SNUID、SUV" class="headerlink" title="重要参数SUID、SNUID、SUV"></a>重要参数SUID、SNUID、SUV</h1><h2 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h2><p>  SUID具体的含义可以自行百度，这里只讲述它生成的过程。当我们访问sogou搜索首页的时候，Set-Cookie中便会生成一个SUID参数的内容，除非重启浏览器，不然短时间内SUID并不会改变。SUID的值应该是sogou服务端随便分配的，只有当重新开启一个session时它的值才会更新。</p>
+<h2 id="SNUID"><a href="#SNUID" class="headerlink" title="SNUID"></a>SNUID</h2><p>  SNUID是sogou反爬虫的重点，sogou是对同一个SNUID访问次数做了限制，而超过限制后，会跳转到验证码页面，只有输入验证码重新验证以后，SNUID才会更新，访问才能继续进行。那么SNUID是如何生成的呢？经过测试，应该是由javascript生成的，当然前提是要有SUID，SUID是生成SNUID的基础。</p>
+<a id="more"></a>
+<h2 id="SUV"><a href="#SUV" class="headerlink" title="SUV"></a>SUV</h2><p>  SUV参数内容是由JavaScript生成的，测试并没有发现其对于反爬虫有何影响，故本文不做详细介绍。</p>
+<h2 id="sct"><a href="#sct" class="headerlink" title="sct"></a>sct</h2><p>  访问次数</p>
+<h2 id="ld"><a href="#ld" class="headerlink" title="ld"></a>ld</h2><p>  每次请求ld都会变化，但即使不对也能获取到内容</p>
+<!-- 
+注释
+
+2017-11-09
+SUV=00022B892641197A59DDD2D3624A0275; 
+IPLOC=CN1100; 
+ABTEST=0|1509418616|v17; 
+SUID=62869B276119940A0000000059F7E678; 
+pgv_pvi=3386598400; 
+SNUID=1DF91BA77F7ADDC6D4E6D7D680FD3318; 
+usid=_AoyXlXRG_2xmcaB; 
+taspeed=taspeedexist; 
+pgv_si=s5419669504; 
+ld=8Zllllllll2BdMBclllllVojdnklllllJimpYkllllDllllljllll5@@@@@@@@@@; 
+browerV=3; 
+osV=1; 
+LSTMV=326%2C428; 
+LCLKINT=23741; 
+sct=30
+
+
+SUV=00022B892641197A59DDD2D3624A0275; 
+IPLOC=CN1100; 
+ABTEST=0|1509418616|v17; 
+SUID=62869B276119940A0000000059F7E678; 
+pgv_pvi=3386598400; 
+SUIR=1DF91BA77F7ADDC6D4E6D7D680FD3318; 
+SNUID=7097893611144F6A4A16E2C012E2A3F8; 
+usid=_AoyXlXRG_2xmcaB; 
+ld=eZllllllll2BdMBclllllVoR7CtlllllJimpYkllllYllllljylll5@@@@@@@@@@; 
+browerV=3; 
+osV=1; 
+LSTMV=333%2C267; 
+LCLKINT=20511; 
+sct=35
+
+
+
+SUV=00022B892641197A59DDD2D3624A0275; 
+IPLOC=CN1100; 
+ABTEST=0|1509418616|v17; 
+SUID=62869B276119940A0000000059F7E678; 
+pgv_pvi=3386598400; 
+SUIR=1DF91BA77F7ADDC6D4E6D7D680FD3318; 
+SNUID=7097893611144F6A4A16E2C012E2A3F8; 
+usid=_AoyXlXRG_2xmcaB; 
+ld=eZllllllll2BdMBclllllVoR7CtlllllJimpYkllllYllllljylll5@@@@@@@@@@; 
+browerV=3; 
+osV=1; 
+LSTMV=333%2C267; 
+LCLKINT=20511; 
+sct=35
+
+
+IPLOC=CN1100; 
+SUID=44DD6D3B2320940A000000005945E840; 
+SUV=1497753659532815; 
+SNUID=CC293489AFAAF22C50400D49AFA06F7A; 
+usid=ZH6lM1wIuPtq5E_F; 
+ABTEST=4|1510196399|v17; 
+ld=jyllllllll2zlDvslllllVoReZYlllllJimpYkllllGllllljylll5@@@@@@@@@@; 
+browerV=2; 
+osV=1
+
+
+
+IPLOC=CN1100; 
+SUID=8E869B272208990A0000000059914DD3; 
+SUV=1502694868786611; 
+SMYUV=1503576678898155; 
+UM_distinctid=15e142762ba458-0ccda5919fa4db-333f5902-13c680-15e142762bbb05; 
+ABTEST=1|1510281512|v17; 
+SNUID=BF5A47FADCD8804A0CCE7EB7DDFA9761; 
+pgv_pvi=1635388416; 
+ld=Jkllllllll2zxS9olllllVoVVRylllllJimpYkllllwllllljklll5@@@@@@@@@@; 
+browerV=3; 
+osV=1; 
+taspeed=taspeedexist; 
+pgv_si=s1349663744; 
+LSTMV=610%2C217; 
+LCLKINT=13097; 
+sct=3
+
+
+2017-11-10 15:33
+SUV=00022B892641197A59DDD2D3624A0275; 
+IPLOC=CN1100; 
+ABTEST=0|1509418616|v17; 
+SUID=62869B276119940A0000000059F7E678; 
+pgv_pvi=3386598400; 
+SUIR=1DF91BA77F7ADDC6D4E6D7D680FD3318; 
+SNUID=7097893611144F6A4A16E2C012E2A3F8; 
+usid=_AoyXlXRG_2xmcaB; 
+taspeed=taspeedexist; 
+pgv_si=s5974199296; 
+sct=40; 
+ld=WZllllllll2BdMBclllllVoVvh9lllllJimpYklllltllllljklll5@@@@@@@@@@; 
+LSTMV=0%2C364; 
+LCLKINT=180467; 
+browerV=3; 
+osV=1
+
+
+2017-11-10 15:53
+SUV=00022B892641197A59DDD2D3624A0275; 
+IPLOC=CN1100; 
+ABTEST=0|1509418616|v17; 
+SUID=62869B276119940A0000000059F7E678; 
+pgv_pvi=3386598400; 
+SUIR=1DF91BA77F7ADDC6D4E6D7D680FD3318; 
+SNUID=7097893611144F6A4A16E2C012E2A3F8; 
+usid=_AoyXlXRG_2xmcaB; 
+taspeed=taspeedexist; 
+pgv_si=s5974199296; 
+PHPSESSID=qtq131sp94m2eqs83fuis2erp3; 
+sst0=285; 
+ld=gyllllllll2BdMBclllllVoVQm6lllllJimpYklllxlllllljklll5@@@@@@@@@@; 
+browerV=3; 
+osV=1; 
+LSTMV=184%2C165; 
+LCLKINT=4290; 
+sct=47
+
+
+2017-11-13 09:46
+SUV=00022B892641197A59DDD2D3624A0275; 
+IPLOC=CN1100; 
+ABTEST=0|1509418616|v17; 
+SUID=62869B276119940A0000000059F7E678; 
+pgv_pvi=3386598400; 
+SUIR=1DF91BA77F7ADDC6D4E6D7D680FD3318; 
+usid=_AoyXlXRG_2xmcaB; 
+SNUID=53B7A91631346FE160479F6C32D22345; 
+sct=53; 
+ld=ekllllllll2BdMBclllllVowdcUlllllJimpYkllllwlllllRylll5@@@@@@@@@@; 
+browerV=3; 
+osV=1; 
+LSTMV=1095%2C336; 
+LCLKINT=44738
+
+
+2017-11-13 11:15 chrome
+SUV=00022B892641197A59DDD2D3624A0275; 
+IPLOC=CN1100; 
+ABTEST=0|1509418616|v17; 
+SUID=62869B276119940A0000000059F7E678; 
+pgv_pvi=3386598400; 
+SUIR=1DF91BA77F7ADDC6D4E6D7D680FD3318; 
+usid=_AoyXlXRG_2xmcaB; 
+SNUID=53B7A91631346FE160479F6C32D22345; 
+sst0=565; 
+sct=55; 
+ld=jlllllllll2BdMBclllllVoJluDlllllJimpYkllllklllllRylll5@@@@@@@@@@; 
+browerV=3; 
+osV=1
+
+
+2017-11-13 15:52 chrome
+SUV=00022B892641197A59DDD2D3624A0275; 
+IPLOC=CN1100; 
+ABTEST=0|1509418616|v17; 
+SUID=62869B276119940A0000000059F7E678; 
+pgv_pvi=3386598400; 
+SUIR=1DF91BA77F7ADDC6D4E6D7D680FD3318; 
+usid=_AoyXlXRG_2xmcaB; 
+taspeed=taspeedexist; 
+pgv_si=s4172974080; 
+sst0=515; 
+PHPSESSID=lr7q7l5ssq49j1h87mkto3va13; 
+SNUID=39DAC07B5C5901832F2282EB5CC25E49; 
+sct=64; 
+ld=Elllllllll2BdMBclllllVoJF87lllllJimpYkllljGlllllRylll5@@@@@@@@@@; 
+browerV=3; 
+osV=1
+
+
+2017-11-13 15:55 firefox
+IPLOC=CN1100; 
+SUID=44DD6D3B2320940A000000005945E840; 
+SUV=1497753659532815; 
+SNUID=76928E32151048CC6B32D18B15263EB0; 
+usid=ZH6lM1wIuPtq5E_F; 
+ABTEST=4|1510196399|v17; 
+ld=6yllllllll2zlDvslllllVoJF6DlllllJimpYkllll9lllllRylll5@@@@@@@@@@; 
+browerV=2; 
+osV=1; 
+sct=7; 
+SUIR=CC293489AFAAF22C50400D49AFA06F7A; 
+LSTMV=325%2C239; 
+LCLKINT=377844
+
+
+2017-11-13 15:57 firefox
+IPLOC=CN1100; 
+SUID=44DD6D3B2320940A000000005945E840; 
+SUV=1497753659532815; 
+SNUID=76928E32151048CC6B32D18B15263EB0; 
+usid=ZH6lM1wIuPtq5E_F; 
+ABTEST=4|1510196399|v17; 
+ld=zlllllllll2zlDvslllllVoJFD6lllllJimpYkllllwlllllRylll5@@@@@@@@@@; 
+browerV=2; 
+osV=1; 
+sct=8; 
+SUIR=CC293489AFAAF22C50400D49AFA06F7A; 
+LSTMV=376%2C251; 
+LCLKINT=165617
+
+
+2017-11-13 15:58 firefox
+IPLOC=CN1100; 
+SUID=44DD6D3B2320940A000000005945E840; 
+SUV=1497753659532815; 
+SNUID=76928E32151048CC6B32D18B15263EB0; 
+usid=ZH6lM1wIuPtq5E_F; 
+ABTEST=4|1510196399|v17; 
+ld=pyllllllll2zlDvslllllVoJU4llllllJimpYkllllGlllllRylll5@@@@@@@@@@; 
+browerV=2; 
+osV=1; 
+sct=9; 
+SUIR=CC293489AFAAF22C50400D49AFA06F7A; 
+taspeed=taspeedexist; 
+pgv_pvi=1396500480; 
+pgv_si=s3432387584; 
+LSTMV=281%2C253; 
+LCLKINT=60394
+
+注释结束
+-->
+<h1 id="被屏蔽现象"><a href="#被屏蔽现象" class="headerlink" title="被屏蔽现象"></a>被屏蔽现象</h1><p>  同样，要解决反爬虫问题，我们先来看看触发反爬虫的现象。当同一个SNUID访问次数sct多了以后，继续访问sogou会跳转到一个验证码页面。<br>URL地址以及解码后的url地址：<br><a href="http://www.sogou.com/antispider/?from=%2fweb%3Fquery%3d152512wqe%26ie%3dutf8%26_ast%3d1488957312%26_asf%3dnull%26w%3d01029901%26p%3d40040100%26dp%3d1%26cid%3d%26cid%3d%26sut%3d578%26sst0%3d1488957299160%26lkt%3d3%2C1488957298718%2C1488957298893" target="_blank" rel="noopener">http://www.sogou.com/antispider/?from=%2fweb%3Fquery%3d152512wqe%26ie%3dutf8%26_ast%3d1488957312%26_asf%3dnull%26w%3d01029901%26p%3d40040100%26dp%3d1%26cid%3d%26cid%3d%26sut%3d578%26sst0%3d1488957299160%26lkt%3d3%2C1488957298718%2C1488957298893</a><br><a href="http://www.sogou.com/antispider/?from=/web?query=152512wqe&amp;ie=utf8&amp;_ast=1488957312&amp;_asf=null&amp;w=01029901&amp;p=40040100&amp;dp=1&amp;cid=&amp;cid=&amp;sut=578&amp;sst0=1488957299160&amp;lkt=3,1488957298718,1488957298893" target="_blank" rel="noopener">http://www.sogou.com/antispider/?from=/web?query=152512wqe&amp;ie=utf8&amp;_ast=1488957312&amp;_asf=null&amp;w=01029901&amp;p=40040100&amp;dp=1&amp;cid=&amp;cid=&amp;sut=578&amp;sst0=1488957299160&amp;lkt=3,1488957298718,1488957298893</a></p>
+<!--
+注释
+
+2017-11-13
+http://www.sogou.com/antispider/?from=%2fsogou%3Fsite%3dnews.qq.com%26query%3d%D7%F7%B0%B8%B9%A4%BE%DF%26pid%3dsogou-wsse-b58ac8403eb9cf17-0004%26sourceid%3d%26idx%3df%26idx%3d1%26ori%3d%D7%F7%B0%B8+
+http://www.sogou.com/antispider/?from=/sogou?site=news.qq.com&query=测试工具&pid=sogou-wsse-b58ac8403eb9cf17-0004&sourceid=&idx=f&idx=1&ori=测试 
+
+http://www.sogou.com/antispider/?from=%2fweb%3Fquery%3d%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%26_asf%3dwww.sogou.com%26_ast%3d%26w%3d01015002%26p%3d40040108%26ie%3dutf8%26from%3dindex-nologin%26s_from%3dindex%26oq%3d%26ri%3d0%26sourceid%3dsugg%26suguuid%3d%26sut%3d0%26sst0%3d1510558948525%26lkt%3d0%2C0%2C0%26sugsuv%3d00022B892641197A59DDD2D3624A0275%26sugtime%3d1510558948525
+http://www.sogou.com/antispider/?from=/web?query=测试工具&_asf=www.sogou.com&_ast=&w=01015002&p=40040108&ie=utf8&from=index-nologin&s_from=index&oq=&ri=0&sourceid=sugg&suguuid=&sut=0&sst0=1510558948525&lkt=0,0,0&sugsuv=00022B892641197A59DDD2D3624A0275&sugtime=1510558948525
+
+注释结束 -->
+<h1 id="获取SUID"><a href="#获取SUID" class="headerlink" title="获取SUID"></a>获取SUID</h1><p>在爬取<a href="https://www.sogou.com/时，可以在响应的Headers里找见SUID，如下：" target="_blank" rel="noopener">https://www.sogou.com/时，可以在响应的Headers里找见SUID，如下：</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-----请求开始-----https://www.sogou.com/</span><br><span class="line">响应状态：HTTP/1.1 200 OK</span><br><span class="line">Server    nginx</span><br><span class="line">Date    Fri, 10 Nov 2017 08:33:45 GMT</span><br><span class="line">Content-Type    text/html; charset=UTF-8</span><br><span class="line">Transfer-Encoding    chunked</span><br><span class="line">Connection    keep-alive</span><br><span class="line">Vary    Accept-Encoding</span><br><span class="line">Set-Cookie    ABTEST=0|1510302825|v17; expires=Sun, 10-Dec-17 08:33:45 GMT; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Set-Cookie    IPLOC=CN1100; expires=Sat, 10-Nov-18 08:33:45 GMT; domain=.sogou.com; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Set-Cookie    SUID=62869B271810990A000000005A056469; expires=Thu, 05-Nov-37 08:33:45 GMT; domain=.sogou.com; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Cache-Control    max-age=0</span><br><span class="line">Content-Language    zh-CN</span><br><span class="line">Set-Cookie    black_passportid=1; domain=.sogou.com; path=/; expires=Thu, 01-Dec-1994 16:00:00 GMT</span><br><span class="line"> Expires    Fri, 10 Nov 2017 08:33:45 GMT</span><br><span class="line">-----请求结束-----</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-----请求开始-----https://www.sogou.com/</span><br><span class="line">响应状态：HTTP/1.1 200 OK</span><br><span class="line">Server    nginx</span><br><span class="line">Date    Fri, 10 Nov 2017 08:36:43 GMT</span><br><span class="line">Content-Type    text/html; charset=UTF-8</span><br><span class="line">Transfer-Encoding    chunked</span><br><span class="line">Connection    keep-alive</span><br><span class="line">Vary    Accept-Encoding</span><br><span class="line">Set-Cookie    ABTEST=4|1510303003|v17; expires=Sun, 10-Dec-17 08:36:43 GMT; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Set-Cookie    IPLOC=CN1100; expires=Sat, 10-Nov-18 08:36:43 GMT; domain=.sogou.com; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Set-Cookie    SUID=62869B271810990A000000005A05651B; expires=Thu, 05-Nov-37 08:36:43 GMT; domain=.sogou.com; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Cache-Control    max-age=0</span><br><span class="line">Content-Language    zh-CN</span><br><span class="line">Set-Cookie    black_passportid=1; domain=.sogou.com; path=/; expires=Thu, 01-Dec-1994 16:00:00 GMT</span><br><span class="line">Expires    Fri, 10 Nov 2017 08:36:43 GMT</span><br><span class="line">-----请求结束-----</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-----请求开始-----https://www.sogou.com/</span><br><span class="line">响应状态：HTTP/1.1 200 OK</span><br><span class="line">Server    nginx</span><br><span class="line">Date    Mon, 13 Nov 2017 02:30:45 GMT</span><br><span class="line">Content-Type    text/html; charset=UTF-8</span><br><span class="line">Transfer-Encoding    chunked</span><br><span class="line">Connection    keep-alive</span><br><span class="line">Vary    Accept-Encoding</span><br><span class="line">Set-Cookie    ABTEST=0|1510540245|v17; expires=Wed, 13-Dec-17 02:30:45 GMT; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Set-Cookie    IPLOC=CN1100; expires=Tue, 13-Nov-18 02:30:45 GMT; domain=.sogou.com; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Set-Cookie    SUID=62869B271810990A000000005A0903D5; expires=Sun, 08-Nov-37 02:30:45 GMT; domain=.sogou.com; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Cache-Control    max-age=0</span><br><span class="line">Content-Language    zh-CN</span><br><span class="line">Set-Cookie    black_passportid=1; domain=.sogou.com; path=/; expires=Thu, 01-Dec-1994 16:00:00 GMT</span><br><span class="line">Expires    Mon, 13 Nov 2017 02:30:45 GMT</span><br><span class="line">-----请求结束-----</span><br></pre></td></tr></table></figure>
+<h1 id="获取SNUID"><a href="#获取SNUID" class="headerlink" title="获取SNUID"></a>获取SNUID</h1><h2 id="搜狗重新生成SNUID的HTML源码"><a href="#搜狗重新生成SNUID的HTML源码" class="headerlink" title="搜狗重新生成SNUID的HTML源码"></a>搜狗重新生成SNUID的HTML源码</h2><p>  在源码里面可以看到重新生成SNUID的步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE HTML&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;link rel=&quot;shortcut icon&quot; href=&quot;//www.sogou.com/images/logo2014/new/favicon.ico&quot; type=&quot;image/x-icon&quot;&gt;</span><br><span class="line">    &lt;title&gt;搜狗搜索&lt;/title&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;static/css/anti.min.css?v=1&quot;/&gt;</span><br><span class="line">    &lt;script src=&quot;//dlweb.sogoucdn.com/common/lib/jquery/jquery-1.11.0.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;static/js/antispider.min.js?v=2&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        var domain = getDomain();</span><br><span class="line">        window.imgCode = -1;</span><br><span class="line"></span><br><span class="line">        (function() &#123;</span><br><span class="line">            function checkSNUID() &#123;</span><br><span class="line">                var cookieArr = document.cookie.split(&apos;; &apos;),</span><br><span class="line">                    count = 0;</span><br><span class="line"></span><br><span class="line">                for(var i = 0, len = cookieArr.length; i &lt; len; i++) &#123;</span><br><span class="line">                    if (cookieArr[i].indexOf(&apos;SNUID=&apos;) &gt; -1) &#123;</span><br><span class="line">                        count++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                return count &gt; 1;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(checkSNUID()) &#123;</span><br><span class="line">                var date = new Date(), expires;</span><br><span class="line">                date.setTime(date.getTime() -100000);</span><br><span class="line"></span><br><span class="line">                expires = date.toGMTString();</span><br><span class="line"></span><br><span class="line">                document.cookie = &apos;SNUID=1;path=/;expires=&apos; + expires;</span><br><span class="line">                document.cookie = &apos;SNUID=1;path=/;expires=&apos; + expires + &apos;;domain=.www.sogou.com&apos;;</span><br><span class="line">                document.cookie = &apos;SNUID=1;path=/;expires=&apos; + expires + &apos;;domain=.weixin.sogou.com&apos;;</span><br><span class="line">                document.cookie = &apos;SNUID=1;path=/;expires=&apos; + expires + &apos;;domain=.sogou.com&apos;;</span><br><span class="line">                document.cookie = &apos;SNUID=1;path=/;expires=&apos; + expires + &apos;;domain=.snapshot.sogoucdn.com&apos;;</span><br><span class="line"></span><br><span class="line">                sendLog(&apos;delSNUID&apos;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(getCookie(&apos;seccodeRight&apos;) === &apos;success&apos;) &#123;</span><br><span class="line">                sendLog(&apos;verifyLoop&apos;);</span><br><span class="line"></span><br><span class="line">                setCookie(&apos;seccodeRight&apos;, 1, getUTCString(-1), location.hostname, &apos;/&apos;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(getCookie(&apos;refresh&apos;)) &#123;</span><br><span class="line">                sendLog(&apos;refresh&apos;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)();</span><br><span class="line"></span><br><span class="line">        function setImgCode(code) &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                var t = new Date().getTime() - imgRequestTime.getTime();</span><br><span class="line">                sendLog(&apos;imgCost&apos;,&quot;cost=&quot;+t);</span><br><span class="line">            &#125; catch (e) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">            window.imgCode = code;</span><br><span class="line">        &#125;</span><br><span class="line">        sendLog(&apos;index&apos;);</span><br><span class="line"></span><br><span class="line">        function changeImg2() &#123;</span><br><span class="line">        	if(window.event) &#123;</span><br><span class="line">        		window.event.returnValue=false</span><br><span class="line">        	&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;header&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;logo&quot;&gt;&lt;a href=&quot;/&quot;&gt;&lt;img width=&quot;180&quot; height=&quot;60&quot; src=&quot;//www.sogou.com/images/logo2014/error180x60.png&quot;&gt;&lt;/a&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;other&quot;&gt;&lt;span class=&quot;s1&quot;&gt;您的访问出错了&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&lt;a href=&quot;/&quot;&gt;返回首页&amp;gt;&amp;gt;&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;content-box&quot;&gt;</span><br><span class="line">    &lt;p class=&quot;ip-time-p&quot;&gt;IP:xxx.xxx.xxx.xxx&lt;br&gt;访问时间：2017.11.10 16:16:01&lt;/p&gt;</span><br><span class="line">    &lt;p class=&quot;p2&quot;&gt;用户您好，您的访问过于频繁，为确认本次访问为正常用户行为，需要您协助验证。&lt;/p&gt;</span><br><span class="line">    &lt;p class=&quot;p3&quot;&gt;&lt;label for=&quot;seccodeInput&quot;&gt;验证码：&lt;/label&gt;&lt;/p&gt;</span><br><span class="line">    &lt;form name=&quot;authform&quot; method=&quot;POST&quot; id=&quot;seccodeForm&quot; action=&quot;/&quot;&gt;</span><br><span class="line">        &lt;p class=&quot;p4&quot;&gt;</span><br><span class="line">            &lt;input type=text name=&quot;c&quot; value=&quot;&quot; placeholder=&quot;请输入验证码&quot; id=&quot;seccodeInput&quot;&gt;</span><br><span class="line">            &lt;input type=&quot;hidden&quot; name=&quot;tc&quot; id=&quot;tc&quot; value=&quot;&quot;&gt;</span><br><span class="line">            &lt;input type=&quot;hidden&quot; name=&quot;r&quot; id=&quot;from&quot; value=&quot;%2Fweb%3Fquery%3D152512wqe&quot; &gt;</span><br><span class="line">            &lt;input type=&quot;hidden&quot; name=&quot;m&quot; value=&quot;0&quot; &gt;            &lt;span class=&quot;s1&quot;&gt;</span><br><span class="line">                &lt;script&gt;imgRequestTime=new Date();&lt;/script&gt;</span><br><span class="line">                &lt;a onclick=&quot;changeImg2();&quot; href=&quot;javascript:void(0)&quot;&gt;</span><br><span class="line">                    &lt;img id=&quot;seccodeImage&quot; onload=&quot;setImgCode(1)&quot; onerror=&quot;setImgCode(0)&quot; src=&quot;util/seccode.php?tc=1510301761&quot; width=&quot;100&quot; height=&quot;40&quot; alt=&quot;请输入图中的验证码&quot; title=&quot;请输入图中的验证码&quot;&gt;</span><br><span class="line">                &lt;/a&gt;</span><br><span class="line">            &lt;/span&gt;</span><br><span class="line">            &lt;a href=&quot;javascript:void(0);&quot; id=&quot;change-img&quot; onclick=&quot;changeImg2();&quot; style=&quot;padding-left:50px;&quot;&gt;换一张&lt;/a&gt;</span><br><span class="line">            &lt;span class=&quot;s2&quot; id=&quot;error-tips&quot; style=&quot;display: none;&quot;&gt;&lt;/span&gt;</span><br><span class="line">        &lt;/p&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">    &lt;p class=&quot;p5&quot;&gt;</span><br><span class="line">        &lt;a href=&quot;javascript:void(0);&quot; id=&quot;submit&quot;&gt;提交&lt;/a&gt;</span><br><span class="line">        &lt;span&gt;提交后没解决问题？欢迎&lt;a href=&quot;http://fankui.help.sogou.com/index.php/web/web/index?type=10&amp;anti_time=1510301761&amp;domain=www.sogou.com&quot; target=&quot;_blank&quot;&gt;反馈&lt;/a&gt;。&lt;/span&gt;</span><br><span class="line">    &lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div id=&quot;ft&quot;&gt;&lt;a href=&quot;http://fuwu.sogou.com/&quot; target=&quot;_blank&quot;&gt;企业推广&lt;/a&gt;&lt;a href=&quot;http://corp.sogou.com/&quot; target=&quot;_blank&quot;&gt;关于搜狗&lt;/a&gt;&lt;a href=&quot;/docs/terms.htm?v=1&quot; target=&quot;_blank&quot;&gt;免责声明&lt;/a&gt;&lt;a href=&quot;http://fankui.help.sogou.com/index.php/web/web/index?type=10&amp;anti_time=1510301761&amp;domain=www.sogou.com&quot; target=&quot;_blank&quot;&gt;意见反馈&lt;/a&gt;&lt;br&gt;&amp;nbsp;&amp;copy;&amp;nbsp;2017&lt;span id=&quot;footer-year&quot;&gt;&lt;/span&gt;&amp;nbsp;Sogou Inc.&amp;nbsp;-&amp;nbsp;&lt;a href=&quot;http://www.miibeian.gov.cn&quot; target=&quot;_blank&quot; class=&quot;g&quot;&gt;京ICP证050897号&lt;/a&gt;&amp;nbsp;-&amp;nbsp;京公网安备1100&lt;span class=&quot;ba&quot;&gt;00000025号&lt;/span&gt;&lt;/div&gt;</span><br><span class="line">&lt;script src=&quot;static/js/index.min.js?v=0.1.4&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;&lt;!--zly--&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="通过访问一个搜狗url，获取响应header里面的SNUID"><a href="#通过访问一个搜狗url，获取响应header里面的SNUID" class="headerlink" title="通过访问一个搜狗url，获取响应header里面的SNUID"></a>通过访问一个搜狗url，获取响应header里面的SNUID</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-----请求开始-----https://www.sogou.com/sogou?ori=%E6%B5%8B%E8%AF%95+&amp;site=news.qq.com&amp;query=%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7&amp;pid=sogou-wsse-b58ac8403eb9cf17-0004&amp;idx=f&amp;page=2&amp;duppid=1&amp;ie=utf8</span><br><span class="line">Invalid cookie header: &quot;set-cookie: ld=qyllllllll2zjStRlllllVoJVZGlllllJimpYkllll9lllllRylll5@@@@@@@@@@; path=/; expires=Wed, 13 Dec 2017 03:52:35 GMT; domain=.sogou.com&quot;. Invalid &apos;expires&apos; attribute: Wed, 13 Dec 2017 03:52:35 GMT</span><br><span class="line">响应状态：HTTP/1.1 200 OK</span><br><span class="line">Server    nginx</span><br><span class="line">Date    Mon, 13 Nov 2017 03:52:35 GMT</span><br><span class="line">Content-Type    text/html; charset=utf-8</span><br><span class="line">Transfer-Encoding    chunked</span><br><span class="line">Connection    keep-alive</span><br><span class="line">Vary    Accept-Encoding</span><br><span class="line">Set-Cookie    ABTEST=5|1510545155|v17; expires=Wed, 13-Dec-17 03:52:35 GMT; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Set-Cookie    SNUID=0DF6EB4870752DA55C005265702D6FF2; expires=Tue, 13-Nov-18 03:52:35 GMT; domain=.sogou.com; path=/</span><br><span class="line">Set-Cookie    IPLOC=CN1100; expires=Tue, 13-Nov-18 03:52:35 GMT; domain=.sogou.com; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">Set-Cookie    SUID=62869B27541C940A000000005A091703; expires=Sun, 08-Nov-37 03:52:35 GMT; domain=.sogou.com; path=/</span><br><span class="line">P3P    CP=&quot;CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR&quot;</span><br><span class="line">set-cookie    ld=qyllllllll2zjStRlllllVoJVZGlllllJimpYkllll9lllllRylll5@@@@@@@@@@; path=/; expires=Wed, 13 Dec 2017 03:52:35 GMT; domain=.sogou.com</span><br><span class="line">Cache-Control    max-age=0</span><br><span class="line">x_ad_pagesize    adpagesize=1059</span><br><span class="line">Set-Cookie    black_passportid=1; domain=.sogou.com; path=/; expires=Thu, 01-Dec-1994 16:00:00 GMT</span><br><span class="line">Expires    Mon, 13 Nov 2017 03:52:35 GMT</span><br><span class="line">-----请求结束-----</span><br></pre></td></tr></table></figure>
+<p>  注意: Set-Cookie 和 set-cookie 大小写不一样</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过访问一个搜狗url，获取响应header里面的SNUID</span></span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">#! -*- coding:utf-8 -*-</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">获取SNUID的值</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line">import time</span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">方法（一）通过phantomjs访问sogou搜索结果页面，获取SNUID的值</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">def phantomjs_getsnuid():</span><br><span class="line">    from selenium import webdriver</span><br><span class="line">    d=webdriver.PhantomJS(&apos;D:\python27\Scripts\phantomjs.exe&apos;,service_args=[&apos;--load-images=no&apos;,&apos;--disk-cache=yes&apos;])</span><br><span class="line">    try:</span><br><span class="line">        d.get(&quot;https://www.sogou.com/web?query=&quot;)</span><br><span class="line">        Snuid=d.get_cookies()[5][&quot;value&quot;]</span><br><span class="line">    except:</span><br><span class="line">        Snuid=&quot;&quot;</span><br><span class="line">    d.quit()</span><br><span class="line">    return Snuid</span><br><span class="line">	</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">方法（二）通过访问特定url，获取body里面的id</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">def Method_one():</span><br><span class="line">    url=&quot;http://www.sogou.com/antispider/detect.php?sn=E9DA81B7290B940A0000000058BFAB0&amp;wdqz22=12&amp;4c3kbr=12&amp;ymqk4p=37&amp;qhw71j=42&amp;mfo5i5=7&amp;3rqpqk=14&amp;6p4tvk=27&amp;eiac26=29&amp;iozwml=44&amp;urfya2=38&amp;1bkeul=41&amp;jugazb=31&amp;qihm0q=8&amp;lplrbr=10&amp;wo65sp=11&amp;2pev4x=23&amp;4eyk88=16&amp;q27tij=27&amp;65l75p=40&amp;fb3gwq=27&amp;azt9t4=45&amp;yeyqjo=47&amp;kpyzva=31&amp;haeihs=7&amp;lw0u7o=33&amp;tu49bk=42&amp;f9c5r5=12&amp;gooklm=11&amp;_=1488956271683&quot;</span><br><span class="line">    headers=&#123;&quot;Cookie&quot;:</span><br><span class="line">    &quot;ABTEST=0|1488956269|v17;\</span><br><span class="line">    IPLOC=CN3301;\</span><br><span class="line">    SUID=E9DA81B7290B940A0000000058BFAB6D;\</span><br><span class="line">    PHPSESSID=rfrcqafv5v74hbgpt98ah20vf3;\</span><br><span class="line">    SUIR=1488956269&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    try:</span><br><span class="line">        f=requests.get(url,headers=headers).content</span><br><span class="line">        f=json.loads(f)</span><br><span class="line">        Snuid=f[&quot;id&quot;]</span><br><span class="line">    except:</span><br><span class="line">        Snuid=&quot;&quot;</span><br><span class="line">    return Snuid</span><br><span class="line">	</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">方法（三）访问特定url，获取header里面的内容</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">def Method_two():</span><br><span class="line">    url=&quot;https://www.sogou.com/web?query=333&amp;_asf=www.sogou.com&amp;_ast=1488955851&amp;w=01019900&amp;p=40040100&amp;ie=utf8&amp;from=index-nologin&quot;</span><br><span class="line">    headers=&#123;&quot;Cookie&quot;:</span><br><span class="line">    &quot;ABTEST=0|1488956269|v17;\</span><br><span class="line">    IPLOC=CN3301;\</span><br><span class="line">    SUID=E9DA81B7290B940A0000000058BFAB6D;\</span><br><span class="line">    PHPSESSID=rfrcqafv5v74hbgpt98ah20vf3;\</span><br><span class="line">    SUIR=1488956269&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    f=requests.head(url,headers=headers).headers</span><br><span class="line">    print f</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">方法（四）通过访问需要输入验证码解封的页面，可以获取SNUID</span><br><span class="line">&apos;&apos;&apos;</span><br><span class="line">def Method_three():</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    http://www.sogou.com/antispider/util/seccode.php?tc=1488958062 验证码地址</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    http://www.sogou.com/antispider/?from=%2fweb%3Fquery%3d152512wqe%26ie%3dutf8%26_ast%3d1488957312%26_asf%3dnull%26w%3d01029901%26p%3d40040100%26dp%3d1%26cid%3d%26cid%3d%26sut%3d578%26sst0%3d1488957299160%26lkt%3d3%2C1488957298718%2C1488957298893</span><br><span class="line">    访问这个url，然后填写验证码，发送以后就是以下的包内容，可以获取SNUID。</span><br><span class="line">    &apos;&apos;&apos;</span><br><span class="line">    import socket</span><br><span class="line">    import re</span><br><span class="line">    res=r&quot;id\&quot;\: \&quot;([^\&quot;]*)\&quot;&quot;</span><br><span class="line">    s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)</span><br><span class="line">    s.connect((&apos;www.sogou.com&apos;,80))</span><br><span class="line">    s.send(&apos;&apos;&apos;</span><br><span class="line">POST http://www.sogou.com/antispider/thank.php HTTP/1.1</span><br><span class="line">Host: www.sogou.com</span><br><span class="line">Content-Length: 223</span><br><span class="line">X-Requested-With: XMLHttpRequest</span><br><span class="line">Content-Type: application/x-www-form-urlencoded; charset=UTF-8</span><br><span class="line">Cookie: CXID=65B8AE6BEE1CE37D4C63855D92AF339C; SUV=006B71D7B781DAE95800816584135075; IPLOC=CN3301; pgv_pvi=3190912000; GOTO=Af12315; ABTEST=8|1488945458|v17; PHPSESSID=f78qomvob1fq1robqkduu7v7p3; SUIR=D0E3BB8E393F794B2B1B02733A162729; SNUID=B182D8EF595C126A7D67E4E359B12C38; sct=2; sst0=958; ld=AXrrGZllll2Ysfa1lllllVA@rLolllllHc4zfyllllYllllljllll5@@@@@@@@@@; browerV=3; osV=1; LSTMV=673%2C447; LCLKINT=6022; ad=6FwTnyllll2g@popQlSGTVA@7VCYx98tLueNukllll9llllljpJ62s@@@@@@@@@@; SUID=EADA81B7516C860A57B28911000DA424; successCount=1|Wed, 08 Mar 2017 07:51:18 GMT; seccodeErrorCount=1|Wed, 08 Mar 2017 07:51:45 GMT</span><br><span class="line">c=6exp2e&amp;r=%252Fweb%253Fquery%253Djs%2B%25E6%25A0%25BC%25E5%25BC%258F%25E5%258C%2596%2526ie%253Dutf8%2526_ast%253D1488957312%2526_asf%253Dnull%2526w%253D01029901%2526p%253D40040100%2526dp%253D1%2526cid%253D%2526cid%253D&amp;v=5</span><br><span class="line">    &apos;&apos;&apos;)</span><br><span class="line">    buf=s.recv(1024)</span><br><span class="line">    p=re.compile(res)</span><br><span class="line">    L=p.findall(buf)</span><br><span class="line">    if len(L)&gt;0:</span><br><span class="line">        Snuid=L[0]</span><br><span class="line">    else:</span><br><span class="line">        Snuid=&quot;&quot;</span><br><span class="line">    return Snuid</span><br><span class="line">def getsnuid(q):</span><br><span class="line">    while 1:</span><br><span class="line">        if q.qsize()&lt;10:</span><br><span class="line">            Snuid=random.choice([Method_one(),Method_three(),phantomjs_getsnuid()])</span><br><span class="line">            if Snuid!=&quot;&quot;:</span><br><span class="line">                q.put(Snuid)</span><br><span class="line">                print Snuid</span><br><span class="line">                time.sleep(0.5)</span><br><span class="line">if __name__==&quot;__main__&quot;:</span><br><span class="line">    import Queue</span><br><span class="line">    q=Queue.Queue()</span><br><span class="line">    getsnuid(q)</span><br></pre></td></tr></table></figure>
+<h1 id="SUV-1"><a href="#SUV-1" class="headerlink" title="SUV"></a>SUV</h1><p>  通过JS生成，可以直接用cookies里的，一般不会改变</p>
+<p>参考<br>[1] <a href="https://thief.one/2017/03/19/爬取搜索引擎之搜狗/" target="_blank" rel="noopener">https://thief.one/2017/03/19/爬取搜索引擎之搜狗/</a><br>[2] <a href="https://blog.gaoqixhb.com/p/56e92e1e7b71cea107c700ba" target="_blank" rel="noopener">https://blog.gaoqixhb.com/p/56e92e1e7b71cea107c700ba</a>    记搜狗微信号搜索反爬虫</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/crawler/" rel="tag"># crawler</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/mariadb-notes/" rel="next" title="MariaDB 笔记">
+                <i class="fa fa-chevron-left"></i> MariaDB 笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/13/knowledge-graph/" rel="prev" title="知识图谱">
+                知识图谱 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重要参数SUID、SNUID、SUV"><span class="nav-number">1.</span> <span class="nav-text">重要参数SUID、SNUID、SUV</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SUID"><span class="nav-number">1.1.</span> <span class="nav-text">SUID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SNUID"><span class="nav-number">1.2.</span> <span class="nav-text">SNUID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SUV"><span class="nav-number">1.3.</span> <span class="nav-text">SUV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sct"><span class="nav-number">1.4.</span> <span class="nav-text">sct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ld"><span class="nav-number">1.5.</span> <span class="nav-text">ld</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#被屏蔽现象"><span class="nav-number">2.</span> <span class="nav-text">被屏蔽现象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取SUID"><span class="nav-number">3.</span> <span class="nav-text">获取SUID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获取SNUID"><span class="nav-number">4.</span> <span class="nav-text">获取SNUID</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#搜狗重新生成SNUID的HTML源码"><span class="nav-number">4.1.</span> <span class="nav-text">搜狗重新生成SNUID的HTML源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过访问一个搜狗url，获取响应header里面的SNUID"><span class="nav-number">4.2.</span> <span class="nav-text">通过访问一个搜狗url，获取响应header里面的SNUID</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SUV-1"><span class="nav-number">5.</span> <span class="nav-text">SUV</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

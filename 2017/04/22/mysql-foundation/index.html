@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="MySQL的一些基础知识。     对比 MySQL Excel     数据库 database 一个excel   表 table 一个sheet   行 row 一个sheet里的一行数据   字段 column 一列">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 基础">
+<meta property="og:url" content="http://weikeqin.cn/2017/04/22/mysql-foundation/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="MySQL的一些基础知识。     对比 MySQL Excel     数据库 database 一个excel   表 table 一个sheet   行 row 一个sheet里的一行数据   字段 column 一列">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-23T14:56:40.990Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 基础">
+<meta name="twitter:description" content="MySQL的一些基础知识。     对比 MySQL Excel     数据库 database 一个excel   表 table 一个sheet   行 row 一个sheet里的一行数据   字段 column 一列">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/04/22/mysql-foundation/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MySQL 基础 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/04/22/mysql-foundation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL 基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-04-22 18:01:26" itemprop="dateCreated datePublished" datetime="2017-04-22T18:01:26+08:00">2017-04-22</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/22/mysql-foundation/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/04/22/mysql-foundation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/22/mysql-foundation/" class="leancloud_visitors" data-flag-title="MySQL 基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> MySQL的一些基础知识。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>对比</th>
+<th>MySQL</th>
+<th>Excel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>数据库</td>
+<td>database</td>
+<td>一个excel</td>
+</tr>
+<tr>
+<td>表</td>
+<td>table</td>
+<td>一个sheet</td>
+</tr>
+<tr>
+<td>行</td>
+<td>row</td>
+<td>一个sheet里的一行数据</td>
+</tr>
+<tr>
+<td>字段</td>
+<td>column</td>
+<td>一列</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h1 id="（1）-MySQL介绍"><a href="#（1）-MySQL介绍" class="headerlink" title="（1） MySQL介绍"></a>（1） MySQL介绍</h1><blockquote>
+<p> MySQL是一个小型关系型数据库管理系统，开发者为瑞典MySql AB公司。2009年被Oracle公司收购。目前MySql被广泛地应用在Internet上的中小型网站中。</p>
+</blockquote>
+<p><br></p>
+<h2 id="1-1-什么是数据库"><a href="#1-1-什么是数据库" class="headerlink" title="(1.1)　什么是数据库"></a>(1.1)　什么是数据库</h2><blockquote>
+<p>　可以认为是一个excel<br>　数据库由一批数据构成的有序集合，这些数据被分门别类地存储放在一些结构化的数据表（table）里，而数据表之间又往往存在交叉引用的关系，这种关系使数据库又被成为关系型数据库</p>
+</blockquote>
+<p><br></p>
+<h2 id="1-2-什么是SQL"><a href="#1-2-什么是SQL" class="headerlink" title="(1.2)　什么是SQL"></a>(1.2)　什么是SQL</h2><blockquote>
+<p>　SQL是Structured Query Language（结构化查询语言）的缩写。SQL是专门为数据库而建立的操作命令集，是一种功能齐全的数据语言。</p>
+</blockquote>
+<p><br></p>
+<h2 id="1-3-DML-DCL-DDL"><a href="#1-3-DML-DCL-DDL" class="headerlink" title="(1.3)　DML DCL DDL"></a>(1.3)　DML DCL DDL</h2><blockquote>
+<p>DDL(Data Definition Language) 数据定义语言<br>  –用来建立数据库、数据库对象和定义其列； 类似设置excel的列的类型(是文本还是数字)<br>  CREATE TABLE<br>  ALTER TABLE<br>  DROP TABLE </p>
+</blockquote>
+<blockquote>
+<p>DML(Data Manipulation Language) 数据操作语言<br>   查询、插入、修改和删除数据库中的数据  类似操作excel<br>   SELECT<br>   INSERT<br>   UPDATE<br>   DELETE</p>
+</blockquote>
+<blockquote>
+<p> DCL(Data Control Language数据控制语言)<br>    –用来控制存取许可、存储权限等； 类似设置excel谁可以访问 (加密码)<br>    GRANT<br>    REVOKE</p>
+</blockquote>
+<blockquote>
+<p> 功能函数<br>   日期函数、数学函数、字符函数、系统函数；</p>
+</blockquote>
+<p><br></p>
+<h2 id="1-4-MySql优点"><a href="#1-4-MySql优点" class="headerlink" title="(1.4)　 MySql优点"></a>(1.4)　 MySql优点</h2><blockquote>
+<p> 性能快捷、优化Sql语言<br> 容易使用<br> 多线程和可靠性<br> 多用户支持<br> 可移植性和开放源代码<br> 遵循国际标准和国际化支持<br> 为多种编程语言提供API</p>
+</blockquote>
+<h2 id="1-5-MySql不足"><a href="#1-5-MySql不足" class="headerlink" title="(1.5)　 MySql不足"></a>(1.5)　 MySql不足</h2><blockquote>
+<p> 不能直接处理XML数据<br> 一些功能上支持的不够完善和成熟<br> 不能提供任何OLAP（实时分析系统）功能</p>
+</blockquote>
+<h1 id="2-MySql数据类型"><a href="#2-MySql数据类型" class="headerlink" title="(2)　MySql数据类型"></a>(2)　MySql数据类型</h1><p>整形<br>tinyint(m)    1个字节  范围(-128~127)<br>smallint(m)    2个字节  范围(-32768~32767)<br>mediumint(m)    3个字节  范围(-8388608~8388607)<br>int(m)    4个字节  范围(-2147483648~2147483647)<br>bigint(m)    8个字节  范围(+-9.22*10的18次方)</p>
+<p>浮点型<br>float(m,d)    单精度浮点型    8位精度(4字节)     m总个数，d小数位<br>double(m,d)    双精度浮点型    16位精度(8字节)    m总个数，d小数位 </p>
+<p>字符串<br>char(n)    固定长度，最多255个字符<br>varchar(n)    固定长度，最多65535个字符<br>tinytext    可变长度，最多255个字符<br>text    可变长度，最多65535个字符<br>mediumtext    可变长度，最多2的24次方-1个字符<br>longtext    可变长度，最多2的32次方-1个字符 </p>
+<p>char和varchar：<br>1.char(n) 若存入字符数小于n，则以空格补于其后，查询之时再将空格去掉。所以char类型<br>  存储的字符串末尾不能有空格，varchar不限于此。<br>2.char(n) 固定长度，char(4)不管是存入几个字符，都将占用4个字节，varchar是存入的实<br>  际字符数+1个字节（n&lt;=255）或2个字节(n&gt;255)，所以varchar(4),存入3个字符将占<br>  用4个字节。<br>3.char类型的字符串检索速度要比varchar类型的快。</p>
+<p>二进制数据<br>  1.BLOB和TEXT存储方式不同，TEXT以文本方式存储，英文存储区分大小写，而BLOB是以二进制方式存储，不分大小写。<br>  2.BLOB存储的数据只能整体读出。<br>  3.TEXT可以指定字符集，BLOB不用指定字符集。</p>
+<p>日期时间类型</p>
+<p>date    日期 ‘2008-12-2’<br>time    时间 ‘12:25:36’<br>datetime    日期时间 ‘2008-12-2 22:06:44’<br>timestamp    自动存储记录修改时间 </p>
+<p>若定义一个字段为timestamp，这个字段里的时间数据会随其他字段修改的时候自动刷新，所以这个数据类型的字段可以存放这条记录最后被修改的时间。</p>
+<p>数据类型的属性<br>NULL     数据列可包含NULL值<br>NOT NULL     数据列不允许包含NULL值<br>DEFAULT     默认值<br>PRIMARY KEY     主键<br>AUTO_INCREMENT     自动递增，适用于整数类型<br>UNSIGNED     无符号<br>CHARACTER SET name     指定一个字符集 </p>
+<h1 id="3-DDL"><a href="#3-DDL" class="headerlink" title="(3) DDL"></a>(3) DDL</h1><blockquote>
+<p> 新建数据库 <code>create database db_test;</code></p>
+</blockquote>
+<blockquote>
+<p> 查看所有数据库  <code>show databases;</code></p>
+</blockquote>
+<blockquote>
+<p> 使用数据库  <code>use db_test;</code></p>
+</blockquote>
+<blockquote>
+<p> 删除数据库 <code>drop database db_test ;</code></p>
+</blockquote>
+<h2 id="3-1-CREATE"><a href="#3-1-CREATE" class="headerlink" title="(3.1) CREATE"></a>(3.1) CREATE</h2><p>  创建表<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> test_user (</span><br><span class="line"><span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT <span class="keyword">COMMENT</span> <span class="string">'主键id'</span>,</span><br><span class="line"><span class="string">`create_time`</span> datetime <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">COMMENT</span> <span class="string">'用户记录创建的时间'</span>,</span><br><span class="line"><span class="string">`update_time`</span> datetime <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">COMMENT</span> <span class="string">'用户资料修改的时间'</span>,</span><br><span class="line"><span class="string">`user_id`</span> <span class="built_in">bigint</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户id'</span>,</span><br><span class="line"><span class="string">`username`</span> <span class="built_in">varchar</span>(<span class="number">45</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'真实姓名'</span>,</span><br><span class="line"><span class="string">`email`</span> <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户邮箱'</span>,</span><br><span class="line"><span class="string">`nickname`</span> <span class="built_in">varchar</span>(<span class="number">45</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'昵称'</span>,</span><br><span class="line"><span class="string">`avatar`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'头像'</span>,</span><br><span class="line"><span class="string">`birthday`</span> <span class="built_in">date</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'生日'</span>,</span><br><span class="line"><span class="string">`sex`</span> tinyint(<span class="number">4</span>) <span class="keyword">DEFAULT</span> <span class="string">'0'</span> <span class="keyword">COMMENT</span> <span class="string">'性别'</span>,</span><br><span class="line"><span class="string">`short_introduce`</span> <span class="built_in">varchar</span>(<span class="number">150</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'一句话介绍自己，最多50个汉字'</span>,</span><br><span class="line"><span class="string">`user_resume`</span> <span class="built_in">varchar</span>(<span class="number">300</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户提交的简历存放地址'</span>,</span><br><span class="line"><span class="string">`user_register_ip`</span> <span class="built_in">int</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户注册时的源ip'</span>,</span><br><span class="line"><span class="string">`user_review_status`</span> tinyint <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'用户资料审核状态，1为通过，2为审核中，3为未通过，4为还未提交审核'</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>),</span><br><span class="line"><span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`uq_idx_user_id`</span> (<span class="string">`user_id`</span>),</span><br><span class="line"><span class="keyword">KEY</span> <span class="string">`idx_username`</span>(<span class="string">`username`</span>),</span><br><span class="line"><span class="keyword">KEY</span> <span class="string">`idx_create_time`</span>(<span class="string">`create_time`</span>,<span class="string">`user_review_status`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COMMENT</span>=<span class="string">'网站用户基本信息'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>  查询所有的表 <code>show tables;</code></p>
+<p>  显示表的基本结构  <code>describe employee;</code></p>
+<p>  删除表 <code>drop table if exists employee ；</code></p>
+<h2 id="3-2-ALTER"><a href="#3-2-ALTER" class="headerlink" title="(3.2) ALTER"></a>(3.2) ALTER</h2><h3 id="表重命名"><a href="#表重命名" class="headerlink" title="表重命名"></a>表重命名</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`test_user`</span> </span><br><span class="line">  <span class="keyword">rename</span> <span class="keyword">to</span> <span class="string">`test_user_2`</span> ;</span><br></pre></td></tr></table></figure>
+<h3 id="表增加字段"><a href="#表增加字段" class="headerlink" title="表增加字段"></a>表增加字段</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`db_test`</span>.<span class="string">`employee`</span> </span><br><span class="line">    <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`address`</span>  <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span> <span class="keyword">COMMENT</span> <span class="string">'地址'</span> <span class="keyword">AFTER</span> <span class="string">`sex`</span> ,</span><br><span class="line">    <span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`remark`</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">''</span> <span class="keyword">COMMENT</span> <span class="string">'备注'</span> <span class="keyword">AFTER</span> <span class="string">`address`</span> ;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`employee`</span> <span class="keyword">CHANGE</span> <span class="string">`remark`</span> <span class="string">`remark_new`</span> <span class="built_in">VARCHAR</span>(<span class="number">255</span>)</span><br><span class="line">    <span class="built_in">CHARACTER</span> <span class="keyword">SET</span> utf8mb4</span><br><span class="line">    <span class="keyword">COLLATE</span> utf8mb4_general_ci</span><br><span class="line">    <span class="keyword">NOT</span> <span class="literal">NULL</span></span><br><span class="line">    <span class="keyword">DEFAULT</span> <span class="string">''</span></span><br><span class="line">    <span class="keyword">COMMENT</span> <span class="string">'备注'</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-2-3-auto-increment"><a href="#3-2-3-auto-increment" class="headerlink" title="(3.2.3) auto_increment"></a>(3.2.3) auto_increment</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> auto_increment </span><br><span class="line"><span class="keyword">FROM</span> information_schema.tables </span><br><span class="line"><span class="keyword">WHERE</span> table_schema = database_test </span><br><span class="line"><span class="keyword">AND</span> table_name = table_test ;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> database_test.table_test </span><br><span class="line">  auto_increment = <span class="number">100</span>;</span><br></pre></td></tr></table></figure>
+<p>  表添加外键 <code>add constraint 外建名 foreign key(列名) references 表名(列名);</code></p>
+<p>  删除外键 <code>drop foreign key 外建名</code></p>
+<p>  可以更改指定列默认值 <code>alter table employee alter is_deleted default &#39;N&#39;;</code></p>
+<p>  删除字段  <code>alter table employee drop is_deleted;</code></p>
+<p>  更改表的字符集  <code>alter table employee character set UTF8</code></p>
+<p>  修改字段名称/类型   <code>alter table employee change 旧字段名 新字段名 新字段的类型;</code></p>
+<h2 id="4-dml"><a href="#4-dml" class="headerlink" title="(4) dml"></a>(4) dml</h2><h3 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">INSET INTO department ( did, dname ) </span><br><span class="line">values </span><br><span class="line">(1,‘技术部’) ;</span><br></pre></td></tr></table></figure>
+<h3 id="批量插入"><a href="#批量插入" class="headerlink" title="批量插入"></a>批量插入</h3><pre><code class="sql">INSET INTO department ( did, dname ) 
+values 
+(1,’技术部’), 
+(2,’教务部’) ;
+</code></pre>
+<h3 id="只查询表中的某列："><a href="#只查询表中的某列：" class="headerlink" title="只查询表中的某列："></a>只查询表中的某列：</h3><p> select id, emp_id, user_name, sex  form employee ; </p>
+<h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><p> update employee set user_name = ‘tom’ where id = 1 ;</p>
+<p>  更新多个字段  <code>update employee set user_name = &#39;tom&#39;, sex=&#39;男&#39; where id = 1 ;</code> </p>
+<p>  删除  <code>delete from employee where id &lt; 2;</code></p>
+<p>  查询所有语法 <code>select * from employee;</code></p>
+<h1 id="4-连接查询"><a href="#4-连接查询" class="headerlink" title="(4) 连接查询"></a>(4) 连接查询</h1><h2 id="4-1-交叉连接-笛卡尔积-cross-join"><a href="#4-1-交叉连接-笛卡尔积-cross-join" class="headerlink" title="(4.1) 交叉连接(笛卡尔积): cross join"></a>(4.1) 交叉连接(笛卡尔积): cross join</h2><p>  SELECT <em> FROM table_1, table_2 ;<br>  SELECT </em> FROM table_1 cross join table_2 ;<br>  SELECT * FROM table_1 cross join table_2 cross join table_3;</p>
+<p>  “没有任何限制条件的连接方式”称之为”交叉连接”，”交叉连接”后得到的结果跟线性代数中的”笛卡尔乘积”一样。</p>
+<h2 id="2-内连接：inner-join"><a href="#2-内连接：inner-join" class="headerlink" title="(2) 内连接：inner join"></a>(2) 内连接：inner join</h2><p> 内连接-等值连接<br> 内连接-不等连接<br> 内连接-自连接</p>
+<p>  SELECT * FROM table_1 t1, table_2 t2 WHERE t1.id = t2.id ; </p>
+<p>  SELECT * FROM table_1 t1 JOIN table_2 t2 ON t1.id = t2.id ;</p>
+<p>  SELECT * FROM table_1 t1 INNER JOIN table_2 t2 ON t1.id = t2.id ;  (内连接 等值连接)</p>
+<p>  SELECT * FROM table_1 t1 INNER JOIN table_2 t2 ON t1.id &gt; t2.id ;  (内连接 不等连接)</p>
+<p>  SELECT * FROM table_1 t1 INNER JOIN table_1 t2 ON t1.id   t2.user_id ;  (内连接 自连接)</p>
+<p>  “内连接”理解成”两张表中同时符合某种条件的数据记录的组合”</p>
+<p>  注意：inner join 不带条件时就成了 cross join 交叉连接(笛卡尔积)</p>
+<h2 id="3-外连接"><a href="#3-外连接" class="headerlink" title="(3) 外连接"></a>(3) 外连接</h2><h3 id="3-1-左连接-left-join"><a href="#3-1-左连接-left-join" class="headerlink" title="(3.1) 左连接 left join"></a>(3.1) 左连接 left join</h3><p>  SELECT * FROM table_1 t1 LEFT OUTER JOIN table_2 t2 ON t1.id = t2.id ;</p>
+<p>  SELECT * FROM table_1 t1 LEFT JOIN table_2 t2 ON t1.id = t2.id ;</p>
+<p>  左外连接不仅会查询出两表中同时符合条件的记录的组合，同时还会将”left outer join”左侧的表中的不符合条件的记录同时展示出来，由于左侧表中的这一部分记录并不符合连接条件，所以这一部分记录使用”空记录”进行连接。</p>
+<h3 id="3-2-右连接-right-join"><a href="#3-2-右连接-right-join" class="headerlink" title="(3.2) 右连接 right join"></a>(3.2) 右连接 right join</h3><pre><code>SELECT * FROM table_1 t1 RIGHT OUTER JOIN table_2 t2 ON t1.id = t2.id ;
+
+SELECT * FROM table_1 t1 RIGHT JOIN table_2 t2 ON t1.id = t2.id ;
+</code></pre><h2 id="4-联合查询：union-与-union-all"><a href="#4-联合查询：union-与-union-all" class="headerlink" title="(4) 联合查询：union 与 union all"></a>(4) 联合查询：union 与 union all</h2><p>  当使用union连接两个查询语句时，两个语句查询出的字段数量必须相同，否则无法使用union进行联合查询。<br>  使用union将两个结果集集中显示时，重复的数据会被合并为一条。</p>
+<p>  SELECT <em> FROM table_1 t1  UNION  SELECT </em> FROM table_2 t2 ;</p>
+<p>  使用union all进行联合查询时，如果两条sql语句存在重复的数据，重复的记录会被展示出来。</p>
+<p>  SELECT <em> FROM table_1 t1  UNION ALL SELECT </em> FROM table_2 t2 ;</p>
+<h2 id="5-全连接：full-join"><a href="#5-全连接：full-join" class="headerlink" title="(5) 全连接：full join"></a>(5) 全连接：full join</h2><p>  “全连接”的英文原文为full join，但是在mysql中并不支持”全连接”，更准确的说，mysql中不能直接使用”full join”实现全连接，不过，我们可以变相的实现”全连接”,在mysql中，我们可以使用”left join”、”union”、”right join”的组合实现所谓的”全连接”。</p>
+<pre><code>SELECT * FROM table_1 t1 LEFT  JOIN table_2 t2 ON t1.id = t2.id 
+UNION ALL
+SELECT * FROM table_1 t1 RIGHT JOIN table_2 t2 ON t1.id = t2.id ;
+
+
+SELECT * FROM table_1 t1 LEFT  JOIN table_2 t2 ON t1.id = t2.id WHERE t2.id IS NOT NULL 
+UNION ALL
+SELECT * FROM table_1 t1 RIGHT JOIN table_2 t2 ON t1.id = t2.id WHERE t1.id IS NOT NULL ;
+</code></pre><h1 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h1><h2 id="MySQL更改密码"><a href="#MySQL更改密码" class="headerlink" title="MySQL更改密码"></a>MySQL更改密码</h2><blockquote>
+<p>在MySql安装目录下：mysql\bin下输入如下命令：mysqladmin –u root –p旧密码 password 新密码</p>
+</blockquote>
+<h2 id="导出数据库"><a href="#导出数据库" class="headerlink" title="导出数据库"></a>导出数据库</h2><p>mysqldump -u 用户名 -p 数据库名 &gt; 导出的文件名<br>   例如：在mysql/bin目录下执行  mysqldump -u root -p oa &gt; oa.sql<br>   这个时候会提示要你输入root用户名的密码,输入密码后dataname数据库就成功备份在mysql/bin/目录中，后面的路径可以自己定义，可以使用绝对路径。</p>
+<h2 id="导出表"><a href="#导出表" class="headerlink" title="导出表"></a>导出表</h2><p>语法：<br>  mysqldump –u 用户名 –p 数据库名 表名&gt;导出的文件名<br>举例：<br>  mysqldump –u root –p oa dep &gt; dep.sql</p>
+<h2 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h2><p>进入mysql数据库控制台，<br>如mysql -u root -p<br>mysql&gt;use 数据库<br>然后使用source命令，后面参数为脚本文件（如这里用到的.sql）<br>mysql&gt;source d:\oa.sql</p>
+<h2 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h2><p>语法<br>     Grant  操作权限 （select,insert,update,delete或者all） on 数据库名.<em> to 新用户名@访问地址 identified by “密码”;<br>举例：<br>grant all on oa.</em> to xu@localhost identified by ’root’;<br>切换用户 :mysql –u xu -p</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://segmentfault.com/a/1190000014715790" target="_blank" rel="noopener">MySQL基础语法</a><br>[2] <a href="https://www.zsythink.net/archives/1105" target="_blank" rel="noopener">mysql/mariadb知识点总结（16）：select语句总结之三：多表查询</a><br>[3] <a href="https://blog.csdn.net/Jintao_Ma/article/details/51260458" target="_blank" rel="noopener">Mysql 多表查询详解</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/20/implicit-markov-model-notes/" rel="next" title="隐马尔科夫 模型 笔记">
+                <i class="fa fa-chevron-left"></i> 隐马尔科夫 模型 笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/27/git-backup-blog-and-theme/" rel="prev" title="使用GIT备份 博客项目 主题项目">
+                使用GIT备份 博客项目 主题项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#（1）-MySQL介绍"><span class="nav-number">1.</span> <span class="nav-text">（1） MySQL介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-什么是数据库"><span class="nav-number">1.1.</span> <span class="nav-text">(1.1)　什么是数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-什么是SQL"><span class="nav-number">1.2.</span> <span class="nav-text">(1.2)　什么是SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-DML-DCL-DDL"><span class="nav-number">1.3.</span> <span class="nav-text">(1.3)　DML DCL DDL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-MySql优点"><span class="nav-number">1.4.</span> <span class="nav-text">(1.4)　 MySql优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-MySql不足"><span class="nav-number">1.5.</span> <span class="nav-text">(1.5)　 MySql不足</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-MySql数据类型"><span class="nav-number">2.</span> <span class="nav-text">(2)　MySql数据类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-DDL"><span class="nav-number">3.</span> <span class="nav-text">(3) DDL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-CREATE"><span class="nav-number">3.1.</span> <span class="nav-text">(3.1) CREATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-ALTER"><span class="nav-number">3.2.</span> <span class="nav-text">(3.2) ALTER</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表重命名"><span class="nav-number">3.2.1.</span> <span class="nav-text">表重命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表增加字段"><span class="nav-number">3.2.2.</span> <span class="nav-text">表增加字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-3-auto-increment"><span class="nav-number">3.2.3.</span> <span class="nav-text">(3.2.3) auto_increment</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-dml"><span class="nav-number">3.3.</span> <span class="nav-text">(4) dml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插入数据"><span class="nav-number">3.3.1.</span> <span class="nav-text">插入数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量插入"><span class="nav-number">3.3.2.</span> <span class="nav-text">批量插入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只查询表中的某列："><span class="nav-number">3.3.3.</span> <span class="nav-text">只查询表中的某列：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新"><span class="nav-number">3.3.4.</span> <span class="nav-text">更新</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-连接查询"><span class="nav-number">4.</span> <span class="nav-text">(4) 连接查询</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-交叉连接-笛卡尔积-cross-join"><span class="nav-number">4.1.</span> <span class="nav-text">(4.1) 交叉连接(笛卡尔积): cross join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-内连接：inner-join"><span class="nav-number">4.2.</span> <span class="nav-text">(2) 内连接：inner join</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-外连接"><span class="nav-number">4.3.</span> <span class="nav-text">(3) 外连接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-左连接-left-join"><span class="nav-number">4.3.1.</span> <span class="nav-text">(3.1) 左连接 left join</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-右连接-right-join"><span class="nav-number">4.3.2.</span> <span class="nav-text">(3.2) 右连接 right join</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-联合查询：union-与-union-all"><span class="nav-number">4.4.</span> <span class="nav-text">(4) 联合查询：union 与 union all</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-全连接：full-join"><span class="nav-number">4.5.</span> <span class="nav-text">(5) 全连接：full join</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其它"><span class="nav-number">5.</span> <span class="nav-text">其它</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL更改密码"><span class="nav-number">5.1.</span> <span class="nav-text">MySQL更改密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出数据库"><span class="nav-number">5.2.</span> <span class="nav-text">导出数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出表"><span class="nav-number">5.3.</span> <span class="nav-text">导出表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入数据"><span class="nav-number">5.4.</span> <span class="nav-text">导入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建用户"><span class="nav-number">5.5.</span> <span class="nav-text">创建用户</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

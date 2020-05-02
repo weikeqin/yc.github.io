@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="jstat(1)          Monitoring Tools         jstat(1) NAME       jstat - Monitors Java Virtual Machine (JVM) statistics. This command is experimental and unsupported. SYNOPSIS           jstat [ generalO">
+<meta property="og:type" content="website">
+<meta property="og:title" content="沧海一粟">
+<meta property="og:url" content="http://weikeqin.cn/file/linux/man/man-jstat.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="jstat(1)          Monitoring Tools         jstat(1) NAME       jstat - Monitors Java Virtual Machine (JVM) statistics. This command is experimental and unsupported. SYNOPSIS           jstat [ generalO">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-28T09:02:03.686Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="沧海一粟">
+<meta name="twitter:description" content="jstat(1)          Monitoring Tools         jstat(1) NAME       jstat - Monitors Java Virtual Machine (JVM) statistics. This command is experimental and unsupported. SYNOPSIS           jstat [ generalO">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/file/linux/man/man-jstat.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/file/">FILE</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/file/linux/">LINUX</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>MAN</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/file/linux/man-jstat.html/">MAN-JSTAT.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>jstat(1)          Monitoring Tools         jstat(1)</p>
+<p>NAME<br>       jstat - Monitors Java Virtual Machine (JVM) statistics. This command is experimental and unsupported.</p>
+<p>SYNOPSIS<br>           jstat [ generalOption | outputOptions vmid [ interval[s|ms] [ count ] ]</p>
+<pre><code>generalOption
+    A single general command-line option -help or -options. See General Options.
+
+outputOptions
+    One or more output options that consist of a single statOption, plus any of the -t, -h, and -J options. See
+    Output Options.
+
+vmid
+    Virtual machine identifier, which is a string that indicates the target JVM. The general syntax is the
+    following:
+</code></pre><p>   [protocol:][//]lvmid[@hostname[:port]/servername]</p>
+<pre><code>    The syntax of the vmid string corresponds to the syntax of a URI. The vmid string can vary from a simple integer
+    that represents a local JVM to a more complex construction that specifies a communications protocol, port
+    number, and other implementation-specific values. See Virtual Machine Identifier.
+
+interval [s|ms]
+    Sampling interval in the specified units, seconds (s) or milliseconds (ms). Default units are milliseconds. Must
+    be a positive integer. When specified, the jstat command produces its output at each interval.
+
+count
+    Number of samples to display. The default value is infinity which causes the jstat command to display statistics
+    until the target JVM terminates or the jstat command is terminated. This value must be a positive integer.
+</code></pre><p>DESCRIPTION<br>       The jstat command displays performance statistics for an instrumented Java HotSpot VM. The target JVM is identified<br>       by its virtual machine identifier, or vmid option.</p>
+<p>VIRTUAL MACHINE IDENTIFIER<br>       The syntax of the vmid string corresponds to the syntax of a URI:</p>
+<pre><code>    [protocol:][//]lvmid[@hostname[:port]/servername]
+
+protocol
+    The communications protocol. If the protocol value is omitted and a host name is not specified, then the default
+    protocol is a platform-specific optimized local protocol. If the protocol value is omitted and a host name is
+    specified, then the default protocol is rmi.
+
+lvmid
+    The local virtual machine identifier for the target JVM. The lvmid is a platform-specific value that uniquely
+    identifies a JVM on a system. The lvmid is the only required component of a virtual machine identifier. The
+    lvmid is typically, but not necessarily, the operating system&apos;s process identifier for the target JVM process.
+    You can use the jps command to determine the lvmid. Also, you can determine the lvmid on Solaris, Linux, and OS
+    X platforms with the ps command, and on Windows with the Windows Task Manager.
+
+hostname
+    A hostname or IP address that indicates the target host. If the hostname value is omitted, then the target host
+    is the local host.
+
+port
+    The default port for communicating with the remote server. If the hostname value is omitted or the protocol
+    value specifies an optimized, local protocol, then the port value is ignored. Otherwise, treatment of the port
+    parameter is implementation-specific. For the default rmi protocol, the port value indicates the port number for
+    the rmiregistry on the remote host. If the port value is omitted and the protocol value indicates rmi, then the
+    default rmiregistry port (1099) is used.
+
+servername
+    The treatment of the servername parameter depends on implementation. For the optimized local protocol, this
+    field is ignored. For the rmi protocol, it represents the name of the RMI remote object on the remote host.
+</code></pre><p>OPTIONS<br>       The jstat command supports two types of options, general options and output options. General options cause the jstat<br>       command to display simple usage and version information. Output options determine the content and format of the<br>       statistical output.</p>
+<pre><code>All options and their functionality are subject to change or removal in future releases.
+</code></pre><p>   General Options<br>       If you specify one of the general options, then you cannot specify any other option or parameter.</p>
+<pre><code>-help
+    Displays a help message.
+
+-options
+    Displays a list of static options. See Output Options.
+</code></pre><p>   Output Options<br>       If you do not specify a general option, then you can specify output options. Output options determine the content<br>       and format of the jstat command’s output, and consist of a single statOption, plus any of the other output options<br>       (-h, -t, and -J). The statOption must come first.</p>
+<pre><code>Output is formatted as a table, with columns that are separated by spaces. A header row with titles describes the
+columns. Use the -h option to set the frequency at which the header is displayed. Column header names are consistent
+among the different options. In general, if two options provide a column with the same name, then the data source
+for the two columns is the same.
+
+Use the -t option to display a time stamp column, labeled Timestamp as the first column of output. The Timestamp
+column contains the elapsed time, in seconds, since the target JVM started. The resolution of the time stamp is
+dependent on various factors and is subject to variation due to delayed thread scheduling on heavily loaded systems.
+
+Use the interval and count parameters to determine how frequently and how many times, respectively, the jstat
+command displays its output.
+
+Note: Do not to write scripts to parse the jstat command&apos;s output because the format might change in future
+releases. If you write scripts that parse jstat command output, then expect to modify them for future releases of
+this tool.
+
+-statOption
+    Determines the statistics information the jstat command displays. The following lists the available options. Use
+    the -options general option to display the list of options for a particular platform installation. See Stat
+    Options and Output.
+
+    class: Displays statistics about the behavior of the class loader.
+
+    compiler: Displays statistics about the behavior of the Java HotSpot VM Just-in-Time compiler.
+
+    gc: Displays statistics about the behavior of the garbage collected heap.
+
+    gccapacity: Displays statistics about the capacities of the generations and their corresponding spaces.
+
+    gccause: Displays a summary about garbage collection statistics (same as -gcutil), with the cause of the last
+    and current (when applicable) garbage collection events.
+
+    gcnew: Displays statistics of the behavior of the new generation.
+
+    gcnewcapacity: Displays statistics about the sizes of the new generations and its corresponding spaces.
+
+    gcold: Displays statistics about the behavior of the old generation and metaspace statistics.
+
+    gcoldcapacity: Displays statistics about the sizes of the old generation.
+
+    gcmetacapacity: Displays statistics about the sizes of the metaspace.
+
+    gcutil: Displays a summary about garbage collection statistics.
+
+    printcompilation: Displays Java HotSpot VM compilation method statistics.
+
+-h n
+    Displays a column header every n samples (output rows), where n is a positive integer. Default value is 0, which
+    displays the column header the first row of data.
+
+-t
+    Displays a timestamp column as the first column of output. The time stamp is the time since the start time of
+    the target JVM.
+
+-JjavaOption
+    Passes javaOption to the Java application launcher. For example, -J-Xms48m sets the startup memory to 48 MB. For
+    a complete list of options, see java(1).
+</code></pre><p>   Stat Options and Output<br>       The following information summarizes the columns that the jstat command outputs for each statOption.</p>
+<pre><code>-class option
+    Class loader statistics.
+
+    Loaded: Number of classes loaded.
+
+    Bytes: Number of kBs loaded.
+
+    Unloaded: Number of classes unloaded.
+
+    Bytes: Number of Kbytes unloaded.
+
+    Time: Time spent performing class loading and unloading operations.
+
+-compiler option
+    Java HotSpot VM Just-in-Time compiler statistics.
+
+    Compiled: Number of compilation tasks performed.
+
+    Failed: Number of compilations tasks failed.
+
+    Invalid: Number of compilation tasks that were invalidated.
+
+    Time: Time spent performing compilation tasks.
+
+    FailedType: Compile type of the last failed compilation.
+
+    FailedMethod: Class name and method of the last failed compilation.
+
+-gc option
+    Garbage-collected heap statistics.
+
+    S0C: Current survivor space 0 capacity (kB).
+
+    S1C: Current survivor space 1 capacity (kB).
+
+    S0U: Survivor space 0 utilization (kB).
+
+    S1U: Survivor space 1 utilization (kB).
+
+    EC: Current eden space capacity (kB).
+
+    EU: Eden space utilization (kB).
+
+    OC: Current old space capacity (kB).
+
+    OU: Old space utilization (kB).
+
+    MC: Metaspace capacity (kB).
+
+    MU: Metacspace utilization (kB).
+
+    CCSC: Compressed class space capacity (kB).
+
+    CCSU: Compressed class space used (kB).
+
+    YGC: Number of young generation garbage collection events.
+
+    YGCT: Young generation garbage collection time.
+
+    FGC: Number of full GC events.
+
+    FGCT: Full garbage collection time.
+
+    GCT: Total garbage collection time.
+
+-gccapacity option
+    Memory pool generation and space capacities.
+
+    NGCMN: Minimum new generation capacity (kB).
+
+    NGCMX: Maximum new generation capacity (kB).
+
+    NGC: Current new generation capacity (kB).
+
+    S0C: Current survivor space 0 capacity (kB).
+
+    S1C: Current survivor space 1 capacity (kB).
+
+    EC: Current eden space capacity (kB).
+
+    OGCMN: Minimum old generation capacity (kB).
+
+    OGCMX: Maximum old generation capacity (kB).
+
+    OGC: Current old generation capacity (kB).
+
+    OC: Current old space capacity (kB).
+
+    MCMN: Minimum metaspace capacity (kB).
+
+    MCMX: Maximum metaspace capacity (kB).
+
+    MC: Metaspace capacity (kB).
+
+    CCSMN: Compressed class space minimum capacity (kB).
+
+    CCSMX: Compressed class space maximum capacity (kB).
+
+    CCSC: Compressed class space capacity (kB).
+
+    YGC: Number of young generation GC events.
+
+    FGC: Number of full GC events.
+
+-gccause option
+    This option displays the same summary of garbage collection statistics as the -gcutil option, but includes the
+    causes of the last garbage collection event and (when applicable) the current garbage collection event. In
+    addition to the columns listed for -gcutil, this option adds the following columns.
+
+    LGCC: Cause of last garbage collection
+
+    GCC: Cause of current garbage collection
+
+-gcnew option
+    New generation statistics.
+
+    S0C: Current survivor space 0 capacity (kB).
+
+    S1C: Current survivor space 1 capacity (kB).
+
+    S0U: Survivor space 0 utilization (kB).
+
+    S1U: Survivor space 1 utilization (kB).
+
+    TT: Tenuring threshold.
+
+    MTT: Maximum tenuring threshold.
+
+    DSS: Desired survivor size (kB).
+
+    EC: Current eden space capacity (kB).
+
+    EU: Eden space utilization (kB).
+
+    YGC: Number of young generation GC events.
+
+    YGCT: Young generation garbage collection time.
+
+-gcnewcapacity option
+    New generation space size statistics.
+
+    NGCMN: Minimum new generation capacity (kB).
+
+    NGCMX: Maximum new generation capacity (kB).
+
+    NGC: Current new generation capacity (kB).
+
+    S0CMX: Maximum survivor space 0 capacity (kB).
+
+    S0C: Current survivor space 0 capacity (kB).
+
+    S1CMX: Maximum survivor space 1 capacity (kB).
+
+    S1C: Current survivor space 1 capacity (kB).
+
+    ECMX: Maximum eden space capacity (kB).
+
+    EC: Current eden space capacity (kB).
+
+    YGC: Number of young generation GC events.
+
+    FGC: Number of full GC events.
+
+-gcold option
+    Old generation and metaspace behavior statistics.
+
+    MC: Metaspace capacity (kB).
+
+    MU: Metaspace utilization (kB).
+
+    CCSC: Compressed class space capacity (kB).
+
+    CCSU: Compressed class space used (kB).
+
+    OC: Current old space capacity (kB).
+
+    OU: Old space utilization (kB).
+
+    YGC: Number of young generation GC events.
+
+    FGC: Number of full GC events.
+
+    FGCT: Full garbage collection time.
+
+    GCT: Total garbage collection time.
+
+-gcoldcapacity option
+    Old generation size statistics.
+
+    OGCMN: Minimum old generation capacity (kB).
+
+    OGCMX: Maximum old generation capacity (kB).
+
+    OGC: Current old generation capacity (kB).
+
+    OC: Current old space capacity (kB).
+
+    YGC: Number of young generation GC events.
+
+    FGC: Number of full GC events.
+
+    FGCT: Full garbage collection time.
+
+    GCT: Total garbage collection time.
+
+-gcmetacapacity option
+    Metaspace size statistics.
+
+    MCMN: Minimum metaspace capacity (kB).
+
+    MCMX: Maximum metaspace capacity (kB).
+
+    MC: Metaspace capacity (kB).
+
+    CCSMN: Compressed class space minimum capacity (kB).
+
+    CCSMX: Compressed class space maximum capacity (kB).
+
+    YGC: Number of young generation GC events.
+
+    FGC: Number of full GC events.
+
+    FGCT: Full garbage collection time.
+
+    GCT: Total garbage collection time.
+
+-gcutil option
+    Summary of garbage collection statistics.
+
+    S0: Survivor space 0 utilization as a percentage of the space&apos;s current capacity.
+
+    S1: Survivor space 1 utilization as a percentage of the space&apos;s current capacity.
+
+    E: Eden space utilization as a percentage of the space&apos;s current capacity.
+
+    O: Old space utilization as a percentage of the space&apos;s current capacity.
+
+    M: Metaspace utilization as a percentage of the space&apos;s current capacity.
+
+    CCS: Compressed class space utilization as a percentage.
+
+    YGC: Number of young generation GC events.
+
+    YGCT: Young generation garbage collection time.
+
+    FGC: Number of full GC events.
+
+    FGCT: Full garbage collection time.
+
+    GCT: Total garbage collection time.
+
+-printcompilation option
+    Java HotSpot VM compiler method statistics.
+
+    Compiled: Number of compilation tasks performed by the most recently compiled method.
+
+    Size: Number of bytes of byte code of the most recently compiled method.
+
+    Type: Compilation type of the most recently compiled method.
+
+    Method: Class name and method name identifying the most recently compiled method. Class name uses slash (/)
+    instead of dot (.) as a name space separator. Method name is the method within the specified class. The format
+    for these two fields is consistent with the HotSpot -XX:+PrintCompilation option.
+</code></pre><p>EXAMPLES<br>       This section presents some examples of monitoring a local JVM with an lvmid of 21891.</p>
+<p>   The gcutil Option<br>       This example attaches to lvmid 21891 and takes 7 samples at 250 millisecond intervals and displays the output as<br>       specified by the -gcutil option.</p>
+<pre><code>The output of this example shows that a young generation collection occurred between the third and fourth sample.
+The collection took 0.078 seconds and promoted objects from the eden space (E) to the old space (O), resulting in an
+increase of old space utilization from 66.80% to 68.19%. Before the collection, the survivor space was 97.02%
+utilized, but after this collection it is 91.03% utilized.
+
+    jstat -gcutil 21891 250 7
+</code></pre><p> S0     S1     E      O      M     CCS    YGC     YGCT    FGC    FGCT     GCT<br> 0.00  97.02  70.31  66.80  95.52  89.14      7    0.300     0    0.000    0.300<br> 0.00  97.02  86.23  66.80  95.52  89.14      7    0.300     0    0.000    0.300<br> 0.00  97.02  96.53  66.80  95.52  89.14      7    0.300     0    0.000    0.300<br>91.03   0.00   1.98  68.19  95.89  91.24      8    0.378     0    0.000    0.378<br>91.03   0.00  15.82  68.19  95.89  91.24      8    0.378     0    0.000    0.378<br>91.03   0.00  17.80  68.19  95.89  91.24      8    0.378     0    0.000    0.378<br>91.03   0.00  17.80  68.19  95.89  91.24      8    0.378     0    0.000    0.378</p>
+<p>   Repeat the Column Header String<br>       This example attaches to lvmid 21891 and takes samples at 250 millisecond intervals and displays the output as<br>       specified by -gcnew option. In addition, it uses the -h3 option to output the column header after every 3 lines of<br>       data.</p>
+<pre><code>In addition to showing the repeating header string, this example shows that between the second and third samples, a
+young GC occurred. Its duration was 0.001 seconds. The collection found enough active data that the survivor space 0
+utilization (S0U) would have exceeded the desired survivor Size (DSS). As a result, objects were promoted to the old
+generation (not visible in this output), and the tenuring threshold (TT) was lowered from 31 to 2.
+
+Another collection occurs between the fifth and sixth samples. This collection found very few survivors and returned
+the tenuring threshold to 31.
+
+    jstat -gcnew -h3 21891 250
+</code></pre><p>S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT<br> 64.0   64.0    0.0   31.7 31  31   32.0    512.0    178.6    249    0.203<br> 64.0   64.0    0.0   31.7 31  31   32.0    512.0    355.5    249    0.203<br> 64.0   64.0   35.4    0.0  2  31   32.0    512.0     21.9    250    0.204<br>S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT<br> 64.0   64.0   35.4    0.0  2  31   32.0    512.0    245.9    250    0.204<br> 64.0   64.0   35.4    0.0  2  31   32.0    512.0    421.1    250    0.204<br> 64.0   64.0    0.0   19.0 31  31   32.0    512.0     84.4    251    0.204<br>S0C    S1C    S0U    S1U   TT MTT  DSS      EC       EU     YGC     YGCT<br> 64.0   64.0    0.0   19.0 31  31   32.0    512.0    306.7    251    0.204</p>
+<p>   Include a Time Stamp for Each Sample<br>       This example attaches to lvmid 21891 and takes 3 samples at 250 millisecond intervals. The -t option is used to<br>       generate a time stamp for each sample in the first column.</p>
+<pre><code>The Timestamp column reports the elapsed time in seconds since the start of the target JVM. In addition, the
+-gcoldcapacity output shows the old generation capacity (OGC) and the old space capacity (OC) increasing as the heap
+expands to meet allocation or promotion demands. The old generation capacity (OGC) has grown from 11,696 kB to
+13,820 kB after the eighty-first full garbage collection (FGC). The maximum capacity of the generation (and space)
+is 60,544 kB (OGCMX), so it still has room to expand.
+
+    Timestamp      OGCMN    OGCMX     OGC       OC       YGC   FGC    FGCT    GCT
+  150.1   1408.0  60544.0  11696.0  11696.0   194    80    2.874   3.799
+  150.4   1408.0  60544.0  13820.0  13820.0   194    81    2.938   3.863
+  150.7   1408.0  60544.0  13820.0  13820.0   194    81    2.938   3.863
+</code></pre><p>   Monitor Instrumentation for a Remote JVM<br>       This example attaches to lvmid 40496 on the system named remote.domain using the -gcutil option, with samples taken<br>       every second indefinitely.</p>
+<pre><code>The lvmid is combined with the name of the remote host to construct a vmid of 40496@remote.domain. This vmid results
+in the use of the rmi protocol to communicate to the default jstatd server on the remote host. The jstatd server is
+located using the rmiregistry command on remote.domain that is bound to the default port of the rmiregistry command
+(port 1099).
+
+    jstat -gcutil 40496@remote.domain 1000
+    ... output omitted
+</code></pre><p>SEE ALSO<br>       o   java(1)</p>
+<pre><code>o   jps(1)
+
+o   jstatd(1)
+
+o   rmiregistry(1)
+</code></pre><p>JDK 8  03 March 2015           jstat(1)<br> Manual page jstat(1) line 479/507 (END) (press h for help or q to quit)</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/file/">FILE</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li><a href="/file/linux/">LINUX</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>MAN</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/file/linux/man-jstat.html/">MAN-JSTAT.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Neo4j load csv 使用 牛刀小试  下面的例子是 把 http://data.neo4j.com/examples/person.csv 的csv文件导入到neo4j数据库里，指定的csv文件分隔符是,， 只导入第一个字段不为null的数据，根据id为唯一主键导入，导入时设置name为第二个字段，每10000条提交一次。  1234567USING PERIODIC COMMIT 1">
+<meta name="keywords" content="neo4j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="neo4j 使用 官方 ETL load-csv 导入 数据">
+<meta property="og:url" content="http://weikeqin.cn/2017/04/11/neo4j-load-csv/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="Neo4j load csv 使用 牛刀小试  下面的例子是 把 http://data.neo4j.com/examples/person.csv 的csv文件导入到neo4j数据库里，指定的csv文件分隔符是,， 只导入第一个字段不为null的数据，根据id为唯一主键导入，导入时设置name为第二个字段，每10000条提交一次。  1234567USING PERIODIC COMMIT 1">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-04T06:40:46.195Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="neo4j 使用 官方 ETL load-csv 导入 数据">
+<meta name="twitter:description" content="Neo4j load csv 使用 牛刀小试  下面的例子是 把 http://data.neo4j.com/examples/person.csv 的csv文件导入到neo4j数据库里，指定的csv文件分隔符是,， 只导入第一个字段不为null的数据，根据id为唯一主键导入，导入时设置name为第二个字段，每10000条提交一次。  1234567USING PERIODIC COMMIT 1">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/04/11/neo4j-load-csv/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>neo4j 使用 官方 ETL load-csv 导入 数据 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/04/11/neo4j-load-csv/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">neo4j 使用 官方 ETL load-csv 导入 数据
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-04-11 22:32:53" itemprop="dateCreated datePublished" datetime="2017-04-11T22:32:53+08:00">2017-04-11</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/11/neo4j-load-csv/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/04/11/neo4j-load-csv/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/11/neo4j-load-csv/" class="leancloud_visitors" data-flag-title="neo4j 使用 官方 ETL load-csv 导入 数据">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> Neo4j load csv 使用</p>
+<p><strong>牛刀小试</strong></p>
+<p> 下面的例子是 把 <a href="http://data.neo4j.com/examples/person.csv" target="_blank" rel="noopener">http://data.neo4j.com/examples/person.csv</a> 的csv文件导入到neo4j数据库里，指定的csv文件分隔符是<code>,</code>， 只导入第一个字段不为null的数据，根据id为唯一主键导入，导入时设置name为第二个字段，每10000条提交一次。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">USING PERIODIC COMMIT 10000</span><br><span class="line">LOAD CSV FROM &quot;http://data.neo4j.com/examples/person.csv&quot; AS line</span><br><span class="line">fieldterminator &apos;,&apos;</span><br><span class="line">WHERE line[0] IS NOT NULL</span><br><span class="line">MERGE (n:Person &#123;id: toInt(line[0])&#125;)</span><br><span class="line">SET n.name = line[1]</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<!--
+USING PERIODIC COMMIT 10000
+LOAD CSV  FROM "http://data.neo4j.com/examples/person.csv" 
+AS line 
+FIELDTERMINATOR  ',' 
+CREATE (t:Test {id:toInteger(line[0]), name:line[1]})
+-->
+<p>1、 <code>LOAD CSV FROM &quot;http://data.neo4j.com/examples/person.csv&quot;</code> 是读取文件，文件路径可以是url、可以是本地相对路径、本地绝对路径<br>2、 <code>fieldterminator</code> 是设置分隔符<br>3、 <code>MERGE</code> 是插入节点 (不存在则插入，存在则更新)</p>
+<p><br></p>
+<p><strong>导入步骤</strong></p>
+<p>1、处理数据，确保数据是UTF8无BOM编码，确保数据不存在字符转义问题，确保不存在脏数据<br>2、检查数据一共有多少行。  如果行数和实际的有差别，检查数据或者cypher语句<br>3、抽样检查数据。 返回前10条。看格式是否正确，字段是否对应。是否有乱码。<br>4、导入数据。</p>
+<p>  如果特别熟悉了，可以直接进行第4步导入数据，如果不太确定，建议还是1-4步都执行一遍。</p>
+<p><br></p>
+<a id="more"></a>
+<h1 id="1-导入前注意事项"><a href="#1-导入前注意事项" class="headerlink" title="(1)　导入前注意事项"></a>(1)　导入前注意事项</h1><p>1、 csv一定要用 UTF-8无BOM编码，否则入库时可能乱码<br>2、 默认使用<code>,</code>作为分隔符，如果想自定义，可以通过 <code>fieldterminator</code> 设置<br>3、 导入数据前，一定要校验数据，都是坑呀，总结出的经验<br>4、 建议使用绝对路径，使用绝对路径时需要把 <code>neo4j.conf</code>配置文件里的<code>dbms.directories.import=import</code>注释掉(在前面加个#号) </p>
+<p><br></p>
+<h1 id="2-检查csv一共多少行"><a href="#2-检查csv一共多少行" class="headerlink" title="(2)　检查csv一共多少行"></a>(2)　检查csv一共多少行</h1><p>  注意文件路径  </p>
+<h2 id="2-1-windows下相对路径方式"><a href="#2-1-windows下相对路径方式" class="headerlink" title="(2.1)　windows下相对路径方式"></a>(2.1)　windows下相对路径方式</h2><p>  Test.csv 放在 <code>${neo4j_home}/import/Test.csv</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV FROM &quot;file:/Test.csv&quot; </span><br><span class="line">AS line </span><br><span class="line">RETURN COUNT(*);</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-windows下绝对路径方式"><a href="#2-2-windows下绝对路径方式" class="headerlink" title="(2.2)　windows下绝对路径方式"></a>(2.2)　windows下绝对路径方式</h2><p>  文件放在 <code>C:/User/wdb/2017-04-06_test.csv</code> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV FROM  &quot;file:///C:/User/wdb/2017-04-06_test.csv&quot; </span><br><span class="line">AS line </span><br><span class="line">RETURN COUNT(*);</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-linux下相对路径格式"><a href="#2-3-linux下相对路径格式" class="headerlink" title="(2.3)　linux下相对路径格式"></a>(2.3)　linux下相对路径格式</h2><p>  Test.csv 放在 <code>${neo4j_home}/import/Test.csv</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV FROM &quot;file:/2017-04-06_test.csv&quot; </span><br><span class="line">AS line </span><br><span class="line">RETURN COUNT(*);</span><br></pre></td></tr></table></figure>
+<h2 id="2-4-linux下绝对路径格式"><a href="#2-4-linux下绝对路径格式" class="headerlink" title="(2.4)　linux下绝对路径格式"></a>(2.4)　linux下绝对路径格式</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV FROM &quot;file:/home/wkq/databases/data/2017-04-06_test.csv&quot; </span><br><span class="line">AS line </span><br><span class="line">RETURN COUNT(*);</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h1 id="3-校验数据"><a href="#3-校验数据" class="headerlink" title="(3)　校验数据"></a>(3)　校验数据</h1><p>  注意文件路径<br>  文件使用UTF-8编码，否则可能导致乱码</p>
+<h2 id="3-1-检查数据-不带标题"><a href="#3-1-检查数据-不带标题" class="headerlink" title="(3.1)　 检查数据  不带标题"></a>(3.1)　 检查数据  不带标题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV FROM &quot;file:///C:/User/wdb/Test.csv&quot; </span><br><span class="line">AS line </span><br><span class="line">WITH line </span><br><span class="line">RETURN line </span><br><span class="line">LIMIT 5</span><br></pre></td></tr></table></figure>
+<h2 id="3-2-检查数据-带标题"><a href="#3-2-检查数据-带标题" class="headerlink" title="(3.2)　检查数据  带标题"></a>(3.2)　检查数据  带标题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV WITH HEADERS FROM &quot;file:///C:/User/wdb/Test.csv&quot; </span><br><span class="line">AS line </span><br><span class="line">WITH line </span><br><span class="line">RETURN line </span><br><span class="line">LIMIT 5</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h1 id="4-真正导入数据"><a href="#4-真正导入数据" class="headerlink" title="(4)　真正导入数据"></a>(4)　真正导入数据</h1><!--
+// 第一次字段用汉字，发现很慢
+load csv with headers from "file:/Test.csv" as line with line create (:Person {姓名:line.姓名, 序号:toInt(line.序号), 联系方式:toInt(line.联系方式), 性别:line.性别, 班级:line.班级}) ;
+// 第二次 优化后 没有用批量提交，也有点慢
+load csv with headers from "file:/Test.csv" as line with line create (:Person {name:line.姓名, number:toInt(line.序号), tel:toInt(line.联系方式), sex:line.性别, class:line.班级}) ;
+-->
+<h2 id="4-1-导入数据-csv文件带文件头"><a href="#4-1-导入数据-csv文件带文件头" class="headerlink" title="(4.1) 导入数据 csv文件带文件头"></a>(4.1) 导入数据 csv文件带文件头</h2><p>  注意WITH HEADERS的写法和不用HEADERS的写法，一个用的是 line.name 一个用的是 line[0]<br>  导入时可以使用函数 toInt(‘1’)  toFloat(‘1.0’)<br>  toInteger(), toFloat(), split()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV WITH HEADERS FROM &quot;file:///C:/User/wdb/Test.csv&quot; </span><br><span class="line">AS line </span><br><span class="line">WITH line </span><br><span class="line">CREATE (:Person &#123;name:line.name, number:toInt(line.number), tel:toInt(line.tel), sex:line.sex, class:line.classmate&#125;) ;</span><br></pre></td></tr></table></figure>
+<h2 id="4-2-导入数据-csv文件不带文件头"><a href="#4-2-导入数据-csv文件不带文件头" class="headerlink" title="(4.2) 导入数据 csv文件不带文件头"></a>(4.2) 导入数据 csv文件不带文件头</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV FROM &quot;file:///C:/User/wdb/Test.csv&quot; </span><br><span class="line">AS line </span><br><span class="line">WITH line </span><br><span class="line">CREATE (:Person &#123;name:line[0], number:toInt(line[1]), tel:toInt(line[2]), sex:line[3], class:line[4]&#125;) ;</span><br></pre></td></tr></table></figure>
+<p><br></p>
+<h1 id="5-注事事项"><a href="#5-注事事项" class="headerlink" title="(5)  注事事项"></a>(5)  注事事项</h1><h2 id="5-1-批量提交"><a href="#5-1-批量提交" class="headerlink" title="(5.1)  批量提交"></a>(5.1)  批量提交</h2><p>  数据量大了以后可以使用批量提交</p>
+<p>  <code>using periodic commit 10000</code> 表示 每10000行进行一次事务提交</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">USING PERIODIC COMMIT 500</span><br><span class="line">LOAD CSV WITH HEADERS FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">MERGE (pet:Pet &#123;petId: row.PetId&#125;)</span><br><span class="line">MERGE (owner:Owner &#123;ownerId: row.OwnerId&#125;)</span><br><span class="line"> ON CREATE SET owner.name = row.OwnerName</span><br><span class="line">MERGE (pet)-[r:OWNED_BY]-&gt;(owner)</span><br></pre></td></tr></table></figure>
+<h2 id="5-2-处理空值"><a href="#5-2-处理空值" class="headerlink" title="(5.2)  处理空值"></a>(5.2)  处理空值</h2><p>  处理空值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//skip null values</span><br><span class="line">LOAD CSV WITH HEADERS FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">WITH row WHERE row.Company IS NOT NULL</span><br><span class="line">MERGE (c:Company &#123;companyId: row.Id&#125;)</span><br><span class="line"></span><br><span class="line">//set default for null values</span><br><span class="line">LOAD CSV WITH HEADERS FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">MERGE (c:Company &#123;companyId: row.Id, hqLocation: coalesce(row.Location, &quot;Unknown&quot;)&#125;)</span><br><span class="line"></span><br><span class="line">//change empty strings to null values (not stored)</span><br><span class="line">LOAD CSV WITH HEADERS FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">MERGE (c:Company &#123;companyId: row.Id&#125;)</span><br><span class="line">SET c.emailAddress = CASE trim(row.Email) WHEN &quot;&quot; THEN null ELSE row.Email END</span><br></pre></td></tr></table></figure></p>
+<h2 id="5-3-使用split"><a href="#5-3-使用split" class="headerlink" title="(5.3)  使用split()"></a>(5.3)  使用split()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//split string of employee skills into separate nodes</span><br><span class="line">LOAD CSV FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">MERGE (e:Employee &#123;employeeId: row.Id&#125;)</span><br><span class="line">UNWIND split(row.skills, &apos;,&apos;) AS skill</span><br><span class="line">MERGE (s:Skill &#123;name: skill&#125;)</span><br><span class="line">MERGE (e)-[r:HAS_EXPERIENCE]-&gt;(s);</span><br></pre></td></tr></table></figure>
+<h2 id="5-4-使用CASE"><a href="#5-4-使用CASE" class="headerlink" title="(5.4)  使用CASE"></a>(5.4)  使用CASE</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//set businessType property based on shortened value in CSV</span><br><span class="line">LOAD CSV WITH HEADERS FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">WITH row,</span><br><span class="line">(CASE row.BusinessType</span><br><span class="line"> WHEN &apos;P&apos; THEN &apos;Public&apos;</span><br><span class="line"> WHEN &apos;R&apos; THEN &apos;Private&apos;</span><br><span class="line"> WHEN &apos;G&apos; THEN &apos;Government&apos;</span><br><span class="line"> ELSE &apos;Other&apos; END) AS type</span><br><span class="line">MERGE (c:Company &#123;companyId: row.CompanyId&#125;)</span><br><span class="line">SET c.businessType = type</span><br><span class="line">RETURN *</span><br></pre></td></tr></table></figure>
+<h2 id="5-5-MERGE-relation"><a href="#5-5-MERGE-relation" class="headerlink" title="(5.5)  MERGE relation"></a>(5.5)  MERGE relation</h2><p> 为获得最佳性能，请始终在具有索引主键属性的单个标签上使用MATCH和MERGE。<br> 您还应该将节点和关系创建分离为单独的语句。 </p>
+<p> 以下两种写法都没问题，第一种相对第二种更占内存，第二种在内存有限的情况下性能会好一点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MERGE (e:Employee &#123;employeeId: row.employeeId&#125;)</span><br><span class="line">MERGE (c:Company &#123;companyId: row.companyId&#125;)</span><br><span class="line">MERGE (e)-[r:WORKS_FOR]-&gt;(c)</span><br></pre></td></tr></table></figure>
+<p>  官方推荐在具体的Label的属性上建立索引使用MATCH和MERGE，并且把创建节点和创建关系分开写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">LOAD CSV WITH HEADERS FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">MERGE (e:Employee &#123;employeeId: row.employeeId&#125;)</span><br><span class="line">RETURN count(e);</span><br><span class="line"></span><br><span class="line">LOAD CSV WITH HEADERS FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">MERGE (c:Company &#123;companyId: row.companyId&#125;)</span><br><span class="line">RETURN count(c);</span><br><span class="line"></span><br><span class="line">LOAD CSV WITH HEADERS FROM &apos;file:///data.csv&apos; AS row</span><br><span class="line">MATCH (e:Employee &#123;employeeId: row.employeeId&#125;)</span><br><span class="line">MATCH (c:Company &#123;companyId: row.companyId&#125;)</span><br><span class="line">MERGE (e)-[r:WORKS_FOR]-&gt;(c)</span><br><span class="line">RETURN count(*);</span><br></pre></td></tr></table></figure>
+<p>官方原文</p>
+<p>To improve inserting or updating unique entities into your graph (using MERGE or MATCH with updates), you can create indexes and constraints declared for each of the labels and properties you plan to merge or match on.</p>
+<p>For best performance, always MATCH and MERGE on a single label with the indexed primary-key property.<br>You should also separate node and relationship creation into separate statements. </p>
+<p>This way, the load is only doing one piece of the import at a time and can move through large amounts of data quickly and efficiently, reducing heavy processing.</p>
+<p>When the amount of data being loaded is too much to fit into memory, there are a couple of different approaches you can use to combat running out of memory during the data load.</p>
+<p><br></p>
+<h1 id="6-性能测试"><a href="#6-性能测试" class="headerlink" title="(6)　性能测试"></a>(6)　性能测试</h1><h2 id="测试1"><a href="#测试1" class="headerlink" title="测试1"></a>测试1</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">neo4j-sh (?)$ using periodic commit 10000 load csv with headers from &quot;file:/data/stale/data01/neo4j/node_uuid_10w.csv&quot; as line with line create (:Test &#123;uuid:line.uuid, name:line.name&#125;);</span><br><span class="line">+-------------------+</span><br><span class="line">| No data returned. |</span><br><span class="line">+-------------------+</span><br><span class="line">Nodes created: 100000</span><br><span class="line">Properties set: 200000</span><br><span class="line">Labels added: 100000</span><br><span class="line">3412 ms</span><br></pre></td></tr></table></figure>
+<h2 id="测试2"><a href="#测试2" class="headerlink" title="测试2"></a>测试2</h2><p>/data/stale/data01/neo4j/node_uuid_1kw.csv文件加上标题一共10000010条，有10000009条数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">neo4j-sh (?)$ load csv from &quot;file:/data/stale/data01/neo4j/node_uuid_1kw.csv&quot; as line return count(*);</span><br><span class="line">+----------+</span><br><span class="line">| count(*) |</span><br><span class="line">+----------+</span><br><span class="line">| 10000010 |</span><br><span class="line">+----------+</span><br><span class="line">1 row</span><br><span class="line">7434 ms</span><br><span class="line">neo4j-sh (?)$ using periodic commit 10000 load csv with headers from &quot;file:/data/stale/data01/neo4j/node_uuid_1kw.csv&quot; as line with line create (:Test &#123;uuid:line.uuid, name:line.name&#125;);</span><br><span class="line">+-------------------+</span><br><span class="line">| No data returned. |</span><br><span class="line">+-------------------+</span><br><span class="line">Nodes created: 10000009</span><br><span class="line">Properties set: 20000018</span><br><span class="line">Labels added: 10000009</span><br><span class="line">151498 ms</span><br></pre></td></tr></table></figure>
+<p>服务器32核，256G内存，1T机械硬盘<br>导入时CPU利用率在150%左右，RES Memory 5G左右，VIRT Memory 70G左右</p>
+<h1 id="7-可能遇到的问题"><a href="#7-可能遇到的问题" class="headerlink" title="(7)　可能遇到的问题"></a>(7)　可能遇到的问题</h1><h2 id="7-1-Neo-DatabaseError-General-UnknownError"><a href="#7-1-Neo-DatabaseError-General-UnknownError" class="headerlink" title="(7.1)　Neo.DatabaseError.General.UnknownError"></a>(7.1)　Neo.DatabaseError.General.UnknownError</h2><p><code>Neo.DatabaseError.General.UnknownError: At /home/usdp/databases/data/news.csv:172393 -  there&#39;s a field starting with a quote and whereas it ends that quote there seems to be characters in that field after that ending quote. That isn&#39;t supported. This is what I read: &#39;最后一公里&quot;&#39;</code><br>字符转义的问题，换一个分隔符或者把那条数据去掉</p>
+<p>在修改语句后 <code>load csv from &quot;file:/home/usdp/databases/data/news.csv&quot; as line fieldterminator &#39;;&#39; return count(*);</code></p>
+<p>数据格式问题<br>在生成数据或者处理数据这步没做好，没有好的办法，只能把有问题的数据处理掉</p>
+<!--
+[usdp@neo4j data]$ sed -n '172394p' news.csv
+172393;http://www.chinarta.com/html/2017-6/20176285018.htm;[物流]快递柜风靡,"最后一公里"通了吗？;2017-06-02 08:50:00.0;4279
+[usdp@neo4j data]$ sed '172394d' news.csv
+[usdp@neo4j data]$
+-->
+<h2 id="7-2-Couldn’t-load-the-external-resource"><a href="#7-2-Couldn’t-load-the-external-resource" class="headerlink" title="(7.2)　Couldn’t load the external resource"></a>(7.2)　Couldn’t load the external resource</h2><p><code>WARNING: Couldn&#39;t load the external resource at: file:/home/usdp/databases/data/news.csv</code><br>路径输错了或者没有权限</p>
+<h2 id="7-3-WARNING-Invalid-input"><a href="#7-3-WARNING-Invalid-input" class="headerlink" title="(7.3)　WARNING: Invalid input"></a>(7.3)　WARNING: Invalid input</h2><p><code>WARNING: Invalid input &#39;)&#39;: expected whitespace, &#39;.&#39;, node labels, &#39;[&#39;, &quot;=~&quot;, IN, STARTS, ENDS, CONTAINS, IS, &#39;^&#39;, &#39;*&#39;, &#39;/&#39;, &#39;%&#39;, &#39;+&#39;, &#39;-&#39;, &#39;=&#39;, &quot;&lt;&gt;&quot;, &quot;!=&quot;, &#39;&lt;&#39;, &#39;&gt;&#39;, &quot;&lt;=&quot;, &quot;&gt;=&quot;, AND, XOR, OR, &#39;,&#39; or &#39;}&#39;</code><br>cypher语句写的有问题</p>
+<h2 id="7-4-WARNING-Variable-n-not-defined"><a href="#7-4-WARNING-Variable-n-not-defined" class="headerlink" title="(7.4)　WARNING: Variable n not defined"></a>(7.4)　WARNING: Variable <code>n</code> not defined</h2><p>cypher语句写的有问题，找不见变量n</p>
+<h2 id="7-5-WARNING-Expected-0-to-be-a-java-lang-String-but-it-was-a-java-lang-Long"><a href="#7-5-WARNING-Expected-0-to-be-a-java-lang-String-but-it-was-a-java-lang-Long" class="headerlink" title="(7.5)　WARNING: Expected 0 to be a java.lang.String, but it was a java.lang.Long"></a>(7.5)　WARNING: Expected 0 to be a java.lang.String, but it was a java.lang.Long</h2><p>load csv时使用header就在cypher里用header的属性<br>或者load csv时不使用header，然后用line[0], line[1]<br>否则会出现上面的错误</p>
+<h1 id="8-官网英文资料"><a href="#8-官网英文资料" class="headerlink" title="(8)　官网英文资料"></a>(8)　官网英文资料</h1><p>  LOAD CSV非常适合导入中小型数据，大概1000 0000 左右数据。<br>  对于大数据集，即在100B记录范围内，我们可以访问专门的批量导入程序。</p>
+<p>  LOAD CSV is great for importing small – medium sized data, i.e. up to the 10M records range. For large data sets, i.e. in the 100B records range, we have access to a specialized bulk importer.</p>
+<p>CSV Data Quality<br>Real World Data Considerations</p>
+<p>Real world data is messy. Don’t assume what someone told you is in a CSV file is actually, in there, don’t rely on format descriptions, consistency or correct quoting. Only trust data validity that you checked yourself.<br>Common Pitfalls</p>
+<p>BOM byte order mark (2 UTF-8) bytes at the beginning of a file ← remove them<br>Binary zeros or other non-text-characters dispersed throughout the file ← remove them<br>Inconsisent line breaks – mixed Windows and Unix linebreaks ← make sure they are consistent, best choose Unix style<br>Header inconsistent with data (missing, too many columns, different delimiter in header) ← fix headers<br>Special character in non-quoted text ← make sure unusual text is always quoted<br>Unexpected newlines in quoted and unquoted text-fields ← either quote text or remove newlines<br>stray quotes – standalone double or single quote in the middle of non-quoted text, or non-escaped quotes in quoted text ← escape or remove stray quotes</p>
+<p>// assert correct line count<br>LOAD CSV FROM “file-url” AS line<br>RETURN count(*);</p>
+<p>// check first few raw lines<br>LOAD CSV FROM “file-url” AS line WITH line<br>RETURN line<br>LIMIT 5;</p>
+<p>// check first 5 line-sample with header-mapping<br>LOAD CSV WITH HEADERS FROM “file-url” AS line WITH line<br>RETURN line<br>LIMIT 5;</p>
+<p>LOAD CSV for Medium Sized Datasets<br>The real secret of LOAD CSV.</p>
+<p>It is not just your basic data ingestion mechanism, but actually an ETL Power Tool. Why?</p>
+<p>It combines multiple aspects in a single operation:</p>
+<p>supports loading / ingesting CSV data from an URI<br>direct mapping of input data into complex graph/domain structure<br>data conversion<br>supports complex computations<br>create or merge data, relationships and structure</p>
+<p>Important Tips for LOAD CSV</p>
+<p>Always use the latest version of Neo4j, it will most probably be faster than earlier ones.</p>
+<p>Data Quality and Conversion</p>
+<p>See the data quality section above<br>Empty fields have to be skipped or replaced with default values during LOAD CSV<br>All data from the CSV file is read as a string, you have to use toInt, toFloat, split or similar functions to convert<br>Split arrays in a cell by delimiter using split (combine with extract for conversions)<br>Check your Cypher import statement for typos: labels, property names and relationship-types are case-sensitive<br>Conditional conversions can be achieved with CASE</p>
+<p>Indexing and Performance</p>
+<p>Make sure to have indexes and constraints declared and ONLINE for entities you want to MATCH or MERGE on<br>Always MATCH and MERGE on a single label and the indexed primary-key property<br>Prefix your load statements with USING PERIODIC COMMIT 10000<br>If possible, separate node creation from relationship creation into different statements<br>If your import is slow or runs into memory issues, see Mark’s blog post on Eager loading.</p>
+<p>Memory Config</p>
+<p>Make sure to have enough memory (at least 4G heap in neo4j-wrapper.conf) reserved for your Neo4j-Server or Neo4j-Shell (export JAVA_OPTS=”-Xmx4G”)<br>Configure the memory mapping settings (Neo4j 2.1) according to your expected file sizes<br>(Neo4j 2.1 neo4j.properties keep these ratios: nodestore=100M, relationshipstore=2G, propertystore=500M, stringstore=500M)</p>
+<p>File-URLs and Neo4j-Shell</p>
+<p>Make sure to use the right URLs esp. file URLs.+ On OSX and Unix use file:///path/to/data.csv, on Windows, please use file:c:/path/to/data.csv<br>Use the bin/neo4j-shell instead of the browser for better error messages and control<br>by default it connects to a running server, but you can also use bin/neo4j-shell -path import.db -config conf/neo4j.properties for direct database directory access (when no server is running with that db).</p>
+<p>Step by Step Example for LOAD CSV</p>
+<p>In our guide on ETL import from a relational database we explain how to import CSV data step by step, from data modeling, creating indexes to writing the individual LOAD CSV statements.<br>Webinar “LOAD CSV in the Real World”</p>
+<p>In this very hands-on webinar Nicole White, Neo Technology’s Data Scientist, shows how to use LOAD CSV to import a real world dataset (consumer complaints from consumerfinance.gov) into Neo4j.</p>
+<p>After a quick modeling discussion she walks through the steps of preparing indexes and constraints and then imports one part of the dataset at a time into Neo4j.</p>
+<p>Super Fast Batch Importer For Huge Datasets</p>
+<p>LOAD CSV is great for importing small – medium sized data, i.e. up to the 10M records range. For large data sets, i.e. in the 100B records range, we have access to a specialized bulk importer.</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://neo4j.com/developer/guide-import-csv/" target="_blank" rel="noopener">neo4j office guide-import-csv</a><br>[2] <a href="http://markhneedham.com/blog/2014/10/23/neo4j-cypher-avoiding-the-eager/" target="_blank" rel="noopener">neo4j-cypher-avoiding-the-eager</a><br>[3] <a href="http://jexp.de/blog/2014/06/using-load-csv-to-import-git-history-into-neo4j/" target="_blank" rel="noopener">using-load-csv-to-import-git-history-into-neo4j</a><br>[4] <a href="http://jexp.de/blog/2014/06/load-csv-into-neo4j-quickly-and-successfully/" target="_blank" rel="noopener">load-csv-into-neo4j-quickly-and-successfully</a><br>[5] <a href="https://stackoverflow.com/questions/45166907/how-to-use-a-csv-field-to-define-the-node-label-in-a-load-statement" target="_blank" rel="noopener">how-to-use-a-csv-field-to-define-the-node-label-in-a-load-statement</a><br>[6] <a href="https://stackoverflow.com/questions/26596644/how-to-load-csv-files-into-spss-variable-and-value-labels" target="_blank" rel="noopener">how-to-load-csv-files-into-spss-variable-and-value-labels</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/neo4j/" rel="tag"># neo4j</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/09/google-search/" rel="next" title="谷歌搜索方法">
+                <i class="fa fa-chevron-left"></i> 谷歌搜索方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/11/neo4j-import/" rel="prev" title="使用 官方 etl neo4j-import 导入 数据">
+                使用 官方 etl neo4j-import 导入 数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-导入前注意事项"><span class="nav-number">1.</span> <span class="nav-text">(1)　导入前注意事项</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-检查csv一共多少行"><span class="nav-number">2.</span> <span class="nav-text">(2)　检查csv一共多少行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-windows下相对路径方式"><span class="nav-number">2.1.</span> <span class="nav-text">(2.1)　windows下相对路径方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-windows下绝对路径方式"><span class="nav-number">2.2.</span> <span class="nav-text">(2.2)　windows下绝对路径方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-linux下相对路径格式"><span class="nav-number">2.3.</span> <span class="nav-text">(2.3)　linux下相对路径格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-linux下绝对路径格式"><span class="nav-number">2.4.</span> <span class="nav-text">(2.4)　linux下绝对路径格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-校验数据"><span class="nav-number">3.</span> <span class="nav-text">(3)　校验数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-检查数据-不带标题"><span class="nav-number">3.1.</span> <span class="nav-text">(3.1)　 检查数据  不带标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-检查数据-带标题"><span class="nav-number">3.2.</span> <span class="nav-text">(3.2)　检查数据  带标题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-真正导入数据"><span class="nav-number">4.</span> <span class="nav-text">(4)　真正导入数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-导入数据-csv文件带文件头"><span class="nav-number">4.1.</span> <span class="nav-text">(4.1) 导入数据 csv文件带文件头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-导入数据-csv文件不带文件头"><span class="nav-number">4.2.</span> <span class="nav-text">(4.2) 导入数据 csv文件不带文件头</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-注事事项"><span class="nav-number">5.</span> <span class="nav-text">(5)  注事事项</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-批量提交"><span class="nav-number">5.1.</span> <span class="nav-text">(5.1)  批量提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-处理空值"><span class="nav-number">5.2.</span> <span class="nav-text">(5.2)  处理空值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-使用split"><span class="nav-number">5.3.</span> <span class="nav-text">(5.3)  使用split()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-使用CASE"><span class="nav-number">5.4.</span> <span class="nav-text">(5.4)  使用CASE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-MERGE-relation"><span class="nav-number">5.5.</span> <span class="nav-text">(5.5)  MERGE relation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-性能测试"><span class="nav-number">6.</span> <span class="nav-text">(6)　性能测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#测试1"><span class="nav-number">6.1.</span> <span class="nav-text">测试1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试2"><span class="nav-number">6.2.</span> <span class="nav-text">测试2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-可能遇到的问题"><span class="nav-number">7.</span> <span class="nav-text">(7)　可能遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-Neo-DatabaseError-General-UnknownError"><span class="nav-number">7.1.</span> <span class="nav-text">(7.1)　Neo.DatabaseError.General.UnknownError</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-Couldn’t-load-the-external-resource"><span class="nav-number">7.2.</span> <span class="nav-text">(7.2)　Couldn’t load the external resource</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-3-WARNING-Invalid-input"><span class="nav-number">7.3.</span> <span class="nav-text">(7.3)　WARNING: Invalid input</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-4-WARNING-Variable-n-not-defined"><span class="nav-number">7.4.</span> <span class="nav-text">(7.4)　WARNING: Variable n not defined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-5-WARNING-Expected-0-to-be-a-java-lang-String-but-it-was-a-java-lang-Long"><span class="nav-number">7.5.</span> <span class="nav-text">(7.5)　WARNING: Expected 0 to be a java.lang.String, but it was a java.lang.Long</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-官网英文资料"><span class="nav-number">8.</span> <span class="nav-text">(8)　官网英文资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">9.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

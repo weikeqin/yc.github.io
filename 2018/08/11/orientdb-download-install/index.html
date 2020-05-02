@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="下载解压orientdb压缩包 通过 server.sh 或者 server.bat 启动orieintdb 访问 http://localhost:2480 查看orientdb  1　下载解压  orientdb 所有版本      https://orientdb.com/releases/      https://orientdb.com/downloads/      https:/">
+<meta name="keywords" content="orientdb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OrientDB 下载 安装">
+<meta property="og:url" content="http://weikeqin.cn/2018/08/11/orientdb-download-install/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="下载解压orientdb压缩包 通过 server.sh 或者 server.bat 启动orieintdb 访问 http://localhost:2480 查看orientdb  1　下载解压  orientdb 所有版本      https://orientdb.com/releases/      https://orientdb.com/downloads/      https:/">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-04T06:36:52.390Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OrientDB 下载 安装">
+<meta name="twitter:description" content="下载解压orientdb压缩包 通过 server.sh 或者 server.bat 启动orieintdb 访问 http://localhost:2480 查看orientdb  1　下载解压  orientdb 所有版本      https://orientdb.com/releases/      https://orientdb.com/downloads/      https:/">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2018/08/11/orientdb-download-install/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>OrientDB 下载 安装 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2018/08/11/orientdb-download-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">OrientDB 下载 安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-11 12:57:24" itemprop="dateCreated datePublished" datetime="2018-08-11T12:57:24+08:00">2018-08-11</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/orientdb/" itemprop="url" rel="index"><span itemprop="name">orientdb</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/08/11/orientdb-download-install/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/08/11/orientdb-download-install/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/08/11/orientdb-download-install/" class="leancloud_visitors" data-flag-title="OrientDB 下载 安装">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ol>
+<li>下载解压orientdb压缩包</li>
+<li>通过 server.sh 或者 server.bat 启动orieintdb</li>
+<li>访问 <a href="http://localhost:2480" target="_blank" rel="noopener">http://localhost:2480</a> 查看orientdb</li>
+</ol>
+<h1 id="1-下载解压"><a href="#1-下载解压" class="headerlink" title="1　下载解压"></a>1　下载解压</h1><p>  orientdb 所有版本<br>      <a href="https://orientdb.com/releases/" target="_blank" rel="noopener">https://orientdb.com/releases/</a><br>      <a href="https://orientdb.com/downloads/" target="_blank" rel="noopener">https://orientdb.com/downloads/</a><br>      <a href="https://orientdb.com/download-2/" target="_blank" rel="noopener">https://orientdb.com/download-2/</a><br>      <a href="https://orientdb.org/download" target="_blank" rel="noopener">https://orientdb.org/download</a> </p>
+<p>  orientdb-3.0.8.zip   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.zip" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.zip</a><br>  orientdb-3.0.8.tar.gz   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.tar.gz" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.tar.gz</a><br>  agent-3.0.8.jar   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/agent-3.0.8.jar" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/agent-3.0.8.jar</a>  </p>
+<!--
+  https://s3.us-east-2.amazonaws.com/orientdb3/releases/3.0.20/orientdb-3.0.20.zip
+  https://s3.us-east-2.amazonaws.com/orientdb3/releases/3.0.20/orientdb-3.0.20.tar.gz
+-->
+<p>  无论是zip包还是tar.gz包，解压完进入bin目录，执行 <code>./server.sh</code> (linux) 或 <code>server.bat</code>(windows) 即可运行OrientDB数据库。<br>  第一次使用需要设置密码，设置完密码启动后在浏览器输入 <a href="http://127.0.0.1:2480" target="_blank" rel="noopener">http://127.0.0.1:2480</a> 访问 图形化界面。  </p>
+<a id="more"></a>  
+<p> readme.md</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">           .                                          </span><br><span class="line">          .`        `                                 </span><br><span class="line">          ,      `:.                                  </span><br><span class="line">         `,`    ,:`                                   </span><br><span class="line">         .,.   :,,                                    </span><br><span class="line">         .,,  ,,,                                     </span><br><span class="line">    .    .,.:::::  ````                                 :::::::::     :::::::::</span><br><span class="line">    ,`   .::,,,,::.,,,,,,`;;                      .:    ::::::::::    :::    :::</span><br><span class="line">    `,.  ::,,,,,,,:.,,.`  `                       .:    :::      :::  :::     :::</span><br><span class="line">     ,,:,:,,,,,,,,::.   `        `         ``     .:    :::      :::  :::     :::</span><br><span class="line">      ,,:.,,,,,,,,,: `::, ,,   ::,::`   : :,::`  ::::   :::      :::  :::    :::</span><br><span class="line">       ,:,,,,,,,,,,::,:   ,,  :.    :   ::    :   .:    :::      :::  :::::::</span><br><span class="line">        :,,,,,,,,,,:,::   ,,  :      :  :     :   .:    :::      :::  :::::::::</span><br><span class="line">  `     :,,,,,,,,,,:,::,  ,, .::::::::  :     :   .:    :::      :::  :::     :::</span><br><span class="line">  `,...,,:,,,,,,,,,: .:,. ,, ,,         :     :   .:    :::      :::  :::     :::</span><br><span class="line">    .,,,,::,,,,,,,:  `: , ,,  :     `   :     :   .:    :::      :::  :::     :::</span><br><span class="line">      ...,::,,,,::.. `:  .,,  :,    :   :     :   .:    :::::::::::   :::     :::</span><br><span class="line">           ,::::,,,. `:   ,,   :::::    :     :   .:    :::::::::     ::::::::::</span><br><span class="line">           ,,:` `,,.                                  </span><br><span class="line">          ,,,    .,`                                           MULTI  MODEL</span><br><span class="line">         ,,.     `,                                       GRAPH DOCUMENT DATABASE</span><br><span class="line">       ``        `.                                         </span><br><span class="line">                 ``                                         COMMUNITY  EDITION</span><br><span class="line">                 `                                           www.orientdb.org</span><br><span class="line"></span><br><span class="line">*********************************************************************************</span><br><span class="line"></span><br><span class="line"> QUICK START</span><br><span class="line">---------------</span><br><span class="line">1) Start the server by executing “server.sh” (or “server.bat” if you’re using</span><br><span class="line">   Windows) under the “bin” directory. On most of OS you can just double click</span><br><span class="line">   on it.</span><br><span class="line">2) Type in the terminal the password you want to assign to the “root” user. This</span><br><span class="line">   is needed only the first time.</span><br><span class="line">2) To Open Studio Web Tool, open a browser and point it to the URL:</span><br><span class="line">   http://localhost:2480</span><br><span class="line">3) You can also use the console, it’s in “bin” directory. Launch “console.sh”</span><br><span class="line">   (or “console.bat” if you’re using Windows)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> REQUIREMENTS</span><br><span class="line">---------------</span><br><span class="line"></span><br><span class="line">Before to download, compile and install the last version of OrientDB please</span><br><span class="line">assure to have Java installed. OrientDB needs Oracle Java JDK version 8 or major</span><br><span class="line">to run the Server. JDK different by Oracle, like OpenJDK, could not work on some</span><br><span class="line">configuration. We noticed also Oracle JDK is generally faster than OpenJDK.</span><br><span class="line"></span><br><span class="line">To download Java go to: http://www.java.com/en/download/</span><br><span class="line"></span><br><span class="line">Note: Please assure to download the JDK and not JRE.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> INFORMATION</span><br><span class="line">---------------</span><br><span class="line"></span><br><span class="line">For more information visit the official website: http://www.orientdb.org.</span><br><span class="line"></span><br><span class="line">Remember OrientDB is an Open Source project released with the Apache v2 license,</span><br><span class="line">so it&apos;s always FREE for any purpose. If you&apos;re interested to Enterprise tools,</span><br><span class="line">professional support, training or consultancy contact: info@orientdb.com.</span><br><span class="line"></span><br><span class="line">Enjoy the Graphs,</span><br><span class="line">OrientDB</span><br><span class="line">(www.orientdb.com)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">D:\ProfessionalSoftWare\orientdb\orientdb-3.0.4\bin</span><br><span class="line">λ dir</span><br><span class="line"> 驱动器 D 中的卷是 disk-D</span><br><span class="line"> 卷的序列号是 B0F3-626E</span><br><span class="line"></span><br><span class="line"> D:\ProfessionalSoftWare\orientdb\orientdb-3.0.4\bin 的目录</span><br><span class="line"></span><br><span class="line">2018-07-12  10:09    &lt;DIR&gt;          .</span><br><span class="line">2018-07-12  10:09    &lt;DIR&gt;          ..</span><br><span class="line">2018-07-12  09:33             4,377 backup.sh</span><br><span class="line">2018-07-12  09:33             1,757 console.bat</span><br><span class="line">2018-07-12  09:33             1,733 console.sh</span><br><span class="line">2018-07-12  09:33             3,670 dserver.bat</span><br><span class="line">2018-07-12  09:33             4,561 dserver.sh</span><br><span class="line">2018-07-12  09:33             1,720 oetl.bat</span><br><span class="line">2018-07-12  09:33             2,083 oetl.sh</span><br><span class="line">2018-07-12  09:33               268 orientdb.service</span><br><span class="line">2018-07-12  09:33             1,770 orientdb.sh</span><br><span class="line">2018-07-12  09:33               394 orientdb.upstart</span><br><span class="line">2018-07-12  09:38             1,641 oteleporter.bat</span><br><span class="line">2018-07-12  09:38             1,475 oteleporter.sh</span><br><span class="line">2018-07-12  09:33             4,102 server.bat</span><br><span class="line">2018-07-12  09:33             4,634 server.sh</span><br><span class="line">2018-07-12  09:33             1,416 shutdown.bat</span><br><span class="line">2018-07-12  09:33             1,886 shutdown.sh</span><br><span class="line">              16 个文件         37,487 字节</span><br><span class="line">               2 个目录 978,574,606,336 可用字节</span><br></pre></td></tr></table></figure>
+<h1 id="2-启动"><a href="#2-启动" class="headerlink" title="(2) 启动"></a>(2) 启动</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">D:\ProfessionalSoftWare\orientdb\orientdb-3.0.4\bin</span><br><span class="line">λ server</span><br><span class="line">           .</span><br><span class="line">          .`        `</span><br><span class="line">          ,      `:.</span><br><span class="line">         `,`    ,:`</span><br><span class="line">         .,.   :,,</span><br><span class="line">         .,,  ,,,</span><br><span class="line">    .    .,.:::::  ````                                 :::::::::     :::::::::</span><br><span class="line">    ,`   .::,,,,::.,,,,,,`;;                      .:    ::::::::::    :::    :::</span><br><span class="line">    `,.  ::,,,,,,,:.,,.`  `                       .:    :::      :::  :::     :::</span><br><span class="line">     ,,:,:,,,,,,,,::.   `        `         ``     .:    :::      :::  :::     :::</span><br><span class="line">      ,,:.,,,,,,,,,: `::, ,,   ::,::`   : :,::`  ::::   :::      :::  :::    :::</span><br><span class="line">       ,:,,,,,,,,,,::,:   ,,  :.    :   ::    :   .:    :::      :::  :::::::</span><br><span class="line">        :,,,,,,,,,,:,::   ,,  :      :  :     :   .:    :::      :::  :::::::::</span><br><span class="line">  `     :,,,,,,,,,,:,::,  ,, .::::::::  :     :   .:    :::      :::  :::     :::</span><br><span class="line">  `,...,,:,,,,,,,,,: .:,. ,, ,,         :     :   .:    :::      :::  :::     :::</span><br><span class="line">    .,,,,::,,,,,,,:  `: , ,,  :     `   :     :   .:    :::      :::  :::     :::</span><br><span class="line">      ...,::,,,,::.. `:  .,,  :,    :   :     :   .:    :::::::::::   :::     :::</span><br><span class="line">           ,::::,,,. `:   ,,   :::::    :     :   .:    :::::::::     ::::::::::</span><br><span class="line">           ,,:` `,,.</span><br><span class="line">          ,,,    .,`</span><br><span class="line">         ,,.     `,                                              VELOCE</span><br><span class="line">       ``        `.</span><br><span class="line">                 ``                                         www.orientdb.com</span><br><span class="line">                 `</span><br><span class="line"></span><br><span class="line">2018-08-11 12:55:01:547 INFO  Windows OS is detected, 262144 limit of open files will be set for the disk cache. [ONative]</span><br><span class="line">2018-08-11 12:55:01:598 INFO  Loading configuration from: D:/ProfessionalSoftWare/orientdb/orientdb-3.0.4/config/orientdb-server-config.xml... [OServerConfigurationLoaderXml]</span><br><span class="line">2018-08-11 12:55:01:940 INFO  OrientDB Server v3.0.4 - Veloce (build 4578b51f72a55feaa0852bc8ddd52929011d956c, branch 3.0.x) is starting up... [OServer]</span><br><span class="line">2018-08-11 12:55:01:977 INFO  8194301952 B/7814 MB/7 GB of physical memory were detected on machine [ONative]</span><br><span class="line">2018-08-11 12:55:01:978 INFO  Detected memory limit for current process is 8194301952 B/7814 MB/7 GB [ONative]</span><br><span class="line">2018-08-11 12:55:01:981 INFO  JVM can use maximum 1963MB of heap memory [OMemoryAndLocalPaginatedEnginesInitializer]</span><br><span class="line">2018-08-11 12:55:01:983 INFO  Because OrientDB is running outside a container 2g of memory will be left unallocated according to the setting &apos;memory.leftToOS&apos; not taking into account heap memory [OMemoryAndLocalPaginatedEnginesInitializer]</span><br><span class="line">2018-08-11 12:55:01:987 INFO  OrientDB auto-config DISKCACHE=3,803MB (heap=1,963MB os=7,814MB) [orientechnologies]</span><br><span class="line">2018-08-11 12:55:02:011 INFO  Databases directory: D:\ProfessionalSoftWare\orientdb\orientdb-3.0.4\databases [OServer]</span><br><span class="line">2018-08-11 12:55:02:076 INFO  Creating the system database &apos;OSystem&apos; for current server [OSystemDatabase]</span><br><span class="line">2018-08-11 12:55:03:952 INFO  Storage &apos;plocal:D:\ProfessionalSoftWare\orientdb\orientdb-3.0.4\databases/OSystem&apos; is created under OrientDB distribution : 3.0.4 - Veloce (build 4578b51f72a55feaa0852bc8ddd52929011d956c, branch 3.0.x) [OLocalPaginatedStorage]</span><br><span class="line">2018-08-11 12:55:12:054 INFO  Listening binary connections on 0.0.0.0:2424 (protocol v.37, socket=default) [OServerNetworkListener]</span><br><span class="line">2018-08-11 12:55:12:057 INFO  Listening http connections on 0.0.0.0:2480 (protocol v.10, socket=default) [OServerNetworkListener]</span><br><span class="line"></span><br><span class="line">+---------------------------------------------------------------+</span><br><span class="line">|                WARNING: FIRST RUN CONFIGURATION               |</span><br><span class="line">+---------------------------------------------------------------+</span><br><span class="line">| This is the first time the server is running. Please type a   |</span><br><span class="line">| password of your choice for the &apos;root&apos; user or leave it blank |</span><br><span class="line">| to auto-generate it.                                          |</span><br><span class="line">|                                                               |</span><br><span class="line">| To avoid this message set the environment variable or JVM     |</span><br><span class="line">| setting ORIENTDB_ROOT_PASSWORD to the root password to use.   |</span><br><span class="line">+---------------------------------------------------------------+</span><br><span class="line"></span><br><span class="line">Root password [BLANK=auto generate it]: *****</span><br><span class="line">Please confirm the root password: *****</span><br><span class="line"></span><br><span class="line">2018-08-11 12:55:27:130 INFO  Installing dynamic plugin &apos;orientdb-etl-3.0.4.jar&apos;... [OServerPluginManager]</span><br><span class="line">2018-08-11 12:55:27:142 INFO  Installing dynamic plugin &apos;orientdb-neo4j-importer-plugin-3.0.4-dist.jar&apos;... [OServerPluginManager]</span><br><span class="line">2018-08-11 12:55:27:165 INFO  Installing dynamic plugin &apos;orientdb-studio-3.0.4.zip&apos;... [OServerPluginManager]</span><br><span class="line">2018-08-11 12:55:27:185 INFO  Installing dynamic plugin &apos;orientdb-teleporter-3.0.4.jar&apos;... [OServerPluginManager]</span><br><span class="line">2018-08-11 12:55:27:211 INFO  ODefaultPasswordAuthenticator is active [ODefaultPasswordAuthenticator]</span><br><span class="line">2018-08-11 12:55:27:217 INFO  OServerConfigAuthenticator is active [OServerConfigAuthenticator]</span><br><span class="line">2018-08-11 12:55:27:219 INFO  OSystemUserAuthenticator is active [OSystemUserAuthenticator]</span><br><span class="line">2018-08-11 12:55:27:221 INFO  [OVariableParser.resolveVariables] Property not found: distributed [orientechnologies]</span><br><span class="line">2018-08-11 12:55:27:249 WARNI Authenticated clients can execute any kind of code into the server by using the following allowed languages: [sql] [OServerSideScriptInterpreter]</span><br><span class="line">2018-08-11 12:55:27:397 INFO  OrientDB Studio available at http://10.0.8.244:2480/studio/index.html [OServer]</span><br><span class="line">2018-08-11 12:55:27:398 INFO  OrientDB Server is active v3.0.4 - Veloce (build 4578b51f72a55feaa0852bc8ddd52929011d956c, branch 3.0.x). [OServer]</span><br><span class="line">2018-08-11 13:00:18:547 INFO  Storage &apos;plocal:D:\ProfessionalSoftWare\orientdb\orientdb-3.0.4\databases/demodb&apos; is opened under OrientDB distribution : 3.0.4 - Veloce (build 4578b51f72a55feaa0852bc8ddd52929011d956c, branch 3.0.x) [OLocalPaginatedStorage]</span><br><span class="line">2018-08-11 13:40:47:544 INFO  Loading configuration from: D:/ProfessionalSoftWare/orientdb/orientdb-3.0.4/config/orientdb-server-config.xml... [OServerConfigurationLoaderXml]</span><br><span class="line">2018-08-11 21:13:28:970 WARNI Received signal: SIGINT [OSignalHandler]</span><br><span class="line">2018-08-11 21:13:28:978 INFO  OrientDB Server is shutting down... [OServer]</span><br><span class="line">2018-08-11 21:13:28:981 INFO  Shutting down listeners: [OServer]</span><br><span class="line">2018-08-11 21:13:28:983 INFO  - ONetworkProtocolBinary /0.0.0.0:2424: [OServer]</span><br><span class="line">2018-08-11 21:13:28:985 INFO  - ONetworkProtocolHttpDb /0.0.0.0:2480: [OServer]</span><br><span class="line">2018-08-11 21:13:28:986 INFO  Shutting down protocols [OServer]</span><br><span class="line">2018-08-11 21:13:28:988 INFO  Shutting down plugins: [OServerPluginManager]</span><br><span class="line">2018-08-11 21:13:28:989 INFO  - studio [OServerPluginManager]</span><br><span class="line">2018-08-11 21:13:28:989 INFO  - teleporter [OServerPluginManager]</span><br><span class="line">2018-08-11 21:13:28:991 INFO  - custom-sql-functions-manager [OServerPluginManager]</span><br><span class="line">2018-08-11 21:13:28:991 INFO  - script-interpreter [OServerPluginManager]</span><br><span class="line">2018-08-11 21:13:28:991 INFO  - etl [OServerPluginManager]</span><br><span class="line">2018-08-11 21:13:28:993 INFO  - neo4j-importer [OServerPluginManager]</span><br><span class="line">2018-08-11 21:13:28:995 INFO  Shutting down databases: [OServer]</span><br><span class="line">2018-08-11 21:13:28:998 INFO  Orient Engine is shutting down... [Orient]</span><br><span class="line">2018-08-11 21:13:29:008 INFO  - shutdown storage: OSystem... [OrientDBDistributed]</span><br><span class="line">2018-08-11 21:13:29:217 WARNI Received signal: SIGINT [OSignalHandler]</span><br><span class="line">2018-08-11 21:13:29:598 INFO  - shutdown storage: demodb... [OrientDBDistributed]</span><br><span class="line">2018-08-11 21:13:30:082 INFO  Clearing byte buffer pool [Orient]</span><br><span class="line">2018-08-11 21:13:30:098 INFO  OrientDB Engine shutdown complete [Orient]</span><br><span class="line">2018-08-11 21:13:30:099 INFO  OrientDB Server shutdown complete</span><br><span class="line"> [OServer]终止批处理操作吗(Y/N)? y</span><br></pre></td></tr></table></figure>
+<p>安装完成</p>
+<h1 id="3-配置"><a href="#3-配置" class="headerlink" title="(3) 配置"></a>(3) 配置</h1><p>配置内存</p>
+<p>  修改 ${ORIENTDB_HOME}/bin/server.sh</p>
+<p>  搜 ORIENTDB_OPTS_MEMORY ，大概在102行， 修改 <code>-Xms2G -Xmx2G</code> 为 <code>-Xms16G -Xmx16G</code></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://orientdb.com" target="_blank" rel="noopener">orientdb</a><br>[2] <a href="http://blog.itpub.net/31380193/viewspace-2619260/" target="_blank" rel="noopener">如何在CentOS 7中安装和配置OrientDB社区版</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/orientdb/" rel="tag"># orientdb</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/03/elasticsearch-cluster/" rel="next" title="elasticsearch 集群">
+                <i class="fa fa-chevron-left"></i> elasticsearch 集群
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/12/jvm-memory-area/" rel="prev" title="JVM内存区域">
+                JVM内存区域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-下载解压"><span class="nav-number">1.</span> <span class="nav-text">1　下载解压</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-启动"><span class="nav-number">2.</span> <span class="nav-text">(2) 启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-配置"><span class="nav-number">3.</span> <span class="nav-text">(3) 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

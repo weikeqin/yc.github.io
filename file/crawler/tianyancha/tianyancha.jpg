@@ -1,0 +1,366 @@
+<html>
+
+<!--
+http://www.tianyancha.com/company/3069334211
+
+
+http://www.tianyancha.com/company/11997559
+Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding:gzip, deflate
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+DNT:1
+Host:www.tianyancha.com
+Upgrade-Insecure-Requests:1
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+
+301
+Connection:keep-alive
+Content-Length:278
+Content-Type:text/html
+Date:Wed, 17 Jan 2018 06:09:12 GMT
+Location:https://www.tianyancha.com/company/11997559
+Set-Cookie:aliyungf_tc=AQAAABycRkgpjw0A3ylEAY25VRp4NrBS; Path=/; HttpOnly
+
+
+
+https://www.tianyancha.com/company/11997559
+Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+Cookie:aliyungf_tc=AQAAABycRkgpjw0A3ylEAY25VRp4NrBS
+DNT:1
+Host:www.tianyancha.com
+Upgrade-Insecure-Requests:1
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+
+Connection:keep-alive
+Content-Encoding:gzip
+Content-Type:text/html; charset=utf-8
+Date:Wed, 17 Jan 2018 06:09:14 GMT
+set-cookie:TYCID=f0aac860fb4c11e7939357a1d35219e1; path=/; expires=Fri, 17 Jan 2020 06:09:14 GMT; domain=.tianyancha.com; httponly
+set-cookie:_csrf=/B1HV4Zzyv/l0s+GJsmMQg==; path=/; domain=.tianyancha.com; secure
+set-cookie:csrfToken=24IoGOhjTt2YpJogOAVnjeT6; path=/; secure
+set-cookie:undefined=f0aac860fb4c11e7939357a1d35219e1; path=/; expires=Fri, 17 Jan 2020 06:09:14 GMT; domain=.tianyancha.com; httponly
+set-cookie:OA=r+5YNdMhJo1zqRIH/4IITX+5Ghnj1ojSP2682RlSa1HBZfyPTreg4iN7cVA26E9+; path=/; domain=.tianyancha.com; secure
+set-cookie:_csrf_bk=6687c8081e68a693d3a1d43c82642be5; path=/; domain=.tianyancha.com; secure
+Transfer-Encoding:chunked
+x-content-type-options:nosniff
+x-download-options:noopen
+x-readtime:923
+x-xss-protection:1; mode=block
+
+
+
+https://www.tianyancha.com/stock/stockVolatility.json?id=11997559&_=1516169354130
+
+Accept:application/json, text/javascript, */*; q=0.01
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Cache-Control:no-cache
+Connection:keep-alive
+Cookie:aliyungf_tc=AQAAABycRkgpjw0A3ylEAY25VRp4NrBS; csrfToken=24IoGOhjTt2YpJogOAVnjeT6; _csrf=/B1HV4Zzyv/l0s+GJsmMQg==; OA=r+5YNdMhJo1zqRIH/4IITX+5Ghnj1ojSP2682RlSa1HBZfyPTreg4iN7cVA26E9+; _csrf_bk=6687c8081e68a693d3a1d43c82642be5; TYCID=f0aac860fb4c11e7939357a1d35219e1; undefined=f0aac860fb4c11e7939357a1d35219e1; Hm_lvt_e92c8d65d92d534b0fc290df538b4758=1516169354; Hm_lpvt_e92c8d65d92d534b0fc290df538b4758=1516169354; ssuid=4592965750; RTYCID=f4b105dc6185494f8610cac10e227f42; bannerFlag=true
+DNT:1
+Host:www.tianyancha.com
+Pragma:no-cache
+Referer:https://www.tianyancha.com/company/11997559
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+X-Requested-With:XMLHttpRequest
+
+Connection:keep-alive
+Content-Length:575
+Content-Type:application/json; charset=utf-8
+Date:Wed, 17 Jan 2018 06:09:59 GMT
+x-content-type-options:nosniff
+x-download-options:noopen
+x-readtime:41
+x-xss-protection:1; mode=block
+
+
+
+
+https://antirobot.tianyancha.com/captcha/verify?return_url=https%3A%2F%2Fwww.tianyancha.com%2Fcompany%2F11997559&rnd=
+IP：39.155.134.98     访问时间：2018-01-17 14:22:46
+用户：18614082388
+
+
+https://antirobot.tianyancha.com/captcha/checkCaptcha.json?captchaId=ac33f8cd-2166-4de0-a856-009322813865&clickLocs=[{%22x%22:234,%22y%22:27},{%22x%22:59,%22y%22:50}]&t=1516170159015&_=1516170143135
+
+Accept:application/json, text/javascript, */*; q=0.01
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+Cookie:TYCID=f0aac860fb4c11e7939357a1d35219e1; undefined=f0aac860fb4c11e7939357a1d35219e1; Hm_lvt_e92c8d65d92d534b0fc290df538b4758=1516169354; ssuid=4592965750; RTYCID=f4b105dc6185494f8610cac10e227f42; tyc-user-info=%257B%2522post%2522%253A%2522IT%257C%25E4%25BA%2592%25E8%2581%2594%25E7%25BD%2591%257C%25E9%2580%259A%25E4%25BF%25A1%2522%252C%2522nickname%2522%253A%2522278276130%2522%252C%2522token%2522%253A%2522eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODYxNDA4MjM4OCIsImlhdCI6MTUxNjE2OTc5MCwiZXhwIjoxNTMxNzIxNzkwfQ.fCzfaLMopUSHdnp06QFckW4_JkCMTbRcE2JAyz7kNzaHW-o_Aj-KFPf1FIolv6sxYjfVOKFx-14bT6l9V3MTqw%2522%252C%2522integrity%2522%253A%252280%2525%2522%252C%2522state%2522%253A%25220%2522%252C%2522companyName%2522%253A%2522BONC%2522%252C%2522industry%2522%253A%2522IT%257C%25E9%2580%259A%25E4%25BF%25A1%257C%25E7%2594%25B5%25E5%25AD%2590%257C%25E4%25BA%2592%25E8%2581%2594%25E7%25BD%2591%2522%252C%2522vipManager%2522%253A%25220%2522%252C%2522vnum%2522%253A%25220%2522%252C%2522onum%2522%253A%25220%2522%252C%2522mobile%2522%253A%252218614082388%2522%257D; auth_token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODYxNDA4MjM4OCIsImlhdCI6MTUxNjE2OTc5MCwiZXhwIjoxNTMxNzIxNzkwfQ.fCzfaLMopUSHdnp06QFckW4_JkCMTbRcE2JAyz7kNzaHW-o_Aj-KFPf1FIolv6sxYjfVOKFx-14bT6l9V3MTqw; _csrf=eQYk1gnacbH9e7vjt6WWbg==; OA=fMEMXObiWNpvvn0CCJnQrqajuyLli7DNVH7UNqB9i3A=; _csrf_bk=a67ee29519677e67a4534d3654b44229; Hm_lpvt_e92c8d65d92d534b0fc290df538b4758=1516170081; aliyungf_tc=AQAAAIwZmSXuxQ0AYoabJ8A5v7iaDZ+p
+DNT:1
+Host:antirobot.tianyancha.com
+Referer:https://antirobot.tianyancha.com/captcha/verify?return_url=https%3A%2F%2Fwww.tianyancha.com%2Fcompany%2F11997559&rnd=
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+X-CSRFToken:null
+X-Requested-With:XMLHttpRequest
+
+Connection:keep-alive
+Content-Type:application/json;charset=UTF-8
+Date:Wed, 17 Jan 2018 06:22:42 GMT
+Success:1
+Transfer-Encoding:chunked
+
+
+
+https://dis.tianyancha.com/dis/getInfoById/11997559.json?
+{"state":"ok","message":"","special":"","vipMessage":"","isLogin":0,"data":{"nodes":[{"id":"2231104509","labels":["Human"],"properties":{"name":"金正皓","ntype":"s"}},{"id":"31407824","labels":["Company"],"properties":{"name":"北京摩比万思科技有限公司","ntype":"s"}},{"id":"2067112485","labels":["Human"],"properties":{"name":"王卫民","ntype":"f"}},{"id":"1920446821","labels":["Human"],"properties":{"name":"张云鹏","ntype":"f"}},{"id":"1811163489","labels":["Human"],"properties":{"name":"刘彦斐","ntype":"f"}},{"id":"16703462","labels":["Company"],"properties":{"name":"北京仁邦翰威投资咨询有限公司","ntype":"s"}},{"id":"47221450","labels":["Company"],"properties":{"name":"北京数邦科技有限公司","ntype":"f"}},{"id":"1958617379","labels":["Human"],"properties":{"name":"时文鸿","ntype":"s"}},{"id":"2206017760","labels":["Human"],"properties":{"name":"邢洪海","ntype":"f"}},{"id":"3095314145","labels":["Company"],"properties":{"name":"内蒙古新泰国信科技有限公司","ntype":"s"}},{"id":"651341170","labels":["Company"],"properties":{"name":"大连东方国信科技有限公司","ntype":"s"}},{"id":"34199981","labels":["Company"],"properties":{"name":"北京普泽创智数据技术有限公司","ntype":"s"}},{"id":"1783427689","labels":["Human"],"properties":{"name":"佘友华","ntype":"f"}},{"id":"3074013596","labels":["Company"],"properties":{"name":"北京国信会视科技有限公司","ntype":"s"}},{"id":"2077272824","labels":["Human"],"properties":{"name":"王虎","ntype":"f"}},{"id":"258217165","labels":["Company"],"properties":{"name":"上海屹通信息科技发展有限公司","ntype":"s"}},{"id":"2348944041","labels":["Company"],"properties":{"name":"江苏东方国信数据科技有限公司","ntype":"s"}},{"id":"3979408","labels":["Company"],"properties":{"name":"北京炎黄新星网络科技有限公司","ntype":"s"}},{"id":"1951932008","labels":["Human"],"properties":{"name":"敖志强","ntype":"f"}},{"id":"2355526484","labels":["Company"],"properties":{"name":"新余高新区国信高鹏大数据投资合伙企业（有限合伙）","ntype":"s"}},{"id":"150815566","labels":["Company"],"properties":{"name":"东方国信（天津）科技有限公司","ntype":"s"}},{"id":"1874162563","labels":["Human"],"properties":{"name":"姜海青","ntype":"f"}},{"id":"30076656","labels":["Company"],"properties":{"name":"北京千禾颐养家苑养老服务有限责任公司","ntype":"s"}},{"id":"2265045822","labels":["Human"],"properties":{"name":"霍卫平","ntype":"s"}},{"id":"11997559","labels":["Company"],"properties":{"name":"北京东方国信科技股份有限公司","ntype":"s"}},{"id":"3109570968","labels":["Company"],"properties":{"name":"浙江国信新蓝图海洋科技有限公司","ntype":"s"}},{"id":"3101570718","labels":["Company"],"properties":{"name":"北京国信信达科技有限公司","ntype":"s"}},{"id":"1892595471","labels":["Human"],"properties":{"name":"宗文龙","ntype":"s"}},{"id":"16703549","labels":["Company"],"properties":{"name":"北京仁邦时代投资咨询有限公司","ntype":"s"}},{"id":"2107087197","labels":["Human"],"properties":{"name":"管连平","ntype":"s"}},{"id":"198339102","labels":["Company"],"properties":{"name":"新余仁邦翰威投资管理有限公司","ntype":"f"}},{"id":"33668303","labels":["Company"],"properties":{"name":"北京东华信通信息技术有限公司","ntype":"s"}},{"id":"2254452403","labels":["Human"],"properties":{"name":"陈桂霞","ntype":"f"}},{"id":"2184957039","labels":["Human"],"properties":{"name":"贾世光","ntype":"f"}},{"id":"403734089","labels":["Company"],"properties":{"name":"吉林省东方国信科技有限公司","ntype":"s"}},{"id":"2347363253","labels":["Company"],"properties":{"name":"广东东方国信数据科技有限公司","ntype":"s"}},{"id":"117249056","labels":["Company"],"properties":{"name":"北京创造者软件系统有限公司","ntype":"f"}},{"id":"2121258289","labels":["Human"],"properties":{"name":"肖宝玉","ntype":"f"}},{"id":"29163618","labels":["Company"],"properties":{"name":"北京国信新世纪科技有限公司","ntype":"s"}},{"id":"9671793","labels":["Company"],"properties":{"name":"北京北科亿力科技有限公司","ntype":"s"}},{"id":"2944436196","labels":["Company"],"properties":{"name":"辽宁大通智胜科技有限责任公司","ntype":"s"}},{"id":"1979489690","labels":["Human"],"properties":{"name":"李俊峰","ntype":"s"}},{"id":"2355526542","labels":["Company"],"properties":{"name":"新余高鹏资本投资管理合伙企业（有限合伙）","ntype":"s"}},{"id":"2522792244","labels":["Company"],"properties":{"name":"山东国信信息技术有限公司","ntype":"s"}},{"id":"1936071946","labels":["Human"],"properties":{"name":"彭岩","ntype":"f"}},{"id":"198357052","labels":["Company"],"properties":{"name":"新余仁邦时代投资管理有限公司","ntype":"f"}},{"id":"1532961065","labels":["Company"],"properties":{"name":"安徽东方国信城市智能与运营有限公司","ntype":"s"}},{"id":"11997519","labels":["Company"],"properties":{"name":"北京科瑞明软件有限公司","ntype":"s"}},{"id":"28968384","labels":["Company"],"properties":{"name":"北京汉桥科创科技有限公司","ntype":"s"}},{"id":"2193678906","labels":["Human"],"properties":{"name":"赵毅","ntype":"s"}},{"id":"1783397559","labels":["Human"],"properties":{"name":"佘元冠","ntype":"s"}},{"id":"1910329120","labels":["Human"],"properties":{"name":"常志刚","ntype":"s"}},{"id":"2311225532","labels":["Company"],"properties":{"name":"成都东方国信科技有限公司","ntype":"s"}}],"relationships":[{"id":"23968667","type":"INVEST_H","startNode":"2231104509","endNode":"16703462","properties":{"labels":["参股"],"amount":"3.7548"}},{"id":"148344143","type":"INVEST_H","startNode":"2067112485","endNode":"16703462","properties":{"labels":["参股"],"amount":"1.4796"}},{"id":"129171833","type":"SERVE","startNode":"2067112485","endNode":"3979408","properties":{"labels":["董事"]}},{"id":"328225127","type":"SERVE","startNode":"2231104509","endNode":"11997559","properties":{"labels":["董事"]}},{"id":"192165065","type":"INVEST_H","startNode":"2231104509","endNode":"198339102","properties":{"labels":["参股"],"amount":"3.7548"}},{"id":"29796035","type":"INVEST_H","startNode":"2067112485","endNode":"198339102","properties":{"labels":["参股"],"amount":"1.4796"}},{"id":"195174904","type":"SERVE","startNode":"2067112485","endNode":"2944436196","properties":{"labels":["董事"]}},{"id":"211710629","type":"SERVE","startNode":"1920446821","endNode":"3095314145","properties":{"labels":["董事长"]}},{"id":"176307547","type":"SERVE","startNode":"1920446821","endNode":"3109570968","properties":{"labels":["董事长"]}},{"id":"200463717","type":"SERVE","startNode":"1811163489","endNode":"651341170","properties":{"labels":["董事"]}},{"id":"333368006","type":"SERVE","startNode":"1811163489","endNode":"258217165","properties":{"labels":["董事"]}},{"id":"291078963","type":"SERVE","startNode":"1811163489","endNode":"30076656","properties":{"labels":["董事"]}},{"id":"126865724","type":"INVEST_C","startNode":"16703462","endNode":"11997559","properties":{"labels":["参股"],"amount":"360.0"}},{"id":"106605682","type":"INVEST_H","startNode":"1958617379","endNode":"16703462","properties":{"labels":["参股"],"amount":"0.9864"}},{"id":"277290658","type":"SERVE","startNode":"1958617379","endNode":"11997559","properties":{"labels":["监事"]}},{"id":"245417761","type":"INVEST_H","startNode":"1958617379","endNode":"198339102","properties":{"labels":["参股"],"amount":"0.9864"}},{"id":"333368008","type":"SERVE","startNode":"2206017760","endNode":"258217165","properties":{"labels":["董事"]}},{"id":"71996646","type":"SERVE","startNode":"2206017760","endNode":"9671793","properties":{"labels":["董事"]}},{"id":"330805945","type":"SERVE","startNode":"2206017760","endNode":"11997519","properties":{"labels":["董事"]}},{"id":"19783267","type":"SERVE","startNode":"1783427689","endNode":"3095314145","properties":{"labels":["董事"]}},{"id":"266490240","type":"SERVE","startNode":"1783427689","endNode":"2348944041","properties":{"labels":["董事"]}},{"id":"62325959","type":"SERVE","startNode":"1783427689","endNode":"3109570968","properties":{"labels":["董事"]}},{"id":"126835508","type":"SERVE","startNode":"1783427689","endNode":"2347363253","properties":{"labels":["监事"]}},{"id":"291844229","type":"INVEST_H","startNode":"2077272824","endNode":"16703462","properties":{"labels":["参股"],"amount":"0.4932"}},{"id":"176916527","type":"SERVE","startNode":"2077272824","endNode":"34199981","properties":{"labels":["经理"]}},{"id":"25874420","type":"OWN","startNode":"2077272824","endNode":"34199981","properties":{"labels":["法人"]}},{"id":"157882294","type":"SERVE","startNode":"2077272824","endNode":"34199981","properties":{"labels":["执行董事"]}},{"id":"267482186","type":"INVEST_H","startNode":"2077272824","endNode":"198339102","properties":{"labels":["参股"],"amount":"0.4932"}},{"id":"312842205","type":"SERVE","startNode":"1951932008","endNode":"9671793","properties":{"labels":["董事"]}},{"id":"285659593","type":"SERVE","startNode":"1951932008","endNode":"2522792244","properties":{"labels":["执行董事"]}},{"id":"234238543","type":"OWN","startNode":"1951932008","endNode":"2522792244","properties":{"labels":["法人"]}},{"id":"3440726","type":"SERVE","startNode":"1874162563","endNode":"29163618","properties":{"labels":["监事"]}},{"id":"36160969","type":"SERVE","startNode":"1874162563","endNode":"2311225532","properties":{"labels":["监事"]}},{"id":"320780224","type":"SERVE","startNode":"2265045822","endNode":"31407824","properties":{"labels":["董事"]}},{"id":"192186895","type":"SERVE","startNode":"2265045822","endNode":"16703462","properties":{"labels":["监事"]}},{"id":"287684491","type":"INVEST_H","startNode":"2265045822","endNode":"16703462","properties":{"labels":["参股"],"amount":"0.4583"}},{"id":"249456418","type":"SERVE","startNode":"2265045822","endNode":"47221450","properties":{"labels":["总经理"]}},{"id":"136362524","type":"OWN","startNode":"2265045822","endNode":"47221450","properties":{"labels":["法人"]}},{"id":"60692380","type":"INVEST_H","startNode":"2265045822","endNode":"47221450","properties":{"labels":["参股"],"amount":"4.2"}},{"id":"276386906","type":"SERVE","startNode":"2265045822","endNode":"47221450","properties":{"labels":["执行董事"]}},{"id":"200463714","type":"SERVE","startNode":"2265045822","endNode":"651341170","properties":{"labels":["董事"]}},{"id":"328225125","type":"SERVE","startNode":"2265045822","endNode":"11997559","properties":{"labels":["董事"]}},{"id":"208331688","type":"INVEST_H","startNode":"2265045822","endNode":"11997559","properties":{"labels":["参股"],"amount":"600.0"}},{"id":"328439872","type":"OWN","startNode":"2265045822","endNode":"16703549","properties":{"labels":["法人"]}},{"id":"328439885","type":"SERVE","startNode":"2265045822","endNode":"16703549","properties":{"labels":["总经理"]}},{"id":"50404438","type":"SERVE","startNode":"2265045822","endNode":"16703549","properties":{"labels":["执行董事"]}},{"id":"102234468","type":"INVEST_H","startNode":"2265045822","endNode":"16703549","properties":{"labels":["参股"],"amount":"0.6017"}},{"id":"173670867","type":"INVEST_H","startNode":"2265045822","endNode":"198339102","properties":{"labels":["参股"],"amount":"0.4583"}},{"id":"175793064","type":"SERVE","startNode":"2265045822","endNode":"117249056","properties":{"labels":["执行董事"]}},{"id":"282921510","type":"OWN","startNode":"2265045822","endNode":"117249056","properties":{"labels":["法人"]}},{"id":"21060194","type":"INVEST_H","startNode":"2265045822","endNode":"117249056","properties":{"labels":["参股"],"amount":"60.0"}},{"id":"292338965","type":"INVEST_H","startNode":"2265045822","endNode":"198357052","properties":{"labels":["参股"],"amount":"0.6017"}},{"id":"317624140","type":"INVEST_C","startNode":"11997559","endNode":"31407824","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"103994402","type":"INVEST_C","startNode":"11997559","endNode":"3095314145","properties":{"labels":["参股"],"amount":"2800.0"}},{"id":"124988598","type":"INVEST_C","startNode":"11997559","endNode":"651341170","properties":{"labels":["参股"],"amount":"255.0"}},{"id":"317624137","type":"INVEST_C","startNode":"11997559","endNode":"34199981","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"298560046","type":"INVEST_C","startNode":"11997559","endNode":"3074013596","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"124988594","type":"INVEST_C","startNode":"11997559","endNode":"258217165","properties":{"labels":["参股"]}},{"id":"244170131","type":"INVEST_C","startNode":"11997559","endNode":"2348944041","properties":{"labels":["参股"]}},{"id":"244970817","type":"INVEST_C","startNode":"11997559","endNode":"3979408","properties":{"labels":["参股"],"amount":"10000.0"}},{"id":"90041673","type":"INVEST_C","startNode":"11997559","endNode":"2355526484","properties":{"labels":["参股"],"amount":"20000.0"}},{"id":"124988597","type":"INVEST_C","startNode":"11997559","endNode":"150815566","properties":{"labels":["参股"],"amount":"1200.0"}},{"id":"317624149","type":"INVEST_C","startNode":"11997559","endNode":"30076656","properties":{"labels":["参股"],"amount":"171.43"}},{"id":"256145744","type":"INVEST_C","startNode":"11997559","endNode":"3109570968","properties":{"labels":["参股"],"amount":"2100.0"}},{"id":"243035475","type":"INVEST_C","startNode":"11997559","endNode":"3101570718","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"317624144","type":"INVEST_C","startNode":"11997559","endNode":"33668303","properties":{"labels":["参股"],"amount":"200.0"}},{"id":"28966737","type":"INVEST_C","startNode":"11997559","endNode":"403734089","properties":{"labels":["参股"],"amount":"500.0"}},{"id":"315250242","type":"INVEST_C","startNode":"11997559","endNode":"2347363253","properties":{"labels":["参股"],"amount":"3000.0"}},{"id":"317624142","type":"INVEST_C","startNode":"11997559","endNode":"29163618","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"86684519","type":"INVEST_C","startNode":"11997559","endNode":"9671793","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"124988600","type":"INVEST_C","startNode":"11997559","endNode":"2944436196","properties":{"labels":["参股"],"amount":"2400.0"}},{"id":"88594621","type":"INVEST_C","startNode":"11997559","endNode":"2355526542","properties":{"labels":["参股"],"amount":"1000.0"}},{"id":"124988596","type":"INVEST_C","startNode":"11997559","endNode":"2522792244","properties":{"labels":["参股"],"amount":"1000.0"}},{"id":"117758748","type":"INVEST_C","startNode":"11997559","endNode":"1532961065","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"158260244","type":"INVEST_C","startNode":"11997559","endNode":"11997519","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"119109503","type":"INVEST_C","startNode":"11997559","endNode":"28968384","properties":{"labels":["参股"],"amount":"0.0"}},{"id":"52320479","type":"INVEST_C","startNode":"11997559","endNode":"2311225532","properties":{"labels":["参股"],"amount":"200.0"}},{"id":"164519384","type":"SERVE","startNode":"1892595471","endNode":"11997559","properties":{"labels":["董事"]}},{"id":"130539755","type":"INVEST_C","startNode":"16703549","endNode":"11997559","properties":{"labels":["参股"],"amount":"240.0"}},{"id":"307989764","type":"OWN","startNode":"2107087197","endNode":"16703462","properties":{"labels":["法人"]}},{"id":"323816495","type":"SERVE","startNode":"2107087197","endNode":"16703462","properties":{"labels":["执行董事"]}},{"id":"94616021","type":"SERVE","startNode":"2107087197","endNode":"16703462","properties":{"labels":["总经理"]}},{"id":"67710216","type":"INVEST_H","startNode":"2107087197","endNode":"16703462","properties":{"labels":["参股"],"amount":"0.6109"}},{"id":"50569382","type":"INVEST_H","startNode":"2107087197","endNode":"47221450","properties":{"labels":["参股"],"amount":"5.8"}},{"id":"196354038","type":"SERVE","startNode":"2107087197","endNode":"47221450","properties":{"labels":["监事"]}},{"id":"200463716","type":"SERVE","startNode":"2107087197","endNode":"651341170","properties":{"labels":["董事长"]}},{"id":"194644077","type":"OWN","startNode":"2107087197","endNode":"2348944041","properties":{"labels":["法人"]}},{"id":"194979989","type":"SERVE","startNode":"2107087197","endNode":"2348944041","properties":{"labels":["董事长"]}},{"id":"170775540","type":"SERVE","startNode":"2107087197","endNode":"3979408","properties":{"labels":["董事"]}},{"id":"328225119","type":"OWN","startNode":"2107087197","endNode":"11997559","properties":{"labels":["法人"]}},{"id":"328225121","type":"SERVE","startNode":"2107087197","endNode":"11997559","properties":{"labels":["董事长"]}},{"id":"328225122","type":"SERVE","startNode":"2107087197","endNode":"11997559","properties":{"labels":["总经理"]}},{"id":"100435271","type":"INVEST_H","startNode":"2107087197","endNode":"11997559","properties":{"labels":["参股"],"amount":"800.0"}},{"id":"328439879","type":"SERVE","startNode":"2107087197","endNode":"16703549","properties":{"labels":["监事"]}},{"id":"172960908","type":"INVEST_H","startNode":"2107087197","endNode":"16703549","properties":{"labels":["参股"],"amount":"0.8095"}},{"id":"319722621","type":"INVEST_H","startNode":"2107087197","endNode":"198339102","properties":{"labels":["参股"],"amount":"0.6109"}},{"id":"124386156","type":"OWN","startNode":"2107087197","endNode":"2347363253","properties":{"labels":["法人"]}},{"id":"125862044","type":"SERVE","startNode":"2107087197","endNode":"2347363253","properties":{"labels":["执行董事,经理"]}},{"id":"251304263","type":"INVEST_H","startNode":"2107087197","endNode":"117249056","properties":{"labels":["参股"],"amount":"80.0"}},{"id":"169358828","type":"SERVE","startNode":"2107087197","endNode":"117249056","properties":{"labels":["总经理"]}},{"id":"27093219","type":"INVEST_H","startNode":"2107087197","endNode":"198357052","properties":{"labels":["参股"],"amount":"0.8095"}},{"id":"12515481","type":"OWN","startNode":"2107087197","endNode":"1532961065","properties":{"labels":["法人"]}},{"id":"185177421","type":"SERVE","startNode":"2107087197","endNode":"1532961065","properties":{"labels":["董事长"]}},{"id":"307989768","type":"INVEST_H","startNode":"2254452403","endNode":"16703462","properties":{"labels":["参股"],"amount":"2.268"}},{"id":"150746510","type":"SERVE","startNode":"2254452403","endNode":"150815566","properties":{"labels":["监事"]}},{"id":"22205127","type":"INVEST_H","startNode":"2254452403","endNode":"198339102","properties":{"labels":["参股"],"amount":"2.574"}},{"id":"144405815","type":"OWN","startNode":"2254452403","endNode":"403734089","properties":{"labels":["法人"]}},{"id":"33817159","type":"SERVE","startNode":"2254452403","endNode":"198357052","properties":{"labels":["监事"]}},{"id":"7604217","type":"INVEST_H","startNode":"2184957039","endNode":"16703462","properties":{"labels":["参股"],"amount":"1.7748"}},{"id":"176307546","type":"OWN","startNode":"2184957039","endNode":"3109570968","properties":{"labels":["法人"]}},{"id":"256915798","type":"SERVE","startNode":"2184957039","endNode":"3109570968","properties":{"labels":["经理"]}},{"id":"256915797","type":"SERVE","startNode":"2184957039","endNode":"3109570968","properties":{"labels":["董事"]}},{"id":"245110520","type":"INVEST_H","startNode":"2184957039","endNode":"198339102","properties":{"labels":["参股"],"amount":"1.7748"}},{"id":"333368013","type":"SERVE","startNode":"2121258289","endNode":"258217165","properties":{"labels":["董事"]}},{"id":"300033097","type":"SERVE","startNode":"2121258289","endNode":"3979408","properties":{"labels":["董事"]}},{"id":"292086090","type":"SERVE","startNode":"2121258289","endNode":"30076656","properties":{"labels":["监事"]}},{"id":"80989596","type":"SERVE","startNode":"2121258289","endNode":"9671793","properties":{"labels":["经理"]}},{"id":"330805944","type":"SERVE","startNode":"2121258289","endNode":"11997519","properties":{"labels":["董事"]}},{"id":"149372174","type":"SERVE","startNode":"1979489690","endNode":"11997559","properties":{"labels":["董事"]}},{"id":"332302139","type":"INVEST_C","startNode":"2355526542","endNode":"2355526484","properties":{"labels":["参股"],"amount":"1000.0"}},{"id":"231689244","type":"SERVE","startNode":"1936071946","endNode":"150815566","properties":{"labels":["执行董事"]}},{"id":"95961754","type":"OWN","startNode":"1936071946","endNode":"150815566","properties":{"labels":["法人"]}},{"id":"39994434","type":"INVEST_H","startNode":"1936071946","endNode":"16703549","properties":{"labels":["参股"],"amount":"3.0168"}},{"id":"319970708","type":"SERVE","startNode":"1936071946","endNode":"198339102","properties":{"labels":["监事"]}},{"id":"289660993","type":"SERVE","startNode":"1936071946","endNode":"9671793","properties":{"labels":["董事"]}},{"id":"234571254","type":"SERVE","startNode":"1936071946","endNode":"2944436196","properties":{"labels":["董事"]}},{"id":"315518589","type":"INVEST_H","startNode":"1936071946","endNode":"198357052","properties":{"labels":["参股"],"amount":"3.0168"}},{"id":"10742730","type":"INVEST_H","startNode":"2193678906","endNode":"16703462","properties":{"labels":["参股"],"amount":"1.9728"}},{"id":"154099241","type":"SERVE","startNode":"2193678906","endNode":"11997559","properties":{"labels":["监事"]}},{"id":"310077862","type":"INVEST_H","startNode":"2193678906","endNode":"198339102","properties":{"labels":["参股"],"amount":"1.9728"}},{"id":"164519385","type":"SERVE","startNode":"1783397559","endNode":"11997559","properties":{"labels":["独立董事"]}},{"id":"24794141","type":"INVEST_H","startNode":"1910329120","endNode":"16703462","properties":{"labels":["参股"],"amount":"1.5084"}},{"id":"328225120","type":"SERVE","startNode":"1910329120","endNode":"11997559","properties":{"labels":["监事"]}},{"id":"155961310","type":"INVEST_H","startNode":"1910329120","endNode":"198339102","properties":{"labels":["参股"],"amount":"1.5084"}}]}}
+
+Accept:application/json, text/plain, */*
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+Cookie:TYCID=f0aac860fb4c11e7939357a1d35219e1; undefined=f0aac860fb4c11e7939357a1d35219e1; Hm_lvt_e92c8d65d92d534b0fc290df538b4758=1516169354; ssuid=4592965750; RTYCID=f4b105dc6185494f8610cac10e227f42; tyc-user-info=%257B%2522post%2522%253A%2522IT%257C%25E4%25BA%2592%25E8%2581%2594%25E7%25BD%2591%257C%25E9%2580%259A%25E4%25BF%25A1%2522%252C%2522nickname%2522%253A%2522278276130%2522%252C%2522token%2522%253A%2522eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODYxNDA4MjM4OCIsImlhdCI6MTUxNjE2OTc5MCwiZXhwIjoxNTMxNzIxNzkwfQ.fCzfaLMopUSHdnp06QFckW4_JkCMTbRcE2JAyz7kNzaHW-o_Aj-KFPf1FIolv6sxYjfVOKFx-14bT6l9V3MTqw%2522%252C%2522integrity%2522%253A%252280%2525%2522%252C%2522state%2522%253A%25220%2522%252C%2522companyName%2522%253A%2522BONC%2522%252C%2522industry%2522%253A%2522IT%257C%25E9%2580%259A%25E4%25BF%25A1%257C%25E7%2594%25B5%25E5%25AD%2590%257C%25E4%25BA%2592%25E8%2581%2594%25E7%25BD%2591%2522%252C%2522vipManager%2522%253A%25220%2522%252C%2522vnum%2522%253A%25220%2522%252C%2522onum%2522%253A%25220%2522%252C%2522mobile%2522%253A%252218614082388%2522%257D; auth_token=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODYxNDA4MjM4OCIsImlhdCI6MTUxNjE2OTc5MCwiZXhwIjoxNTMxNzIxNzkwfQ.fCzfaLMopUSHdnp06QFckW4_JkCMTbRcE2JAyz7kNzaHW-o_Aj-KFPf1FIolv6sxYjfVOKFx-14bT6l9V3MTqw; OA=fMEMXObiWNpvvn0CCJnQrpicSp3iY8hdFqwa1Bp0xONnNzyhiBLgD0n3Bgjk6gxk; _csrf_bk=b8772cd968495007d4cb919c284aa111; _csrf=uAq81hPsGYbWDNlAssuUeQ==; Hm_lpvt_e92c8d65d92d534b0fc290df538b4758=1516170219; rtoken=4df4b0537ab64280a3807e8ad315aa8a; _rutm=b19a3e38a61c480cab0cf359f8b5b937
+DNT:1
+Host:dis.tianyancha.com
+Referer:https://dis.tianyancha.com/dis/old
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+
+Access-Control-Allow-Headers:x-requested-with
+Access-Control-Allow-Methods:POST, GET, OPTIONS, DELETE
+Access-Control-Allow-Origin:*
+Connection:keep-alive
+Content-Encoding:gzip
+Content-Type:application/json;charset=UTF-8
+Date:Wed, 17 Jan 2018 06:23:43 GMT
+Server:Tengine
+Transfer-Encoding:chunked
+Vary:Accept-Encoding
+
+
+https://static.tianyancha.com/web-require-js/public/js/require-c507571800.config.js
+
+-->
+
+
+
+
+
+
+
+
+
+<--
+
+https://www.tianyancha.com/login
+
+Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+DNT:1
+Host:www.tianyancha.com
+Upgrade-Insecure-Requests:1
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+
+Connection:keep-alive
+Content-Encoding:gzip
+Content-Type:text/html; charset=utf-8
+Date:Wed, 17 Jan 2018 06:39:44 GMT
+Set-Cookie:TYCID=33f3fc00fb5111e79702115f720fb8e4; path=/; expires=Fri, 17 Jan 2020 06:39:44 GMT; domain=.tianyancha.com; httponly
+Set-Cookie:_csrf=Zsd0Lx6aNNaOt6f2l74WjA==; path=/; domain=.tianyancha.com; secure
+Set-Cookie:aliyungf_tc=AQAAAC5CzH7pwAAAYoabJyVZqbPUM95e; Path=/; HttpOnly
+Set-Cookie:csrfToken=i9L6FC3nQWEw_lya0mmqbIcQ; path=/; secure
+Set-Cookie:undefined=33f3fc00fb5111e79702115f720fb8e4; path=/; expires=Fri, 17 Jan 2020 06:39:44 GMT; domain=.tianyancha.com; httponly
+Set-Cookie:OA=aj6CtXoo8Bv6ykfIHovRapBIUox8ar8xunAPqt1rOEU=; path=/; domain=.tianyancha.com; secure
+Set-Cookie:_csrf_bk=6446a6d6ae497fd61879b1a6bc977bfa; path=/; domain=.tianyancha.com; secure
+Transfer-Encoding:chunked
+x-content-type-options:nosniff
+x-download-options:noopen
+x-readtime:24
+x-xss-protection:1; mode=block
+
+
+
+https://www.promisejs.org/polyfills/promise-6.1.0.js
+
+https://static.tianyancha.com/web-require-js/public/js/require-c507571800.config.js
+
+https://static.tianyancha.com/wap-require-js/public/js/lib/require.js
+
+// qq
+https://qzs.qq.com/qzone/biz/res/gt.js
+
+https://static.tianyancha.com/web-require-js/public/js/route/login-4975bf51d8.js
+
+https://static.tianyancha.com/web-require-js/public/js/lib/domReady.js
+
+https://static.tianyancha.com/web-require-js/public/js/lib/base64-4dc9e46e99.js
+
+https://static.tianyancha.com/web-require-js/public/js/lib/js-a7a8d2842f.cookie.js
+
+https://static.tianyancha.com/web-require-js/public/js/lib/gt-423ec12052.js
+
+https://static.tianyancha.com/web-require-js/public/js/util/banner-9d9b68d6c7.js
+
+https://static.tianyancha.com/web-require-js/public/js/util/bannerMobile-6418ba078c.js
+
+https://static.tianyancha.com/web-require-js/public/js/util/jweixin-1917b64947.js
+
+https://static.tianyancha.com/web-require-js/public/js/lib/jquery-801292734a.js
+
+
+https://www.tianyancha.com/wxApi/getJsSdkConfig.json?url=https%3A%2F%2Fwww.tianyancha.com%2Flogin&_=1516171181763
+
+{"data":{"appId":"wx2ca32fcf7804bffc","nonceStr":"pm4khx2d5rixgxe","timestamp":"1516171185","url":"https://www.tianyancha.com/login","signature":"482789db8b9bbe452f1b80ab53aa1b8a808f1dd2"},"state":"ok"}
+
+Accept:application/json, text/javascript, */*; q=0.01
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+Cookie:aliyungf_tc=AQAAAC5CzH7pwAAAYoabJyVZqbPUM95e; csrfToken=i9L6FC3nQWEw_lya0mmqbIcQ; _csrf=Zsd0Lx6aNNaOt6f2l74WjA==; OA=aj6CtXoo8Bv6ykfIHovRapBIUox8ar8xunAPqt1rOEU=; _csrf_bk=6446a6d6ae497fd61879b1a6bc977bfa; TYCID=33f3fc00fb5111e79702115f720fb8e4; undefined=33f3fc00fb5111e79702115f720fb8e4; Hm_lvt_e92c8d65d92d534b0fc290df538b4758=1516171182; Hm_lpvt_e92c8d65d92d534b0fc290df538b4758=1516171182; ssuid=1864542472
+DNT:1
+Host:www.tianyancha.com
+Referer:https://www.tianyancha.com/login
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+X-Requested-With:XMLHttpRequest
+
+Connection:keep-alive
+Content-Length:202
+Content-Type:application/json; charset=utf-8
+Date:Wed, 17 Jan 2018 06:39:45 GMT
+x-content-type-options:nosniff
+x-download-options:noopen
+x-readtime:3
+x-xss-protection:1; mode=block
+
+
+// only success one time
+https://www.tianyancha.com/doctor.json?_t=1516171181944    POST    403
+
+$:1.12.4
+width:1423
+height:195
+href:https://www.tianyancha.com/login
+referrer:
+appCodeName:Mozilla
+userAgent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+platform:Win32
+language:zh-CN
+pic:w|38|h|38|b|57|r|149.5|t|19|l|111.5|y|19|x|111.5
+xyz:i9L6FC3nQWEw_lya0mmqbIcQ
+
+Accept:*/*
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+Content-Length:389
+Content-Type:application/x-www-form-urlencoded; charset=UTF-8
+Cookie:aliyungf_tc=AQAAAC5CzH7pwAAAYoabJyVZqbPUM95e; csrfToken=i9L6FC3nQWEw_lya0mmqbIcQ; _csrf=Zsd0Lx6aNNaOt6f2l74WjA==; OA=aj6CtXoo8Bv6ykfIHovRapBIUox8ar8xunAPqt1rOEU=; _csrf_bk=6446a6d6ae497fd61879b1a6bc977bfa; TYCID=33f3fc00fb5111e79702115f720fb8e4; undefined=33f3fc00fb5111e79702115f720fb8e4; Hm_lvt_e92c8d65d92d534b0fc290df538b4758=1516171182; Hm_lpvt_e92c8d65d92d534b0fc290df538b4758=1516171182; ssuid=1864542472
+DNT:1
+Host:www.tianyancha.com
+Origin:https://www.tianyancha.com
+Referer:https://www.tianyancha.com/login
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+X-Requested-With:XMLHttpRequest
+
+Connection:keep-alive
+Content-Length:461
+Content-Type:text/html
+Date:Wed, 17 Jan 2018 06:39:45 GMT
+ETag:"594784b8-1cd"
+
+
+https://www.tianyancha.com/login
+
+Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+DNT:1
+Host:www.tianyancha.com
+Upgrade-Insecure-Requests:1
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+
+Connection:keep-alive
+Content-Encoding:gzip
+Content-Type:text/html; charset=utf-8
+Date:Wed, 17 Jan 2018 07:23:02 GMT
+Set-Cookie:TYCID=40ef98a0fb5711e7aada5bc30f19babf; path=/; expires=Fri, 17 Jan 2020 07:23:02 GMT; domain=.tianyancha.com; httponly
+Set-Cookie:_csrf=bWQxCLHfnFaRGkJozGjUNw==; path=/; domain=.tianyancha.com; secure
+Set-Cookie:aliyungf_tc=AQAAALp6Plp8ZwwAYoabJ/XZYyd7WwiP; Path=/; HttpOnly
+Set-Cookie:csrfToken=2DXUvPMHnM6fq5fDyGzheAcp; path=/; secure
+Set-Cookie:undefined=40ef98a0fb5711e7aada5bc30f19babf; path=/; expires=Fri, 17 Jan 2020 07:23:02 GMT; domain=.tianyancha.com; httponly
+Set-Cookie:OA=wItfnM3cOdMSal0NSfXrQP8hBHiF9B7LrVMD5Eyzi0w=; path=/; domain=.tianyancha.com; secure
+Set-Cookie:_csrf_bk=b640f66a9ebec37e1d2d9b896be7c6a8; path=/; domain=.tianyancha.com; secure
+Transfer-Encoding:chunked
+x-content-type-options:nosniff
+x-download-options:noopen
+x-readtime:18
+x-xss-protection:1; mode=block
+
+
+https://www.tianyancha.com/cd/login.json  POST
+
+{"mobile":"18614082388","cdpassword":"password","loginway":"PL","autoLogin":true}
+
+{"data":{"token":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODYxNDA4MjM4OCIsImlhdCI6MTUxNTU3MjIwNSwiZXhwIjoxNTMxMTI0MjA1fQ.YBX74UbURbf-2ylWtIdL2tR9A4uzTI31ujJfuSB66KOWgL4AHxsRRv6FztCn_4fIVDFolZTBOp-9Kcg55XFxyw","integrity":"0%","state":"0","vipManager":"0","vnum":"0","onum":"0","mobile":"18614082388"},"state":"ok"}
+{"data":{"post":"IT|互联网|通信","nickname":"278276130","token":"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODYxNDA4MjM4OCIsImlhdCI6MTUxNjE3Mjc1NiwiZXhwIjoxNTMxNzI0NzU2fQ.LAEYxDOrwKdb_Kg8gWGxGcYe37C5ljGkSNmuOeiEpm4kq_xa6bfbd58gHSOc_ZFIju9RoT9fhX8KZLIexuYnLw","integrity":"80%","state":"0","companyName":"BONC","industry":"IT|通信|电子|互联网","vipManager":"0","vnum":"0","onum":"0","mobile":"18614082388"},"state":"ok"}
+
+send
+https://static.tianyancha.com/web-require-js/public/js/lib/jquery-801292734a.js:1:96572
+ajax
+https://static.tianyancha.com/web-require-js/public/js/lib/jquery-801292734a.js:1:89343
+post
+https://static.tianyancha.com/web-require-js/public/js/route/login-4975bf51d8.js:20:28671
+cd_login
+https://static.tianyancha.com/web-require-js/public/js/route/login-4975bf51d8.js:21:2516
+t.loginByPhone
+https://static.tianyancha.com/web-require-js/public/js/route/login-4975bf51d8.js:22:28198
+onclick
+https://www.tianyancha.com/login:1:1
+
+Accept:*/*
+Accept-Encoding:gzip, deflate, br
+Accept-Language:zh-CN,zh;q=0.9,zh-TW;q=0.8
+Connection:keep-alive
+Content-Length:105
+Content-Type:application/json; charset=UTF-8
+Cookie:aliyungf_tc=AQAAAC5CzH7pwAAAYoabJyVZqbPUM95e; csrfToken=i9L6FC3nQWEw_lya0mmqbIcQ; _csrf=Zsd0Lx6aNNaOt6f2l74WjA==; OA=aj6CtXoo8Bv6ykfIHovRapBIUox8ar8xunAPqt1rOEU=; _csrf_bk=6446a6d6ae497fd61879b1a6bc977bfa; TYCID=33f3fc00fb5111e79702115f720fb8e4; undefined=33f3fc00fb5111e79702115f720fb8e4; Hm_lvt_e92c8d65d92d534b0fc290df538b4758=1516171182; Hm_lpvt_e92c8d65d92d534b0fc290df538b4758=1516171182; ssuid=1864542472
+DNT:1
+Host:www.tianyancha.com
+Origin:https://www.tianyancha.com
+Referer:https://www.tianyancha.com/login
+User-Agent:Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+X-Requested-With:XMLHttpRequest
+
+Connection:keep-alive
+Content-Length:421
+Content-Type:application/json; charset=utf-8
+Date:Wed, 17 Jan 2018 06:45:45 GMT
+x-content-type-options:nosniff
+x-download-options:noopen
+x-readtime:22
+x-xss-protection:1; mode=block
+
+Cookie:
+aliyungf_tc
+csrfToken
+_csrf
+OA
+_csrf_bk
+TYCID
+undefined
+Hm_lvt_e92c8d65d92d534b0fc290df538b4758
+Hm_lpvt_e92c8d65d92d534b0fc290df538b4758
+ssuid
+
+seven from response 
+one from js
+
+// redirct
+https://clkst.tianyancha.com/pingd?srctype=getsret&lurl=https%3A//www.tianyancha.com/login&ch=Login.Login&sc=person&ourl=&ssuid=8031868056&mobi=undefined&rand=0.49880646640574056
+
+-->
+
+
+
+
+
+
+
+</html>

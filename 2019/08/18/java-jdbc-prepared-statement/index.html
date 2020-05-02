@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="在写neo4j和orientdb的通用方法时，忽然想到jdbc，然后就想试试mysql neo4j orientdb几个数据库jdbc连接方式里的 prepartdStatement一不一样。   问题的来源来自以下代码12345678910111213141516171819202122232425262728List&amp;lt;Map&amp;lt;String, Object&amp;gt;&amp;gt; lis">
+<meta name="keywords" content="java,jdbc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java-jdbc-prepared-statement">
+<meta property="og:url" content="http://weikeqin.cn/2019/08/18/java-jdbc-prepared-statement/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="在写neo4j和orientdb的通用方法时，忽然想到jdbc，然后就想试试mysql neo4j orientdb几个数据库jdbc连接方式里的 prepartdStatement一不一样。   问题的来源来自以下代码12345678910111213141516171819202122232425262728List&amp;lt;Map&amp;lt;String, Object&amp;gt;&amp;gt; lis">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-19T01:06:29.267Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java-jdbc-prepared-statement">
+<meta name="twitter:description" content="在写neo4j和orientdb的通用方法时，忽然想到jdbc，然后就想试试mysql neo4j orientdb几个数据库jdbc连接方式里的 prepartdStatement一不一样。   问题的来源来自以下代码12345678910111213141516171819202122232425262728List&amp;lt;Map&amp;lt;String, Object&amp;gt;&amp;gt; lis">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2019/08/18/java-jdbc-prepared-statement/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>java-jdbc-prepared-statement | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/08/18/java-jdbc-prepared-statement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java-jdbc-prepared-statement
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-18 10:59:41" itemprop="dateCreated datePublished" datetime="2019-08-18T10:59:41+08:00">2019-08-18</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/18/java-jdbc-prepared-statement/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/08/18/java-jdbc-prepared-statement/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/08/18/java-jdbc-prepared-statement/" class="leancloud_visitors" data-flag-title="java-jdbc-prepared-statement">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>  在写neo4j和orientdb的通用方法时，忽然想到jdbc，然后就想试试mysql neo4j orientdb几个数据库jdbc连接方式里的 prepartdStatement一不一样。</p>
+<p>  问题的来源来自以下代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; list = <span class="keyword">new</span> ArrayList();</span><br><span class="line"><span class="keyword">try</span> (PreparedStatement pst = conn.prepareStatement(sql);</span><br><span class="line">     ResultSet rs = pst.executeQuery();) &#123;</span><br><span class="line"></span><br><span class="line">    List&lt;String&gt; fields = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">while</span> (rs.next()) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (fields.isEmpty()) &#123;</span><br><span class="line">            ResultSetMetaData metaData = rs.getMetaData();</span><br><span class="line">            <span class="comment">// 查询出的字段</span></span><br><span class="line">            <span class="keyword">int</span> count = metaData.getColumnCount();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i++) &#123;</span><br><span class="line">                fields.add(metaData.getColumnName(i));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String field : fields) &#123;</span><br><span class="line">            map.put(field, rs.getObject(field));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// T r =  JSONObject.parseObject(JSON.toString(map), Object.class);</span></span><br><span class="line">        list.add(map);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a> 
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> sql    查询语句</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> params 占位符 参数</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> conn   连接</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Iterator&lt;Map&lt;String, Object&gt;&gt; query(String sql, Map&lt;Integer, Object&gt; params,</span><br><span class="line">                                           Connection conn) <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="keyword">final</span> PreparedStatement statement = conn.prepareStatement(sql);</span><br><span class="line">    <span class="comment">// 设置参数</span></span><br><span class="line">    setParameters(statement, params);</span><br><span class="line">    <span class="comment">// 执行查询并获得结果</span></span><br><span class="line">    <span class="keyword">final</span> ResultSet result = statement.executeQuery();</span><br><span class="line">    <span class="comment">// 封装返回</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Iterator&lt;Map&lt;String, Object&gt;&gt;() &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">boolean</span> hasNext = result.next();</span><br><span class="line">        <span class="comment">// 所有字段</span></span><br><span class="line">        <span class="keyword">public</span> List&lt;String&gt; columns;</span><br><span class="line">        <span class="comment">// 字段个数</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">int</span> columnsCount;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> hasNext;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 获得所有字段&lt;br&gt;</span></span><br><span class="line"><span class="comment">         *     第一次会查询出所有字段，第二 第三次 直接用columns</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> List&lt;String&gt; <span class="title">getColumns</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (columns != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> columns;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            ResultSetMetaData metaData = result.getMetaData();</span><br><span class="line">            <span class="comment">// 查询出的字段</span></span><br><span class="line">            <span class="keyword">int</span> count = metaData.getColumnCount();</span><br><span class="line">            List&lt;String&gt; cols = <span class="keyword">new</span> ArrayList&lt;&gt;(count);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i++) &#123;</span><br><span class="line">                cols.add(metaData.getColumnName(i));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            columnsCount = cols.size();</span><br><span class="line">            <span class="keyword">return</span> columns = cols;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title">next</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (hasNext) &#123;</span><br><span class="line">                    <span class="comment">//</span></span><br><span class="line">                    Map&lt;String, Object&gt; map = <span class="keyword">new</span> LinkedHashMap&lt;&gt;(columnsCount);</span><br><span class="line">                    <span class="keyword">for</span> (String col : getColumns()) &#123;</span><br><span class="line">                        map.put(col, result.getObject(col));</span><br><span class="line">                    &#125;</span><br><span class="line">                    hasNext = result.next();</span><br><span class="line">                    <span class="keyword">if</span> (!hasNext) &#123;</span><br><span class="line">                        result.close();</span><br><span class="line">                        statement.close();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">return</span> map;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  然后查看对应的源代码<br>mysql-connector-java-5.1.40.jar<br>neo4j-jdbc-3.4.0.jar<br>orientdb-jdbc-3.0.22.jar</p>
+<h1 id="MySQL-prepart-测试"><a href="#MySQL-prepart-测试" class="headerlink" title="MySQL prepart 测试"></a>MySQL prepart 测试</h1><h2 id="MySQL-client-server-prepart-测试"><a href="#MySQL-client-server-prepart-测试" class="headerlink" title="MySQL client server prepart 测试"></a>MySQL client server prepart 测试</h2><p>  MySQL server 配置开启 all_query log</p>
+<p>  在命令行执行以下语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PREPARE</span> stmt1 <span class="keyword">FROM</span> <span class="string">'SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse'</span>;</span><br><span class="line"><span class="keyword">SET</span> @a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">SET</span> @b = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">EXECUTE</span> stmt1 <span class="keyword">USING</span> @a, @b;</span><br><span class="line"><span class="keyword">EXECUTE</span> stmt1 <span class="keyword">USING</span> @a, @b;</span><br><span class="line"><span class="keyword">SET</span> @a = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">SET</span> @b = <span class="number">8</span>;</span><br><span class="line"><span class="keyword">EXECUTE</span> stmt1 <span class="keyword">USING</span> @a, @b;</span><br><span class="line"><span class="keyword">SET</span> @s = <span class="string">'SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse'</span>;</span><br><span class="line"><span class="keyword">PREPARE</span> stmt2 <span class="keyword">FROM</span> @s;</span><br><span class="line"><span class="keyword">SET</span> @a = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">SET</span> @b = <span class="number">8</span>;</span><br><span class="line"><span class="keyword">EXECUTE</span> stmt2 <span class="keyword">USING</span> @a, @b;</span><br></pre></td></tr></table></figure>
+<p>  all_query.log输出如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">2019-08-14T12:24:02.934322Z	 1042 Query	PREPARE stmt1 FROM ...</span><br><span class="line">2019-08-14T12:24:02.934412Z	 1042 Prepare	SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse</span><br><span class="line">2019-08-14T12:24:02.934762Z	 1042 Query	SET @a = 3</span><br><span class="line">2019-08-14T12:24:02.935089Z	 1042 Query	SET @b = 4</span><br><span class="line">2019-08-14T12:24:02.935404Z	 1042 Query	EXECUTE stmt1 USING @a, @b</span><br><span class="line">2019-08-14T12:24:02.935449Z	 1042 Execute	SELECT SQRT(POW(3,2) + POW(4,2)) AS hypotenuse</span><br><span class="line">2019-08-14T12:24:02.935949Z	 1042 Query	EXECUTE stmt1 USING @a, @b</span><br><span class="line">2019-08-14T12:24:02.935994Z	 1042 Execute	SELECT SQRT(POW(3,2) + POW(4,2)) AS hypotenuse</span><br><span class="line">2019-08-14T12:24:02.936388Z	 1042 Query	SET @a = 6</span><br><span class="line">2019-08-14T12:24:02.936938Z	 1042 Query	SET @b = 8</span><br><span class="line">2019-08-14T12:24:02.937319Z	 1042 Query	EXECUTE stmt1 USING @a, @b</span><br><span class="line">2019-08-14T12:24:02.937358Z	 1042 Execute	SELECT SQRT(POW(6,2) + POW(8,2)) AS hypotenuse</span><br><span class="line">2019-08-14T12:24:02.937791Z	 1042 Query	SET @s = &apos;SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse&apos;</span><br><span class="line">2019-08-14T12:24:02.938083Z	 1042 Query	PREPARE stmt2 FROM @s</span><br><span class="line">2019-08-14T12:24:02.938187Z	 1042 Prepare	SELECT SQRT(POW(?,2) + POW(?,2)) AS hypotenuse</span><br><span class="line">2019-08-14T12:24:02.938518Z	 1042 Query	SET @a = 6</span><br><span class="line">2019-08-14T12:24:02.938804Z	 1042 Query	SET @b = 8</span><br><span class="line">2019-08-14T12:24:02.939095Z	 1042 Query	EXECUTE stmt2 USING @a, @b</span><br><span class="line">2019-08-14T12:24:02.939130Z	 1042 Execute	SELECT SQRT(POW(6,2) + POW(8,2)) AS hypotenuse</span><br></pre></td></tr></table></figure>
+<p>  确实是使用了Prepare<br>  不过从这个结果看不出Prepare提高了多少性能<br>  通过程序测试Prepare大概提高了30%的性能，语句不同，参数不通，测试结果会有差异。</p>
+<p>  <code>jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;useSSL=false&amp;useServerPrepStmts=true</code></p>
+<p> com.mysql.jdbc.ConnectionImpl.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> PreparedStatement <span class="title">prepareStatement</span><span class="params">(String sql)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.prepareStatement(sql, <span class="number">1003</span>, <span class="number">1007</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> PreparedStatement <span class="title">prepareStatement</span><span class="params">(String sql, <span class="keyword">int</span> autoGenKeyIndex)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    PreparedStatement pStmt = <span class="keyword">this</span>.prepareStatement(sql);</span><br><span class="line">    ((com.mysql.jdbc.PreparedStatement)pStmt).setRetrieveGeneratedKeys(autoGenKeyIndex == <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> pStmt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> PreparedStatement <span class="title">prepareStatement</span><span class="params">(String sql, <span class="keyword">int</span> resultSetType, <span class="keyword">int</span> resultSetConcurrency)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span>(<span class="keyword">this</span>.getConnectionMutex()) &#123;</span><br><span class="line">        <span class="keyword">this</span>.checkClosed();</span><br><span class="line">        com.mysql.jdbc.PreparedStatement pStmt = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">boolean</span> canServerPrepare = <span class="keyword">true</span>;</span><br><span class="line">        String nativeSql = <span class="keyword">this</span>.getProcessEscapeCodesForPrepStmts() ? <span class="keyword">this</span>.nativeSQL(sql) : sql;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.useServerPreparedStmts &amp;&amp; <span class="keyword">this</span>.getEmulateUnsupportedPstmts()) &#123;</span><br><span class="line">            canServerPrepare = <span class="keyword">this</span>.canHandleAsServerPreparedStatement(nativeSql);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.useServerPreparedStmts &amp;&amp; canServerPrepare) &#123;</span><br><span class="line">            <span class="comment">// // 从缓存中获取 pst</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.getCachePreparedStatements()) &#123;</span><br><span class="line">                <span class="keyword">synchronized</span>(<span class="keyword">this</span>.serverSideStatementCache) &#123;</span><br><span class="line">                    pStmt = (ServerPreparedStatement)<span class="keyword">this</span>.serverSideStatementCache.remove(sql);</span><br><span class="line">                    <span class="keyword">if</span> (pStmt != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        ((ServerPreparedStatement)pStmt).setClosed(<span class="keyword">false</span>);</span><br><span class="line">                        <span class="comment">// 清理上次留下的参数</span></span><br><span class="line">                        ((com.mysql.jdbc.PreparedStatement)pStmt).clearParameters();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (pStmt == <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="comment">// 向 Server 提交 SQL 预编译</span></span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            pStmt = ServerPreparedStatement.getInstance(<span class="keyword">this</span>.getMultiHostSafeProxy(), nativeSql, <span class="keyword">this</span>.database, resultSetType, resultSetConcurrency);</span><br><span class="line">                            <span class="keyword">if</span> (sql.length() &lt; <span class="keyword">this</span>.getPreparedStatementCacheSqlLimit()) &#123;</span><br><span class="line">                                ((ServerPreparedStatement)pStmt).isCached = <span class="keyword">true</span>;</span><br><span class="line">                            &#125;</span><br><span class="line"></span><br><span class="line">                            ((com.mysql.jdbc.PreparedStatement)pStmt).setResultSetType(resultSetType);</span><br><span class="line">                            ((com.mysql.jdbc.PreparedStatement)pStmt).setResultSetConcurrency(resultSetConcurrency);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (SQLException var13) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (!<span class="keyword">this</span>.getEmulateUnsupportedPstmts()) &#123;</span><br><span class="line">                                <span class="keyword">throw</span> var13;</span><br><span class="line">                            &#125;</span><br><span class="line"></span><br><span class="line">                            pStmt = (com.mysql.jdbc.PreparedStatement)<span class="keyword">this</span>.clientPrepareStatement(nativeSql, resultSetType, resultSetConcurrency, <span class="keyword">false</span>);</span><br><span class="line">                            <span class="keyword">if</span> (sql.length() &lt; <span class="keyword">this</span>.getPreparedStatementCacheSqlLimit()) &#123;</span><br><span class="line">                                <span class="keyword">this</span>.serverSideStatementCheckCache.put(sql, Boolean.FALSE);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// // 向 Server 提交 SQL 预编译</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    pStmt = ServerPreparedStatement.getInstance(<span class="keyword">this</span>.getMultiHostSafeProxy(), nativeSql, <span class="keyword">this</span>.database, resultSetType, resultSetConcurrency);</span><br><span class="line">                    ((com.mysql.jdbc.PreparedStatement)pStmt).setResultSetType(resultSetType);</span><br><span class="line">                    ((com.mysql.jdbc.PreparedStatement)pStmt).setResultSetConcurrency(resultSetConcurrency);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (SQLException var12) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (!<span class="keyword">this</span>.getEmulateUnsupportedPstmts()) &#123;</span><br><span class="line">                        <span class="keyword">throw</span> var12;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    pStmt = (com.mysql.jdbc.PreparedStatement)<span class="keyword">this</span>.clientPrepareStatement(nativeSql, resultSetType, resultSetConcurrency, <span class="keyword">false</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            pStmt = (com.mysql.jdbc.PreparedStatement)<span class="keyword">this</span>.clientPrepareStatement(nativeSql, resultSetType, resultSetConcurrency, <span class="keyword">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (PreparedStatement)pStmt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  从代码里可以看到，服务(代码里)缓存了解析编译的语句，如果有直接拿来用。</p>
+<!--
+  jdbc的代码里有解析sql并且编译，然后把编译好的发给服务端，以后每次发送对应的id以及占位符的参数，这样免得服务器每次解析sql，而且不用每次把整个语句以及后面的参数发送给服务端，只需要发送预编译后的预计的id以及占位参数即可，减少了服务端编译，减少了网络传输，提高了效率。
+-->
+<h1 id="Neo4j"><a href="#Neo4j" class="headerlink" title="Neo4j"></a>Neo4j</h1><p>  Neo4j 连接方式 有 neo4j-jdbc-driver  neo4j-jdbc-bolt  neo4j-jdbc-http </p>
+<p>  org.neo4j.jdbc.Neo4jPreparedStatement.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Default constructor with connection and statement.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> connection   The JDBC connection</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> rawStatement The prepared statement</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="title">Neo4jPreparedStatement</span><span class="params">(Neo4jConnection connection, String rawStatement)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">super</span>(connection);</span><br><span class="line">	<span class="keyword">this</span>.statement = PreparedStatementBuilder.replacePlaceholders(rawStatement);</span><br><span class="line">	<span class="keyword">this</span>.parametersNumber = PreparedStatementBuilder.namedParameterCount(statement);</span><br><span class="line">	<span class="keyword">this</span>.parameters = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="keyword">this</span>.parametersNumber);</span><br><span class="line">	<span class="keyword">this</span>.batchParameters = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  org.neo4j.jdbc.utils.PreparedStatementBuilder<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * This method return a String that is the original raw string with all valid placeholders replaced with neo4j curly brackets notation for parameters.</span></span><br><span class="line"><span class="comment"> * &lt;br&gt;</span></span><br><span class="line"><span class="comment"> * i.e. MATCH n RETURN n WHERE n.name = ? is transformed in MATCH n RETURN n WHERE n.name = &#123;1&#125;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> raw The string to be translated.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> The string with the placeholders replaced.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">replacePlaceholders</span><span class="params">(String raw)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line">	String digested = raw;</span><br><span class="line"></span><br><span class="line">	String regex = <span class="string">"\\?(?=[^\"]*(?:\"[^\"]*\"[^\"]*)*$)"</span>;</span><br><span class="line">	Matcher matcher = Pattern.compile(regex).matcher(digested);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (matcher.find()) &#123;</span><br><span class="line">		digested = digested.replaceFirst(regex, <span class="string">"&#123;"</span> + index + <span class="string">"&#125;"</span>);</span><br><span class="line">		index++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> digested;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  neo4j-jdbc 里对PreparedStatement里的语句仅仅是把占位符组装成一个cypher语句，没有做预编译处理</p>
+<h1 id="Orientdb"><a href="#Orientdb" class="headerlink" title="Orientdb"></a>Orientdb</h1><p>  com.orientechnologies.orient.jdbc.OrientJdbcPreparedStatement.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">OrientJdbcPreparedStatement</span><span class="params">(OrientJdbcConnection iConnection, String sql)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(iConnection, <span class="number">1003</span>, <span class="number">1007</span>, <span class="number">1</span>, sql);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">OrientJdbcPreparedStatement</span><span class="params">(OrientJdbcConnection iConnection, <span class="keyword">int</span> resultSetType, <span class="keyword">int</span> resultSetConcurrency, String sql)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>(iConnection, resultSetType, resultSetConcurrency, <span class="number">1</span>, sql);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">OrientJdbcPreparedStatement</span><span class="params">(OrientJdbcConnection iConnection, <span class="keyword">int</span> resultSetType, <span class="keyword">int</span> resultSetConcurrency, <span class="keyword">int</span> resultSetHoldability, String sql)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>(iConnection, resultSetType, resultSetConcurrency, resultSetHoldability);</span><br><span class="line">    <span class="keyword">this</span>.sql = sql;</span><br><span class="line">    <span class="keyword">this</span>.params = <span class="keyword">new</span> HashMap();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  orientdb-jdbc jar包里没有对PreparedStatement的语句做预编译处理</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://juejin.im/post/59875a836fb9a03c4a7615ae" target="_blank" rel="noopener">JDBC PreparedStatement 实现原理【推荐阅读】</a><br>[2] <a href="https://blog.csdn.net/py941215/article/details/78020663" target="_blank" rel="noopener">mysql-JDBC源码解析</a><br>[3] <a href="https://dev.mysql.com/doc/refman/5.7/en/sql-syntax-prepared-statements.html" target="_blank" rel="noopener">mysql sql-syntax-prepared-statements</a><br>[4] <a href="https://github.com/mysql/mysql-connector-j" target="_blank" rel="noopener">github mysql-connector-j</a><br>[5] <a href="https://github.com/neo4j-contrib/neo4j-jdbc" target="_blank" rel="noopener">github neo4j-jdbc </a><br>[6] <a href="http://neo4j-contrib.github.io/neo4j-jdbc/" target="_blank" rel="noopener">neo4j-jdbc doc</a><br>[7] <a href="https://github.com/orientechnologies/orientdb-jdbc" target="_blank" rel="noopener">github orientdb-jdbc</a><br>[8] <a href="https://github.com/orientechnologies/orientdb-docs" target="_blank" rel="noopener">orientdb-docs</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/jdbc/" rel="tag"># jdbc</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/18/java-concurrent/" rel="next" title="java 并发">
+                <i class="fa fa-chevron-left"></i> java 并发
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/18/orientdb-config/" rel="prev" title="orientdb-config">
+                orientdb-config <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL-prepart-测试"><span class="nav-number">1.</span> <span class="nav-text">MySQL prepart 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-client-server-prepart-测试"><span class="nav-number">1.1.</span> <span class="nav-text">MySQL client server prepart 测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Neo4j"><span class="nav-number">2.</span> <span class="nav-text">Neo4j</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Orientdb"><span class="nav-number">3.</span> <span class="nav-text">Orientdb</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

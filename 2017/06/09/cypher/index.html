@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="遇到的问题修改Label、删除Label、增加Label  neo4j是no-schema的，允许一个节点有0-n个label，也就是可以没有Label，可以有一个Label，也可以有多个 删除Label  match (n) where id(n) = 2 remove n:Label return n; 123456789101112131415161718192021222324252627">
+<meta name="keywords" content="neo4j,cypher">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neo4j Cypher 笔记">
+<meta property="og:url" content="http://weikeqin.cn/2017/06/09/cypher/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="遇到的问题修改Label、删除Label、增加Label  neo4j是no-schema的，允许一个节点有0-n个label，也就是可以没有Label，可以有一个Label，也可以有多个 删除Label  match (n) where id(n) = 2 remove n:Label return n; 123456789101112131415161718192021222324252627">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-07-05T09:18:58.661Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neo4j Cypher 笔记">
+<meta name="twitter:description" content="遇到的问题修改Label、删除Label、增加Label  neo4j是no-schema的，允许一个节点有0-n个label，也就是可以没有Label，可以有一个Label，也可以有多个 删除Label  match (n) where id(n) = 2 remove n:Label return n; 123456789101112131415161718192021222324252627">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/06/09/cypher/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Neo4j Cypher 笔记 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/06/09/cypher/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Neo4j Cypher 笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-06-09 16:27:31" itemprop="dateCreated datePublished" datetime="2017-06-09T16:27:31+08:00">2017-06-09</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/09/cypher/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/06/09/cypher/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/09/cypher/" class="leancloud_visitors" data-flag-title="Neo4j Cypher 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h1><h2 id="修改Label、删除Label、增加Label"><a href="#修改Label、删除Label、增加Label" class="headerlink" title="修改Label、删除Label、增加Label"></a>修改Label、删除Label、增加Label</h2><p>  neo4j是no-schema的，允许一个节点有0-n个label，也就是可以没有Label，可以有一个Label，也可以有多个</p>
+<h3 id="删除Label"><a href="#删除Label" class="headerlink" title="删除Label"></a>删除Label</h3><p>  <code>match (n) where id(n) = 2 remove n:Label return n;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">neo4j-sh (?)$ match (n) where id(n) = 2 set n:E return id(n), labels(n), n;</span><br><span class="line">+------------------------------------------------+</span><br><span class="line">| id(n) | labels(n)          | n                 |</span><br><span class="line">+------------------------------------------------+</span><br><span class="line">| 2     | [&quot;Person&quot;,&quot;T&quot;,&quot;E&quot;] | Node[2]&#123;name:&quot;t&quot;&#125; |</span><br><span class="line">+------------------------------------------------+</span><br><span class="line">1 row</span><br><span class="line">Labels added: 1</span><br><span class="line">136 ms</span><br><span class="line">neo4j-sh (?)$ match (n) where id(n) = 2 remove n:E return id(n), labels(n), n;</span><br><span class="line">+--------------------------------------------+</span><br><span class="line">| id(n) | labels(n)      | n                 |</span><br><span class="line">+--------------------------------------------+</span><br><span class="line">| 2     | [&quot;Person&quot;,&quot;T&quot;] | Node[2]&#123;name:&quot;t&quot;&#125; |</span><br><span class="line">+--------------------------------------------+</span><br><span class="line">1 row</span><br><span class="line">Labels removed: 1</span><br><span class="line">107 ms</span><br><span class="line">neo4j-sh (?)$ match (n) where id(n) = 2 remove n:Person:T return id(n), labels(n), n;</span><br><span class="line">+---------------------------------------+</span><br><span class="line">| id(n) | labels(n) | n                 |</span><br><span class="line">+---------------------------------------+</span><br><span class="line">| 2     | []        | Node[2]&#123;name:&quot;t&quot;&#125; |</span><br><span class="line">+---------------------------------------+</span><br><span class="line">1 row</span><br><span class="line">Labels removed: 2</span><br><span class="line">46 ms</span><br></pre></td></tr></table></figure>
+<p>可以看到，<br>第一次操作，原来id=2的节点有3个Label Person、T、E ，移除一个E后，还有2个<br>第二次操作，原来id=2的节点有2个Label Person、T ，移除两个后，有0个</p>
+<h3 id="修改Label"><a href="#修改Label" class="headerlink" title="修改Label"></a>修改Label</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">neo4j-sh (?)$ match (n) where id(n) = 2 set n:E return id(n), labels(n), n;</span><br><span class="line">+---------------------------------------+</span><br><span class="line">| id(n) | labels(n) | n                 |</span><br><span class="line">+---------------------------------------+</span><br><span class="line">| 2     | [&quot;E&quot;]     | Node[2]&#123;name:&quot;t&quot;&#125; |</span><br><span class="line">+---------------------------------------+</span><br><span class="line">1 row</span><br><span class="line">Labels added: 1</span><br><span class="line">13 ms</span><br><span class="line">neo4j-sh (?)$ match (n) where id(n) = 2 set n:T return id(n), labels(n), n;</span><br><span class="line">+---------------------------------------+</span><br><span class="line">| id(n) | labels(n) | n                 |</span><br><span class="line">+---------------------------------------+</span><br><span class="line">| 2     | [&quot;T&quot;,&quot;E&quot;] | Node[2]&#123;name:&quot;t&quot;&#125; |</span><br><span class="line">+---------------------------------------+</span><br><span class="line">1 row</span><br><span class="line">Labels added: 1</span><br><span class="line">29 ms</span><br></pre></td></tr></table></figure>
+<p>不remove，直接set，会导致修改完有两个Label，所以需要先remove，然后再set (先set再remove也可以)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="增加Label"><a href="#增加Label" class="headerlink" title="增加Label"></a>增加Label</h3><h2 id="neo4j里如何判断一个属性是什么类型"><a href="#neo4j里如何判断一个属性是什么类型" class="headerlink" title="neo4j里如何判断一个属性是什么类型"></a>neo4j里如何判断一个属性是什么类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE (n &#123;a:1, b:&quot;a&quot;, c:[1,2,3]&#125;)</span><br><span class="line"></span><br><span class="line">MATCH (n)</span><br><span class="line">RETURN size(n.a),</span><br><span class="line">CASE n.a</span><br><span class="line">WHEN toInt(n.a)</span><br><span class="line">THEN &apos;int&apos;</span><br><span class="line">WHEN toFloat(n.a)</span><br><span class="line">THEN &apos;float&apos;</span><br><span class="line">WHEN toString(n.a)</span><br><span class="line">THEN &apos;string&apos;</span><br><span class="line">WHEN [x IN n.a | x]</span><br><span class="line">THEN &apos;coll&apos;</span><br><span class="line">WHEN NULL THEN &apos;null&apos;</span><br><span class="line">ELSE &apos;unknown&apos; END , size(n.b), size(n.c)</span><br></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/27194534/how-to-determine-property-value-type-within-a-node-in-neo4j" target="_blank" rel="noopener">how-to-determine-property-value-type-within-a-node-in-neo4j</a></p>
+<h1 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">unwind // 把列转为单独的行</span><br><span class="line">// With UNWIND, any list can be transformed back into individual rows.</span><br><span class="line">// The example matches all names from a list of names.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">with  // 变量传递</span><br><span class="line">// The WITH syntax is similar to RETURN. It separates query parts explicitly,</span><br><span class="line">// allowing you to declare which variables to carry over to the next part.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 查询所有关系的节点的id</span><br><span class="line">match (n)-[r]-(m) with count(r) as count, id(n) as id</span><br><span class="line">where count &gt; 0</span><br><span class="line">return collect(id);</span><br><span class="line"></span><br><span class="line">// 查询孤立节点</span><br><span class="line">match (n) where not (n)--() return n;</span><br><span class="line"></span><br><span class="line">// 查询孤立节点的所有标签</span><br><span class="line">match (n) where not (n)--() return distinct (labels(n));</span><br></pre></td></tr></table></figure>
+<h1 id="Introduction-to-Cypher"><a href="#Introduction-to-Cypher" class="headerlink" title="Introduction to Cypher"></a>Introduction to Cypher</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Chapter 3. Introduction to Cypher</span><br><span class="line"></span><br><span class="line">Table of Contents</span><br><span class="line">3.1. Background and Motivation</span><br><span class="line">3.2. Graphs, Patterns, and Cypher</span><br><span class="line">3.3. Patterns in Practice</span><br><span class="line">3.4. Getting the Results You Want</span><br><span class="line">3.5. How to Compose Large Statements</span><br><span class="line">3.6. Labels, Constraints and Indexes</span><br><span class="line">3.7. Loading Data</span><br><span class="line">3.8. Utilizing Data Structures</span><br><span class="line">3.9. Cypher vs. SQL</span><br></pre></td></tr></table></figure>
+<p>This friendly guide will introduce you to Cypher, Neo4j’s query language.</p>
+<p>The guide will help you:</p>
+<pre><code>start thinking about graphs and patterns,
+apply this knowledge to simple problems,
+learn how to write Cypher statements,
+use Cypher for loading data,
+transition from SQL to Cypher.
+</code></pre><p>If you want to keep a reference at your side while reading, please see the Cypher Refcard.</p>
+<h2 id="Background-and-Motivation"><a href="#Background-and-Motivation" class="headerlink" title="Background and Motivation"></a>Background and Motivation</h2><p>Cypher provides a convenient way to express queries and other Neo4j actions. Although Cypher is particularly useful for exploratory work, it is fast enough to be used in production. Java-based approaches (eg, unmanaged extensions) can also be used to handle particularly demanding use cases.</p>
+<h3 id="Query-processing"><a href="#Query-processing" class="headerlink" title="Query processing"></a>Query processing</h3><p>To use Cypher effectively, it’s useful to have an idea of how it works. So, let’s take a high-level look at the way Cypher processes queries.</p>
+<pre><code>Parse and validate the query.
+Generate the execution plan.
+Locate the initial node(s).
+Select and traverse relationships.
+Change and/or return values.
+</code></pre><h4 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h4><p>Parsing and validating the Cypher statement(s) is important, but mundane. However, generating an optimal search strategy can be far more challenging.</p>
+<p>The execution plan must tell the database how to locate initial node(s), select relationships for traversal, etc. This involves tricky optimization problems (eg, which actions should happen first), but we can safely leave the details to the Neo4j engineers. So, let’s move on to locating the initial node(s).</p>
+<h4 id="Locate-the-initial-node-s"><a href="#Locate-the-initial-node-s" class="headerlink" title="Locate the initial node(s)"></a>Locate the initial node(s)</h4><p>Neo4j is highly optimized for traversing property graphs. Under ideal circumstances, it can traverse millions of nodes and relationships per second, following chains of pointers in the computer’s memory.</p>
+<p>However, before traversal can begin, Neo4j must know one or more starting nodes. Unless the user (or, more likely, a client program) can provide this information, Neo4j will have to search for these nodes.</p>
+<p>A “brute force” search of the database (eg, for a specified property value) can be very time consuming. Every node must be examined, first to see if it has the property, then to see if the value meets the desired criteria. To avoid this effort, Neo4j creates and uses indexes. So, Neo4j uses a separate index for each label/property combination.</p>
+<h4 id="Traversal-and-actions"><a href="#Traversal-and-actions" class="headerlink" title="Traversal and actions"></a>Traversal and actions</h4><p>Once the initial nodes are determined, Neo4j can traverse portions of the graph and perform any requested actions. The execution plan helps Neo4j to determine which nodes are relevant, which relationships to traverse, etc.</p>
+<h2 id="Graphs-Patterns-and-Cypher"><a href="#Graphs-Patterns-and-Cypher" class="headerlink" title="Graphs, Patterns, and Cypher"></a>Graphs, Patterns, and Cypher</h2><h3 id="Nodes-Relationships-and-Patterns"><a href="#Nodes-Relationships-and-Patterns" class="headerlink" title="Nodes, Relationships, and Patterns"></a>Nodes, Relationships, and Patterns</h3><p>Neo4j’s Property Graphs are composed of nodes and relationships, either of which may have properties (ie, attributes). Nodes represent entities (eg, concepts, events, places, things); relationships (which may be directed) connect pairs of nodes.</p>
+<p>However, nodes and relationships are simply low-level building blocks. The real strength of the Property Graph lies in its ability to encode patterns of connected nodes and relationships. A single node or relationship typically encodes very little information, but a pattern of nodes and relationships can encode arbitrarily complex ideas.</p>
+<p>Cypher, Neo4j’s query language, is strongly based on patterns. Specifically, patterns are used to match desired graph structures. Once a matching structure has been found (or created), Neo4j can use it for further processing.</p>
+<h4 id="Simple-and-Complex-Patterns"><a href="#Simple-and-Complex-Patterns" class="headerlink" title="Simple and Complex Patterns"></a>Simple and Complex Patterns</h4><p>A simple pattern, which has only a single relationship, connects a pair of nodes (or, occasionally, a node to itself). For example, a Person LIVES_IN a City or a City is PART_OF a Country.</p>
+<p>Complex patterns, using multiple relationships, can express arbitrarily complex concepts and support a variety of interesting use cases. For example, we might want to match instances where a Person LIVES_IN a Country. The following Cypher code combines two simple patterns into a (mildly) complex pattern which performs this match:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(:Person) -[:LIVES_IN]-&gt; (:City) -[:PART_OF]-&gt; (:Country)</span><br></pre></td></tr></table></figure></p>
+<p>Pattern recognition is fundamental to the way that the brain works. Consequently, humans are very good at working with patterns. When patterns are presented visually (eg, in a diagram or map), humans can use them to recognize, specify, and understand concepts. As a pattern-based language, Cypher takes advantage of this capability.</p>
+<h3 id="Cypher-Concepts"><a href="#Cypher-Concepts" class="headerlink" title="Cypher Concepts"></a>Cypher Concepts</h3><p>Like SQL (used in relational databases), Cypher is a textual, declarative query language. It uses a form of ASCII art to represent graph-related patterns. SQL-like clauses and keywords (eg, MATCH, WHERE, DELETE) are used to combine these patterns and specify desired actions.</p>
+<p>This combination tells Neo4j which patterns to match and what to do with the matching items (eg, nodes, relationships, paths, collections). However, as a declarative language, Cypher does not tell Neo4j how to find nodes, traverse relationships, etc. (This level of control is available from Neo4j’s Java APIs, see Section 32.2, “Unmanaged Extensions”)</p>
+<p>Diagrams made up of icons and arrows are commonly used to visualize graphs; textual annotations provide labels, define properties, etc. Cypher’s ASCII-art syntax formalizes this approach, while adapting it to the limitations of text.</p>
+<h4 id="Node-Syntax"><a href="#Node-Syntax" class="headerlink" title="Node Syntax"></a>Node Syntax</h4><p>Cypher uses a pair of parentheses (usually containing a text string) to represent a node, eg: (), (foo). This is reminiscent of a circle or a rectangle with rounded end caps. Here are some ASCII-art encodings for example Neo4j nodes, providing varying types and amounts of detail:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">()</span><br><span class="line">(matrix)</span><br><span class="line">(:Movie)</span><br><span class="line">(matrix:Movie)</span><br><span class="line">(matrix:Movie &#123;title: &quot;The Matrix&quot;&#125;)</span><br><span class="line">(matrix:Movie &#123;title: &quot;The Matrix&quot;, released: 1997&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>The simplest form, (), represents an anonymous, uncharacterized node. If we want to refer to the node elsewhere, we can add an identifier, eg: (matrix). Identifiers are restricted (ie, scoped) to a single statement: an identifier may have different (or no) meaning in another statement.</p>
+<p>The Movie label (prefixed in use with a colon) declares the node’s type. This restricts the pattern, keeping it from matching (say) a structure with an Actor node in this position. Neo4j’s node indexes also use labels: each index is specific to the combination of a label and a property.</p>
+<p>The node’s properties (eg, title) are represented as a list of key/value pairs, enclosed within a pair of braces, eg: {…}. Properties can be used to store information and/or restrict patterns. For example, we could match nodes whose title is “The Matrix”.</p>
+<h4 id="Relationship-Syntax"><a href="#Relationship-Syntax" class="headerlink" title="Relationship Syntax"></a>Relationship Syntax</h4><p>Cypher uses a pair of dashes (–) to represent an undirected relationship. Directed relationships have an arrowhead at one end (eg, &lt;–, –&gt;). Bracketed expressions (eg: […]) can be used to add details. This may include identifiers, properties, and/or type information, eg:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">--&gt;</span><br><span class="line">-[role]-&gt;</span><br><span class="line">-[:ACTED_IN]-&gt;</span><br><span class="line">-[role:ACTED_IN]-&gt;</span><br><span class="line">-[role:ACTED_IN &#123;roles: [&quot;Neo&quot;]&#125;]-&gt;</span><br></pre></td></tr></table></figure></p>
+<p>The syntax and semantics found within a relationship’s bracket pair are very similar to those used between a node’s parentheses. An identifier (eg, role) can be defined, to be used elsewhere in the statement. The relationship’s type (eg, ACTED_IN) is analogous to the node’s label. The properties (eg, roles) are entirely equivalent to node properties. (Note that the value of a property may be an array.)</p>
+<h4 id="Pattern-Syntax"><a href="#Pattern-Syntax" class="headerlink" title="Pattern Syntax"></a>Pattern Syntax</h4><p>Combining the syntax for nodes and relationships, we can express patterns. The following could be a simple pattern (or fact) in this domain:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(keanu:Person:Actor &#123;name:  &quot;Keanu Reeves&quot;&#125; )</span><br><span class="line">-[role:ACTED_IN     &#123;roles: [&quot;Neo&quot;] &#125; ]-&gt;</span><br><span class="line">(matrix:Movie       &#123;title: &quot;The Matrix&quot;&#125; )</span><br></pre></td></tr></table></figure></p>
+<p>Like with node labels, the relationship type ACTED_IN is added as a symbol, prefixed with a colon: :ACTED_IN. Identifiers (eg, role) can be used elsewhere in the statement to refer to the relationship. Node and relationship properties use the same notation. In this case, we used an array property for the roles, allowing multiple roles to be specified.<br>[Note]</p>
+<h4 id="Pattern-Nodes-vs-Database-Nodes"><a href="#Pattern-Nodes-vs-Database-Nodes" class="headerlink" title="Pattern Nodes vs. Database Nodes"></a>Pattern Nodes vs. Database Nodes</h4><p>When a node is used in a pattern, it describes zero or more nodes in the database. Similarly, each pattern describes zero or more paths of nodes and relationships.<br>Pattern Identifiers</p>
+<p>To increase modularity and reduce repetition, Cypher allows patterns to be assigned to identifiers. This allow the matching paths to be inspected, used in other expressions, etc.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">acted_in = (:Person)-[:ACTED_IN]-&gt;(:Movie)</span><br></pre></td></tr></table></figure></p>
+<p>The acted_in variable would contain two nodes and the connecting relationship for each path that was found or created. There are a number of functions to access details of a path, including nodes(path), rels(path) (same as relationships(path)), and length(path).</p>
+<h3 id="Clauses"><a href="#Clauses" class="headerlink" title="Clauses"></a>Clauses</h3><p>Cypher statements typically have multiple clauses, each of which performs a specific task, eg:</p>
+<pre><code>create and match patterns in the graph
+filter, project, sort, or paginate results
+connect/compose partial statements
+</code></pre><p>By combining Cypher clauses, we can compose more complex statements that express what we want to know or create. Neo4j then figures out how to achieve the desired goal in an efficient manner.</p>
+<h1 id="Neo4j-Tutorial"><a href="#Neo4j-Tutorial" class="headerlink" title="Neo4j Tutorial"></a>Neo4j Tutorial</h1><h2 id="Fundamentals"><a href="#Fundamentals" class="headerlink" title="Fundamentals"></a>Fundamentals</h2><p>Store any kind of data using the following graph concepts:</p>
+<ul>
+<li><strong>Node</strong>: Graph data records</li>
+<li><strong>Relationship</strong>: Connect nodes (has direction and a type)</li>
+<li><strong>Property</strong>: Stores data in key-value pair in nodes and relationships</li>
+<li><strong>Label</strong>: Groups nodes and relationships (optional)</li>
+</ul>
+<hr>
+<h2 id="Browser-editor"><a href="#Browser-editor" class="headerlink" title="Browser editor"></a>Browser editor</h2><h3 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h3><p>Examples: <code>:help</code> <code>:clear</code></p>
+<hr>
+<h1 id="Cypher"><a href="#Cypher" class="headerlink" title="Cypher"></a>Cypher</h1><h2 id="Match"><a href="#Match" class="headerlink" title="Match"></a>Match</h2><h3 id="Match-node"><a href="#Match-node" class="headerlink" title="Match node"></a>Match node</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (ee:Person)</span><br><span class="line">WHERE ee.name = &quot;Emil&quot;</span><br><span class="line">RETURN ee;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>MATCH</strong> clause to specify a pattern of nodes and relationships</li>
+<li><strong>(ee:Person)</strong> a single node pattern with label ‘Person’ which will assign matches to the variable <code>ee</code></li>
+<li><strong>WHERE</strong> clause to constrain the results</li>
+<li><strong>ee.name = “Emil”</strong> compares name property to the value “Emil”</li>
+<li><strong>RETURN</strong> clause used to request particular results</li>
+</ul>
+<p>Gets gets the id<5> and id<0> nodes and creates a <code>:KNOWS</code> relationship between them</0></5></p>
+<h3 id="Match-nodes-and-relationships"><a href="#Match-nodes-and-relationships" class="headerlink" title="Match nodes and relationships"></a>Match nodes and relationships</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (ee:Person)-[:KNOWS]-(friends)</span><br><span class="line">WHERE ee.name = &quot;Emil&quot;</span><br><span class="line">RETURN ee, friends</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>MATCH</strong> clause to describe the pattern from known Nodes to found Nodes</li>
+<li><strong>(ee)</strong> starts the pattern with a Person (qualified by WHERE)</li>
+<li><strong>-[:KNOWS]-</strong> matches “KNOWS” relationships (in either direction)</li>
+<li><strong>(friends)</strong> will be bound to Emil’s friends</li>
+</ul>
+<h3 id="Match-labels"><a href="#Match-labels" class="headerlink" title="Match labels"></a>Match labels</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n:Person</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<h3 id="Match-multiple-labels"><a href="#Match-multiple-labels" class="headerlink" title="Match multiple labels"></a>Match multiple labels</h3><p><code>:Car</code> <strong>OR</strong> <code>:Person</code> labels</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n:Person OR n:Car</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<p><code>:Car</code> <strong>AND</strong> <code>:Person</code> labels</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n:Person:Car</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<h3 id="Match-same-properties"><a href="#Match-same-properties" class="headerlink" title="Match same properties"></a>Match same properties</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a:Person)</span><br><span class="line">WHERE a.from = &quot;Sweden&quot;</span><br><span class="line">RETURN a</span><br></pre></td></tr></table></figure>
+<p>Returns every node (and their relationships) where there’s a property <code>from</code> with “Sweden” value</p>
+<h3 id="Match-friends-of-friends-with-same-hobbies"><a href="#Match-friends-of-friends-with-same-hobbies" class="headerlink" title="Match friends of friends with same hobbies"></a>Match friends of friends with same hobbies</h3><p>Johan is learning surfing, and wants to know any friend of his friends who already knows surfing</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (js:Person)-[:KNOWS]-()-[:KNOWS]-(surfer)</span><br><span class="line">WHERE js.name = &quot;Johan&quot; AND surfer.hobby = &quot;surfing&quot;</span><br><span class="line">RETURN DISTINCT surfer</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>()</strong> empty parenthesis to ignore these nodes</li>
+<li><strong>DISTINCT</strong> because more than one path will match the pattern</li>
+<li><strong>surfer</strong> will contain Allison, a friend of a friend who surfs</li>
+</ul>
+<h3 id="Match-by-ID"><a href="#Match-by-ID" class="headerlink" title="Match by ID"></a>Match by ID</h3><p>Every node and relationship has an internal autonumeric ID, which can be queried using <strong>&lt;</strong>, <strong>&lt;=</strong>, <strong>=</strong>, <strong>=&gt;</strong>, <strong>&lt;&gt;</strong> and <strong>IN</strong> operators:</p>
+<p><strong>Search node by ID</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE id(n) = 0</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<p><strong>Search multiple nodes by ID</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE id(n) IN [1, 2, 3]</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<p><strong>Search relationship by ID</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH ()-[n]-()</span><br><span class="line">WHERE id(n) = 0</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h2><h3 id="Create-node"><a href="#Create-node" class="headerlink" title="Create node"></a>Create node</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE (ee:Person &#123; name: &quot;Emil&quot;, from: &quot;Sweden&quot;, klout: 99 &#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>CREATE</strong> clause to create data</li>
+<li><strong>()</strong> parenthesis to indicate a node</li>
+<li><strong>ee:Person</strong> a variable <code>ee</code> and label <code>Person</code> for the new node</li>
+<li><strong>{}</strong> brackets to add properties (key-value pairs) to the node</li>
+</ul>
+<h3 id="Create-nodes-and-relationships"><a href="#Create-nodes-and-relationships" class="headerlink" title="Create nodes and relationships"></a>Create nodes and relationships</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MATCH (ee:Person) WHERE ee.name = &quot;Emil&quot;</span><br><span class="line">CREATE (js:Person &#123; name: &quot;Johan&quot;, from: &quot;Sweden&quot;, learn: &quot;surfing&quot; &#125;),</span><br><span class="line">(ir:Person &#123; name: &quot;Ian&quot;, from: &quot;England&quot;, title: &quot;author&quot; &#125;),</span><br><span class="line">(rvb:Person &#123; name: &quot;Rik&quot;, from: &quot;Belgium&quot;, pet: &quot;Orval&quot; &#125;),</span><br><span class="line">(ally:Person &#123; name: &quot;Allison&quot;, from: &quot;California&quot;, hobby: &quot;surfing&quot; &#125;),</span><br><span class="line">(ee)-[:KNOWS &#123;since: 2001&#125;]-&gt;(js),(ee)-[:KNOWS &#123;rating: 5&#125;]-&gt;(ir),</span><br><span class="line">(js)-[:KNOWS]-&gt;(ir),(js)-[:KNOWS]-&gt;(rvb),</span><br><span class="line">(ir)-[:KNOWS]-&gt;(js),(ir)-[:KNOWS]-&gt;(ally),</span><br><span class="line">(rvb)-[:KNOWS]-&gt;(ally)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>MATCH</strong> clause to get “Emil” in <code>ee</code> variable</li>
+<li><strong>CREATE</strong> clause to create multiple nodes (comma separated) with their labels and properties. Also creates directed relationships <code>(a)-[:Label {key: value}]-&gt;(b)</code></li>
+</ul>
+<h3 id="Create-relationship-between-2-unrelated-nodes"><a href="#Create-relationship-between-2-unrelated-nodes" class="headerlink" title="Create relationship between 2 unrelated nodes"></a>Create relationship between 2 unrelated nodes</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n), (m)</span><br><span class="line">WHERE n.name = &quot;Allison&quot; AND m.name = &quot;Emil&quot;</span><br><span class="line">CREATE (n)-[:KNOWS]-&gt;(m)</span><br></pre></td></tr></table></figure>
+<p>Alternative with <code>MERGE</code>, which ensures that the relationship is created only <strong>once</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:User &#123;name: &quot;Allison&quot;&#125;), (m:User &#123;name: &quot;Emil&quot;&#125;)</span><br><span class="line">MERGE (n)-[:KNOWS]-&gt;(m)</span><br></pre></td></tr></table></figure>
+<h3 id="Create-node-with-multiple-labels"><a href="#Create-node-with-multiple-labels" class="headerlink" title="Create node with multiple labels"></a>Create node with multiple labels</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE (n:Actor:Director)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h2><h3 id="Update-node-properties-add-new-or-modify"><a href="#Update-node-properties-add-new-or-modify" class="headerlink" title="Update node properties (add new or modify)"></a>Update node properties (add new or modify)</h3><p>Add new <code>.owns</code> property or modify (if exists)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n.name = &quot;Rik&quot;</span><br><span class="line">SET n.owns = &quot;Audi&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Replace-all-node-properties-for-the-new-ones"><a href="#Replace-all-node-properties-for-the-new-ones" class="headerlink" title="Replace all node properties for the new ones"></a>Replace all node properties for the new ones</h3><p><strong>Danger</strong>: It will delete all previous properties and create <code>.plays</code> and <code>.age</code> properties</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n.name = &quot;Rik&quot;</span><br><span class="line">SET n = &#123;plays: &quot;Piano&quot;, age: 23&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Add-new-node-properties-without-deleting-old-ones"><a href="#Add-new-node-properties-without-deleting-old-ones" class="headerlink" title="Add new node properties without deleting old ones"></a>Add new node properties without deleting old ones</h3><p><strong>Danger</strong>: If <code>.plays</code> or <code>.age</code> properties are already set, it will overwrite them</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n.name = &quot;Rik&quot;</span><br><span class="line">SET n += &#123;plays: &quot;Piano&quot;, age: 23&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Add-new-node-property-if-property-not-already-set"><a href="#Add-new-node-property-if-property-not-already-set" class="headerlink" title="Add new node property if property not already set"></a>Add new node property if property not already set</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n.plays = &quot;Guitar&quot; AND NOT (EXISTS (n.likes))</span><br><span class="line">SET n.likes = &quot;Movies&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Rename-a-property-in-all-nodes"><a href="#Rename-a-property-in-all-nodes" class="headerlink" title="Rename a property in all nodes"></a>Rename a property in all nodes</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE NOT (EXISTS (n.instrument))</span><br><span class="line">SET n.instrument = n.plays</span><br><span class="line">REMOVE n.plays</span><br></pre></td></tr></table></figure>
+<p>Alternative</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n.instrument is null</span><br><span class="line">SET n.instrument = n.plays</span><br><span class="line">REMOVE n.plays</span><br></pre></td></tr></table></figure>
+<h3 id="Add-label-to-existing-node"><a href="#Add-label-to-existing-node" class="headerlink" title="Add label to existing node"></a>Add label to existing node</h3><p>Adds the <code>:Food</code> label to nodes id<7> and id<8></8></7></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE id(n) IN [7, 8]</span><br><span class="line">SET n:Food</span><br></pre></td></tr></table></figure>
+<h3 id="Creates-the-node-if-not-exists-and-updates-or-creates-a-property"><a href="#Creates-the-node-if-not-exists-and-updates-or-creates-a-property" class="headerlink" title="Creates the node if not exists and updates (or creates) a property"></a>Creates the node if not exists and updates (or creates) a property</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MERGE (n:Person &#123;name: &quot;Rik&quot;&#125;)</span><br><span class="line">SET n.owns = &quot;Audi&quot;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h2><h3 id="Delete-nodes"><a href="#Delete-nodes" class="headerlink" title="Delete nodes"></a>Delete nodes</h3><p>To <strong>delete a node</strong> (p.e. id<5>), first we need to <strong>delete its relationships</strong>. Then, the node can be deleted</5></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)-[r]-()</span><br><span class="line">WHERE id(n) = 5</span><br><span class="line">DELETE r, n</span><br></pre></td></tr></table></figure>
+<p>To <strong>delete multiple nodes</strong> (must have their relationships previously deleted)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE id(n) IN [1, 2, 3]</span><br><span class="line">DELETE n</span><br></pre></td></tr></table></figure>
+<h3 id="Deletes-a-property-in-a-specific-node"><a href="#Deletes-a-property-in-a-specific-node" class="headerlink" title="Deletes a property in a specific node"></a>Deletes a property in a specific node</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n:Person AND n.name = &quot;Rik&quot; AND n.plays is NOT null</span><br><span class="line">REMOVE n.plays</span><br></pre></td></tr></table></figure>
+<p>Alternative</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n:Person AND n.name = &quot;Rik&quot; AND EXISTS (n.plays)</span><br><span class="line">REMOVE n.plays</span><br></pre></td></tr></table></figure>
+<h3 id="Delete-a-label-from-all-nodes"><a href="#Delete-a-label-from-all-nodes" class="headerlink" title="Delete a label from all nodes"></a>Delete a label from all nodes</h3><p>Deletes the <code>:Person</code> label from <strong>all</strong> nodes</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">REMOVE n:Person</span><br></pre></td></tr></table></figure>
+<h3 id="Delete-a-label-from-nodes-with-specific-labels"><a href="#Delete-a-label-from-nodes-with-specific-labels" class="headerlink" title="Delete a label from nodes with specific labels"></a>Delete a label from nodes with specific labels</h3><p>Deletes the <code>:Person</code> label from nodes with <code>:Food</code> and <code>:Person</code> labels</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n:Food:Person</span><br><span class="line">REMOVE n:Person</span><br></pre></td></tr></table></figure>
+<h3 id="Delete-multiple-labels-from-nodes"><a href="#Delete-multiple-labels-from-nodes" class="headerlink" title="Delete multiple labels from nodes"></a>Delete multiple labels from nodes</h3><p>Deletes the <code>:Food</code> and <code>:Person</code> labels from nodes which have <strong>both</strong> labels</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n:Food:Person</span><br><span class="line">REMOVE n:Food:Person</span><br></pre></td></tr></table></figure>
+<p><strong>Danger</strong>: Deletes the <code>:Food</code> and <code>:Person</code> labels from nodes which have <code>:Food</code> or <code>:Person</code> or <code>:Food:Person</code> labels</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">REMOVE n:Food:Person</span><br></pre></td></tr></table></figure>
+<h3 id="Delete-entire-database"><a href="#Delete-entire-database" class="headerlink" title="Delete entire database"></a>Delete entire database</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">OPTIONAL MATCH (n)-[r]-()</span><br><span class="line">DELETE n, r</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Other-clauses"><a href="#Other-clauses" class="headerlink" title="Other clauses"></a>Other clauses</h2><h3 id="Show-execution-plan"><a href="#Show-execution-plan" class="headerlink" title="Show execution plan"></a>Show execution plan</h3><p>Use <code>PROFILE</code> or <code>EXPLAIN</code> before the query</p>
+<p><code>PROFILE</code>: Shows the execution plan, query information and <strong>db hits</strong>. Example: Cypher version: CYPHER 3.0, planner: COST, runtime: INTERPRETED. 84 total db hits in 32 ms.</p>
+<p><code>EXPLAIN</code>: Shows the execution plan and query information. Example: Cypher version: CYPHER 3.0, planner: COST, runtime: INTERPRETED.</p>
+<h3 id="Count"><a href="#Count" class="headerlink" title="Count"></a>Count</h3><p>Count all nodes</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">RETURN count(n)</span><br></pre></td></tr></table></figure>
+<p>Count all relationships</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH ()--&gt;()</span><br><span class="line">RETURN count(*);</span><br></pre></td></tr></table></figure>
+<h3 id="Limit"><a href="#Limit" class="headerlink" title="Limit"></a>Limit</h3><p>Returns up to 2 nodes (and their relationships) where there’s a property <code>from</code> with “Sweden” value</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a:Person)</span><br><span class="line">WHERE a.from = &quot;Sweden&quot;</span><br><span class="line">RETURN a</span><br><span class="line">LIMIT 2</span><br></pre></td></tr></table></figure>
+<h3 id="Create-unique-property-constraint"><a href="#Create-unique-property-constraint" class="headerlink" title="Create unique property constraint"></a>Create unique property constraint</h3><p>Make <code>.name</code> property unique on nodes with <code>:Person</code> label</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CREATE CONSTRAINT ON (n:Person)</span><br><span class="line">ASSERT n.name IS UNIQUE</span><br></pre></td></tr></table></figure>
+<h3 id="Drop-unique-property-constraint"><a href="#Drop-unique-property-constraint" class="headerlink" title="Drop unique property constraint"></a>Drop unique property constraint</h3><p>Make <code>.name</code> property unique on nodes with <code>:Person</code> label</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DROP CONSTRAINT ON (n:Person)</span><br><span class="line">ASSERT n.name IS UNIQUE</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://neo4j.com/developer/cypher/" target="_blank" rel="noopener">https://neo4j.com/developer/cypher/</a><br>[2] <a href="https://neo4j.com/docs/cypher-refcard/current/" target="_blank" rel="noopener">https://neo4j.com/docs/cypher-refcard/current/</a><br>[3] <a href="https://neo4j.com/docs/developer-manual/3.1/cypher/clauses/set/" target="_blank" rel="noopener">https://neo4j.com/docs/developer-manual/3.1/cypher/clauses/set/</a><br>[4] <a href="http://www.jexp.de/blog/html/compiled-runtime-32.html" target="_blank" rel="noopener">http://www.jexp.de/blog/html/compiled-runtime-32.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/neo4j/" rel="tag"># neo4j</a>
+          
+            <a href="/tags/cypher/" rel="tag"># cypher</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/02/wikipedia-data-downlaod/" rel="next" title="wikipedia 数据 下载 使用">
+                <i class="fa fa-chevron-left"></i> wikipedia 数据 下载 使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/14/linux-notes/" rel="prev" title="linux 笔记">
+                linux 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#遇到的问题"><span class="nav-number">1.</span> <span class="nav-text">遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改Label、删除Label、增加Label"><span class="nav-number">1.1.</span> <span class="nav-text">修改Label、删除Label、增加Label</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除Label"><span class="nav-number">1.1.1.</span> <span class="nav-text">删除Label</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改Label"><span class="nav-number">1.1.2.</span> <span class="nav-text">修改Label</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增加Label"><span class="nav-number">1.1.3.</span> <span class="nav-text">增加Label</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#neo4j里如何判断一个属性是什么类型"><span class="nav-number">1.2.</span> <span class="nav-text">neo4j里如何判断一个属性是什么类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本语法"><span class="nav-number">2.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction-to-Cypher"><span class="nav-number">3.</span> <span class="nav-text">Introduction to Cypher</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Background-and-Motivation"><span class="nav-number">3.1.</span> <span class="nav-text">Background and Motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Query-processing"><span class="nav-number">3.1.1.</span> <span class="nav-text">Query processing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Preparation"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">Preparation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Locate-the-initial-node-s"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">Locate the initial node(s)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Traversal-and-actions"><span class="nav-number">3.1.1.3.</span> <span class="nav-text">Traversal and actions</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Graphs-Patterns-and-Cypher"><span class="nav-number">3.2.</span> <span class="nav-text">Graphs, Patterns, and Cypher</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nodes-Relationships-and-Patterns"><span class="nav-number">3.2.1.</span> <span class="nav-text">Nodes, Relationships, and Patterns</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Simple-and-Complex-Patterns"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">Simple and Complex Patterns</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cypher-Concepts"><span class="nav-number">3.2.2.</span> <span class="nav-text">Cypher Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-Syntax"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">Node Syntax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Relationship-Syntax"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">Relationship Syntax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pattern-Syntax"><span class="nav-number">3.2.2.3.</span> <span class="nav-text">Pattern Syntax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pattern-Nodes-vs-Database-Nodes"><span class="nav-number">3.2.2.4.</span> <span class="nav-text">Pattern Nodes vs. Database Nodes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Clauses"><span class="nav-number">3.2.3.</span> <span class="nav-text">Clauses</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Neo4j-Tutorial"><span class="nav-number">4.</span> <span class="nav-text">Neo4j Tutorial</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fundamentals"><span class="nav-number">4.1.</span> <span class="nav-text">Fundamentals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Browser-editor"><span class="nav-number">4.2.</span> <span class="nav-text">Browser editor</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CLI"><span class="nav-number">4.2.1.</span> <span class="nav-text">CLI</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cypher"><span class="nav-number">5.</span> <span class="nav-text">Cypher</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Match"><span class="nav-number">5.1.</span> <span class="nav-text">Match</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Match-node"><span class="nav-number">5.1.1.</span> <span class="nav-text">Match node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Match-nodes-and-relationships"><span class="nav-number">5.1.2.</span> <span class="nav-text">Match nodes and relationships</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Match-labels"><span class="nav-number">5.1.3.</span> <span class="nav-text">Match labels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Match-multiple-labels"><span class="nav-number">5.1.4.</span> <span class="nav-text">Match multiple labels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Match-same-properties"><span class="nav-number">5.1.5.</span> <span class="nav-text">Match same properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Match-friends-of-friends-with-same-hobbies"><span class="nav-number">5.1.6.</span> <span class="nav-text">Match friends of friends with same hobbies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Match-by-ID"><span class="nav-number">5.1.7.</span> <span class="nav-text">Match by ID</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create"><span class="nav-number">5.2.</span> <span class="nav-text">Create</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-node"><span class="nav-number">5.2.1.</span> <span class="nav-text">Create node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-nodes-and-relationships"><span class="nav-number">5.2.2.</span> <span class="nav-text">Create nodes and relationships</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-relationship-between-2-unrelated-nodes"><span class="nav-number">5.2.3.</span> <span class="nav-text">Create relationship between 2 unrelated nodes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-node-with-multiple-labels"><span class="nav-number">5.2.4.</span> <span class="nav-text">Create node with multiple labels</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update"><span class="nav-number">5.3.</span> <span class="nav-text">Update</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Update-node-properties-add-new-or-modify"><span class="nav-number">5.3.1.</span> <span class="nav-text">Update node properties (add new or modify)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Replace-all-node-properties-for-the-new-ones"><span class="nav-number">5.3.2.</span> <span class="nav-text">Replace all node properties for the new ones</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-new-node-properties-without-deleting-old-ones"><span class="nav-number">5.3.3.</span> <span class="nav-text">Add new node properties without deleting old ones</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-new-node-property-if-property-not-already-set"><span class="nav-number">5.3.4.</span> <span class="nav-text">Add new node property if property not already set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rename-a-property-in-all-nodes"><span class="nav-number">5.3.5.</span> <span class="nav-text">Rename a property in all nodes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-label-to-existing-node"><span class="nav-number">5.3.6.</span> <span class="nav-text">Add label to existing node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Creates-the-node-if-not-exists-and-updates-or-creates-a-property"><span class="nav-number">5.3.7.</span> <span class="nav-text">Creates the node if not exists and updates (or creates) a property</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Delete"><span class="nav-number">5.4.</span> <span class="nav-text">Delete</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Delete-nodes"><span class="nav-number">5.4.1.</span> <span class="nav-text">Delete nodes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deletes-a-property-in-a-specific-node"><span class="nav-number">5.4.2.</span> <span class="nav-text">Deletes a property in a specific node</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Delete-a-label-from-all-nodes"><span class="nav-number">5.4.3.</span> <span class="nav-text">Delete a label from all nodes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Delete-a-label-from-nodes-with-specific-labels"><span class="nav-number">5.4.4.</span> <span class="nav-text">Delete a label from nodes with specific labels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Delete-multiple-labels-from-nodes"><span class="nav-number">5.4.5.</span> <span class="nav-text">Delete multiple labels from nodes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Delete-entire-database"><span class="nav-number">5.4.6.</span> <span class="nav-text">Delete entire database</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-clauses"><span class="nav-number">5.5.</span> <span class="nav-text">Other clauses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Show-execution-plan"><span class="nav-number">5.5.1.</span> <span class="nav-text">Show execution plan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Count"><span class="nav-number">5.5.2.</span> <span class="nav-text">Count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Limit"><span class="nav-number">5.5.3.</span> <span class="nav-text">Limit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-unique-property-constraint"><span class="nav-number">5.5.4.</span> <span class="nav-text">Create unique property constraint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Drop-unique-property-constraint"><span class="nav-number">5.5.5.</span> <span class="nav-text">Drop unique property constraint</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

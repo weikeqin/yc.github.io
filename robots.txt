@@ -1,0 +1,20 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+Allow: /archives/ 
+Allow: /categories/
+Allow: /tags/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /fancybox/
+Disallow: /img/
+Disallow: /images/
+Disallow: /file/
+
+Sitemap: http://weikeqin.cn/sitemap.xml
+Sitemap: http://weikeqin.cn/baidusitemap.xml
+Sitemap: https://weikeqin.cn/sitemap.xml
+Sitemap: https://weikeqin.cn/baidusitemap.xml

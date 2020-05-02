@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="转自 Java核心技术36讲 杨晓峰 第1讲 | 谈谈你对Java平台的理解？ 模块一 Java基础 (14讲) 第1讲 | 谈谈你对Java平台的理解？   谈谈你对 Java 平台的理解？“Java 是解释执行”，这句话正确吗？   Java 本身是一种面向对象的语言，最显著的特性有两个方面，一是所谓的“书写一次，到处运行”（Write once, run anywhere），能够非常容易">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java核心技术36讲 杨晓峰">
+<meta property="og:url" content="http://weikeqin.cn/2019/08/18/java-core-technology-36-lectures/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="转自 Java核心技术36讲 杨晓峰 第1讲 | 谈谈你对Java平台的理解？ 模块一 Java基础 (14讲) 第1讲 | 谈谈你对Java平台的理解？   谈谈你对 Java 平台的理解？“Java 是解释执行”，这句话正确吗？   Java 本身是一种面向对象的语言，最显著的特性有两个方面，一是所谓的“书写一次，到处运行”（Write once, run anywhere），能够非常容易">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-19T05:25:53.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java核心技术36讲 杨晓峰">
+<meta name="twitter:description" content="转自 Java核心技术36讲 杨晓峰 第1讲 | 谈谈你对Java平台的理解？ 模块一 Java基础 (14讲) 第1讲 | 谈谈你对Java平台的理解？   谈谈你对 Java 平台的理解？“Java 是解释执行”，这句话正确吗？   Java 本身是一种面向对象的语言，最显著的特性有两个方面，一是所谓的“书写一次，到处运行”（Write once, run anywhere），能够非常容易">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2019/08/18/java-core-technology-36-lectures/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Java核心技术36讲 杨晓峰 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/08/18/java-core-technology-36-lectures/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java核心技术36讲 杨晓峰
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-18 12:31:03" itemprop="dateCreated datePublished" datetime="2019-08-18T12:31:03+08:00">2019-08-18</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/08/18/java-core-technology-36-lectures/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/08/18/java-core-technology-36-lectures/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/08/18/java-core-technology-36-lectures/" class="leancloud_visitors" data-flag-title="Java核心技术36讲 杨晓峰">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>  转自 <a href="https://time.geekbang.org/column/article/6478" target="_blank" rel="noopener">Java核心技术36讲 杨晓峰</a></p>
+<h1 id="第1讲-谈谈你对Java平台的理解？"><a href="#第1讲-谈谈你对Java平台的理解？" class="headerlink" title="第1讲 | 谈谈你对Java平台的理解？"></a>第1讲 | 谈谈你对Java平台的理解？</h1><!--2019-08-20学习-->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/6845" target="_blank" rel="noopener">第1讲 | 谈谈你对Java平台的理解？</a></p>
+<p>  谈谈你对 Java 平台的理解？“Java 是解释执行”，这句话正确吗？</p>
+<p>  Java 本身是一种面向对象的语言，最显著的特性有两个方面，一是所谓的“书写一次，到处运行”（Write once, run anywhere），能够非常容易地获得跨平台能力；另外就是 垃圾收集 （GC, Garbage Collection），Java 通过垃圾收集器（Garbage Collector）回收分配内存，大部分情况下，程序员不需要自己操心内存的分配和回收。  </p>
+<p>  我们日常会接触到 JRE（Java Runtime Environment）或者 JDK（Java Development Kit）。 JRE，也就是 Java 运行环境，包含了 JVM 和 Java 类库，以及一些模块等。而 JDK 可以看作是 JRE 的一个超集，提供了更多工具，比如编译器、各种诊断工具等。</p>
+<p>  对于“Java 是解释执行”这句话，这个说法不太准确。我们开发的 Java 的源代码，首先通过 Javac 编译成为字节码（bytecode），然后，在运行时，通过 Java 虚拟机（JVM）内嵌的解释器将字节码转换成为最终的机器码。但是常见的 JVM，比如我们大多数情况使用的 Oracle JDK 提供的 Hotspot JVM，都提供了 JIT（Just-In-Time）编译器，也就是通常所说的动态编译器，JIT 能够在运行时将热点代码编译成机器码，这种情况下部分热点代码就属于</p>
+<p>  对于 Java 平台的理解，可以从很多方面简明扼要地谈一下，例如：Java 语言特性，包括泛型、Lambda 等语言特性；基础类库，包括集合、IO/NIO、网络、并发、安全等基础类库。对于我们日常工作应用较多的类库，面试前可以系统化总结一下，有助于临场发挥。</p>
+<p>  或者谈谈 JVM 的一些基础概念和机制，比如 Java 的类加载机制，常用版本 JDK（如 JDK 8）内嵌的 Class-Loader，例如 Bootstrap、 Application 和 Extension Class-loader；类加载大致过程：加载、验证、链接、初始化（这里参考了周志明的《深入理解 Java 虚拟机》，非常棒的 JVM 上手书籍）；自定义 Class-Loader 等。还有垃圾收集的基本原理，最常见的垃圾收集器，如 SerialGC、Parallel GC、 CMS、 G1 等，对于适用于什么样的工作负载最好也心里有数。这些都是可以扩展开的领域，我会在后面的专栏对此进行更系统的介绍。</p>
+<p>  当然还有 JDK 包含哪些工具或者 Java 领域内其他工具等，如编译器、运行时环境、安全工具、诊断和监控工具等。这些基本工具是日常工作效率的保证，对于我们工作在其他语言平台上，同样有所帮助，很多都是触类旁通的。</p>
+<p>Java特性:<br>  面向对象（封装，继承，多态）<br>  平台无关性（JVM运行.class文件）<br>  语言（泛型，Lambda）<br>  类库（集合，并发，网络，IO/NIO）<br>  JRE（Java运行环境，JVM，类库）<br>  JDK（Java开发工具，包括JRE，javac，诊断工具）</p>
+<a id="more"></a>  
+<p>Java是解析运行吗？<br>  不正确！<br>  1，Java源代码经过Javac编译成.class文件<br>  2，.class文件经JVM解析或编译运行。<br>  （1）解析:.class文件经过JVM内嵌的解析器解析执行。<br>  （2）编译:存在JIT编译器（Just In Time Compile 即时编译器）把经常运行的代码作为”热点代码”编译与本地平台相关的机器码，并进行各种层次的优化。<br>  （3）AOT编译器: Java 9提供的直接将所有代码编译成机器码执行。</p>
+<p>Java平台中有两大核心：</p>
+<ol>
+<li>Java语言本身、JDK中所提供的核心类库和相关工具</li>
+<li>Java虚拟机以及其他包含的GC  </li>
+</ol>
+<ol>
+<li><p>Java语言本身、JDK中所提供的核心类库和相关工具<br>从事Java平台的开发，掌握Java语言、核心类库以及相关工具是必须的，我觉得这是基础中的基础。</p>
+<blockquote>
+<blockquote>
+<p>对语言本身的了解，需要开发者非常熟悉语言的语法结构；而Java又是一种面对对象的语言，这又需要开发者深入了解面对对象的设计理念；<br>Java核心类库包含集合类、线程相关类、IO、NIO、J.U.C并发包等；<br>JDK提供的工具包含：基本的编译工具、虚拟机性能检测相关工具等。</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>Java虚拟机<br>Java语言具有跨平台的特性，也正是因为虚拟机的存在。Java源文件被编译成字节码，被虚拟机加载后执行。这里隐含的意思有两层：<br>1）大部分情况下，编程者只需要关心Java语言本身，而无需特意关心底层细节。包括对内存的分配和回收，也全权交给了GC。<br>2）对于虚拟机而言，只要是符合规范的字节码，它们都能被加载执行，当然，能正常运行的程序光满足这点是不行的，程序本身需要保证在运行时不出现异常。所以，Scala、Kotlin、Jython等语言也可以跑在虚拟机上。</p>
+</li>
+</ol>
+<p>围绕虚拟机的效率问题展开，将涉及到一些优化技术，例如：JIT、AOT。因为如果虚拟机加载字节码后，完全进行解释执行，这势必会影响执行效率。所以，对于这个运行环节，虚拟机会进行一些优化处理，例如JIT技术，会将某些运行特别频繁的代码编译成机器码。而AOT技术，是在运行前，通过工具直接将字节码转换为机器码。</p>
+<p>1，JVM的内存模型，堆、栈、方法区；字节码的跨平台性；对象在JVM中的强引用，弱引用，软引用，虚引用，是否可用finalise方法救救它？；双亲委派进行类加载，什么是双亲呢？双亲就是多亲，一份文档由我加载，然后你也加载，这份文档在JVM中是一样的吗？；多态思想是Java需要最核心的概念，也是面向对象的行为的一个最好诠释；理解方法重载与重写在内存中的执行流程，怎么定位到这个具体方法的。<br>2，发展流程，JDK5(重写bug)，JDK6(商用最稳定版)，JDK7(switch的字符串支持)，JDK8(函数式编程)，一直在发展进化。<br>3，理解祖先类Object，它的行为是怎样与现实生活连接起来的。<br>4，理解23种设计模式，因为它是道与术的结合体。</p>
+<p>解释执行和编译执行有何区别<br>  一个是同声传译，一个是放录音</p>
+<p>这种基于运行分析，进行热点代码编译的设计，是因为绝大多数的程序都表现为“小部分的热点耗费了大多数的资源”。只有这样才能做到，在某些场景下，一个需要跑在运行时上的语言，可以比直接编译成机器码的语言更“快”</p>
+<p>Java平台包括java语言，class文件结构，jvm，api类库，第三方库，各种编译、监控和诊断工具等。<br>Java语言是一种面向对象的高级语言；通过平台中立的class文件格式和屏蔽底层硬件差异的jvm实现‘一次编写，到处运行’；<br>通过‘垃圾收集器’管理内存的分配和回收。<br>jvm通过使用class文件这种中间表示和具体语言解耦，使得任何在源码早期编译过程中以class文件为中间表示或者<br>能够转换成class文件的具体语言，都能运行jvm之上，也就可以使用jvm的各种特性。<br>api类库主要包含集合、IO/NIO、网络、并发等。<br>第三方库包括各种商业机构和开源社区的java库，如spring、mybatis等。<br>各种工具如javac、jconsole、jmap、jstack等。</p>
+<p><br></p>
+<h1 id="第2讲-Exception和Error有什么区别？"><a href="#第2讲-Exception和Error有什么区别？" class="headerlink" title="第2讲 | Exception和Error有什么区别？"></a>第2讲 | Exception和Error有什么区别？</h1><!--2019-08-21学习-->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/6849" target="_blank" rel="noopener">第2讲 | Exception和Error有什么区别？</a></p>
+<p>  请对比 Exception 和 Error，另外，运行时异常与一般异常有什么区别？</p>
+<p>  Exception 和 Error 都是继承了 Throwable 类，在 Java 中只有 Throwable 类型的实例才可以被抛出（throw）或者捕获（catch），它是异常处理机制的基本组成类型。</p>
+<p>  Exception 和 Error 体现了 Java 平台设计者对不同异常情况的分类。Exception 是程序正常运行中，可以预料的意外情况，可能并且应该被捕获，进行相应处理。</p>
+<p>  Error 是指在正常情况下，不大可能出现的情况，绝大部分的 Error 都会导致程序（比如 JVM 自身）处于非正常的、不可恢复状态。既然是非正常情况，所以不便于也不需要捕获，常见的比如 OutOfMemoryError 之类，都是 Error 的子类。</p>
+<p>  Exception 又分为<strong>可检查</strong>（checked）异常和<strong>不检查</strong>（unchecked）异常。</p>
+<blockquote>
+<p>可检查异常在源代码里必须显式地进行捕获处理，这是编译期检查的一部分。前面不可查的 Error，是 Throwable 不是 Exception。</p>
+</blockquote>
+<blockquote>
+<p>不检查异常就是所谓的运行时异常，类似 NullPointerException、ArrayIndexOutOfBoundsException 之类，通常是可以编码避免的逻辑错误，具体根据需要来判断是否需要捕获，并不会在编译期强制要求。</p>
+</blockquote>
+<p>  异常处理的两个基本原则</p>
+<blockquote>
+<ol>
+<li>尽量不要捕获类似 Exception 这样的通用异常，而是应该捕获特定异常。 (不方便维护)</li>
+<li>不要生吞（swallow）异常。   (不方便排查问题)(很可能会导致非常难以诊断的诡异情况。)<br>异常以及异常的堆栈信息输出到日志里。</li>
+</ol>
+</blockquote>
+<h2 id="一课一练"><a href="#一课一练" class="headerlink" title="一课一练"></a>一课一练</h2><p>  对于异常处理编程，不同的编程范式也会影响到异常处理策略，比如，现在非常火热的反应式编程（Reactive Stream），因为其本身是异步、基于事件机制的，所以出现异常情况，决不能简单抛出去；另外，由于代码堆栈不再是同步调用那种垂直的结构，这里的异常处理和日志需要更加小心，我们看到的往往是特定 executor 的堆栈，而不是业务方法调用关系。对于这种情况，你有什么好的办法吗？</p>
+<h2 id="评论-毛毛熊"><a href="#评论-毛毛熊" class="headerlink" title="评论 毛毛熊"></a>评论 毛毛熊</h2><p>  NoClassDefFoundError 和 ClassNotFoundException 有什么区别？</p>
+<p>  NoClassDefFoundError是一个错误(Error)，而ClassNOtFoundException是一个异常，在Java中对于错误和异常的处理是不同的，我们可以从异常中恢复程序但却不应该尝试从错误中恢复程序。</p>
+<blockquote>
+<p>ClassNotFoundException 的产生原因：</p>
+</blockquote>
+<p>  (1).Java支持使用Class.forName方法来动态地加载类，任意一个类的类名如果被作为参数传递给这个方法都将导致该类被加载到JVM内存中，如果这个类在类路径中没有被找到，那么此时就会在运行时抛出ClassNotFoundException异常。</p>
+<p>  (2).Java支持使用反射方式在运行时动态加载类，例如使用Class.forName方法来动态地加载类时，可以将类名作为参数传递给上述方法从而将指定类加载到JVM内存中，如果这个类在类路径中没有被找到，那么此时就会在运行时抛出ClassNotFoundException异常。<br>解决该问题需要确保所需的类连同它依赖的包存在于类路径中，常见问题在于类名书写错误。</p>
+<p>  (3).当一个类已经某个类加载器加载到内存中了，此时另一个类加载器又尝试着动态地从同一个包中加载这个类。通过控制动态类加载过程，可以避免上述情况发生。</p>
+<blockquote>
+<p>NoClassDefFoundError产生的原因在于：</p>
+</blockquote>
+<p>  如果JVM或者ClassLoader实例尝试加载（可以通过正常的方法调用，也可能是使用new来创建新的对象）类的时候却找不到类的定义。要查找的类在编译的时候是存在的，运行的时候却找不到了。这个时候就会导致NoClassDefFoundError.<br>  造成该问题的原因可能是打包过程漏掉了部分类，或者jar包出现损坏或者篡改。解决这个问题的办法是查找那些在开发期间存在于类路径下但在运行期间却不在类路径下的类。 </p>
+<h1 id="评论-公号-代码荣耀"><a href="#评论-公号-代码荣耀" class="headerlink" title="评论 公号-代码荣耀"></a>评论 公号-代码荣耀</h1><p>在Java世界里，异常的出现让我们编写的程序运行起来更加的健壮，同时为程序在调试、运行期间发生的一些意外情况，提供了补救机会；即使遇到一些严重错误而无法弥补，异常也会非常忠实的记录所发生的这一切。以下是文章心得感悟:</p>
+<p>1 不要推诿或延迟处理异常，就地解决最好，并且需要实实在在的进行处理，而不是只捕捉，不动作。</p>
+<p>2 一个函数尽管抛出了多个异常，但是只有一个异常可被传播到调用端。最后被抛出的异常时唯一被调用端接收的异常，其他异常都会被吞没掩盖。如果调用端要知道造成失败的最初原因，程序之中就绝不能掩盖任何异常。</p>
+<p>3 不要在finally代码块中处理返回值。</p>
+<p>4 按照我们程序员的惯性认知：当遇到return语句的时候，执行函数会立刻返回。但是，在Java语言中，如果存在finally就会有例外。除了return语句，try代码块中的break或continue语句也可能使控制权进入finally代码块。</p>
+<p>5 请勿在try代码块中调用return、break或continue语句。万一无法避免，一定要确保finally的存在不会改变函数的返回值。</p>
+<p>6 函数返回值有两种类型：值类型与对象引用。对于对象引用，要特别小心，如果在finally代码块中对函数返回的对象成员属性进行了修改，即使不在finally块中显式调用return语句，这个修改也会作用于返回值上。</p>
+<p>7 勿将异常用于控制流。</p>
+<p>8 如无必要，勿用异常。</p>
+<h2 id="评论-adrian-jser"><a href="#评论-adrian-jser" class="headerlink" title="评论 adrian-jser"></a>评论 adrian-jser</h2><h2 id="假如你开车上山，车坏了，你拿出工具箱修一修，修好继续上路（Exception被捕获，从异常中恢复，继续程序的运行），车坏了，你不知道怎么修，打电话告诉修车行，告诉你是什么问题，要车行过来修。（在当前的逻辑背景下，你不知道是怎么样的处理逻辑，把异常抛出去到更高的业务层来处理）。你打电话的时候，要尽量具体，不能只说我车动不了了。那修车行很难定位你的问题。（要补货特定的异常，不能捕获类似Exception的通用异常）。还有一种情况是，你开车上山，山塌了，这你还能修吗？（Error：导致你的运行环境进入不正常的状态，很难恢复）"><a href="#假如你开车上山，车坏了，你拿出工具箱修一修，修好继续上路（Exception被捕获，从异常中恢复，继续程序的运行），车坏了，你不知道怎么修，打电话告诉修车行，告诉你是什么问题，要车行过来修。（在当前的逻辑背景下，你不知道是怎么样的处理逻辑，把异常抛出去到更高的业务层来处理）。你打电话的时候，要尽量具体，不能只说我车动不了了。那修车行很难定位你的问题。（要补货特定的异常，不能捕获类似Exception的通用异常）。还有一种情况是，你开车上山，山塌了，这你还能修吗？（Error：导致你的运行环境进入不正常的状态，很难恢复）" class="headerlink" title="  假如你开车上山，车坏了，你拿出工具箱修一修，修好继续上路（Exception被捕获，从异常中恢复，继续程序的运行），车坏了，你不知道怎么修，打电话告诉修车行，告诉你是什么问题，要车行过来修。（在当前的逻辑背景下，你不知道是怎么样的处理逻辑，把异常抛出去到更高的业务层来处理）。你打电话的时候，要尽量具体，不能只说我车动不了了。那修车行很难定位你的问题。（要补货特定的异常，不能捕获类似Exception的通用异常）。还有一种情况是，你开车上山，山塌了，这你还能修吗？（Error：导致你的运行环境进入不正常的状态，很难恢复）"></a>  假如你开车上山，车坏了，你拿出工具箱修一修，修好继续上路（Exception被捕获，从异常中恢复，继续程序的运行），车坏了，你不知道怎么修，打电话告诉修车行，告诉你是什么问题，要车行过来修。（在当前的逻辑背景下，你不知道是怎么样的处理逻辑，把异常抛出去到更高的业务层来处理）。你打电话的时候，要尽量具体，不能只说我车动不了了。那修车行很难定位你的问题。（要补货特定的异常，不能捕获类似Exception的通用异常）。还有一种情况是，你开车上山，山塌了，这你还能修吗？（Error：导致你的运行环境进入不正常的状态，很难恢复）</h2><h2 id="思考问题：由于代码堆栈不再是同步调用那种垂直的结构，这里的异常处理和日志需要更加小心，我们看到的往往是特定-executor-的堆栈，而不是业务方法调用关系。对于这种情况，你有什么好的办法吗？"><a href="#思考问题：由于代码堆栈不再是同步调用那种垂直的结构，这里的异常处理和日志需要更加小心，我们看到的往往是特定-executor-的堆栈，而不是业务方法调用关系。对于这种情况，你有什么好的办法吗？" class="headerlink" title="思考问题：由于代码堆栈不再是同步调用那种垂直的结构，这里的异常处理和日志需要更加小心，我们看到的往往是特定 executor 的堆栈，而不是业务方法调用关系。对于这种情况，你有什么好的办法吗？"></a>思考问题：由于代码堆栈不再是同步调用那种垂直的结构，这里的异常处理和日志需要更加小心，我们看到的往往是特定 executor 的堆栈，而不是业务方法调用关系。对于这种情况，你有什么好的办法吗？</h2><p>业务功能模块分配ID，在记录日志是将前后模块的ID进行调用关系的串联，一并跟任务信息，进行日志保存。</p>
+<p><br>  </p>
+<h1 id="第3讲-谈谈final、finally、-finalize有什么不同？"><a href="#第3讲-谈谈final、finally、-finalize有什么不同？" class="headerlink" title="第3讲 | 谈谈final、finally、 finalize有什么不同？"></a>第3讲 | 谈谈final、finally、 finalize有什么不同？</h1><!-- 2019-08-21学习 -->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/6906" target="_blank" rel="noopener">第3讲 | 谈谈final、finally、 finalize有什么不同？</a></p>
+<p>  谈谈 final、finally、 finalize 有什么不同？</p>
+<p>  final 可以用来修饰类、方法、变量，分别有不同的意义，final 修饰的 class 代表不可以继承扩展，final 的变量是不可以修改的，而 final 的方法也是不可以重写的（override）。</p>
+<p>  finally 则是 Java 保证重点代码一定要被执行的一种机制。我们可以使用 try-finally 或者 try-catch-finally 来进行类似关闭 JDBC 连接、保证 unlock 锁等动作。</p>
+<p>  finalize 是基础类 java.lang.Object 的一个方法，它的设计目的是保证对象在被垃圾收集前完成特定资源的回收。finalize 机制现在已经不推荐使用，并且在 JDK 9 开始被标记为 deprecated。</p>
+<p>注意，final 不是 immutable！</p>
+<p>  final 只能约束对象引用不可以被赋值，但是对象行为不被 final 影响。添加元素等操作是完全正常的。如果我们真的希望对象本身是不可变的，那么需要相应的类支持不可变的行为。在上面这个例子中，<br>  如果我们真的希望对象本身是不可变的，那么需要相应的类支持不可变的行为。</p>
+<p><br></p>
+<h1 id="第4讲-强引用、软引用、弱引用、幻象引用有什么区别？"><a href="#第4讲-强引用、软引用、弱引用、幻象引用有什么区别？" class="headerlink" title="第4讲 | 强引用、软引用、弱引用、幻象引用有什么区别？"></a>第4讲 | 强引用、软引用、弱引用、幻象引用有什么区别？</h1><!-- 2019-09-24 学习 -->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/6970" target="_blank" rel="noopener">第4讲 | 强引用、软引用、弱引用、幻象引用有什么区别？</a></p>
+<p>强可达（Strongly Reachable），就是当一个对象可以有一个或多个线程可以不通过各种引用访问到的情况。比如，我们新创建一个对象，那么创建它的线程对它就是强可达。</p>
+<p>软可达（Softly Reachable），就是当我们只能通过软引用才能访问到对象的状态。</p>
+<p>弱可达（Weakly Reachable），类似前面提到的，就是无法通过强引用或者软引用访问，只能通过弱引用访问时的状态。这是十分临近 finalize 状态的时机，当弱引用被清除的时候，就符合 finalize 的条件了。</p>
+<p>幻象可达（Phantom Reachable），上面流程图已经很直观了，就是没有强、软、弱引用关联，并且 finalize 过了，只有幻象引用指向这个对象的时候。</p>
+<p>当然，还有一个最后的状态，就是不可达（unreachable），意味着对象可以被清除了。</p>
+<h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a>评论</h2><h3 id="Jerry银银"><a href="#Jerry银银" class="headerlink" title="Jerry银银"></a>Jerry银银</h3><ol>
+<li><p>强引用：项目中到处都是。</p>
+</li>
+<li><p>软引用：图片缓存框架中，“内存缓存”中的图片是以这种引用来保存，使得JVM在发生OOM之前，可以回收这部分缓存</p>
+</li>
+<li><p>虚引用：在静态内部类中，经常会使用虚引用。例如，一个类发送网络请求，承担callback的静态内部类，则常以虚引用的方式来保存外部类(宿主类)的引用，当外部类需要被JVM回收时，不会因为网络请求没有及时回来，导致外部类不能被回收，引起内存泄漏</p>
+</li>
+<li><p>幽灵引用：这种引用的get()方法返回总是null，所以，可以想象，在平常的项目开发肯定用的少。但是根据这种引用的特点，我想可以通过监控这类引用，来进行一些垃圾清理的动作。不过具体的场景，还是希望峰哥举几个稍微详细的实战性的例子？</p>
+</li>
+</ol>
+<h3 id="公号-代码荣耀"><a href="#公号-代码荣耀" class="headerlink" title="公号-代码荣耀"></a>公号-代码荣耀</h3><p>在Java语言中，除了基本数据类型外，其他的都是指向各类对象的对象引用；Java中根据其生命周期的长短，将引用分为4类。</p>
+<p>1 强引用</p>
+<p>特点：我们平常典型编码Object obj = new Object()中的obj就是强引用。通过关键字new创建的对象所关联的引用就是强引用。 当JVM内存空间不足，JVM宁愿抛出OutOfMemoryError运行时错误（OOM），使程序异常终止，也不会靠随意回收具有强引用的“存活”对象来解决内存不足的问题。对于一个普通的对象，如果没有其他的引用关系，只要超过了引用的作用域或者显式地将相应（强）引用赋值为 null，就是可以被垃圾收集的了，具体回收时机还是要看垃圾收集策略。</p>
+<p>2 软引用</p>
+<p>特点：软引用通过SoftReference类实现。 软引用的生命周期比强引用短一些。只有当 JVM 认为内存不足时，才会去试图回收软引用指向的对象：即JVM 会确保在抛出 OutOfMemoryError 之前，清理软引用指向的对象。软引用可以和一个引用队列（ReferenceQueue）联合使用，如果软引用所引用的对象被垃圾回收器回收，Java虚拟机就会把这个软引用加入到与之关联的引用队列中。后续，我们可以调用ReferenceQueue的poll()方法来检查是否有它所关心的对象被回收。如果队列为空，将返回一个null,否则该方法返回队列中前面的一个Reference对象。</p>
+<p>应用场景：软引用通常用来实现内存敏感的缓存。如果还有空闲内存，就可以暂时保留缓存，当内存不足时清理掉，这样就保证了使用缓存的同时，不会耗尽内存。</p>
+<p>3 弱引用</p>
+<p>弱引用通过WeakReference类实现。 弱引用的生命周期比软引用短。在垃圾回收器线程扫描它所管辖的内存区域的过程中，一旦发现了具有弱引用的对象，不管当前内存空间足够与否，都会回收它的内存。由于垃圾回收器是一个优先级很低的线程，因此不一定会很快回收弱引用的对象。弱引用可以和一个引用队列（ReferenceQueue）联合使用，如果弱引用所引用的对象被垃圾回收，Java虚拟机就会把这个弱引用加入到与之关联的引用队列中。</p>
+<p>应用场景：弱应用同样可用于内存敏感的缓存。</p>
+<p>4 虚引用</p>
+<p>特点：虚引用也叫幻象引用，通过PhantomReference类来实现。无法通过虚引用访问对象的任何属性或函数。幻象引用仅仅是提供了一种确保对象被 finalize 以后，做某些事情的机制。如果一个对象仅持有虚引用，那么它就和没有任何引用一样，在任何时候都可能被垃圾回收器回收。虚引用必须和引用队列 （ReferenceQueue）联合使用。当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会在回收对象的内存之前，把这个虚引用加入到与之关联的引用队列中。<br>ReferenceQueue queue = new ReferenceQueue ();<br>PhantomReference pr = new PhantomReference (object, queue);<br>程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。如果程序发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取一些程序行动。</p>
+<p>应用场景：可用来跟踪对象被垃圾回收器回收的活动，当一个虚引用关联的对象被垃圾收集器回收之前会收到一条系统通知。</p>
+<p><br></p>
+<h1 id="第5讲-String、StringBuffer、StringBuilder有什么区别？"><a href="#第5讲-String、StringBuffer、StringBuilder有什么区别？" class="headerlink" title="第5讲 | String、StringBuffer、StringBuilder有什么区别？"></a>第5讲 | String、StringBuffer、StringBuilder有什么区别？</h1><!-- 2019-09-24学习 -->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/7349" target="_blank" rel="noopener">第5讲 | String、StringBuffer、StringBuilder有什么区别？</a></p>
+<p>  String 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 Immutable 类，被声明成为 final class，所有属性也都是 final 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 String 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。</p>
+<p>  StringBuffer 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 append 或者 add 方法，把字符串添加到已有序列的末尾或者指定位置。StringBuffer 本质是一个线程安全的可修改字符序列，它保证了线程安全，也随之带来了额外的性能开销，所以除非有线程安全的需要，不然还是推荐使用它的后继者，也就是 StringBuilder。</p>
+<p>  StringBuilder 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。</p>
+<p>关于今天我们讨论的题目你做到心中有数了吗？限于篇幅有限，还有很多字符相关的问题没有来得及讨论，比如编码相关的问题。可以思考一下，很多字符串操作，比如 getBytes()/String​(byte[] bytes) 等都是隐含着使用平台默认编码，这是一种好的实践吗？是否有利于避免乱码？</p>
+<h1 id="第6讲-动态代理是基于什么原理？"><a href="#第6讲-动态代理是基于什么原理？" class="headerlink" title="第6讲 | 动态代理是基于什么原理？"></a>第6讲 | 动态代理是基于什么原理？</h1><!-- 2019-09-24 学习 -->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/7489" target="_blank" rel="noopener">第6讲 | 动态代理是基于什么原理？</a></p>
+<h2 id="评论-1"><a href="#评论-1" class="headerlink" title="评论"></a>评论</h2><h3 id="肖一林"><a href="#肖一林" class="headerlink" title="肖一林"></a>肖一林</h3><p>提一些建议：应该从两条线讲这个问题，一条从代理模式，一条从反射机制。不要老担心篇幅限制讲不清问题，废话砍掉一些，深层次的内在原理多讲些（比如asm），容易自学的扩展知识可以用链接代替<br>代理模式（通过代理静默地解决一些业务无关的问题，比如远程、安全、事务、日志、资源关闭……让应用开发者可以只关心他的业务）<br>    静态代理：事先写好代理类，可以手工编写，也可以用工具生成。缺点是每个业务类都要对应一个代理类，非常不灵活。<br>    动态代理：运行时自动生成代理对象。缺点是生成代理代理对象和调用代理方法都要额外花费时间。<br>        JDK动态代理：基于Java反射机制实现，必须要实现了接口的业务类才能用这种办法生成代理对象。新版本也开始结合ASM机制。<br>        cglib动态代理：基于ASM机制实现，通过生成业务类的子类作为代理类。<br>Java 发射机制的常见应用：动态代理（AOP、RPC）、提供第三方开发者扩展能力（Servlet容器，JDBC连接）、第三方组件创建对象（DI）……<br>我水平比较菜，希望多学点东西，希望比免费知识层次更深些，也不光是为了面试，所以提提建议。</p>
+<h3 id="公号-代码荣耀-1"><a href="#公号-代码荣耀-1" class="headerlink" title="公号-代码荣耀"></a>公号-代码荣耀</h3><p>反射与动态代理原理</p>
+<p>1 关于反射<br>反射最大的作用之一就在于我们可以不在编译时知道某个对象的类型，而在运行时通过提供完整的”包名+类名.class”得到。注意：不是在编译时，而是在运行时。</p>
+<p>功能：<br>•在运行时能判断任意一个对象所属的类。<br>•在运行时能构造任意一个类的对象。<br>•在运行时判断任意一个类所具有的成员变量和方法。<br>•在运行时调用任意一个对象的方法。<br>说大白话就是，利用Java反射机制我们可以加载一个运行时才得知名称的class，获悉其构造方法，并生成其对象实体，能对其fields设值并唤起其methods。</p>
+<p>应用场景：<br>反射技术常用在各类通用框架开发中。因为为了保证框架的通用性，需要根据配置文件加载不同的对象或类，并调用不同的方法，这个时候就会用到反射——运行时动态加载需要加载的对象。</p>
+<p>特点：<br>由于反射会额外消耗一定的系统资源，因此如果不需要动态地创建一个对象，那么就不需要用反射。另外，反射调用方法时可以忽略权限检查，因此可能会破坏封装性而导致安全问题。</p>
+<p>2 动态代理<br>为其他对象提供一种代理以控制对这个对象的访问。在某些情况下，一个对象不适合或者不能直接引用另一个对象，而代理对象可以在两者之间起到中介的作用（可类比房屋中介，房东委托中介销售房屋、签订合同等）。<br>所谓动态代理，就是实现阶段不用关心代理谁，而是在运行阶段才指定代理哪个一个对象（不确定性）。如果是自己写代理类的方式就是静态代理（确定性）。</p>
+<p>组成要素：<br>(动态)代理模式主要涉及三个要素：<br>其一：抽象类接口<br>其二：被代理类（具体实现抽象接口的类）<br>其三：动态代理类：实际调用被代理类的方法和属性的类</p>
+<p>实现方式:<br>实现动态代理的方式很多，比如 JDK 自身提供的动态代理，就是主要利用了反射机制。还有其他的实现方式，比如利用字节码操作机制，类似 ASM、CGLIB（基于 ASM）、Javassist 等。<br>举例，常可采用的JDK提供的动态代理接口InvocationHandler来实现动态代理类。其中invoke方法是该接口定义必须实现的，它完成对真实方法的调用。通过InvocationHandler接口，所有方法都由该Handler来进行处理，即所有被代理的方法都由InvocationHandler接管实际的处理任务。此外，我们常可以在invoke方法实现中增加自定义的逻辑实现，实现对被代理类的业务逻辑无侵入。</p>
+<p><br></p>
+<h1 id="第7讲-int和Integer有什么区别？？"><a href="#第7讲-int和Integer有什么区别？？" class="headerlink" title="第7讲 | int和Integer有什么区别？？"></a>第7讲 | int和Integer有什么区别？？</h1><!-- 2019-09-25 学习 -->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/7514" target="_blank" rel="noopener">第7讲 | int和Integer有什么区别？</a></p>
+<h2 id="评论-2"><a href="#评论-2" class="headerlink" title="评论"></a>评论</h2><h3 id="12"><a href="#12" class="headerlink" title="12"></a>12</h3><p>对象由三部分组成，对象头，对象实例，对齐填充。<br>其中对象头一般是十六个字节，包括两部分，第一部分有哈希码，锁状态标志，线程持有的锁，偏向线程id，gc分代年龄等。第二部分是类型指针，也就是对象指向它的类元数据指针，可以理解，对象指向它的类。<br>对象实例就是对象存储的真正有效信息，也是程序中定义各种类型的字段包括父类继承的和子类定义的，这部分的存储顺序会被虚拟机和代码中定义的顺序影响（这里问一下，这个被虚拟机影响是不是就是重排序？？如果是的话，我知道的volatile定义的变量不会被重排序应该就是这里不会受虚拟机影响吧？？）。<br>第三部分对齐填充只是一个类似占位符的作用，因为内存的使用都会被填充为八字节的倍数。</p>
+<h3 id="Kyle"><a href="#Kyle" class="headerlink" title="Kyle"></a>Kyle</h3><p>节选自《深入理解JAVA虚拟机》：<br>在HotSpot虚拟机中，对象在内存中存储的布局可以分为3块区域：对象头（Header）、实例数据（Instance Data）和对齐填充（Padding）。</p>
+<p>HotSpot虚拟机的对象头包括两部分信息，第一部分用于存储对象自身的运行时数据，如哈希码（HashCode）、GC分代年龄、锁状态标志、线程持有的锁、偏向线程ID、偏向时间戳等，这部分数据的长度在32位和64位的虚拟机（未开启压缩指针）中分别为32bit和64bit，官方称它为”Mark Word”。</p>
+<p>对象头的另外一部分是类型指针，即对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是哪个类的实例。并不是所有的虚拟机实现都必须在对象数据上保留类型指针，换句话说，查找对象的元数据信息并不一定要经过对象本身，这点将在2.3.3节讨论。另外，如果对象是一个Java数组，那在对象头中还必须有一块用于记录数组长度的数据，因为虚拟机可以通过普通Java对象的元数据信息确定Java对象的大小，但是从数组的元数据中却无法确定数组的大小。</p>
+<p>接下来的实例数据部分是对象真正存储的有效信息，也是在程序代码中所定义的各种类型的字段内容。无论是从父类继承下来的，还是在子类中定义的，都需要记录起来。</p>
+<p>第三部分对齐填充并不是必然存在的，也没有特别的含义，它仅仅起着占位符的作用。由于HotSpot VM的自动内存管理系统要求对象起始地址必须是8字节的整数倍，换句话说，就是对象的大小必须是8字节的整数倍。</p>
+<h3 id="公号-代码荣耀-2"><a href="#公号-代码荣耀-2" class="headerlink" title="公号-代码荣耀"></a>公号-代码荣耀</h3><p>1 int和Integer</p>
+<p>JDK1.5引入了自动装箱与自动拆箱功能，Java可根据上下文，实现int/Integer,double/Double,boolean/Boolean等基本类型与相应对象之间的自动转换，为开发过程带来极大便利。</p>
+<p>最常用的是通过new方法构建Integer对象。但是，基于大部分数据操作都是集中在有限的、较小的数值范围，在JDK1.5 中新增了静态工厂方法 valueOf，其背后实现是将int值为-128 到 127 之间的Integer对象进行缓存，在调用时候直接从缓存中获取，进而提升构建对象的性能，也就是说使用该方法后，如果两个对象的int值相同且落在缓存值范围内，那么这个两个对象就是同一个对象；当值较小且频繁使用时，推荐优先使用整型池方法（时间与空间性能俱佳）。</p>
+<p>2 注意事项</p>
+<p>[1] 基本类型均具有取值范围，在大数<em>大数的时候，有可能会出现越界的情况。<br>[2] 基本类型转换时，使用声明的方式。例：long result= 1234567890 </em> 24 <em> 365；结果值一定不会是你所期望的那个值，因为1234567890 </em> 24已经超过了int的范围，如果修改为：long result= 1234567890L <em> 24 </em> 365；就正常了。<br>[3] 慎用基本类型处理货币存储。如采用double常会带来差距，常采用BigDecimal、整型（如果要精确表示分，可将值扩大100倍转化为整型）解决该问题。<br>[4] 优先使用基本类型。原则上，建议避免无意中的装箱、拆箱行为，尤其是在性能敏感的场合，<br>[5] 如果有线程安全的计算需要，建议考虑使用类型AtomicInteger、AtomicLong 这样的线程安全类。部分比较宽的基本数据类型，比如 float、double，甚至不能保证更新操作的原子性，可能出现程序读取到只更新了一半数据位的数值。</p>
+<h3 id="行者"><a href="#行者" class="headerlink" title="行者"></a>行者</h3><ol>
+<li>Mark Word:标记位 4字节，类似轻量级锁标记位，偏向锁标记位等。</li>
+<li>Class对象指针:4字节，指向对象对应class对象的内存地址。</li>
+<li>对象实际数据:对象所有成员变量。</li>
+<li>对齐:对齐填充字节，按照8个字节填充。</li>
+</ol>
+<p>Integer占用内存大小，4+4+4+4=16字节。<br>作者回复: 不错，如果是64位不用压缩指针，对象头会变大，还可能有对齐开销 </p>
+<h2 id="George"><a href="#George" class="headerlink" title="George"></a>George</h2><p>计算对象大小可通过dump内存之后用memory analyze分析</p>
+<p>作者回复: 嗯，也可以利用：<br>jol，jmap，或者instrument api（Java agent）等等</p>
+<h1 id="第8讲-对比Vector、ArrayList、LinkedList有何区别？"><a href="#第8讲-对比Vector、ArrayList、LinkedList有何区别？" class="headerlink" title="第8讲 | 对比Vector、ArrayList、LinkedList有何区别？"></a>第8讲 | 对比Vector、ArrayList、LinkedList有何区别？</h1><!-- 2019-08-28学习 -->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/7810" target="_blank" rel="noopener">第8讲 | 对比Vector、ArrayList、LinkedList有何区别？</a></p>
+<h2 id="评论-3"><a href="#评论-3" class="headerlink" title="评论"></a>评论</h2><h3 id="公号-代码荣耀-3"><a href="#公号-代码荣耀-3" class="headerlink" title="公号-代码荣耀"></a>公号-代码荣耀</h3><p>Vector、ArrayList、LinkedList均为线型的数据结构，但是从实现方式与应用场景中又存在差别。</p>
+<p>1 底层实现方式<br>ArrayList内部用数组来实现；LinkedList内部采用双向链表实现；Vector内部用数组实现。</p>
+<p>2 读写机制<br>ArrayList在执行插入元素是超过当前数组预定义的最大值时，数组需要扩容，扩容过程需要调用底层System.arraycopy()方法进行大量的数组复制操作；在删除元素时并不会减少数组的容量（如果需要缩小数组容量，可以调用trimToSize()方法）；在查找元素时要遍历数组，对于非null的元素采取equals的方式寻找。</p>
+<p>LinkedList在插入元素时，须创建一个新的Entry对象，并更新相应元素的前后元素的引用；在查找元素时，需遍历链表；在删除元素时，要遍历链表，找到要删除的元素，然后从链表上将此元素删除即可。<br>Vector与ArrayList仅在插入元素时容量扩充机制不一致。对于Vector，默认创建一个大小为10的Object数组，并将capacityIncrement设置为0；当插入元素数组大小不够时，如果capacityIncrement大于0，则将Object数组的大小扩大为现有size+capacityIncrement；如果capacityIncrement&lt;=0,则将Object数组的大小扩大为现有大小的2倍。</p>
+<p>3 读写效率</p>
+<p>ArrayList对元素的增加和删除都会引起数组的内存分配空间动态发生变化。因此，对其进行插入和删除速度较慢，但检索速度很快。</p>
+<p>LinkedList由于基于链表方式存放数据，增加和删除元素的速度较快，但是检索速度较慢。</p>
+<p>4 线程安全性</p>
+<p>ArrayList、LinkedList为非线程安全；Vector是基于synchronized实现的线程安全的ArrayList。</p>
+<p>需要注意的是：单线程应尽量使用ArrayList，Vector因为同步会有性能损耗；即使在多线程环境下，我们可以利用Collections这个类中为我们提供的synchronizedList(List list)方法返回一个线程安全的同步列表对象。</p>
+<p>问题回答</p>
+<p>利用PriorityBlockingQueue或Disruptor可实现基于任务优先级为调度策略的执行调度系统。</p>
+<p><br></p>
+<h1 id="第9讲-对比Hashtable、HashMap、TreeMap有什么不同？"><a href="#第9讲-对比Hashtable、HashMap、TreeMap有什么不同？" class="headerlink" title="第9讲 | 对比Hashtable、HashMap、TreeMap有什么不同？"></a>第9讲 | 对比Hashtable、HashMap、TreeMap有什么不同？</h1><!-- 2019-08-28学习 -->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/8053" target="_blank" rel="noopener">第9讲 | 对比Hashtable、HashMap、TreeMap有什么不同？</a></p>
+<p>对比 Hashtable、HashMap、TreeMap 有什么不同？</p>
+<p>天凉好个秋 </p>
+<p>解决哈希冲突的常用方法有：</p>
+<p>开放定址法<br>基本思想是：当关键字key的哈希地址p=H（key）出现冲突时，以p为基础，产生另一个哈希地址p1，如果p1仍然冲突，再以p为基础，产生另一个哈希地址p2，…，直到找出一个不冲突的哈希地址pi ，将相应元素存入其中。</p>
+<p>再哈希法<br>这种方法是同时构造多个不同的哈希函数：<br>Hi=RH1（key）  i=1，2，…，k<br>当哈希地址Hi=RH1（key）发生冲突时，再计算Hi=RH2（key）……，直到冲突不再产生。这种方法不易产生聚集，但增加了计算时间。</p>
+<p>链地址法<br>这种方法的基本思想是将所有哈希地址为i的元素构成一个称为同义词链的单链表，并将单链表的头指针存在哈希表的第i个单元中，因而查找、插入和删除主要在同义词链中进行。链地址法适用于经常进行插入和删除的情况。</p>
+<p>建立公共溢出区<br>这种方法的基本思想是：将哈希表分为基本表和溢出表两部分，凡是和基本表发生冲突的元素，一律填入溢出表。</p>
+<p>公号-代码荣耀<br>Hashtable、HashMap、TreeMap心得</p>
+<p>三者均实现了Map接口，存储的内容是基于key-value的键值对映射，一个映射不能有重复的键，一个键最多只能映射一个值。</p>
+<p>（1）    元素特性<br>HashTable中的key、value都不能为null；HashMap中的key、value可以为null，很显然只能有一个key为null的键值对，但是允许有多个值为null的键值对；TreeMap中当未实现 Comparator 接口时，key 不可以为null；当实现 Comparator 接口时，若未对null情况进行判断，则key不可以为null，反之亦然。</p>
+<p>（2）顺序特性<br>HashTable、HashMap具有无序特性。TreeMap是利用红黑树来实现的（树中的每个节点的值，都会大于或等于它的左子树种的所有节点的值，并且小于或等于它的右子树中的所有节点的值），实现了SortMap接口，能够对保存的记录根据键进行排序。所以一般需要排序的情况下是选择TreeMap来进行，默认为升序排序方式（深度优先搜索），可自定义实现Comparator接口实现排序方式。</p>
+<p>（3）初始化与增长方式<br>初始化时：HashTable在不指定容量的情况下的默认容量为11，且不要求底层数组的容量一定要为2的整数次幂；HashMap默认容量为16，且要求容量一定为2的整数次幂。<br>扩容时：Hashtable将容量变为原来的2倍加1；HashMap扩容将容量变为原来的2倍。</p>
+<p>（4）线程安全性<br>HashTable其方法函数都是同步的（采用synchronized修饰），不会出现两个线程同时对数据进行操作的情况，因此保证了线程安全性。也正因为如此，在多线程运行环境下效率表现非常低下。因为当一个线程访问HashTable的同步方法时，其他线程也访问同步方法就会进入阻塞状态。比如当一个线程在添加数据时候，另外一个线程即使执行获取其他数据的操作也必须被阻塞，大大降低了程序的运行效率，在新版本中已被废弃，不推荐使用。<br>HashMap不支持线程的同步，即任一时刻可以有多个线程同时写HashMap;可能会导致数据的不一致。如果需要同步（1）可以用 Collections的synchronizedMap方法；（2）使用ConcurrentHashMap类，相较于HashTable锁住的是对象整体， ConcurrentHashMap基于lock实现锁分段技术。首先将Map存放的数据分成一段一段的存储方式，然后给每一段数据分配一把锁，当一个线程占用锁访问其中一个段的数据时，其他段的数据也能被其他线程访问。ConcurrentHashMap不仅保证了多线程运行环境下的数据访问安全性，而且性能上有长足的提升。</p>
+<p>(5)一段话HashMap<br>HashMap基于哈希思想，实现对数据的读写。当我们将键值对传递给put()方法时，它调用键对象的hashCode()方法来计算hashcode，让后找到bucket位置来储存值对象。当获取对象时，通过键对象的equals()方法找到正确的键值对，然后返回值对象。HashMap使用链表来解决碰撞问题，当发生碰撞了，对象将会储存在链表的下一个节点中。 HashMap在每个链表节点中储存键值对对象。当两个不同的键对象的hashcode相同时，它们会储存在同一个bucket位置的链表中，可通过键对象的equals()方法用来找到键值对。如果链表大小超过阈值（TREEIFY_THRESHOLD, 8），链表就会被改造为树形结构。</p>
+<h1 id="第10讲-如何保证集合是线程安全的-ConcurrentHashMap如何实现高效地线程安全？"><a href="#第10讲-如何保证集合是线程安全的-ConcurrentHashMap如何实现高效地线程安全？" class="headerlink" title="第10讲 | 如何保证集合是线程安全的? ConcurrentHashMap如何实现高效地线程安全？"></a>第10讲 | 如何保证集合是线程安全的? ConcurrentHashMap如何实现高效地线程安全？</h1><!-- 2019-08-28学习 -->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/8137" target="_blank" rel="noopener">第10讲 | 如何保证集合是线程安全的? ConcurrentHashMap如何实现高效地线程安全？</a>  </p>
+<p>明翼<br>1.7<br>put加锁<br>通过分段加锁segment，一个hashmap里有若干个segment，每个segment里有若干个桶，桶里存放K-V形式的链表，put数据时通过key哈希得到该元素要添加到的segment，然后对segment进行加锁，然后在哈希，计算得到给元素要添加到的桶，然后遍历桶中的链表，替换或新增节点到桶中</p>
+<p>size<br>分段计算两次，两次结果相同则返回，否则对所以段加锁重新计算</p>
+<p>1.8<br>put CAS 加锁<br>1.8中不依赖与segment加锁，segment数量与桶数量一致；<br>首先判断容器是否为空，为空则进行初始化利用volatile的sizeCtl作为互斥手段，如果发现竞争性的初始化，就暂停在那里，等待条件恢复，否则利用CAS设置排他标志（U.compareAndSwapInt(this, SIZECTL, sc, -1)）;否则重试<br>对key hash计算得到该key存放的桶位置，判断该桶是否为空，为空则利用CAS设置新节点<br>否则使用synchronize加锁，遍历桶中数据，替换或新增加点到桶中<br>最后判断是否需要转为红黑树，转换之前判断是否需要扩容</p>
+<p>size<br>利用LongAdd累加计算  </p>
+<h1 id="第34讲-有人说“Lambda能让Java程序慢30倍”，你怎么看？"><a href="#第34讲-有人说“Lambda能让Java程序慢30倍”，你怎么看？" class="headerlink" title="第34讲 | 有人说“Lambda能让Java程序慢30倍”，你怎么看？"></a>第34讲 | 有人说“Lambda能让Java程序慢30倍”，你怎么看？</h1><!-- 2019-08-07学习 -->
+<p>模块四 Java性能基础 </p>
+<p><a href="https://time.geekbang.org/column/article/11824" target="_blank" rel="noopener">第34讲 | 有人说“Lambda能让Java程序慢30倍”，你怎么看</a></p>
+<p> <a href="https://blog.overops.com/benchmark-how-java-8-lambdas-and-streams-can-make-your-code-5-times-slower/" target="_blank" rel="noopener">如果 Stream 使用不当，会让你的代码慢 5 倍</a></p>
+<p><a href="http://openjdk.java.net/projects/code-tools/jmh/" target="_blank" rel="noopener">基准测试框架 JMH</a></p>
+<p><a href="https://www.baeldung.com/java-microbenchmark-harness" target="_blank" rel="noopener">JMH上手步骤</a></p>
+<p><a href="http://hg.openjdk.java.net/code-tools/jmh/file/3769055ad883/jmh-samples/src/main/java/org/openjdk/jmh/samples" target="_blank" rel="noopener">JMH样例代码</a></p>
+<p>  JMH 是由 Hotspot JVM 团队专家开发的，除了支持完整的基准测试过程，包括预热、运行、统计和报告等，还支持 Java 和其他 JVM 语言。更重要的是，它针对 Hotspot JVM 提供了各种特性，以保证基准测试的正确性，整体准确性大大优于其他框架，并且，JMH 还提供了用近乎白盒的方式进行 Profiling 等工作的能力。</p>
+<p> 使用 JMH 也非常简单，你可以直接将其依赖加入Maven工程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mvn archetype:generate \</span><br><span class="line">      	-DinteractiveMode=false \</span><br><span class="line">      	-DarchetypeGroupId=org.openjdk.jmh \</span><br><span class="line">          -DarchetypeArtifactId=jmh-java-benchmark-archetype \</span><br><span class="line">      	-DgroupId=org.sample \</span><br><span class="line">      	-DartifactId=test \</span><br><span class="line">      	-Dversion=1.0</span><br></pre></td></tr></table></figure>
+<h2 id="一课一练-1"><a href="#一课一练-1" class="headerlink" title="一课一练"></a>一课一练</h2><p>  我们在项目中需要评估系统的容量，以计划和保证其业务支撑能力，谈谈你的思路是怎么样的？常用手段有哪些？</p>
+<h1 id="第35讲-JVM优化Java代码时都做了什么？"><a href="#第35讲-JVM优化Java代码时都做了什么？" class="headerlink" title="第35讲 | JVM优化Java代码时都做了什么？"></a>第35讲 | JVM优化Java代码时都做了什么？</h1><!-- 2019-08-07学习 -->
+<p>模块四 Java性能基础 </p>
+<p>  JVM 在对代码执行的优化可分为运行时（runtime）优化和即时编译器（JIT）优化。</p>
+<p>  运行时优化主要是解释执行和动态编译通用的一些机制，比如说锁机制（如偏斜锁）、内存分配机制（如 TLAB）等。除此之外，还有一些专门用于优化解释执行效率的，比如说模版解释器、内联缓存（inline cache，用于优化虚方法调用的动态绑定）。</p>
+<p>  JVM 的即时编译器优化是指将热点代码以方法为单位转换成机器码，直接运行在底层硬件之上。它采用了多种优化方式，包括静态编译器可以使用的如方法内联、逃逸分析，也包括基于程序运行 profile 的投机性优化（speculative/optimistic optimization）。这个怎么理解呢？比如我有一条 instanceof 指令，在编译之前的执行过程中，测试对象的类一直是同一个，那么即时编译器可以假设编译之后的执行过程中还会是这一个类，并且根据这个类直接返回 instanceof 的结果。如果出现了其他类，那么就抛弃这段编译后的机器码，并且切换回解释执行。</p>
+<h2 id="一课一练-2"><a href="#一课一练-2" class="headerlink" title="一课一练"></a>一课一练</h2><p>  如何程序化验证 final 关键字是否会影响性能？</p>
+<h2 id="第36讲-谈谈MySQL支持的事务隔离级别，以及悲观锁和乐观锁的原理和应用场景？"><a href="#第36讲-谈谈MySQL支持的事务隔离级别，以及悲观锁和乐观锁的原理和应用场景？" class="headerlink" title="第36讲 | 谈谈MySQL支持的事务隔离级别，以及悲观锁和乐观锁的原理和应用场景？"></a>第36讲 | 谈谈MySQL支持的事务隔离级别，以及悲观锁和乐观锁的原理和应用场景？</h2><p><a href="https://time.geekbang.org/column/article/12288" target="_blank" rel="noopener">第36讲 | 谈谈MySQL支持的事务隔离级别，以及悲观锁和乐观锁的原理和应用场景？</a></p>
+<!-- 2019-08-08 学习 -->
+<p>模块5  Java应用开发扩展 (4讲)</p>
+<p>  MySQL 支持的事务隔离级别，以及悲观锁和乐观锁的原理和应用场景</p>
+<p>  mysql（innodb）的可重复读隔离级别下，为什么可以认为不会出现幻像读呢?<br>  从技术角度实现，mysq用mvcc做了snapshot，如果是locking read文档明确指出了会做区间锁定</p>
+<p>  乐观锁 悲观锁 脏读 幻读 不可重复读 CAS MVCC 隔离级别 锁队列 2PC TCC</p>
+<h2 id="一课一练-3"><a href="#一课一练-3" class="headerlink" title="一课一练"></a>一课一练</h2><p>  从架构设计的角度，可以将 MyBatis 分为哪几层？每层都有哪些主要模块？</p>
+<p>  mybatis架构自下而上分为基础支撑层、数据处理层、API接口层这三层。</p>
+<p>基础支撑层，主要是用来做连接管理、事务管理、配置加载、缓存管理等最基础组件，为上层提供最基础的支撑。<br>数据处理层，主要是用来做参数映射、sql解析、sql执行、结果映射等处理，可以理解为请求到达，完成一次数据库操作的流程。<br>API接口层，主要对外提供API，提供诸如数据的增删改查、获取配置等接口。</p>
+<h1 id="第37讲-谈谈Spring-Bean的生命周期和作用域？"><a href="#第37讲-谈谈Spring-Bean的生命周期和作用域？" class="headerlink" title="第37讲 | 谈谈Spring Bean的生命周期和作用域？"></a>第37讲 | 谈谈Spring Bean的生命周期和作用域？</h1><p><a href="https://time.geekbang.org/column/article/12472" target="_blank" rel="noopener">第37讲 | 谈谈Spring Bean的生命周期和作用域？</a><br><!-- 2019-08-08 学习 --><br>模块5  Java应用开发扩展 (4讲)</p>
+<p>  谈谈 Spring Bean 的生命周期和作用域？</p>
+<p>  Spring Bean 生命周期比较复杂，可以分为创建和销毁两个过程。</p>
+<p>  首先，创建 Bean 会经过一系列的步骤，主要包括：</p>
+<p>  实例化 Bean 对象。</p>
+<p>  设置 Bean 属性。</p>
+<p>  如果我们通过各种 Aware 接口声明了依赖关系，则会注入 Bean 对容器基础设施层面的依赖。具体包括 BeanNameAware、BeanFactoryAware 和 ApplicationContextAware，分别会注入 Bean ID、Bean Factory 或者 ApplicationContext。</p>
+<p>  调用 BeanPostProcessor 的前置初始化方法 postProcessBeforeInitialization。</p>
+<p>  如果实现了 InitializingBean 接口，则会调用 afterPropertiesSet 方法。</p>
+<p>  调用 Bean 自身定义的 init 方法。</p>
+<p>  调用 BeanPostProcessor 的后置初始化方法 postProcessAfterInitialization。</p>
+<p>  创建过程完毕。</p>
+<p>  第二，Spring Bean 的销毁过程会依次调用 DisposableBean 的 destroy 方法和 Bean 自身定制的 destroy 方法。</p>
+<p>广义上的 Spring 已经成为了一个庞大的生态系统，例如：</p>
+<p>  Spring Boot，通过整合通用实践，更加自动、智能的依赖管理等，Spring Boot 提供了各种典型应用领域的快速开发基础，所以它是以应用为中心的一个框架集合。</p>
+<p>  Spring Cloud，可以看作是在 Spring Boot 基础上发展出的更加高层次的框架，它提供了构建分布式系统的通用模式，包含服务发现和服务注册、分布式配置管理、负载均衡、分布式诊断等各种子系统，可以简化微服务系统的构建。</p>
+<p>   当然，还有针对特定领域的 Spring Security、Spring Data 等。</p>
+<p>   Spring容器初始化开始:<br>1.[BeanFactoryPostProcessor]接口实现类的构造器2.[BeanFactoryPostProcessor]的postProcessorBeanFactory方法<br>3.[BeanPostProcessor]接口实现类的构造器<br>4.[InstantiationAwareBeanPostProcessorAdapter]构造器<br>5.[InstantiationAwareBeanPostProcessorAdapter]的postProcessBeforeInstantiation方法(从这里开始初始化bean)<br>6.[Bean]的构造器<br>7.[InstantiationAwareBeanPostProcessorAdapter]的postProcessAfterInstantiation<br>8.[InstantiationAwareBeanPostProcessorAdapter]的postProcessPropertyValues方法<br>9.[Bean]属性注入，setter方<br>方法<br>10.[Bean]如果实现了各种XXXaware接口，依次调用各个setXXX(如BeanNameAware.setBeanName(),BeanFactoryAware.setBeanFactory())<br>11.[BeanPostProcessor]的postProcessBeforeInitialization方法<br>12.[InstantiationAwareBeanPostProcessorAdapter]的postProcessBeforeInitialization方法<br>13.[Bean]自定义的init-method<br>14.[Bean]如果实现了InitializingBean接口，此时会调用它的afterPropertiesSet方法<br>15.[BeanPostProcessor]的postProcessAfterInitialization方法(此时bean初始化完成)<br>16.[InstantiationAwareBeanPostProcessorAdapter]的postProcessInitialization方法(到这里容器初始化完成)<br>17.业务逻辑bean的使用</p>
+<p>Bean的销毁过程:<br>1.[DisposableBean]的destory方法<br>2.[Bean]自定义的destory-method方法</p>
+<p>说明:如果有多个bean需要初始化，会循环执行5–15。</p>
+<p>感觉本篇文章跑题了呢，关于生命周期，只讨论了初始化过程和销毁过程，那么什么时候引发的初始化呢？什么时候触发销毁操作呢？spring容器管理的bean是在容器运行过程中不会被销毁吧？</p>
+<p>我来讲讲吧:<br>首先理解scope:</p>
+<ol>
+<li>Singleton(单例) 在整个应用中,只创建bean的一个实例</li>
+<li>Propotype(原型) 每次注入或者通过Spring应用上下文获取的时候,都会创建一个新<br>的bean实例。</li>
+<li>Session(会话) 在Web应用中,为每个会话创建一个bean实例。</li>
+<li>Request(请求) 在Web应用中,为每个请求创建一个bean实例。</li>
+</ol>
+<p>他们是什么时候创建的:<br>1一个单例的bean,而且lazy-init属性为false(默认),在Application Context创建的时候构造<br>2一个单例的bean,lazy-init属性设置为true,那么,它在第一次需要的时候被构造.<br>3 其他scope的bean,都是在第一次需要使用的时候创建</p>
+<p>他们是什么时候销毁的:<br>1 单例的bean始终 存在与application context中, 只有当 application 终结的时候,才会销毁<br>2 和其他scope相比,Spring并没有管理prototype实例完整的生命周期,在实例化,配置,组装对象交给应用后,spring不再管理.只要bean本身不持有对另一个资源（如数据库连接或会话对象）的引用，只要删除了对该对象的所有引用或对象超出范围，就会立即收集垃圾.<br>3 Request: 每次客户端请求都会创建一个新的bean实例,一旦这个请求结束,实例就会离开scope,被垃圾回收.<br>4 Session: 如果用户结束了他的会话,那么这个bean实例会被GC.</p>
+<h1 id="一课一练-4"><a href="#一课一练-4" class="headerlink" title="一课一练"></a>一课一练</h1><p>  请介绍一下 Spring 声明式事务的实现机制，可以考虑将具体过程画图。</p>
+<h1 id="第38讲-对比Java标准NIO类库，你知道Netty是如何实现更高性能的吗？"><a href="#第38讲-对比Java标准NIO类库，你知道Netty是如何实现更高性能的吗？" class="headerlink" title="第38讲 | 对比Java标准NIO类库，你知道Netty是如何实现更高性能的吗？"></a>第38讲 | 对比Java标准NIO类库，你知道Netty是如何实现更高性能的吗？</h1><p><a href="https://time.geekbang.org/column/article/12629" target="_blank" rel="noopener">第38讲 | 对比Java标准NIO类库，你知道Netty是如何实现更高性能的吗？</a><br><!-- 2019-08-09 学习 --><br>模块5  Java应用开发扩展 (4讲)</p>
+<p>你知道 Netty 是如何实现更高性能的吗</p>
+<p>  单独从性能角度，Netty 在基础的 NIO 等类库之上进行了很多改进，例如：</p>
+<p>  更加优雅的 Reactor 模式实现、灵活的线程模型、利用 EventLoop 等创新性的机制，可以非常高效地管理成百上千的 Channel。</p>
+<p>  充分利用了 Java 的 Zero-Copy 机制，并且从多种角度，“斤斤计较”般的降低内存分配和回收的开销。例如，使用池化的 Direct Buffer 等技术，在提高 IO 性能的同时，减少了对象的创建和销毁；利用反射等技术直接操纵 SelectionKey，使用数组而不是 Java 容器等。</p>
+<p>  使用更多本地代码。例如，直接利用 JNI 调用 Open SSL 等方式，获得比 Java 内建 SSL 引擎更好的性能。</p>
+<p>  在通信协议、序列化等其他角度的优化。</p>
+<p>   推荐阅读 Norman Maurer 等编写的《Netty 实战》（Netty In Action），如果你想系统学习 Netty，它会是个很好的入门参考。 </p>
+<p>  考点：</p>
+<p>  Reactor 模式和 Netty 线程模型。</p>
+<p>  Pipelining、EventLoop 等部分的设计实现细节。</p>
+<p>  Netty 的内存管理机制、<a href="http://netty.io/wiki/reference-counted-objects.html" target="_blank" rel="noopener">引用计数</a> 等特别手段。</p>
+<p>  有的时候面试官也喜欢对比 Java 标准 NIO API，例如，你是否知道 Java NIO 早期版本中的 Epoll <a href="http://www.10tiao.com/html/308/201602/401718035/1.html" target="_blank" rel="noopener">空转问题</a> ，以及 Netty 的解决方式等。</p>
+<h2 id="一课一练-5"><a href="#一课一练-5" class="headerlink" title="一课一练"></a>一课一练</h2><p>  Netty 的线程模型是什么样的？</p>
+<h1 id="第39讲-谈谈常用的分布式ID的设计方案？Snowflake是否受冬令时切换影响？"><a href="#第39讲-谈谈常用的分布式ID的设计方案？Snowflake是否受冬令时切换影响？" class="headerlink" title="第39讲 | 谈谈常用的分布式ID的设计方案？Snowflake是否受冬令时切换影响？"></a>第39讲 | 谈谈常用的分布式ID的设计方案？Snowflake是否受冬令时切换影响？</h1><p><a href="https://time.geekbang.org/column/article/12806" target="_blank" rel="noopener">第39讲 | 谈谈常用的分布式ID的设计方案？Snowflake是否受冬令时切换影响？</a></p>
+<!-- 2019-08-09 学习 -->
+<p>模块5  Java应用开发扩展 (4讲)</p>
+<p>  常用的分布式 ID 的设计方案？<br>  Snowflake 是否受冬令时切换影响？</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/18/orientdb-config/" rel="next" title="orientdb-config">
+                <i class="fa fa-chevron-left"></i> orientdb-config
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/05/mysql-lock-table-solution/" rel="prev" title="MySQL 锁表后快速解决方法 及 锁表原因">
+                MySQL 锁表后快速解决方法 及 锁表原因 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第1讲-谈谈你对Java平台的理解？"><span class="nav-number">1.</span> <span class="nav-text">第1讲 | 谈谈你对Java平台的理解？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第2讲-Exception和Error有什么区别？"><span class="nav-number">2.</span> <span class="nav-text">第2讲 | Exception和Error有什么区别？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一课一练"><span class="nav-number">2.1.</span> <span class="nav-text">一课一练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论-毛毛熊"><span class="nav-number">2.2.</span> <span class="nav-text">评论 毛毛熊</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#评论-公号-代码荣耀"><span class="nav-number">3.</span> <span class="nav-text">评论 公号-代码荣耀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#评论-adrian-jser"><span class="nav-number">3.1.</span> <span class="nav-text">评论 adrian-jser</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#假如你开车上山，车坏了，你拿出工具箱修一修，修好继续上路（Exception被捕获，从异常中恢复，继续程序的运行），车坏了，你不知道怎么修，打电话告诉修车行，告诉你是什么问题，要车行过来修。（在当前的逻辑背景下，你不知道是怎么样的处理逻辑，把异常抛出去到更高的业务层来处理）。你打电话的时候，要尽量具体，不能只说我车动不了了。那修车行很难定位你的问题。（要补货特定的异常，不能捕获类似Exception的通用异常）。还有一种情况是，你开车上山，山塌了，这你还能修吗？（Error：导致你的运行环境进入不正常的状态，很难恢复）"><span class="nav-number">3.2.</span> <span class="nav-text">  假如你开车上山，车坏了，你拿出工具箱修一修，修好继续上路（Exception被捕获，从异常中恢复，继续程序的运行），车坏了，你不知道怎么修，打电话告诉修车行，告诉你是什么问题，要车行过来修。（在当前的逻辑背景下，你不知道是怎么样的处理逻辑，把异常抛出去到更高的业务层来处理）。你打电话的时候，要尽量具体，不能只说我车动不了了。那修车行很难定位你的问题。（要补货特定的异常，不能捕获类似Exception的通用异常）。还有一种情况是，你开车上山，山塌了，这你还能修吗？（Error：导致你的运行环境进入不正常的状态，很难恢复）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考问题：由于代码堆栈不再是同步调用那种垂直的结构，这里的异常处理和日志需要更加小心，我们看到的往往是特定-executor-的堆栈，而不是业务方法调用关系。对于这种情况，你有什么好的办法吗？"><span class="nav-number">3.3.</span> <span class="nav-text">思考问题：由于代码堆栈不再是同步调用那种垂直的结构，这里的异常处理和日志需要更加小心，我们看到的往往是特定 executor 的堆栈，而不是业务方法调用关系。对于这种情况，你有什么好的办法吗？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第3讲-谈谈final、finally、-finalize有什么不同？"><span class="nav-number">4.</span> <span class="nav-text">第3讲 | 谈谈final、finally、 finalize有什么不同？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第4讲-强引用、软引用、弱引用、幻象引用有什么区别？"><span class="nav-number">5.</span> <span class="nav-text">第4讲 | 强引用、软引用、弱引用、幻象引用有什么区别？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#评论"><span class="nav-number">5.1.</span> <span class="nav-text">评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Jerry银银"><span class="nav-number">5.1.1.</span> <span class="nav-text">Jerry银银</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公号-代码荣耀"><span class="nav-number">5.1.2.</span> <span class="nav-text">公号-代码荣耀</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第5讲-String、StringBuffer、StringBuilder有什么区别？"><span class="nav-number">6.</span> <span class="nav-text">第5讲 | String、StringBuffer、StringBuilder有什么区别？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第6讲-动态代理是基于什么原理？"><span class="nav-number">7.</span> <span class="nav-text">第6讲 | 动态代理是基于什么原理？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#评论-1"><span class="nav-number">7.1.</span> <span class="nav-text">评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#肖一林"><span class="nav-number">7.1.1.</span> <span class="nav-text">肖一林</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公号-代码荣耀-1"><span class="nav-number">7.1.2.</span> <span class="nav-text">公号-代码荣耀</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第7讲-int和Integer有什么区别？？"><span class="nav-number">8.</span> <span class="nav-text">第7讲 | int和Integer有什么区别？？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#评论-2"><span class="nav-number">8.1.</span> <span class="nav-text">评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#12"><span class="nav-number">8.1.1.</span> <span class="nav-text">12</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kyle"><span class="nav-number">8.1.2.</span> <span class="nav-text">Kyle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公号-代码荣耀-2"><span class="nav-number">8.1.3.</span> <span class="nav-text">公号-代码荣耀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行者"><span class="nav-number">8.1.4.</span> <span class="nav-text">行者</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#George"><span class="nav-number">8.2.</span> <span class="nav-text">George</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第8讲-对比Vector、ArrayList、LinkedList有何区别？"><span class="nav-number">9.</span> <span class="nav-text">第8讲 | 对比Vector、ArrayList、LinkedList有何区别？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#评论-3"><span class="nav-number">9.1.</span> <span class="nav-text">评论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#公号-代码荣耀-3"><span class="nav-number">9.1.1.</span> <span class="nav-text">公号-代码荣耀</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第9讲-对比Hashtable、HashMap、TreeMap有什么不同？"><span class="nav-number">10.</span> <span class="nav-text">第9讲 | 对比Hashtable、HashMap、TreeMap有什么不同？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第10讲-如何保证集合是线程安全的-ConcurrentHashMap如何实现高效地线程安全？"><span class="nav-number">11.</span> <span class="nav-text">第10讲 | 如何保证集合是线程安全的? ConcurrentHashMap如何实现高效地线程安全？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第34讲-有人说“Lambda能让Java程序慢30倍”，你怎么看？"><span class="nav-number">12.</span> <span class="nav-text">第34讲 | 有人说“Lambda能让Java程序慢30倍”，你怎么看？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一课一练-1"><span class="nav-number">12.1.</span> <span class="nav-text">一课一练</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第35讲-JVM优化Java代码时都做了什么？"><span class="nav-number">13.</span> <span class="nav-text">第35讲 | JVM优化Java代码时都做了什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一课一练-2"><span class="nav-number">13.1.</span> <span class="nav-text">一课一练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第36讲-谈谈MySQL支持的事务隔离级别，以及悲观锁和乐观锁的原理和应用场景？"><span class="nav-number">13.2.</span> <span class="nav-text">第36讲 | 谈谈MySQL支持的事务隔离级别，以及悲观锁和乐观锁的原理和应用场景？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一课一练-3"><span class="nav-number">13.3.</span> <span class="nav-text">一课一练</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第37讲-谈谈Spring-Bean的生命周期和作用域？"><span class="nav-number">14.</span> <span class="nav-text">第37讲 | 谈谈Spring Bean的生命周期和作用域？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一课一练-4"><span class="nav-number">15.</span> <span class="nav-text">一课一练</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第38讲-对比Java标准NIO类库，你知道Netty是如何实现更高性能的吗？"><span class="nav-number">16.</span> <span class="nav-text">第38讲 | 对比Java标准NIO类库，你知道Netty是如何实现更高性能的吗？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一课一练-5"><span class="nav-number">16.1.</span> <span class="nav-text">一课一练</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第39讲-谈谈常用的分布式ID的设计方案？Snowflake是否受冬令时切换影响？"><span class="nav-number">17.</span> <span class="nav-text">第39讲 | 谈谈常用的分布式ID的设计方案？Snowflake是否受冬令时切换影响？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

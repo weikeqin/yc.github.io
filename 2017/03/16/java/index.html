@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="java学习">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java">
+<meta property="og:url" content="http://weikeqin.cn/2017/03/16/java/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="java学习">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://weikeqin.cn/img/java/J2SE的架构.jpg">
+<meta property="og:updated_time" content="2019-11-04T06:36:52.369Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java">
+<meta name="twitter:description" content="java学习">
+<meta name="twitter:image" content="http://weikeqin.cn/img/java/J2SE的架构.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/03/16/java/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>java | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/03/16/java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-03-16 18:35:25" itemprop="dateCreated datePublished" datetime="2017-03-16T18:35:25+08:00">2017-03-16</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/16/java/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/03/16/java/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/16/java/" class="leancloud_visitors" data-flag-title="java">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>java学习</p>
+<p><img src="/img/java/J2SE的架构.jpg" alt="J2SE的架构"></p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java -cp %classpath; HelloWorld</span><br><span class="line"></span><br><span class="line">-Dfile.encoding=UTF-8</span><br></pre></td></tr></table></figure>
+<!--more-->
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WKQ@WKQ-PC C:\Users\WKQ</span><br><span class="line">&gt; chcp</span><br><span class="line">活动代码页: 936</span><br><span class="line"></span><br><span class="line">WKQ@WKQ-PC C:\Users\WKQ</span><br><span class="line">&gt; chcp 65001</span><br><span class="line"></span><br><span class="line">Active code page: 65001</span><br><span class="line"></span><br><span class="line">java -Dfile.encoding=UTF-8 -jar test.jar</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">InputStream in = DictsLoader.class.getClassLoader().getResourceAsStream(&quot;application.properties&quot;);</span><br><span class="line"></span><br><span class="line">InputStream in = DictsLoader.class.getClassLoader().getResourceAsStream(&quot;dictionary/segDicts/stopwords.txt&quot;);</span><br></pre></td></tr></table></figure>
+<!--more-->
+<h2 id="Premature-end-of-file"><a href="#Premature-end-of-file" class="headerlink" title="Premature end of file"></a>Premature end of file</h2><h2 id="3-字节的-UTF-8-序列的字节-2-无效"><a href="#3-字节的-UTF-8-序列的字节-2-无效" class="headerlink" title="3 字节的 UTF-8 序列的字节 2 无效"></a>3 字节的 UTF-8 序列的字节 2 无效</h2><p>com.sun.org.apache.xerces.internal.impl.io.MalformedByteSequenceException: 3 字节的 UTF-8 序列的字节 2 无效。<br>编码原因，使用UTF-8编码</p>
+<h1 id="Java有关身份证的操作"><a href="#Java有关身份证的操作" class="headerlink" title="Java有关身份证的操作"></a>Java有关身份证的操作</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 有关身份证的操作&lt;br&gt;</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * http://www.cnblogs.com/10158wsj/p/7050736.html</span></span><br><span class="line"><span class="comment"> * http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/    行政区划代码</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;pre&gt;</span></span><br><span class="line"><span class="comment"> * 要进行身份证号码的验证，首先需要了解我国身份证号码的编码规则。</span></span><br><span class="line"><span class="comment"> * 我国身份证号码多由若干位数字或者数字与字母混合组成。</span></span><br><span class="line"><span class="comment"> * 早期身份证由15位数字构成，这主要是在1980年以前发放的身份证，</span></span><br><span class="line"><span class="comment"> * 后来考虑到千年虫问题，</span></span><br><span class="line"><span class="comment"> * 因为15位的身份证号码只能为1900年1月1日到1999年12月31日出生的人编号，</span></span><br><span class="line"><span class="comment"> * 所以又增加了18位身份证号码编号规则。</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 15位身份证号</span></span><br><span class="line"><span class="comment"> * 3 7 0 9 8 6 8 9 0 6 2 3 2 1 2</span></span><br><span class="line"><span class="comment"> * A A A A A A Y Y M M D D N N S</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 18位身份证号</span></span><br><span class="line"><span class="comment"> * 3 7 0 9 8 6 1 9 8 9 0 6 2 3 2 1 2 3</span></span><br><span class="line"><span class="comment"> * A A A A A A Y Y Y Y M M D D N N S J</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 前六位AAAAAA是身份证编码对象的所在地（出生地）的编码，</span></span><br><span class="line"><span class="comment"> * 该号码可由国家统计局公布的相关标准中得到。</span></span><br><span class="line"><span class="comment"> * YY表示出生年的后两位，</span></span><br><span class="line"><span class="comment"> * MM和DD表示出生月和日，不足两位的高位补0，</span></span><br><span class="line"><span class="comment"> * NNS为顺序号，无法确定。</span></span><br><span class="line"><span class="comment"> * S为性别识别码，男性为奇数，女性为偶数。</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 了解了身份证号码的规则后，我们就可以推断出，身份证的15位转化位需要两步。</span></span><br><span class="line"><span class="comment"> * 首先把15位身份证号补全为17位，然后再补全最后一位。</span></span><br><span class="line"><span class="comment"> * 但是最后一位是数字还是字母X？这里又出现了问题。</span></span><br><span class="line"><span class="comment"> * 我们知道，身份证的最后一位为校验位，那么最后一位是怎么得到的呢？</span></span><br><span class="line"><span class="comment"> * 原来，最后一位是由数字1-9组成，超过9的比如11就用字母X表示，否则号码就变成了19位。</span></span><br><span class="line"><span class="comment"> * 了解了这些，经过整理得出身份证补全算法实现思想如下：</span></span><br><span class="line"><span class="comment"> * step1  将15位身份证号码加入出生年变为17位</span></span><br><span class="line"><span class="comment"> * step2  将step1得到的身份证17位数分别乘以不同的系数。从第1位到第17位的系数分别为：7-9-10-5-8-4-2-1-6-3-7-9-10-5-8-4-2.</span></span><br><span class="line"><span class="comment"> * step3  将这17位数字和系数相乘的结果相加</span></span><br><span class="line"><span class="comment"> * step4  将step3的结果除以11，得出余数</span></span><br><span class="line"><span class="comment"> * 由于数字的特殊性，这些余数只可能是0-10这11个数字，身份证最后一位的对应数字为1-0-X-9-8-7-6-5-4-3-2.。</span></span><br><span class="line"><span class="comment"> * 例上面的余数结果为3那么对应身份证号码的最后一位就是9，如果是10，身份证最后一位便是2。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;/pre&gt;</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * http://www.cnblogs.com/10158wsj/p/7050736.html</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IDCard</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		System.out.println(transIDCard15to18(<span class="string">"370986890623212"</span>));</span><br><span class="line"></span><br><span class="line">		System.out.println(transIDCard15to18(<span class="string">"370725881105149"</span>));</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 把15位身份证转化为18位标准证件号</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> IdCardNO</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">transIDCard15to18</span><span class="params">(String IdCardNO)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		String cardNo = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">null</span> != IdCardNO &amp;&amp; IdCardNO.trim().length() == <span class="number">15</span>) &#123;</span><br><span class="line"></span><br><span class="line">			IdCardNO = IdCardNO.trim();</span><br><span class="line"></span><br><span class="line">			StringBuffer sb = <span class="keyword">new</span> StringBuffer(IdCardNO);</span><br><span class="line"></span><br><span class="line">			sb.insert(<span class="number">6</span>, <span class="string">"19"</span>); <span class="comment">// 19xx年，15位的身份证省略了19</span></span><br><span class="line"></span><br><span class="line">			sb.append(transCardLastNo(sb.toString()));</span><br><span class="line"></span><br><span class="line">			cardNo = sb.toString();</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> cardNo;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 15位补全‘19’位后的身份证号码</span></span><br><span class="line"><span class="comment">	 * </span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">transCardLastNo</span><span class="params">(String newCardId)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">char</span>[] ch = newCardId.toCharArray();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> m = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span>[] co = &#123; <span class="number">7</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">6</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">4</span>, <span class="number">2</span> &#125;;</span><br><span class="line">		<span class="keyword">char</span>[] verCode = <span class="keyword">new</span> <span class="keyword">char</span>[] &#123; <span class="string">'1'</span>, <span class="string">'0'</span>, <span class="string">'X'</span>, <span class="string">'9'</span>, <span class="string">'8'</span>, <span class="string">'7'</span>, <span class="string">'6'</span>, <span class="string">'5'</span>, <span class="string">'4'</span>, <span class="string">'3'</span>, <span class="string">'2'</span> &#125;;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; newCardId.length(); i++) &#123;</span><br><span class="line">			m += (ch[i] - <span class="string">'0'</span>) * co[i];</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> residue = m % <span class="number">11</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> String.valueOf(verCode[residue]);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Java-Web-error"><a href="#Java-Web-error" class="headerlink" title="Java-Web-error"></a>Java-Web-error</h1><h2 id="junit-framework-AssertionFailedError-Test-method-isn’t-public-test"><a href="#junit-framework-AssertionFailedError-Test-method-isn’t-public-test" class="headerlink" title="junit.framework.AssertionFailedError: Test method isn’t public: test"></a>junit.framework.AssertionFailedError: Test method isn’t public: test</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">junit.framework.AssertionFailedError: Test method isn&apos;t public: test</span><br></pre></td></tr></table></figure>
+<!--more-->
+<h2 id="java-lang-NoClassDefFoundError-javax-servlet-http-HttpServletRequest"><a href="#java-lang-NoClassDefFoundError-javax-servlet-http-HttpServletRequest" class="headerlink" title="java.lang.NoClassDefFoundError: javax/servlet/http/HttpServletRequest"></a>java.lang.NoClassDefFoundError: javax/servlet/http/HttpServletRequest</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2017-07-02 20:58:46.771 [main] [ERROR] [org.springframework.boot.SpringApplication] [821] - Application startup failed</span><br><span class="line">java.lang.NoClassDefFoundError: javax/servlet/http/HttpServletRequest</span><br><span class="line">	at java.lang.Class.getDeclaredMethods0(Native Method)</span><br><span class="line">	</span><br><span class="line">Caused by: java.lang.ClassNotFoundException: javax.servlet.http.HttpServletRequest</span><br><span class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)</span><br><span class="line">	</span><br><span class="line">2017-07-02 20:58:46.774 [main] [INFO ] [o.s.b.logging.ClasspathLoggingApplicationListener] [57] - Application failed to start</span><br></pre></td></tr></table></figure>
+<p>在初次使用 IntelliJ IDEA 中，当你使用javax.servlet包下的类时(例:javax.servlet.http.HttpServlet), 在你会发现在IntelliJ IDEA里无法成功编译这个程序。<br>报错如下：</p>
+<p>java.lang.ClassNotFoundException:javax.el.ELResolver</p>
+<p>为什么呢？因为IntelliJ IDEA 没有导入 servlet-api.jar 这个架包，需要你手动导入支持。</p>
+<p>解决方案如下：<br>1、选中项目（在IntelliJ中称为Module）；<br>2、点击右键，选择open modual settings（或者直接按F4）；<br>3、在弹出的窗口左端选择Libraries；<br>4、点击顶端的一个类似加号“+”的图标；<br>5、在右端选择第一项（Attach Classes…）；<br>6、在弹出的窗口中选择tomcat所在的目录，进入里面的lib目录，寻找servlet-api.jar这个jar包（如果JSP页面也有相关的JavaWeb对象，则还要寻找jsp-api.jar；如果只有Servlet，则只选择servlet-api.jar）；<br>7、选中上述jar包，依次点击OK。</p>
+<h2 id="Unable-to-start-embedded-container-nested-exception-is-org-springframework-context-ApplicationContextException-Unable-to-start-EmbeddedWebApplicationContext-due-to-missing-EmbeddedServletContainerFactory-bean"><a href="#Unable-to-start-embedded-container-nested-exception-is-org-springframework-context-ApplicationContextException-Unable-to-start-EmbeddedWebApplicationContext-due-to-missing-EmbeddedServletContainerFactory-bean" class="headerlink" title="Unable to start embedded container; nested exception is org.springframework.context.ApplicationContextException: Unable to start EmbeddedWebApplicationContext due to missing EmbeddedServletContainerFactory bean."></a>Unable to start embedded container; nested exception is org.springframework.context.ApplicationContextException: Unable to start EmbeddedWebApplicationContext due to missing EmbeddedServletContainerFactory bean.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2017-07-02 21:09:54.505 [main] [ERROR] [org.springframework.boot.SpringApplication] [821] - Application startup failed</span><br><span class="line">org.springframework.context.ApplicationContextException: Unable to start embedded container; nested exception is org.springframework.context.ApplicationContextException: Unable to start EmbeddedWebApplicationContext due to missing EmbeddedServletContainerFactory bean.</span><br><span class="line">	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.onRefresh(EmbeddedWebApplicationContext.java:133)</span><br><span class="line">	</span><br><span class="line">Caused by: org.springframework.context.ApplicationContextException: Unable to start EmbeddedWebApplicationContext due to missing EmbeddedServletContainerFactory bean.</span><br><span class="line">	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.getEmbeddedServletContainerFactory(EmbeddedWebApplicationContext.java:185)</span><br><span class="line">	</span><br><span class="line">2017-07-02 21:09:54.507 [main] [INFO ] [o.s.b.logging.ClasspathLoggingApplicationListener] [57] - Application failed to start</span><br></pre></td></tr></table></figure>
+<h2 id="com-mysql-jdbc-exceptions-jdbc4-MySQLIntegrityConstraintViolationException-Duplicate-entry-‘-’-for-key"><a href="#com-mysql-jdbc-exceptions-jdbc4-MySQLIntegrityConstraintViolationException-Duplicate-entry-‘-’-for-key" class="headerlink" title="com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry ‘????(????)’ for key"></a>com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry ‘????(????)’ for key</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry &apos;????(????)&apos; for key &apos;UK_ijdlfwufomeirxn4yddpckkui&apos;</span><br><span class="line">        at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method) ~[na:1.8.0_121]</span><br></pre></td></tr></table></figure>
+<p>编码问题<br>修改数据库编码，表编码，字段编码<br>如果数据库是空的，可以删除数据库，重新建一个</p>
+<h2 id="The-main-resource-set-specified-war-test-0-1-is-not-valid"><a href="#The-main-resource-set-specified-war-test-0-1-is-not-valid" class="headerlink" title="The main resource set specified [/war/test-0.1] is not valid"></a>The main resource set specified [/war/test-0.1] is not valid</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">17-Aug-2017 10:54:49.821 INFO [main] org.apache.catalina.core.StandardEngine.startInternal Starting Servlet Engine: Apache Tomcat/8.5.4</span><br><span class="line">17-Aug-2017 10:54:49.839 SEVERE [Catalina-startStop-1] org.apache.catalina.core.ContainerBase.startInternal A child container failed during start</span><br><span class="line"> java.util.concurrent.ExecutionException: org.apache.catalina.LifecycleException: Failed to start component [StandardEngine[Catalina].StandardHost[localhost].StandardContext[/test]]</span><br><span class="line">        at java.util.concurrent.FutureTask.report(FutureTask.java:122)</span><br><span class="line">        </span><br><span class="line">Caused by: java.lang.IllegalArgumentException: The main resource set specified [/home/admin/software/test/war/test-0.1] is not valid</span><br><span class="line">        at org.apache.catalina.webresources.StandardRoot.createMainResourceSet(StandardRoot.java:725)</span><br></pre></td></tr></table></figure>
+<p>/home/admin/software/test/war/test-0.1 这么目录路径写错了，导致tomcat访问不到，路径该了就好了。</p>
+<p>值类型是存储在内存中的堆栈（以后简称栈），而引用类型的变量在栈中仅仅是存储引用类型变量的地址，而其本身则存储在堆中。<br>==操作比较的是两个变量的值是否相等，对于引用型变量表示的是两个变量在堆中存储的地址是否相同，即栈中的内容是否相同。<br>equals操作表示的两个变量是否是对同一个对象的引用，即堆中的内容是否相同。</p>
+<h2 id="jar-creation-failed-see-details-additional-information"><a href="#jar-creation-failed-see-details-additional-information" class="headerlink" title="jar creation failed see details additional information"></a>jar creation failed see details additional information</h2><p>1、选中项目右键=&gt;properties=&gt;Java Compiler=&gt;JDK Compliance level栏换一个JDK，最好版本换成1.6以上的<br>2、正常打包流程，一步步点，如果总是不成功，可以尝试将以下两个选项的勾去掉<br>3、选择Project——&gt;Clean   然后选择你的项目，clean一下（由于某种原因，缓存导致）<br>4、如果以上三步都不行的话， 这个时候就看看你项目有没有引用外部jar包，而且这个jar包路径不存在<br>   右键项目——&gt;build Path  看看项目的jar包，如果有不存在的jar包，要么去掉，要么换个路径</p>
+<h2 id="Could-not-find-or-load-main-class"><a href="#Could-not-find-or-load-main-class" class="headerlink" title="Could not find or load main class"></a>Could not find or load main class</h2><p>1、检查JDK环境，环境变量是不是配置有问题<br>2、包名和文件路径不对应，去掉包名。</p>
+<h1 id="Java面试题"><a href="#Java面试题" class="headerlink" title="Java面试题"></a>Java面试题</h1><p>1 Switch能否用string做参数？</p>
+<p>a.在 Java 7 之前, switch 只能支持byte,short,char,int 或者其对应的封装类以及 Enum 类型。在JAVA 7中,String 支持被加上了。</p>
+<p>2 equals与==的区别：</p>
+<p>a.==是判断两个变量或实例是不是指向同一个内存空间 equals是判断两个变量或实例所指向的内存空间的值是不是相同</p>
+<p>3 Object有哪些公用方法？</p>
+<p>a.方法equals测试的是两个对象是否相等</p>
+<p>b.方法clone进行对象拷贝</p>
+<p>c.方法getClass返回和当前对象相关的Class对象</p>
+<p>d.方法notify,notifyall,wait都是用来对给定对象进行线程同步的</p>
+<p>4 Java的四种引用，强弱软虚，用到的场景</p>
+<p>a.利用软引用和弱引用解决OOM问题：用一个HashMap来保存图片的路径和相应图片对象关联的软引用之间的映射关系，在内存不足时，JVM会自动回收这些缓存图片对象所占用的空间，从而有效地避免了OOM的问题</p>
+<p>b.通过软可及对象重获方法实现Java对象的高速缓存:比如我们创建了一Employee的类，如果每次需要查询一个雇员的信息。哪怕是几秒中之前刚刚查询过的，都要重新构建一个实例，这是需要消耗很多时间的。我们可以通过软引用和 HashMap 的结合，先是保存引用方面：以软引用的方式对一个Employee对象的实例进行引用并保存该引用到HashMap 上，key 为此雇员的 id，value为这个对象的软引用，另一方面是取出引用，缓存中是否有该Employee实例的软引用，如果有，从软引用中取得。如果没有软引用，或者从软引用中得到的实例是null，重新构建一个实例，并保存对这个新建实例的软引用。</p>
+<p>c.强引用：如果一个对象具有强引用，它就不会被垃圾回收器回收。即使当前内存空间不足，JVM也不会回收它，而是抛出 OutOfMemoryError 错误，使程序异常终止。如果想中断强引用和某个对象之间的关联，可以显式地将引用赋值为null，这样一来的话，JVM在合适的时间就会回收该对象</p>
+<p>d.软引用：在使用软引用时，如果内存的空间足够，软引用就能继续被使用，而不会被垃圾回收器回收，只有在内存不足时，软引用才会被垃圾回收器回收。</p>
+<p>e..弱引用：具有弱引用的对象拥有的生命周期更短暂。因为当 JVM 进行垃圾回收，一旦发现弱引用对象，无论当前内存空间是否充足，都会将弱引用回收。不过由于垃圾回收器是一个优先级较低的线程，所以并不一定能迅速发现弱引用对象</p>
+<p>f.虚引用：顾名思义，就是形同虚设，如果一个对象仅持有虚引用，那么它相当于没有引用，在任何时候都可能被垃圾回收器回收。</p>
+<p>g.使用场景：</p>
+<p>5 Hashcode的作用，与 equal 有什么区别</p>
+<p>a.同样用于鉴定2个对象是否相等的，java集合中有 list 和 set 两类，其中 set不允许元素重复实现，那个这个不允许重复实现的方法，如果用 equal 去比较的话，如果存在1000个元素，你 new 一个新的元素出来，需要去调用1000次 equal 去逐个和他们比较是否是同一个对象，这样会大大降低效率。hashcode实际上是返回对象的存储地址，如果这个位置上没有元素，就把元素直接存储在上面，如果这个位置上已经存在元素，这个时候才去调用equal方法与新元素进行比较，相同的话就不存了，散列到其他地址上</p>
+<p>6 String、StringBuffer与StringBuilder的区别</p>
+<p>a.String 类型和 StringBuffer 类型的主要性能区别其实在于 String 是不可变的对象</p>
+<p>b.StringBuffer和StringBuilder底层是 char[]数组实现的</p>
+<p>c.StringBuffer是线程安全的，而StringBuilder是线程不安全的</p>
+<p>7 Override和Overload的含义去区别</p>
+<p>a.Overload顾名思义是重新加载，它可以表现类的多态性，可以是函数里面可以有相同的函数名但是参数名、返回值、类型不能相同；或者说可以改变参数、类型、返回值但是函数名字依然不变。</p>
+<p>b.就是ride(重写)的意思，在子类继承父类的时候子类中可以定义某方法与其父类有相同的名称和参数，当子类在调用这一函数时自动调用子类的方法，而父类相当于被覆盖（重写）了。</p>
+<p>8 抽象类和接口的区别</p>
+<p>a.一个类只能继承单个类，但是可以实现多个接口</p>
+<p>b.接口强调特定功能的实现，而抽象类强调所属关系</p>
+<p>c.抽象类中的所有方法并不一定要是抽象的，你可以选择在抽象类中实现一些基本的方法。而接口要求所有的方法都必须是抽象的</p>
+<p>9 解析XML的几种方式的原理与特点：DOM、SAX、PULL</p>
+<p>a.DOM：消耗内存：先把xml文档都读到内存中，然后再用DOM API来访问树形结构，并获取数据。这个写起来很简单，但是很消耗内存。要是数据过大，手机不够牛逼，可能手机直接死机</p>
+<p>b.SAX：解析效率高，占用内存少，基于事件驱动的：更加简单地说就是对文档进行顺序扫描，当扫描到文档(document)开始与结束、元素(element)开始与结束、文档(document)结束等地方时通知事件处理函数，由事件处理函数做相应动作，然后继续同样的扫描，直至文档结束。</p>
+<p>c.SAX：与 SAX 类似，也是基于事件驱动，我们可以调用它的next（）方法，来获取下一个解析事件（就是开始文档，结束文档，开始标签，结束标签），当处于某个元素时可以调用XmlPullParser的getAttributte()方法来获取属性的值，也可调用它的nextText()获取本节点的值。</p>
+<p>10 wait()和sleep()的区别</p>
+<p>sleep来自Thread类，和wait来自Object类</p>
+<p>调用sleep()方法的过程中，线程不会释放对象锁。而 调用 wait 方法线程会释放对象锁</p>
+<p>sleep睡眠后不出让系统资源，wait让出系统资源其他线程可以占用CPU</p>
+<p>sleep(milliseconds)需要指定一个睡眠时间，时间一到会自动唤醒</p>
+<p>11 JAVA 中堆和栈的区别，说下java 的内存机制</p>
+<p>a.基本数据类型比变量和对象的引用都是在栈分配的</p>
+<p>b.堆内存用来存放由new创建的对象和数组</p>
+<p>c.类变量（static修饰的变量），程序在一加载的时候就在堆中为类变量分配内存，堆中的内存地址存放在栈中</p>
+<p>d.实例变量：当你使用java关键字new的时候，系统在堆中开辟并不一定是连续的空间分配给变量，是根据零散的堆内存地址，通过哈希算法换算为一长串数字以表征这个变量在堆中的”物理位置”,实例变量的生命周期–当实例变量的引用丢失后，将被GC（垃圾回收器）列入可回收“名单”中，但并不是马上就释放堆中内存</p>
+<p>e.局部变量: 由声明在某方法，或某代码段里（比如for循环），执行到它的时候在栈中开辟内存，当局部变量一但脱离作用域，内存立即释放</p>
+<p>12 JAVA多态的实现原理</p>
+<p>a.抽象的来讲，多态的意思就是同一消息可以根据发送对象的不同而采用多种不同的行为方式。（发送消息就是函数调用）</p>
+<p>b.实现的原理是动态绑定，程序调用的方法在运行期才动态绑定，追溯源码可以发现，JVM 通过参数的自动转型来找到合适的办法。</p>
+<p>13 JAVA 垃圾回收机制</p>
+<p>a.标记回收法：遍历对象图并且记录可到达的对象，以便删除不可到达的对象，一般使用单线程工作并且可能产生内存碎片</p>
+<p>b.标记-压缩回收法：前期与第一种方法相同，只是多了一步，将所有的存活对象压缩到内存的一端，这样内存碎片就可以合成一大块可再利用的内存区域，提高了内存利用率</p>
+<p>c.复制回收法：把现有内存空间分成两部分，gc运行时，它把可到达对象复制到另一半空间，再清空正在使用的空间的全部对象。这种方法适用于短生存期的对象，持续复制长生存期的对象则导致效率降低。</p>
+<p>d.分代回收发：把内存空间分为两个或者多个域，如年轻代和老年代，年轻代的特点是对象会很快被回收，因此在年轻代使用效率比较高的算法。当一个对象经过几次回收后依然存活，对象就会被放入称为老年的内存空间，老年代则采取标记-压缩算法</p>
+<p>e.引用计数（最简单古老的方法）：指将资源（可以是对象、内存或磁盘空间等等）的被引用次数保存起来，当被引用次数变为零时就将其释放的过程</p>
+<p>f.对象引用遍历（现在大多数 jvm 使用的方法）：对象引用遍历从一组对象开始，沿着整个对象图上的每条链接，递归确定可到达（reachable）的对象。如果某对象不能从这些根对象的一个（至少一个）到达，则将它作为垃圾收集</p>
+<p>g.什么是垃圾回收机：释放那些不再持有引用的对象的内存</p>
+<p>h.怎么判断一个对象是否需要收集？</p>
+<p>i.几种垃圾回收机制</p>
+<p>14 讲讲 Java 中的集合有多少种，区别是什么？</p>
+<p>a.HashTable比较老，是基于Dictionary 类实现的，HashTable 则是基于 Map接口实现的</p>
+<p>b.HashTable 是线程安全的， HashMap 则是线程不安全的</p>
+<p>c.HashMap可以让你将空值作为一个表的条目的key或value</p>
+<p>d.ArrayList、LinkedList、Vector的区别：ArrayList 和Vector底层是采用数组方式存储数据，Vector由于使用了synchronized方法（线程安全）所以性能上比ArrayList要差，LinkedList使用双向链表实现存储，随机存取比较慢</p>
+<p>e.HashMap的底层源码实现：当我们往HashMap中put元素的时候，先根据key的hashCode重新计算hash值，根据hash值得到这个元素在数组中的位置（即下标），如果数组该位置上已经存放有其他元素了，那么在这个位置上的元素将以链表的形式存放，新加入的放在链头，最先加入的放在链尾。如果数组该位置上没有元素，就直接将该元素放到此数组中的该位置上。</p>
+<p>f.Fail-Fast机制:在使用迭代器的过程中有其他线程修改了map，那么将抛出ConcurrentModificationException，这就是所谓fail-fast机制。这一机制在源码中的实现是通过modCount域，modCount顾名思义就是修改次数，对HashMap内容的修改都将增加这个值，那么在迭代器初始化过程中会将这个值赋给迭代器的expectedModCount。在迭代过程中，判断modCount跟expectedModCount是否相等，如果不相等就表示已经有其他线程修改了Map.</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.java.com/zh_CN/about/" target="_blank" rel="noopener">https://www.java.com/zh_CN/about/</a><br>[2] <a href="https://docs.oracle.com/javase/tutorial/" target="_blank" rel="noopener">https://docs.oracle.com/javase/tutorial/</a>　　 Java 教程<br>[3] <a href="http://www.oracle.com/technetwork/java/javamagazine/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javamagazine/index.html</a><br>[4] <a href="http://www.oracle.com/technetwork/topics/newtojava/youngdevelopers/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/topics/newtojava/youngdevelopers/index.html</a><br>[5] <a href="http://www.oracle.com/technetwork/topics/newtojava/overview/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/topics/newtojava/overview/index.html</a><br>[6] <a href="http://www.cnblogs.com/xrq730/p/4826691.html" target="_blank" rel="noopener">http://www.cnblogs.com/xrq730/p/4826691.html</a>　　Java虚拟机1：什么是Java<br>[7] <a href="http://www.importnew.com/" target="_blank" rel="noopener">http://www.importnew.com/</a>    ImportNew - 专注Java &amp; Android 技术分享<br>[8] <a href="http://www.cnblogs.com/zengkefu/p/5633342.html" target="_blank" rel="noopener">http://www.cnblogs.com/zengkefu/p/5633342.html</a><br>[9] <a href="http://blog.csdn.net/moneyshi/article/details/43056321" target="_blank" rel="noopener">http://blog.csdn.net/moneyshi/article/details/43056321</a><br>[10] <a href="http://blog.csdn.net/whorus1/article/details/51518139" target="_blank" rel="noopener">http://blog.csdn.net/whorus1/article/details/51518139</a><br>[11] <a href="https://mp.weixin.qq.com/s/ENxjkPMsBTwImD-sBTNeKw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/ENxjkPMsBTwImD-sBTNeKw</a>    46张PPT讲述JVM体系结构、GC算法和调优<br>[12] <a href="https://mp.weixin.qq.com/s/sHJoPmbpcGDe1XyyI4qKTg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/sHJoPmbpcGDe1XyyI4qKTg</a>    10种简单的Java性能优化<br>[13] <a href="https://yq.aliyun.com/articles/73581" target="_blank" rel="noopener">https://yq.aliyun.com/articles/73581</a>    2016年Java面试题整理<br>[14] <a href="https://yq.aliyun.com/articles/73584" target="_blank" rel="noopener">https://yq.aliyun.com/articles/73584</a>    Java集合类操作优化经验总结<br>[15] <a href="http://www.toutiao.com/a6409910051989258498/" target="_blank" rel="noopener">http://www.toutiao.com/a6409910051989258498/</a>    图解Java面试题——JVM<br>[16] <a href="http://www.toutiao.com/a6409986995707871489/" target="_blank" rel="noopener">http://www.toutiao.com/a6409986995707871489/</a>    2017年终BAT的JAVA面试题聚集<br>[17] <a href="http://www.tuicool.com/articles/7RRrIr" target="_blank" rel="noopener">http://www.tuicool.com/articles/7RRrIr</a>    Java 资源大全中文版</p>
+<p>java-web error<br>[1] <a href="https://my.oschina.net/fdblog/blog/161305" target="_blank" rel="noopener">https://my.oschina.net/fdblog/blog/161305</a><br>[2] <a href="http://blog.csdn.net/zhang168/article/details/51423905" target="_blank" rel="noopener">http://blog.csdn.net/zhang168/article/details/51423905</a><br>[3] <a href="https://stackoverflow.com/questions/21783391/spring-boot-unable-to-start-embeddedwebapplicationcontext-due-to-missing-embedd" target="_blank" rel="noopener">https://stackoverflow.com/questions/21783391/spring-boot-unable-to-start-embeddedwebapplicationcontext-due-to-missing-embedd</a></p>
+<p><a href="https://www.cnblogs.com/yougewe/p/8227447.html" target="_blank" rel="noopener">一点解决版本冲突的应急思路、怎样在所有jar包文件中搜索冲突的方法？</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/15/decision-tree/" rel="next" title="决策树 笔记">
+                <i class="fa fa-chevron-left"></i> 决策树 笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/16/java-parser-xml/" rel="prev" title="java解析xml">
+                java解析xml <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Premature-end-of-file"><span class="nav-number">1.</span> <span class="nav-text">Premature end of file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-字节的-UTF-8-序列的字节-2-无效"><span class="nav-number">2.</span> <span class="nav-text">3 字节的 UTF-8 序列的字节 2 无效</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#Java有关身份证的操作"><span class="nav-number"></span> <span class="nav-text">Java有关身份证的操作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-Web-error"><span class="nav-number"></span> <span class="nav-text">Java-Web-error</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#junit-framework-AssertionFailedError-Test-method-isn’t-public-test"><span class="nav-number">1.</span> <span class="nav-text">junit.framework.AssertionFailedError: Test method isn’t public: test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-lang-NoClassDefFoundError-javax-servlet-http-HttpServletRequest"><span class="nav-number">2.</span> <span class="nav-text">java.lang.NoClassDefFoundError: javax/servlet/http/HttpServletRequest</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unable-to-start-embedded-container-nested-exception-is-org-springframework-context-ApplicationContextException-Unable-to-start-EmbeddedWebApplicationContext-due-to-missing-EmbeddedServletContainerFactory-bean"><span class="nav-number">3.</span> <span class="nav-text">Unable to start embedded container; nested exception is org.springframework.context.ApplicationContextException: Unable to start EmbeddedWebApplicationContext due to missing EmbeddedServletContainerFactory bean.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#com-mysql-jdbc-exceptions-jdbc4-MySQLIntegrityConstraintViolationException-Duplicate-entry-‘-’-for-key"><span class="nav-number">4.</span> <span class="nav-text">com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry ‘????(????)’ for key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-main-resource-set-specified-war-test-0-1-is-not-valid"><span class="nav-number">5.</span> <span class="nav-text">The main resource set specified [/war/test-0.1] is not valid</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jar-creation-failed-see-details-additional-information"><span class="nav-number">6.</span> <span class="nav-text">jar creation failed see details additional information</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Could-not-find-or-load-main-class"><span class="nav-number">7.</span> <span class="nav-text">Could not find or load main class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java面试题"><span class="nav-number"></span> <span class="nav-text">Java面试题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

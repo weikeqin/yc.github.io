@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1 下载及安装  在Eclipse官网 下载页面选择对应的版本下载，这里提供一个下载链接  下载的是zip安装包，解压完就可以使用 2 配置1.设置JDK   Window  -  Preferences  -  Java  -  Installed JREs  -  Add  - Standard VM  -  选中JDK安装目录的jdk1.7.0_80文件夹">
+<meta name="keywords" content="tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Eclipse 安装 配置">
+<meta property="og:url" content="http://weikeqin.cn/2017/04/18/eclipse-install-config/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="1 下载及安装  在Eclipse官网 下载页面选择对应的版本下载，这里提供一个下载链接  下载的是zip安装包，解压完就可以使用 2 配置1.设置JDK   Window  -  Preferences  -  Java  -  Installed JREs  -  Add  - Standard VM  -  选中JDK安装目录的jdk1.7.0_80文件夹">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse配置JDK.png">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse设置工作空间编码.png">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse设置字体.png">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse设置文件字体.png">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/EclipseJVM配置.png">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse设置背景颜色为豆沙绿.png">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse设置tab%20键为4个空格.png">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse在package视图中自动选中相应的类.png">
+<meta property="og:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse设置JSP页面默认编码为UTF-8.png">
+<meta property="og:updated_time" content="2019-07-03T12:31:21.643Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Eclipse 安装 配置">
+<meta name="twitter:description" content="1 下载及安装  在Eclipse官网 下载页面选择对应的版本下载，这里提供一个下载链接  下载的是zip安装包，解压完就可以使用 2 配置1.设置JDK   Window  -  Preferences  -  Java  -  Installed JREs  -  Add  - Standard VM  -  选中JDK安装目录的jdk1.7.0_80文件夹">
+<meta name="twitter:image" content="http://weikeqin.cn/img/tools/Eclipse/Eclipse配置JDK.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/04/18/eclipse-install-config/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Eclipse 安装 配置 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/04/18/eclipse-install-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Eclipse 安装 配置
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-04-18 10:42:57" itemprop="dateCreated datePublished" datetime="2017-04-18T10:42:57+08:00">2017-04-18</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/18/eclipse-install-config/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/04/18/eclipse-install-config/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/04/18/eclipse-install-config/" class="leancloud_visitors" data-flag-title="Eclipse 安装 配置">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-下载及安装"><a href="#1-下载及安装" class="headerlink" title="1 下载及安装"></a>1 下载及安装</h1><p>  在Eclipse<a href="https://www.eclipse.org/downloads/eclipse-packages/" target="_blank" rel="noopener">官网 下载页面</a>选择对应的版本下载，这里提供一个<a href="https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/neon/3/eclipse-jee-neon-3-win32-x86_64.zip" target="_blank" rel="noopener">下载链接</a><br>  下载的是zip安装包，解压完就可以使用</p>
+<h1 id="2-配置"><a href="#2-配置" class="headerlink" title="2 配置"></a>2 配置</h1><h2 id="1-设置JDK"><a href="#1-设置JDK" class="headerlink" title="1.设置JDK"></a>1.设置JDK</h2><p>   Window  -  Preferences  -  Java  -  Installed JREs  -  Add  - Standard VM  -  选中JDK安装目录的jdk1.7.0_80文件夹<br><img src="/img/tools/Eclipse/Eclipse配置JDK.png" alt="Eclipse配置JDK"></p>
+<a id="more"></a>
+<h2 id="2-设置工作空间编码格式"><a href="#2-设置工作空间编码格式" class="headerlink" title="2. 设置工作空间编码格式"></a>2. 设置工作空间编码格式</h2><p>   Window  -  Preferences  -  General  -  WorkSpace  -      TextFileEncoding  -  Other  UTF-8<br><img src="/img/tools/Eclipse/Eclipse设置工作空间编码.png" alt="Eclipse设置工作空间编码"></p>
+<h2 id="3-设置工作空间字体格式"><a href="#3-设置工作空间字体格式" class="headerlink" title="3. 设置工作空间字体格式"></a>3. 设置工作空间字体格式</h2><p>   Window  -  Preferences  -  General  -  Appearance  -  Colors and Fonts  - Basic  - Text Font  Consolas  常规  11<br><img src="/img/tools/Eclipse/Eclipse设置字体.png" alt="Eclipse设置字体"></p>
+<h2 id="4-设置其他文件编码"><a href="#4-设置其他文件编码" class="headerlink" title="4. 设置其他文件编码"></a>4. 设置其他文件编码</h2><pre><code>例如 把.properties文件设置为UTF-8编码
+</code></pre><p>   Window  -  Preferences  -  General  -  Content Type  -  Text  -  Java Properties File（选中）  -  下面框里面的 *.properties(locked)<br><img src="/img/tools/Eclipse/Eclipse设置文件字体.png" alt="Eclipse设置文件字体">   </p>
+<h2 id="5-eclipse内存不够用了-在eclipse-安装目录下"><a href="#5-eclipse内存不够用了-在eclipse-安装目录下" class="headerlink" title="5.  eclipse内存不够用了  在eclipse 安装目录下"></a>5.  eclipse内存不够用了  在eclipse 安装目录下</h2><p><img src="/img/tools/Eclipse/EclipseJVM配置.png" alt="EclipseJVM配置">   </p>
+<h2 id="6-eclipse设置背景颜色为豆沙绿，保护视力。Window-Preferences-General-Editors-Text-Editors-右边下面找到Background-color，选中background-color，"><a href="#6-eclipse设置背景颜色为豆沙绿，保护视力。Window-Preferences-General-Editors-Text-Editors-右边下面找到Background-color，选中background-color，" class="headerlink" title="6. eclipse设置背景颜色为豆沙绿，保护视力。Window  -  Preferences  -  General  -  Editors  -  Text Editors  右边下面找到Background color，选中background color，"></a>6. eclipse设置背景颜色为豆沙绿，保护视力。Window  -  Preferences  -  General  -  Editors  -  Text Editors  右边下面找到Background color，选中background color，</h2><pre><code>勾掉System Default，点击&apos;color&apos;，弹出颜色选择面板，然后设置自定义颜色，把色调调成：85 饱和度调成：123 亮度调成205 即可调成豆沙绿色了 然后点确定。
+</code></pre><p><img src="/img/tools/Eclipse/Eclipse设置背景颜色为豆沙绿.png" alt="Eclipse设置背景颜色为豆沙绿">     </p>
+<h2 id="7-设置tab-键为4个空格"><a href="#7-设置tab-键为4个空格" class="headerlink" title="7. 设置tab 键为4个空格"></a>7. 设置tab 键为4个空格</h2><p><img src="/img/tools/Eclipse/Eclipse设置tab 键为4个空格.png" alt="Eclipse设置tab键为4个空格">     </p>
+<h2 id="8-在eclipse的package视图中自动选中相应的类"><a href="#8-在eclipse的package视图中自动选中相应的类" class="headerlink" title="8. 在eclipse的package视图中自动选中相应的类"></a>8. 在eclipse的package视图中自动选中相应的类</h2><p><img src="/img/tools/Eclipse/Eclipse在package视图中自动选中相应的类.png" alt="Eclipse在package视图中自动选中相应的类"><br>  pachage explorer右边的按钮，“向左，向右”的箭头没，选中它就行了（图中红色框圈住的部分）。</p>
+<h2 id="9-eclipse设置JSP页面默认编码为UTF-8"><a href="#9-eclipse设置JSP页面默认编码为UTF-8" class="headerlink" title="9. eclipse设置JSP页面默认编码为UTF-8"></a>9. eclipse设置JSP页面默认编码为UTF-8</h2><p>Window  -  Preferences  - Web - Jsp Files<br><img src="/img/tools/Eclipse/Eclipse设置JSP页面默认编码为UTF-8.png" alt="Eclipse设置JSP页面默认编码为UTF-8"> </p>
+<h2 id="10-配置颜色"><a href="#10-配置颜色" class="headerlink" title="10 配置颜色"></a>10 配置颜色</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Java</span><br><span class="line">	Java </span><br><span class="line">		keyword (关键字 茄紫色) GBK 127,0,85</span><br><span class="line">		String 42,0,255</span><br><span class="line">	JavaDoc</span><br><span class="line">		HTML markup  127,127,159</span><br><span class="line">		Links 63,63,191</span><br><span class="line">		Others (@param 的value) 63,95,191</span><br><span class="line">		Tags (@param) 127,159,191</span><br><span class="line">	Common</span><br></pre></td></tr></table></figure>
+<h1 id="3-Eclipse快捷键大全"><a href="#3-Eclipse快捷键大全" class="headerlink" title="3.  Eclipse快捷键大全"></a>3.  Eclipse快捷键大全</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Ctrl+1 快速修复(最经典的快捷键,就不用多说了)</span><br><span class="line">Ctrl+D: 删除当前行</span><br><span class="line">Ctrl+Alt+↓ 复制当前行到下一行(复制增加)</span><br><span class="line">Ctrl+Alt+↑ 复制当前行到上一行(复制增加)</span><br><span class="line">Alt+↓ 当前行和下面一行交互位置(特别实用,可以省去先剪切,再粘贴了)</span><br><span class="line">Alt+↑ 当前行和上面一行交互位置(同上)</span><br><span class="line">Alt+← 前一个编辑的页面</span><br><span class="line">Alt+→ 下一个编辑的页面(当然是针对上面那条来说了)</span><br><span class="line">Alt+Enter 显示当前选择资源(工程,or 文件 or文件)的属性</span><br><span class="line">Shift+Enter 在当前行的下一行插入空行(这时鼠标可以在当前行的任一位置,不一定是最后)</span><br><span class="line">Shift+Ctrl+Enter 在当前行插入空行(原理同上条)</span><br><span class="line">Ctrl+Q 定位到最后编辑的地方</span><br><span class="line">Ctrl+L 定位在某行 (对于程序超过100的人就有福音了)</span><br><span class="line">Ctrl+M 最大化当前的Edit或View (再按则反之)</span><br><span class="line">Ctrl+/ 注释当前行,再按则取消注释</span><br><span class="line">Ctrl+O 快速显示 OutLine</span><br><span class="line">Ctrl+T 快速显示当前类的继承结构</span><br><span class="line">Ctrl+W 关闭当前Editer</span><br><span class="line">Ctrl+K 参照选中的Word快速定位到下一个</span><br><span class="line">Ctrl+E 快速显示当前Editer的下拉列表(如果当前页面没有显示的用黑体表示)</span><br><span class="line">Ctrl+/(小键盘) 折叠当前类中的所有代码</span><br><span class="line">Ctrl+×(小键盘) 展开当前类中的所有代码</span><br><span class="line">Ctrl+Space 代码助手完成一些代码的插入(但一般和输入法有冲突,可以修改输入法的热键,也可以暂用Alt+/来代替)</span><br><span class="line">Ctrl+Shift+E 显示管理当前打开的所有的View的管理器(可以选择关闭,激活等操作)</span><br><span class="line">Ctrl+J 正向增量查找(按下Ctrl+J后,你所输入的每个字母编辑器都提供快速匹配定位到某个单词,如果没有,则在stutes line中显示没有找到了,查一个单词时,特别实用,这个功能Idea两年前就有了)</span><br><span class="line">Ctrl+Shift+J 反向增量查找(和上条相同,只不过是从后往前查)</span><br><span class="line">Ctrl+Shift+F4 关闭所有打开的Editer</span><br><span class="line">Ctrl+Shift+X 把当前选中的文本全部变味小写</span><br><span class="line">Ctrl+Shift+Y 把当前选中的文本全部变为小写</span><br><span class="line">Ctrl+Shift+F 格式化当前代码</span><br><span class="line">Ctrl+Shift+P 定位到对于的匹配符(譬如&#123;&#125;) (从前面定位后面时,光标要在匹配符里面,后面到前面,则反之)</span><br><span class="line"></span><br><span class="line">下面的快捷键是重构里面常用的,本人就自己喜欢且常用的整理一下(注:一般重构的快捷键都是Alt+Shift开头的了)</span><br><span class="line">Alt+Shift+R 重命名 (是我自己最爱用的一个了,尤其是变量和类的Rename,比手工方法能节省很多劳动力)</span><br><span class="line">Alt+Shift+M 抽取方法 (这是重构里面最常用的方法之一了,尤其是对一大堆泥团代码有用)</span><br><span class="line">Alt+Shift+C 修改函数结构(比较实用,有N个函数调用了这个方法,修改一次搞定)</span><br><span class="line">Alt+Shift+L 抽取本地变量( 可以直接把一些魔法数字和字符串抽取成一个变量,尤其是多处调用的时候)</span><br><span class="line">Alt+Shift+F 把Class中的local变量变为field变量 (比较实用的功能)</span><br><span class="line">Alt+Shift+I 合并变量(可能这样说有点不妥Inline)</span><br><span class="line">Alt+Shift+V 移动函数和变量(不怎么常用)</span><br><span class="line">Alt+Shift+Z 重构的后悔药(Undo)</span><br><span class="line"></span><br><span class="line">编辑</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">全局 查找并替换 Ctrl+F</span><br><span class="line">文本编辑器 查找上一个 Ctrl+Shift+K</span><br><span class="line">文本编辑器 查找下一个 Ctrl+K</span><br><span class="line">全局 撤销 Ctrl+Z</span><br><span class="line">全局 复制 Ctrl+C</span><br><span class="line">全局 恢复上一个选择 Alt+Shift+↓</span><br><span class="line">全局 剪切 Ctrl+X</span><br><span class="line">全局 快速修正 Ctrl1+1</span><br><span class="line">全局 内容辅助 Alt+/</span><br><span class="line">全局 全部选中 Ctrl+A</span><br><span class="line">全局 删除 Delete</span><br><span class="line">全局 上下文信息 Alt+？</span><br><span class="line">Alt+Shift+?</span><br><span class="line">Ctrl+Shift+Space</span><br><span class="line">Java编辑器 显示工具提示描述 F2</span><br><span class="line">Java编辑器 选择封装元素 Alt+Shift+↑</span><br><span class="line">Java编辑器 选择上一个元素 Alt+Shift+←</span><br><span class="line">Java编辑器 选择下一个元素 Alt+Shift+→</span><br><span class="line">文本编辑器 增量查找 Ctrl+J</span><br><span class="line">文本编辑器 增量逆向查找 Ctrl+Shift+J</span><br><span class="line">全局 粘贴 Ctrl+V</span><br><span class="line">全局 重做 Ctrl+Y</span><br><span class="line"></span><br><span class="line">查看</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">全局 放大 Ctrl+=</span><br><span class="line">全局 缩小 Ctrl+-</span><br><span class="line"></span><br><span class="line">窗口</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">全局 激活编辑器 F12</span><br><span class="line">全局 切换编辑器 Ctrl+Shift+W</span><br><span class="line">全局 上一个编辑器 Ctrl+Shift+F6</span><br><span class="line">全局 上一个视图 Ctrl+Shift+F7</span><br><span class="line">全局 上一个透视图 Ctrl+Shift+F8</span><br><span class="line">全局 下一个编辑器 Ctrl+F6</span><br><span class="line">全局 下一个视图 Ctrl+F7</span><br><span class="line">全局 下一个透视图 Ctrl+F8</span><br><span class="line">文本编辑器 显示标尺上下文菜单 Ctrl+W</span><br><span class="line">全局 显示视图菜单 Ctrl+F10</span><br><span class="line">全局 显示系统菜单 Alt+-</span><br><span class="line"></span><br><span class="line">导航</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">Java编辑器 打开结构 Ctrl+F3</span><br><span class="line">全局 打开类型 Ctrl+Shift+T</span><br><span class="line">全局 打开类型层次结构 F4</span><br><span class="line">全局 打开声明 F3</span><br><span class="line">全局 打开外部javadoc Shift+F2</span><br><span class="line">全局 打开资源 Ctrl+Shift+R</span><br><span class="line">全局 后退历史记录 Alt+←</span><br><span class="line">全局 前进历史记录 Alt+→</span><br><span class="line">全局 上一个 Ctrl+,</span><br><span class="line">全局 下一个 Ctrl+.</span><br><span class="line">Java编辑器 显示大纲 Ctrl+O</span><br><span class="line">全局 在层次结构中打开类型 Ctrl+Shift+H</span><br><span class="line">全局 转至匹配的括号 Ctrl+Shift+P</span><br><span class="line">全局 转至上一个编辑位置 Ctrl+Q</span><br><span class="line">Java编辑器 转至上一个成员 Ctrl+Shift+↑</span><br><span class="line">Java编辑器 转至下一个成员 Ctrl+Shift+↓</span><br><span class="line">文本编辑器 转至行 Ctrl+L</span><br><span class="line"></span><br><span class="line">搜索</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">全局 出现在文件中 Ctrl+Shift+U</span><br><span class="line">全局 打开搜索对话框 Ctrl+H</span><br><span class="line">全局 工作区中的声明 Ctrl+G</span><br><span class="line">全局 工作区中的引用 Ctrl+Shift+G</span><br><span class="line"></span><br><span class="line">文本编辑</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">文本编辑器 改写切换 Insert</span><br><span class="line">文本编辑器 上滚行 Ctrl+↑</span><br><span class="line">文本编辑器 下滚行 Ctrl+↓</span><br><span class="line"></span><br><span class="line">文件</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">全局 保存 Ctrl+X</span><br><span class="line">Ctrl+S</span><br><span class="line">全局 打印 Ctrl+P</span><br><span class="line">全局 关闭 Ctrl+F4</span><br><span class="line">全局 全部保存 Ctrl+Shift+S</span><br><span class="line">全局 全部关闭 Ctrl+Shift+F4</span><br><span class="line">全局 属性 Alt+Enter</span><br><span class="line">全局 新建 Ctrl+N</span><br><span class="line"></span><br><span class="line">项目</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">全局 全部构建 Ctrl+B</span><br><span class="line"></span><br><span class="line">源代码</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">Java编辑器 格式化 Ctrl+Shift+F</span><br><span class="line">Java编辑器 取消注释 Ctrl+</span><br><span class="line">Java编辑器 注释 Ctrl+/</span><br><span class="line">Java编辑器 添加导入 Ctrl+Shift+M</span><br><span class="line">Java编辑器 组织导入 Ctrl+Shift+O</span><br><span class="line">Java编辑器 使用try/catch块来包围 未设置，太常用了，所以在这里列出,建议自己设置。</span><br><span class="line">也可以使用Ctrl+1自动修正。</span><br><span class="line"></span><br><span class="line">运行</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">全局 单步返回 F7</span><br><span class="line">全局 单步跳过 F6</span><br><span class="line">全局 单步跳入 F5</span><br><span class="line">全局 单步跳入选择 Ctrl+F5</span><br><span class="line">全局 调试上次启动 F11</span><br><span class="line">全局 继续 F8</span><br><span class="line">全局 使用过滤器单步执行 Shift+F5</span><br><span class="line">全局 添加/去除断点 Ctrl+Shift+B</span><br><span class="line">全局 显示 Ctrl+D</span><br><span class="line">全局 运行上次启动 Ctrl+F11</span><br><span class="line">全局 运行至行 Ctrl+R</span><br><span class="line">全局 执行 Ctrl+U</span><br><span class="line"></span><br><span class="line">重构</span><br><span class="line">作用域 功能 快捷键</span><br><span class="line">全局 撤销重构 Alt+Shift+Z</span><br><span class="line">全局 抽取方法 Alt+Shift+M</span><br><span class="line">全局 抽取局部变量 Alt+Shift+L</span><br><span class="line">全局 内联 Alt+Shift+I</span><br><span class="line">全局 移动 Alt+Shift+V</span><br><span class="line">全局 重命名 Alt+Shift+R</span><br><span class="line">全局 重做 Alt+Shift+Y</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://www.68idc.cn/help/jiabenmake/qita/20150516341321.html" target="_blank" rel="noopener">http://www.68idc.cn/help/jiabenmake/qita/20150516341321.html</a><br>[2] <a href="http://blog.csdn.net/xiebaochun/article/details/37922571" target="_blank" rel="noopener">http://blog.csdn.net/xiebaochun/article/details/37922571</a><br>[3] <a href="http://blog.csdn.net/angle_birds/article/details/19609011" target="_blank" rel="noopener">http://blog.csdn.net/angle_birds/article/details/19609011</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tools/" rel="tag"># tools</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/14/neo4j-import-data/" rel="next" title="Neo4j 批量 导入 数据 的 几种方式">
+                <i class="fa fa-chevron-left"></i> Neo4j 批量 导入 数据 的 几种方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/18/intellij-idea-install-and-config/" rel="prev" title="IntelliJ-IDEA 使用笔记">
+                IntelliJ-IDEA 使用笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-下载及安装"><span class="nav-number">1.</span> <span class="nav-text">1 下载及安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-配置"><span class="nav-number">2.</span> <span class="nav-text">2 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-设置JDK"><span class="nav-number">2.1.</span> <span class="nav-text">1.设置JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-设置工作空间编码格式"><span class="nav-number">2.2.</span> <span class="nav-text">2. 设置工作空间编码格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-设置工作空间字体格式"><span class="nav-number">2.3.</span> <span class="nav-text">3. 设置工作空间字体格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-设置其他文件编码"><span class="nav-number">2.4.</span> <span class="nav-text">4. 设置其他文件编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-eclipse内存不够用了-在eclipse-安装目录下"><span class="nav-number">2.5.</span> <span class="nav-text">5.  eclipse内存不够用了  在eclipse 安装目录下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-eclipse设置背景颜色为豆沙绿，保护视力。Window-Preferences-General-Editors-Text-Editors-右边下面找到Background-color，选中background-color，"><span class="nav-number">2.6.</span> <span class="nav-text">6. eclipse设置背景颜色为豆沙绿，保护视力。Window  -  Preferences  -  General  -  Editors  -  Text Editors  右边下面找到Background color，选中background color，</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-设置tab-键为4个空格"><span class="nav-number">2.7.</span> <span class="nav-text">7. 设置tab 键为4个空格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-在eclipse的package视图中自动选中相应的类"><span class="nav-number">2.8.</span> <span class="nav-text">8. 在eclipse的package视图中自动选中相应的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-eclipse设置JSP页面默认编码为UTF-8"><span class="nav-number">2.9.</span> <span class="nav-text">9. eclipse设置JSP页面默认编码为UTF-8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-配置颜色"><span class="nav-number">2.10.</span> <span class="nav-text">10 配置颜色</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Eclipse快捷键大全"><span class="nav-number">3.</span> <span class="nav-text">3.  Eclipse快捷键大全</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

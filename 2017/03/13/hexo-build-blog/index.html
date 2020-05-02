@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="原来在学会一些东西的时候总喜欢总结，做一些笔记。刚开始用txt做笔记。使用Git来管理版本。后来很多需要图片的，发现txt不方便，就开始用word。但是在用git提交的时候就发现word的不方便了。而且word不是纯文本文件，在其他电脑或者手机上打开不太方便。后来发现了markdown，就是用markdown来写博客。   在写博客前，在网上搜了好多写博客的方法。最后发现使用markdown格">
+<meta name="keywords" content="blog,hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo搭建博客">
+<meta property="og:url" content="http://weikeqin.cn/2017/03/13/hexo-build-blog/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="原来在学会一些东西的时候总喜欢总结，做一些笔记。刚开始用txt做笔记。使用Git来管理版本。后来很多需要图片的，发现txt不方便，就开始用word。但是在用git提交的时候就发现word的不方便了。而且word不是纯文本文件，在其他电脑或者手机上打开不太方便。后来发现了markdown，就是用markdown来写博客。   在写博客前，在网上搜了好多写博客的方法。最后发现使用markdown格">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://weikeqin.cn/img/blog/algolia/algolia-write-key.png">
+<meta property="og:updated_time" content="2019-07-03T12:31:21.653Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo搭建博客">
+<meta name="twitter:description" content="原来在学会一些东西的时候总喜欢总结，做一些笔记。刚开始用txt做笔记。使用Git来管理版本。后来很多需要图片的，发现txt不方便，就开始用word。但是在用git提交的时候就发现word的不方便了。而且word不是纯文本文件，在其他电脑或者手机上打开不太方便。后来发现了markdown，就是用markdown来写博客。   在写博客前，在网上搜了好多写博客的方法。最后发现使用markdown格">
+<meta name="twitter:image" content="http://weikeqin.cn/img/blog/algolia/algolia-write-key.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/03/13/hexo-build-blog/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>hexo搭建博客 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/03/13/hexo-build-blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">hexo搭建博客
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-03-13 19:21:14" itemprop="dateCreated datePublished" datetime="2017-03-13T19:21:14+08:00">2017-03-13</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/blog/" itemprop="url" rel="index"><span itemprop="name">blog</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/13/hexo-build-blog/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/03/13/hexo-build-blog/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/13/hexo-build-blog/" class="leancloud_visitors" data-flag-title="hexo搭建博客">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>  原来在学会一些东西的时候总喜欢总结，做一些笔记。刚开始用txt做笔记。使用Git来管理版本。后来很多需要图片的，发现txt不方便，就开始用word。但是在用git提交的时候就发现word的不方便了。而且word不是纯文本文件，在其他电脑或者手机上打开不太方便。后来发现了markdown，就是用markdown来写博客。</p>
+<p>  在写博客前，在网上搜了好多写博客的方法。最后发现使用markdown格式的比较多。而且最近大家都用github + hexo来搭建自己的博客，教程也比较多，所以自己也想搭一个试试。</p>
+<h1 id="1-安装软件"><a href="#1-安装软件" class="headerlink" title="(1)　安装软件"></a>(1)　安装软件</h1><h2 id="1-1-安装git"><a href="#1-1-安装git" class="headerlink" title="(1.1)　安装git"></a>(1.1)　安装git</h2><p>  在<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">Git官网</a>下载，或者可以在百度下载。下载完以后双击运行。一直点next，直到完成安装。</p>
+<p>  通过 <code>git --version</code> 验证是否安装正确以及查看版本。</p>
+<h2 id="1-2-安装Node-js"><a href="#1-2-安装Node-js" class="headerlink" title="(1.2)　安装Node.js"></a>(1.2)　安装Node.js</h2><p>　在<a href="https://nodejs.org/en/download/" target="_blank" rel="noopener">Node.js官网</a>下载，或者在百度下载。推荐使用zip包，解压完配置一下就能用。</p>
+<p>  下载完解压到一个目录，解压文件到 <code>D:\ProfessionalSoftWare\Node</code> , 并在解压后的目录下建立 node_global和node_cache (node_global: npm全局安装路径 node_cache: npm全局缓存路径)</p>
+<p>  新建环境变量 <code>NODE_PATH</code> = <code>D:\ProfessionalSoftWare\Node\node-v10.16.0-win-x64</code><br>  修改环境变量 <code>PATH</code> 增加 <code>%NODE_PATH%;%NODE_PATH%\node_global;</code></p>
+<p>  通过 <code>node -v</code> 验证是否安装正确以及查看版本。</p>
+<p>  注意：npm其实是Node.js的包管理工具（package manager），刚开始一直不知道nmp和Node.js是什么关系，晕了半天</p>
+<a id="more"></a>
+<h2 id="1-3-配置使用"><a href="#1-3-配置使用" class="headerlink" title="(1.3)　配置使用"></a>(1.3)　配置使用</h2><p>  在所有程序里打开CMD，通过CMD来配置</p>
+<p>  配置git<br>  <code>git config --global use.name &quot;wkq&quot;</code><br>  <code>git config --global use.email &quot;weikeqin.cn@gmail.com&quot;</code></p>
+<p>  大家估计都有被“墙”的经历，安装hexo为了避免出现类似情况，我使用淘宝NPM镜像,输入以下命令等待安装完成<br>  <code>npm install -g cnpm --registry=https://registry.npm.taobao.org</code></p>
+<p>  使用淘宝NPM安装Hexo<br>  <code>cnpm install -g hexo-cli</code><br>  出现WARN不用管，继续输入一下命令<br>  <code>cnpm install hexo --save</code></p>
+<p>  安装完成后，通过 <code>hexo -v</code>，验证是否安装正确</p>
+<p>  在cmd里进入任意目录，在该目录下创建博客，目录名可以自定义，这儿我使用blog作为博客名，<br>  创建完该目录里就保存你博客的主要信息<br>  <code>hexo init blog</code></p>
+<p>  生成静态页面至public目录 <code>hexo generate</code></p>
+<p>  部署并使用5000端口，执行完后在浏览器输入 <a href="http://localhost:5000" target="_blank" rel="noopener">http://localhost:5000</a> 就可以访问博客了，端口可以自定义 <code>hexo server -p 5000</code></p>
+<h1 id="2-hexo其他配置"><a href="#2-hexo其他配置" class="headerlink" title="(2)　hexo其他配置"></a>(2)　hexo其他配置</h1><h2 id="2-1-RSS和站点地图"><a href="#2-1-RSS和站点地图" class="headerlink" title="(2.1)　RSS和站点地图"></a>(2.1)　RSS和站点地图</h2><p>  <code>npm install hexo-generator-feed  --save</code><br>  <code>npm install hexo-generator-sitemap  --save</code><br>  <code>npm install hexo-generator-baidu-sitemap  --save</code></p>
+<p>  rss、通用搜索引擎sitemap、百度爬虫sitemap</p>
+<p>  之后重启博客，访问/atom.xml和/sitemap.xml，会发现已经生成了。可以把sitemap提交到搜索引擎的站长平台来增加收录</p>
+<p>  <code>npm install hexo-generator-search --save</code></p>
+<p>  <code>npm install hexo-generator-searchdb --save</code></p>
+<p>  <code>npm install hexo-renderer-stylus --save</code> </p>
+<h2 id="2-2-添加tags页面和categories页面"><a href="#2-2-添加tags页面和categories页面" class="headerlink" title="(2.2)　添加tags页面和categories页面"></a>(2.2)　添加tags页面和categories页面</h2><p>  tags页面是标签云<br>  categories页面是分类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 新建tags页面和categories页面</span><br><span class="line">  hexo new page tags</span><br><span class="line">  hexo new page categories</span><br><span class="line"></span><br><span class="line"># 修改对应的index.md</span><br><span class="line">edit source/tags/index.md</span><br><span class="line">add line: layout: &quot;tags&quot;</span><br><span class="line"></span><br><span class="line">edit source/categories/index.md</span><br><span class="line">add line: layout: &quot;categories&quot;</span><br><span class="line"></span><br><span class="line">delete db.json</span><br><span class="line"></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-添加字数统计"><a href="#2-3-添加字数统计" class="headerlink" title="(2.3)　添加字数统计"></a>(2.3)　添加字数统计</h2><p>  <code>npm install hexo-wordcount --save</code></p>
+<p>  wordcount可以实现字数统计，阅读时常还有总字数的统计功能<br>  只需要 <code>npm install hexo-wordcount --save</code> 就可以安装wordcount插件，<br>  主要功能<br>  字数统计:WordCount<br>  阅读时长预计:Min2Read<br>  总字数统计: TotalCount<br>  安装完插件之后在主题的配置文件中开启该功能就可以~</p>
+<h2 id="2-4-集成Algolia搜索"><a href="#2-4-集成Algolia搜索" class="headerlink" title="(2.4)　集成Algolia搜索"></a>(2.4)　集成Algolia搜索</h2><p>  <code>npm install hexo-algolia --save</code></p>
+<p>  <code>npm install hexo-algoliasearch --save</code></p>
+<p>在站点的_config.yml中加入如下配置:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">algolia:</span><br><span class="line">  appId: &apos;appId&apos;</span><br><span class="line">  apiKey: &apos;apiKey&apos;</span><br><span class="line">  adminApiKey: &apos;adminApiKey&apos;</span><br><span class="line">  indexName: &apos;indexName&apos;</span><br><span class="line">  chunkSize: 5000</span><br><span class="line">  fields:</span><br><span class="line">    - title</span><br><span class="line">    - slug</span><br><span class="line">    - content:strip</span><br></pre></td></tr></table></figure></p>
+<p>配置环境变量HEXO_ALGOLIA_INDEXING_KEY，值为获取的apiKey，如果不知道用哪个，可以设置为 Admin API Key</p>
+<h1 id="3-域名解析"><a href="#3-域名解析" class="headerlink" title="(3)　域名解析"></a>(3)　域名解析</h1><p>hexo blog 托管到github和coding<br>这么做有几个目的</p>
+<ol>
+<li>增加流量，百度爬不到github的内容，但可以爬到coding的内容</li>
+<li>国内加速</li>
+<li>互为镜像，即使一个不能用了，还有另一个</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　CNAME　www　默认　pages.coding.me</span><br><span class="line">CNAME　@  　默认　pages.coding.me</span><br><span class="line">　A　    www　海外　151.101.xxx.xxx (对应username.github.io的ip地址)</span><br><span class="line">　A　    @　  海外　151.101.xxx.xxx</span><br></pre></td></tr></table></figure>
+<p>域名解析参数含义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">(1)记录类型</span><br><span class="line">　A记录：</span><br><span class="line">　　将域名指向一个IPv4地址（例如：10.10.10.10），需要增加A记录</span><br><span class="line">　CNAME记录：</span><br><span class="line">　　如果将域名指向一个域名，实现与被指向域名相同的访问效果，需要增加CNAME记录</span><br><span class="line">　MX记录：</span><br><span class="line">　　建立电子邮箱服务，将指向邮件服务器地址，需要设置MX记录</span><br><span class="line">　NS记录：</span><br><span class="line">　　域名解析服务器记录，如果要将子域名指定某个域名服务器来解析，需要设置NS记录</span><br><span class="line">　TXT记录：</span><br><span class="line">　　可任意填写（可为空），通常用做SPF记录（反垃圾邮件）使用</span><br><span class="line">　AAAA记录：</span><br><span class="line">　　将主机名（或域名）指向一个IPv6地址（例如：ff03:0:0:0:0:0:0:c1），需要添加AAAA记录</span><br><span class="line">　SRV记录：</span><br><span class="line">　　记录了哪台计算机提供了哪个服务。格式为：服务的名字.协议的类型（例如：_example-server._tcp）</span><br><span class="line">　显性URL：</span><br><span class="line">　　将域名指向一个http（s)协议地址，访问域名时，自动跳转至目标地址（例如：将www.net.cn显性转发到www.hichina.com后，访问www.net.cn时，地址栏显示的地址为：www.hichina.com）。</span><br><span class="line">　隐性URL：</span><br><span class="line">　　与显性URL类似，但隐性转发会隐藏真实的目标地址（例如：将www.net.cn隐性转发到www.hichina.com后，访问www.net.cn时，地址栏显示的地址仍然为：www.net.cn）。</span><br><span class="line"></span><br><span class="line">温馨提示：</span><br><span class="line">　　搭建网站：要将域名指向主机服务商提供的IP地址，请选择「A记录」；要将域名指向主机服务商提供的另一个域名，请选择「CNAME记录」。</span><br><span class="line">　　建立邮箱：需要设置「MX记录」，根据邮箱服务商提供的MX记录填写。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(2)主机记录</span><br><span class="line">　主机记录就是域名前缀，常见用法有：</span><br><span class="line">　www ：</span><br><span class="line">　　将域名解析为www.example.com，填写www；</span><br><span class="line">　@ ：</span><br><span class="line">　　将域名解析为example.com（不带www），填写@或者不填写；</span><br><span class="line">　mail ：</span><br><span class="line">　　将域名解析为mail.example.com，通常用于解析邮箱服务器；</span><br><span class="line">　* ：</span><br><span class="line">　　泛解析，所有子域名均被解析到统一地址（除单独设置的子域名解析）；</span><br><span class="line">　二级域名 ：</span><br><span class="line">　　如：mail.example.com或abc.example.com，填写mail或abc；</span><br><span class="line">　手机网站 ：</span><br><span class="line">　　如：m.example.com，填写m。</span><br><span class="line">　温馨提示：</span><br><span class="line">　　要将域名example.com解析为www.example.com，在主机记录(RR)处填写www即可。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(3)解析线路(运营商)</span><br><span class="line">　默认</span><br><span class="line">　联通</span><br><span class="line">　电信</span><br><span class="line">　移动</span><br><span class="line">　教育网</span><br><span class="line">　海外</span><br><span class="line">　搜索引擎</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(4)　记录值</span><br><span class="line">温馨提示：</span><br><span class="line">　A记录值请填写您的服务器IP地址（必须为IPv4地址，例如：202.106.0.20），若不清楚IP，请您咨询您的空间服务商。</span><br><span class="line">　如果IP地址的格式中带有端口，如：202.106.0.20:8080，则只添加202.106.0.20即可。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">(5)　TTL</span><br><span class="line">　10分钟</span><br><span class="line">　30分钟</span><br><span class="line">　1小时</span><br><span class="line">　12小时</span><br><span class="line">　24小时</span><br><span class="line">　一般都选第一个，10分钟</span><br><span class="line"></span><br><span class="line">(6)　我的配置</span><br><span class="line">　CNAME　www　默认　pages.coding.me</span><br><span class="line">  CNAME　@  　默认　pages.coding.me</span><br><span class="line">　A　    www　海外　151.101.xxx.xxx (对应username.github.io的ip地址)</span><br><span class="line">　A　    @　  海外　151.101.xxx.xxx</span><br></pre></td></tr></table></figure></p>
+<h1 id="4-hexo升级"><a href="#4-hexo升级" class="headerlink" title="(4)  hexo升级"></a>(4)  hexo升级</h1><p>  升级需谨慎</p>
+<p>  升级没有好办法，升级hexo<br>  要换一个目录重新init，可以_config.yml可能增加了一些配置，需要自己改<br>  source/_post下的文件可以拷过来<br>  插件需要自己安装<br>  可能会遇到很多意想不到的错误，不要急，慢慢解决就行</p>
+<p>  如果没有必须升级的必要，建议不要升级。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">hexo init blog</span><br><span class="line">cd blog</span><br><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<h1 id="5-常用命令"><a href="#5-常用命令" class="headerlink" title="(5)　常用命令"></a>(5)　常用命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">  npm install hexo -g #安装hexo</span><br><span class="line">  npm update hexo -g #升级  </span><br><span class="line"></span><br><span class="line">  hexo init #初始化</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  hexo init  创建目录</span><br><span class="line"></span><br><span class="line">  hexo new &quot;postName&quot;  # 新建文章</span><br><span class="line">  hexo new page &quot;pageName&quot;  # 新建页面</span><br><span class="line">  hexo generate  # 生成静态页面至public目录</span><br><span class="line">  hexo server  # 开启预览访问端口（默认端口4000，&apos;ctrl + c&apos;关闭server）</span><br><span class="line">  hexo deploy  # 将.deploy目录部署到GitHub</span><br><span class="line"></span><br><span class="line">  hexo generate #使用 Hexo 生成静态文件快速而且简单</span><br><span class="line">  hexo generate --watch #监视文件变动</span><br><span class="line"></span><br><span class="line">  hexo server  # Hexo会监视文件变动并自动更新，您无须重启服务器。</span><br><span class="line">  hexo server -s  # 静态模式</span><br><span class="line">  hexo server -p 5000  # 部署并使用5000端口</span><br><span class="line">  hexo server -i 192.168.1.1 # 自定义 IP</span><br><span class="line"></span><br><span class="line">  hexo server -g  #生成加预览</span><br><span class="line"></span><br><span class="line">  hexo deploy -g  #生成加部署</span><br><span class="line"></span><br><span class="line">完成后部署</span><br><span class="line">两个命令的作用是相同的</span><br><span class="line">  hexo generate --deploy</span><br><span class="line">  hexo deploy --generate</span><br><span class="line"></span><br><span class="line">  hexo new [layout] &lt;title&gt;</span><br><span class="line">  hexo new photo &quot;My Gallery&quot;</span><br><span class="line">  hexo new &quot;Hello World&quot; --lang tw</span><br><span class="line"></span><br><span class="line">  hexo help  # 查看帮助</span><br><span class="line">  hexo version  #查看Hexo的版本</span><br></pre></td></tr></table></figure>
+<h2 id="草稿-私密博客"><a href="#草稿-私密博客" class="headerlink" title="草稿 私密博客"></a>草稿 私密博客</h2><p>  草稿相当于很多博客都有的“私密文章”功能。<br>  $ hexo new draft “draft”<br>  会在source/_drafts目录下生成一个new-draft.md文件。但是这个文件不被显示在页面上，链接也访问不到。<br>  也就是说如果你想把某一篇文章移除显示，又不舍得删除，可以把它移动到_drafts目录之中。</p>
+<h1 id="6-遇到的错误"><a href="#6-遇到的错误" class="headerlink" title="(6)　遇到的错误"></a>(6)　遇到的错误</h1><h2 id="6-1-ERROR-Deployer-not-found-git"><a href="#6-1-ERROR-Deployer-not-found-git" class="headerlink" title="(6.1)　ERROR Deployer not found: git"></a>(6.1)　ERROR Deployer not found: git</h2><p><code>npm install hexo-deployer-git --save</code> 改了之后执行hexo deploy就可以了</p>
+<h2 id="6-2-Cannot-set-property-‘lastIndex’-of-undefined"><a href="#6-2-Cannot-set-property-‘lastIndex’-of-undefined" class="headerlink" title="(6.2)　Cannot set property ‘lastIndex’ of undefined"></a>(6.2)　Cannot set property ‘lastIndex’ of undefined</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">WKQ@WKQ-PC C:\blog</span><br><span class="line">&gt; hexo algolia --debug</span><br><span class="line">13:34:28.423 DEBUG Hexo version: 3.3.1</span><br><span class="line">13:34:28.426 DEBUG Working directory: C:\blog\</span><br><span class="line">13:34:28.601 DEBUG Config loaded: C:\blog\_config.yml</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">13:34:38.088 INFO  Error has occurred during collecting posts : TypeError: Cannot set property &apos;lastIndex&apos; of undefined</span><br><span class="line">13:34:38.089 FATAL Something&apos;s wrong. Maybe you can find the solution here: http://hexo.io/docs/troubleshooting.html</span><br><span class="line">TypeError: Cannot set property &apos;lastIndex&apos; of undefined</span><br><span class="line">    at highlight (C:\blog\node_modules\highlight.js\lib\highlight.js:511:35)</span><br><span class="line"></span><br><span class="line">13:34:39.040 DEBUG Database saved</span><br><span class="line">13:34:39.042 FATAL Cannot set property &apos;lastIndex&apos; of undefined</span><br><span class="line">TypeError: Cannot set property &apos;lastIndex&apos; of undefined</span><br><span class="line">    at highlight (C:\blog\node_modules\highlight.js\lib\highlight.js:511:35)</span><br></pre></td></tr></table></figure>
+<p>在博客的_config.yml中auto_detect设为false</p>
+<p>遇到这种情况，首先重新clean generate 一次<br>如果重新clean generate后还出现这个问题，可能是哪篇博客里的内容有问题，可以用排除法解决<br>如果hexo clean generate时报错信息变了，那就是另一个问题了</p>
+<h2 id="6-3-Please-provide-an-application-ID-Usage-algoliasearch-applicationID-apiKey-opts"><a href="#6-3-Please-provide-an-application-ID-Usage-algoliasearch-applicationID-apiKey-opts" class="headerlink" title="(6.3)　Please provide an application ID. Usage: algoliasearch(applicationID, apiKey, opts)"></a>(6.3)　Please provide an application ID. Usage: algoliasearch(applicationID, apiKey, opts)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">WKQ@WKQ-PC C:\blog</span><br><span class="line">&gt; hexo algolia --debug</span><br><span class="line">14:54:55.858 DEBUG Hexo version: 3.3.1</span><br><span class="line">14:54:55.862 DEBUG Working directory: C:\blog\</span><br><span class="line">14:54:56.037 DEBUG Config loaded: C:\blog\_config.yml</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">C:\blog\node_modules\bluebird\js\release\async.js:61</span><br><span class="line">        fn = function () &#123; throw arg; &#125;;</span><br><span class="line">                           ^</span><br><span class="line">AlgoliaSearchError: Please provide an application ID. Usage: algoliasearch(applicationID, apiKey, opts)</span><br><span class="line">    at AlgoliaSearchNodeJS.AlgoliaSearchCore (C:\blog\node_modules\algoliasearch\src\AlgoliaSearchCore.js:51:11)</span><br><span class="line">   </span><br><span class="line">    at processImmediate [as _immediateCallback] (timers.js:596:5)</span><br></pre></td></tr></table></figure>
+<p>algolia在新版本中没有使用apiKey和adminApiKey，而是使用环境变量的方式来获取apikey，需要配置一个环境变量<br>HEXO_ALGOLIA_INDEXING_KEY=’you apiKey’</p>
+<p>参考<a href="https://github.com/iissnan/hexo-theme-next/issues/1711" target="_blank" rel="noopener">next主题有关algolia的Issues</a> 和 <a href="https://github.com/oncletom/hexo-algolia/tree/20f6ecfde2b3348c2fba5ffc3963cc1ba7d2e3cb" target="_blank" rel="noopener">algolia官方文档</a> 后<br>发现algolia在新版本中没有使用apiKey和adminApiKey，而是使用环境变量的方式来获取apikey，<br>所以要本地配置一个环境变量，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">windows下 计算机 右键 属性 高级系统设置 环境变量 新建 HEXO_ALGOLIA_INDEXING_KEY xxx(对应的apikey)</span><br><span class="line">          或者可以使用dos命令行 set HEXO_ALGOLIA_INDEXING_KEY=xxx(对应的apikey)</span><br><span class="line">linux下 export HEXO_ALGOLIA_INDEXING_KEY=xxx(对应的apikey)</span><br></pre></td></tr></table></figure></p>
+<p>在<a href="https://www.algolia.com/apps/${your" target="_blank" rel="noopener">https://www.algolia.com/apps/${your</a> count}/api-keys/restricted页面修改配置<br><img src="/img/blog/algolia/algolia-write-key.png" alt="修改配置"></p>
+<h2 id="6-4-Invalid-Application-ID-or-API-key"><a href="#6-4-Invalid-Application-ID-or-API-key" class="headerlink" title="(6.4)　Invalid Application-ID or API key"></a>(6.4)　Invalid Application-ID or API key</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AlgoliaSearchError: Invalid Application-ID or API key</span><br><span class="line">    at success (C:\WorkSpaces\blog_test\node_modules\algoliasearch\src\AlgoliaSearchCore.js:351:32)</span><br><span class="line">    at process._tickCallback (internal/process/next_tick.js:103:7)</span><br></pre></td></tr></table></figure>
+<p>首先看key对不对，applicationID 有的版本里是appId<br>然后看value对不对，这个是自己申请的，复制就可以</p>
+<h2 id="6-5-AlgoliaSearchError-Record-at-the-position-84-objectID-xxxx-is-too-big-size-416696-bytes"><a href="#6-5-AlgoliaSearchError-Record-at-the-position-84-objectID-xxxx-is-too-big-size-416696-bytes" class="headerlink" title="(6.5)　AlgoliaSearchError: Record at the position 84 objectID=xxxx is too big size=416696 bytes."></a>(6.5)　AlgoliaSearchError: Record at the position 84 objectID=xxxx is too big size=416696 bytes.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AlgoliaSearchError: Record at the position 84 objectID=xxxx is too big size=416696 bytes. Contact us if you need an extended quota</span><br><span class="line">    at success (C:\blog\node_modules\algoliasearch\src\AlgoliaSearchCore.js:335:32)</span><br><span class="line">    at process._tickCallback (internal/process/next_tick.js:103:7)</span><br><span class="line"></span><br><span class="line">AlgoliaSearchError: Record at the position 14 objectID=ad9c6969914d2c69736bd053a3d977846ffd3ac9 is too big size=159686 bytes. Contact us if you need an extended quota</span><br><span class="line">    at success (C:\WorkSpaces\blog_test\node_modules\algoliasearch\src\AlgoliaSearchCore.js:351:32)</span><br><span class="line">    at process._tickCallback (internal/process/next_tick.js:103:7)</span><br></pre></td></tr></table></figure>
+<p>博客的字数太多，文件太大，把文件大小大于41K(我测试的博客文件大小为41K时更新algolia成功的最大大小)的博客移动位置或者删除</p>
+<h2 id="6-6-AlgoliaSearchRequestTimeoutError-Request-timedout-before-getting-a-response"><a href="#6-6-AlgoliaSearchRequestTimeoutError-Request-timedout-before-getting-a-response" class="headerlink" title="(6.6)　AlgoliaSearchRequestTimeoutError: Request timedout before getting a response"></a>(6.6)　AlgoliaSearchRequestTimeoutError: Request timedout before getting a response</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">AlgoliaSearchRequestTimeoutError: Request timedout before getting a response</span><br><span class="line">    at Timeout.timeout [as _onTimeout] (C:\WorkSpaces\blog_test\node_modules\algoliasearch\src\server\builds\node.js:234:14)</span><br><span class="line">    at ontimeout (timers.js:365:14)</span><br><span class="line">    at tryOnTimeout (timers.js:237:5)</span><br><span class="line">    at Timer.listOnTimeout (timers.js:207:5)</span><br></pre></td></tr></table></figure>
+<p>最后终于成功了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">WKQ@WKQ-PC C:\WorkSpaces\blog_test</span><br><span class="line">&gt; hexo algolia --debug</span><br><span class="line">14:33:23.642 DEBUG Hexo version: 3.3.8</span><br><span class="line"></span><br><span class="line">14:33:25.162 INFO  [Algolia] Identified 1 posts to index.</span><br><span class="line">14:33:25.164 INFO  [Algolia] Start indexing...</span><br><span class="line">14:33:28.255 INFO  [Algolia] Indexing done.</span><br></pre></td></tr></table></figure></p>
+<h2 id="6-7-ERROR-Deployer-not-found-git"><a href="#6-7-ERROR-Deployer-not-found-git" class="headerlink" title="(6.7)　ERROR Deployer not found: git"></a>(6.7)　ERROR Deployer not found: git</h2><p>  hexo 更新到3.0之后，deploy的type 的github需要改成git<br>  <code>npm install hexo-deployer-git --save</code></p>
+<p>##　(6.8)　给博客添加feed </p>
+<p>  安装hexo-generator-feed</p>
+<p>  <code>npm install hexo-generator-feed --save</code></p>
+<p>  配置到站点配置文件_config.yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#Extensions</span><br><span class="line">##Plugins: http://hexo.io/plugins/</span><br><span class="line">#RSS订阅</span><br><span class="line">plugin:</span><br><span class="line">- hexo-generator-feed</span><br><span class="line">#Feed Atom</span><br><span class="line">feed:</span><br><span class="line">type: atom</span><br><span class="line">path: atom.xml</span><br><span class="line">limit: 20</span><br></pre></td></tr></table></figure>
+<p>  最后，在你next主题下的_config.yml下，添加RSS订阅链接即可：<br>  <code>rss: /atom.xml</code></p>
+<h2 id="6-9-给博客生成一个站点地图"><a href="#6-9-给博客生成一个站点地图" class="headerlink" title="(6.9)　给博客生成一个站点地图"></a>(6.9)　给博客生成一个站点地图</h2><p>  安装hexo-generator-seo-friendly-sitemap</p>
+<p>  <code>$ npm install hexo-generator-seo-friendly-sitemap --save</code></p>
+<p>  在站点配置文件_config.yml 中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sitemap:</span><br><span class="line">    path: sitemap.xml</span><br></pre></td></tr></table></figure>
+<h2 id="6-10-遇到的问题"><a href="#6-10-遇到的问题" class="headerlink" title="(6.10)　遇到的问题"></a>(6.10)　遇到的问题</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules\chokidar\node_modules\fsevents):</span><br><span class="line">npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.1: wanted &#123;&quot;os&quot;:&quot;darwin&quot;,&quot;arch&quot;:&quot;any&quot;&#125; (current: &#123;&quot;os&quot;:&quot;win32&quot;,&quot;arch&quot;:&quot;x64&quot;&#125;)</span><br></pre></td></tr></table></figure>
+<p>  这不是错误，忽略就行 </p>
+<p>  <a href="http://stackoverflow.com/questions/40449117/dependencies-not-installed-error-npm-warn-optional-skipping-optional-dependen" target="_blank" rel="noopener">参考文章</a></p>
+<p>It is a warning that <strong>fseventsd</strong>.<br>its not an error.<br>its a MAC OS Specified, running on windows or Linux show this warning,this the only reason it is showing this warning, you can skip it..</p>
+<h2 id="6-11-bad-indentation-of-a-mapping-entry"><a href="#6-11-bad-indentation-of-a-mapping-entry" class="headerlink" title="(6.11)　bad indentation of a mapping entry"></a>(6.11)　bad indentation of a mapping entry</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">YAMLException: bad indentation of a mapping entry at line 9, column 4:</span><br><span class="line">       - xiecheng</span><br><span class="line">       ^</span><br><span class="line">    at generateError (C:\blog\node_modules\js-yaml\lib\js-yaml\loader.js:165:10)</span><br></pre></td></tr></table></figure>
+<h2 id="6-12-npm-ERR-Unexpected-end-of-JSON-input-while-parsing-near-‘…ttp”-”-0-0-2”-”-hasS’"><a href="#6-12-npm-ERR-Unexpected-end-of-JSON-input-while-parsing-near-‘…ttp”-”-0-0-2”-”-hasS’" class="headerlink" title="(6.12)　npm ERR! Unexpected end of JSON input while parsing near ‘…ttp”:”~0.0.2”},”_hasS’"></a>(6.12)　npm ERR! Unexpected end of JSON input while parsing near ‘…ttp”:”~0.0.2”},”_hasS’</h2><p>  <code>npm cache clean --force</code></p>
+<h2 id="6-13-设置Hexo不渲染-md或者-html"><a href="#6-13-设置Hexo不渲染-md或者-html" class="headerlink" title="(6.13)　 设置Hexo不渲染.md或者.html"></a>(6.13)　 设置Hexo不渲染.md或者.html</h2><p>  自己写的一些html或者谷歌百度认证的html不想让hexo编译，可以通过设置 skip_render 禁止hexo编译</p>
+<p>  在 source 文件夹下的所有 md 文件或者 html 文件都会被渲染，有时候我们不想这些文件被渲染怎么办？比如很多时候我们想要写一个 README.md 或者一些自定义的页面。比如百度或者谷歌在验证站长权限的时候，通常都会要求在主目录下添加一个 html 文件。</p>
+<p>  不渲染 md 文件<br>  使用上面的办法虽然不会渲染 md 文件，但是还是将 md 文件转化成了 html 文件，如果想保留原 md 文件后缀要怎么做呢？这就需要在 站点配置文件 _config.yml 中配置，找到 skip_render 参数，开始匹配的位置是基于你的 source_dir 的，一般来说，是你的 source 文件夹下。下面我分别列举几种常见的情况进行说明：</p>
+<p>  修改博客根目录下 _config.yml ，在 skip_render 后添加以下内容。<br>  注意：1. <code>_config.yml</code> 里有 <code>skip_render</code>，不需要再自己添加，否则会报 hexo skip_render  YAMLException: duplicated mapping key </p>
+<pre><code>2. html里引的js文件也设置一下，禁止编译，否则会出现意想不到的错误。
+3. html js 等 推荐使用UTF-8编码
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">skip_render: README.md</span><br><span class="line"># 单个文件夹下指定类型文件</span><br><span class="line">  - `test/*.md`</span><br><span class="line"># 单个文件夹下全部文件</span><br><span class="line">  - `test1/*.html`</span><br><span class="line"># 单个文件夹下全部文件以及子目录</span><br><span class="line">  - `test2/**`</span><br><span class="line">  - &quot;README.md&quot;</span><br><span class="line">  - &quot;file/**&quot;</span><br><span class="line">  - &quot;*.html&quot;</span><br></pre></td></tr></table></figure>
+<p>  在不想被渲染的 html 文件最上面添加如下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">layout: false</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
+<h1 id="7-调优"><a href="#7-调优" class="headerlink" title="(7)　调优"></a>(7)　调优</h1><p>  最近这几次执行hexo generate的时候发现特别慢，特别费时间，有一次generate用了20多分钟。 感觉不正常，今天正好有时间来找一下原因。<br>  使用debug来调试，如下<br>  <code>hexo  generate  --debug</code></p>
+<p>  结果发现有2个原因</p>
+<ol>
+<li>有一篇博客了一行有上千字，导致generate的时生成对应的index.html耗时较长，生成这个页面用了6min44s</li>
+<li>图片里有一张test.svg的矢量图，有1.48M，特别耗时，用了18s</li>
+<li><p>生成index.html 和 page/2/index.html的时候，中间花了6min53s，正好那篇博客(一行有上千字)在这两个页面里</p>
+<p>把上千行文字删除一部分，剩50 - 200字左右就可以了<br>把test.svg删掉</p>
+</li>
+</ol>
+<p>优化前<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">12:29:12.409 INFO  481 files generated in 14 min</span><br><span class="line">12:29:12.750 DEBUG Database saved</span><br></pre></td></tr></table></figure></p>
+<p>优化后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">14:46:15.546 INFO  483 files generated in 33 s</span><br><span class="line">14:46:15.741 DEBUG Database saved</span><br></pre></td></tr></table></figure></p>
+<p>  wordcount也比较费时，嫌时间长可以关掉</p>
+<h2 id="7-2-优化Mathjax"><a href="#7-2-优化Mathjax" class="headerlink" title="(7.2)　优化Mathjax"></a>(7.2)　优化Mathjax</h2><p>  加载Mathjax的过程很费时间，根据next主题的默认写法，即使在网页中并没有生成公式时, 也会加载最基本 MathJax.js。为解决此问题，可根据 这篇文章 的做法，只有在用到公式的页面才加载 Mathjax。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://blog.csdn.net/jzooo/article/details/46781805" target="_blank" rel="noopener">零基础免费搭建个人博客-hexo+github</a><br>[2] <a href="http://www.cnblogs.com/shfanzie/p/6671429.html" target="_blank" rel="noopener">Hexo + Github Pages 搭建个人博客</a><br>[3] <a href="http://www.cnblogs.com/daoyi/p/hexo-duo-zhu-ti-qie-huan.html" target="_blank" rel="noopener">hexo多主题切换</a><br>[4] <a href="http://www.zhaiqianfeng.com/2017/03/changyan-for-hexo-next-theme.html" target="_blank" rel="noopener">为Hexo的Next主题增加畅言评论的支持</a><br>[5] <a href="http://theme-next.iissnan.com/getting-started.html#menu-settings" target="_blank" rel="noopener">Next主题官方文档</a><br>[6] <a href="http://cherryblog.site/Hexo-high-level-tutorialcloudmusic,bg-customthemes-statistical.html#more" target="_blank" rel="noopener">Hexo 4：【高阶】NexT 主题优化之加入网易云音乐、网易云跟帖、动态背景、自定义主题、统计功能</a><br>[7] <a href="https://segmentfault.com/a/1190000009544924" target="_blank" rel="noopener">在文章底部增加版权信息</a><br>[8] <a href="http://blog.csdn.net/yingpaixiaochuan/article/details/68954103" target="_blank" rel="noopener">网易云跟帖</a><br>[9] <a href="http://blog.niices.com/Hexo-Next-Algolia-Search/" target="_blank" rel="noopener">Hexo+Next主题集成Algolia搜索</a><br>[10] <a href="https://www.ezlippi.com/blog/2017/02/hexo-search.html" target="_blank" rel="noopener">Hexo博客添加站内搜索</a><br>[11] <a href="http://yelog.org/2017/06/26/gitment/" target="_blank" rel="noopener">完美替代多说-gitment</a><br>[12] <a href="https://www.zhihu.com/question/33324071" target="_blank" rel="noopener">hexo下新建页面下如何放多个文章</a><br>[13] <a href="http://www.jianshu.com/p/c23902f93558" target="_blank" rel="noopener">Hexo系列教程之三：next主题的配置和优化</a><br>[14] <a href="https://github.com/iissnan/hexo-theme-next/issues/1732" target="_blank" rel="noopener">分类和标签不能显示(点击)</a><br>[15] <a href="https://github.com/iTimeTraveler/hexo-theme-hiker/issues/9" target="_blank" rel="noopener">无法生成categories和tags的页面</a><br>[16] <a href="http://baoxiehao.com/2014/05/17/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96/#" target="_blank" rel="noopener">Hexo博客优化</a><br>[17] <a href="https://segmentfault.com/a/1190000008738089" target="_blank" rel="noopener">2017年最新基于hexo搭建个人免费博客——从零开始</a><br>[18] <a href="https://ioliu.cn/2017/add-valine-comments-to-your-blog/" target="_blank" rel="noopener">Valine – 一款极简的评论系统</a><br>[19] <a href="http://www.jeyzhang.com/hexo-next-add-post-views.html" target="_blank" rel="noopener">Hexo的NexT主题个性化：添加文章阅读量</a><br>[20] <a href="https://pages.github.com/" target="_blank" rel="noopener">github pages</a><br>[21] <a href="https://coding.net/help/doc/pages/domain.html" target="_blank" rel="noopener">绑定自定义域名</a><br>[22] <a href="http://www.jianshu.com/p/465830080ea9" target="_blank" rel="noopener">HEXO+Github,搭建属于自己的博客</a><br>[23] <a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">hexo官方中文资料</a><br>[24] <a href="https://github.com/iissnan/hexo-theme-next/issues/1711" target="_blank" rel="noopener">AlgoliaSearchError: Please provide an API key. Update index fails</a><br>[25] <a href="https://github.com/oncletom/hexo-algolia/tree/20f6ecfde2b3348c2fba5ffc3963cc1ba7d2e3cb" target="_blank" rel="noopener">hexo-algolia</a><br>[26] <a href="https://github.com/iissnan/hexo-theme-next/issues/1293" target="_blank" rel="noopener">配置algolia，跟新algolia失败 #1293</a><br>[27] <a href="https://github.com/iissnan/hexo-theme-next/issues/1571" target="_blank" rel="noopener">5.1.0使用algolia搜索问题 #1571</a><br>[28] <a href="https://lodge.statamic.com/questions/2300-algolia-record-too-big" target="_blank" rel="noopener">2300-algolia-record-too-big  </a><br>[29] <a href="https://github.com/statamic/v2-hub/issues/887#issuecomment-242837630" target="_blank" rel="noopener">Algolia error when my index is updated #887</a><br>[30] <a href="https://lodge.statamic.com/questions/2300-algolia-record-too-big#reply-2" target="_blank" rel="noopener">2300-algolia-record-too-big</a><br>[31] <a href="https://g2ex.github.io/2015/10/14/Hexo-with-SSL-Hosted-on-Github-Page/" target="_blank" rel="noopener">为Github的Hexo博客启用SSL/TLS</a><br>[32] <a href="https://blog.kinpzz.com/2016/12/16/add-https/" target="_blank" rel="noopener">给hexo加上HTTPS</a><br>[33] <a href="https://github.com/iissnan/hexo-theme-next/issues?utf8=%E2%9C%93&amp;q=Mathjax" target="_blank" rel="noopener">issues iissnan/hexo-theme-next</a><br>[34] <a href="https://github.com/iissnan/hexo-theme-next/issues/955" target="_blank" rel="noopener">如何让 NexT 不默认启用 Mathjax?</a><br>[35] <a href="https://github.com/iissnan/hexo-theme-next/pull/887" target="_blank" rel="noopener">load mathjax only when mathjax is needed</a><br>[36] <a href="https://gaomf.cn/2015/11/01/Hexo%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6/" target="_blank" rel="noopener">Hexo博客优化加载速度</a><br>[37] <a href="https://github.com/hexojs/hexo/issues/1913" target="_blank" rel="noopener">TypeError: Cannot set property ‘lastIndex’ of undefined</a><br>[38] <a href="https://www.jianshu.com/p/1aa1485e3a58" target="_blank" rel="noopener">加速访问基于 Github Pages 和 Hexo 的博客</a><br>[39] <a href="https://blog.csdn.net/ganzhilin520/article/details/79057774" target="_blank" rel="noopener">Hexo不渲染.md或者.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/blog/" rel="tag"># blog</a>
+          
+            <a href="/tags/hexo/" rel="tag"># hexo</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/06/springboot-note/" rel="next" title="springboot 笔记">
+                <i class="fa fa-chevron-left"></i> springboot 笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/14/mysql-notes/" rel="prev" title="MySQL 笔记">
+                MySQL 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-安装软件"><span class="nav-number">1.</span> <span class="nav-text">(1)　安装软件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-安装git"><span class="nav-number">1.1.</span> <span class="nav-text">(1.1)　安装git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-安装Node-js"><span class="nav-number">1.2.</span> <span class="nav-text">(1.2)　安装Node.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-配置使用"><span class="nav-number">1.3.</span> <span class="nav-text">(1.3)　配置使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-hexo其他配置"><span class="nav-number">2.</span> <span class="nav-text">(2)　hexo其他配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-RSS和站点地图"><span class="nav-number">2.1.</span> <span class="nav-text">(2.1)　RSS和站点地图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-添加tags页面和categories页面"><span class="nav-number">2.2.</span> <span class="nav-text">(2.2)　添加tags页面和categories页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-添加字数统计"><span class="nav-number">2.3.</span> <span class="nav-text">(2.3)　添加字数统计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-集成Algolia搜索"><span class="nav-number">2.4.</span> <span class="nav-text">(2.4)　集成Algolia搜索</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-域名解析"><span class="nav-number">3.</span> <span class="nav-text">(3)　域名解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-hexo升级"><span class="nav-number">4.</span> <span class="nav-text">(4)  hexo升级</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-常用命令"><span class="nav-number">5.</span> <span class="nav-text">(5)　常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#草稿-私密博客"><span class="nav-number">5.1.</span> <span class="nav-text">草稿 私密博客</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-遇到的错误"><span class="nav-number">6.</span> <span class="nav-text">(6)　遇到的错误</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1-ERROR-Deployer-not-found-git"><span class="nav-number">6.1.</span> <span class="nav-text">(6.1)　ERROR Deployer not found: git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2-Cannot-set-property-‘lastIndex’-of-undefined"><span class="nav-number">6.2.</span> <span class="nav-text">(6.2)　Cannot set property ‘lastIndex’ of undefined</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3-Please-provide-an-application-ID-Usage-algoliasearch-applicationID-apiKey-opts"><span class="nav-number">6.3.</span> <span class="nav-text">(6.3)　Please provide an application ID. Usage: algoliasearch(applicationID, apiKey, opts)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4-Invalid-Application-ID-or-API-key"><span class="nav-number">6.4.</span> <span class="nav-text">(6.4)　Invalid Application-ID or API key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-5-AlgoliaSearchError-Record-at-the-position-84-objectID-xxxx-is-too-big-size-416696-bytes"><span class="nav-number">6.5.</span> <span class="nav-text">(6.5)　AlgoliaSearchError: Record at the position 84 objectID=xxxx is too big size=416696 bytes.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-6-AlgoliaSearchRequestTimeoutError-Request-timedout-before-getting-a-response"><span class="nav-number">6.6.</span> <span class="nav-text">(6.6)　AlgoliaSearchRequestTimeoutError: Request timedout before getting a response</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-7-ERROR-Deployer-not-found-git"><span class="nav-number">6.7.</span> <span class="nav-text">(6.7)　ERROR Deployer not found: git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-9-给博客生成一个站点地图"><span class="nav-number">6.8.</span> <span class="nav-text">(6.9)　给博客生成一个站点地图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-10-遇到的问题"><span class="nav-number">6.9.</span> <span class="nav-text">(6.10)　遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-11-bad-indentation-of-a-mapping-entry"><span class="nav-number">6.10.</span> <span class="nav-text">(6.11)　bad indentation of a mapping entry</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-12-npm-ERR-Unexpected-end-of-JSON-input-while-parsing-near-‘…ttp”-”-0-0-2”-”-hasS’"><span class="nav-number">6.11.</span> <span class="nav-text">(6.12)　npm ERR! Unexpected end of JSON input while parsing near ‘…ttp”:”~0.0.2”},”_hasS’</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-13-设置Hexo不渲染-md或者-html"><span class="nav-number">6.12.</span> <span class="nav-text">(6.13)　 设置Hexo不渲染.md或者.html</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-调优"><span class="nav-number">7.</span> <span class="nav-text">(7)　调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-优化Mathjax"><span class="nav-number">7.1.</span> <span class="nav-text">(7.2)　优化Mathjax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

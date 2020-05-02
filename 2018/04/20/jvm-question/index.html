@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="(1) Java 内存分配？ 1)  Java虚拟机在执行Java的过程中会把管理的内存划分为若干个不同的数据区域。这些区域有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，而有的区域则依赖线程的启动和结束而创建和销毁。  程序计数器、java虚拟机栈、本地方法栈、堆、方法区、常量池  Java内存区域划分、内存分配原理    2)  Java 内存分配全面浅析   (2)">
+<meta name="keywords" content="java,interview,jvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jvm 常见面试题">
+<meta property="og:url" content="http://weikeqin.cn/2018/04/20/jvm-question/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="(1) Java 内存分配？ 1)  Java虚拟机在执行Java的过程中会把管理的内存划分为若干个不同的数据区域。这些区域有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，而有的区域则依赖线程的启动和结束而创建和销毁。  程序计数器、java虚拟机栈、本地方法栈、堆、方法区、常量池  Java内存区域划分、内存分配原理    2)  Java 内存分配全面浅析   (2)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-04T06:36:52.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jvm 常见面试题">
+<meta name="twitter:description" content="(1) Java 内存分配？ 1)  Java虚拟机在执行Java的过程中会把管理的内存划分为若干个不同的数据区域。这些区域有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，而有的区域则依赖线程的启动和结束而创建和销毁。  程序计数器、java虚拟机栈、本地方法栈、堆、方法区、常量池  Java内存区域划分、内存分配原理    2)  Java 内存分配全面浅析   (2)">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2018/04/20/jvm-question/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>jvm 常见面试题 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2018/04/20/jvm-question/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">jvm 常见面试题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-20 09:31:31" itemprop="dateCreated datePublished" datetime="2018-04-20T09:31:31+08:00">2018-04-20</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/20/jvm-question/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/20/jvm-question/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/04/20/jvm-question/" class="leancloud_visitors" data-flag-title="jvm 常见面试题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-Java-内存分配？"><a href="#1-Java-内存分配？" class="headerlink" title="(1) Java 内存分配？"></a>(1) Java 内存分配？</h1><p> 1)<br>  Java虚拟机在执行Java的过程中会把管理的内存划分为若干个不同的数据区域。这些区域有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，而有的区域则依赖线程的启动和结束而创建和销毁。<br>  程序计数器、java虚拟机栈、本地方法栈、堆、方法区、常量池<br>  <a href="https://blog.csdn.net/OyangYujun/article/details/41173747" target="_blank" rel="noopener">Java内存区域划分、内存分配原理</a>  </p>
+<p> 2)<br>  <a href="https://blog.csdn.net/shimiso/article/details/8595564" target="_blank" rel="noopener">Java 内存分配全面浅析</a>  </p>
+<h1 id="2-Java-堆的结构是什么样子的？"><a href="#2-Java-堆的结构是什么样子的？" class="headerlink" title="(2) Java 堆的结构是什么样子的？"></a>(2) Java 堆的结构是什么样子的？</h1><p>  站在垃圾收集器的角度来看，可以把内存分为新生代与老年代。</p>
+<h1 id="什么是堆中的永久代（Perm-Gen-space）"><a href="#什么是堆中的永久代（Perm-Gen-space）" class="headerlink" title="什么是堆中的永久代（Perm Gen space）?"></a>什么是堆中的永久代（Perm Gen space）?</h1><h1 id="说说各个区域的作用？"><a href="#说说各个区域的作用？" class="headerlink" title="说说各个区域的作用？"></a>说说各个区域的作用？</h1><p>  程序计数器<br>  java虚拟机栈<br>  本地方法栈<br>  堆<br>  方法区<br>  常量池</p>
+<h1 id="Java-中会存在内存泄漏吗，简述一下？"><a href="#Java-中会存在内存泄漏吗，简述一下？" class="headerlink" title="Java 中会存在内存泄漏吗，简述一下？"></a>Java 中会存在内存泄漏吗，简述一下？</h1><p>  在 Java 中，内存泄漏就是存在一些被分配的对象，这些对象有下面两个特点，首先，这些对象是可达的，即在有向图中，存在通路可以与其相连（也就是说仍存在该内存对象的引用）；其次，这些对象是无用的，即程序以后不会再使用这些对象。如果对象满足这两个条件，这些对象就可以判定为 Java 中的内存泄漏，这些对象不会被 GC 所回收，然而它却占用内存。</p>
+<h1 id="Java-类加载过程？"><a href="#Java-类加载过程？" class="headerlink" title="Java 类加载过程？"></a>Java 类加载过程？</h1><h1 id="描述一下-JVM-加载-Class-文件的原理机制"><a href="#描述一下-JVM-加载-Class-文件的原理机制" class="headerlink" title="描述一下 JVM 加载 Class 文件的原理机制?"></a>描述一下 JVM 加载 Class 文件的原理机制?</h1><h1 id="什么是类加载器？"><a href="#什么是类加载器？" class="headerlink" title="什么是类加载器？"></a>什么是类加载器？</h1><h1 id="类加载器有哪些？"><a href="#类加载器有哪些？" class="headerlink" title="类加载器有哪些？"></a>类加载器有哪些？</h1><h1 id="什么是tomcat类加载机制？"><a href="#什么是tomcat类加载机制？" class="headerlink" title="什么是tomcat类加载机制？"></a>什么是tomcat类加载机制？</h1><h1 id="类加载器双亲委派模型机制？"><a href="#类加载器双亲委派模型机制？" class="headerlink" title="类加载器双亲委派模型机制？"></a>类加载器双亲委派模型机制？</h1><h1 id="什么是GC-为什么要有-GC？"><a href="#什么是GC-为什么要有-GC？" class="headerlink" title="什么是GC? 为什么要有 GC？"></a>什么是GC? 为什么要有 GC？</h1><h1 id="简述一下Java-垃圾回收机制？"><a href="#简述一下Java-垃圾回收机制？" class="headerlink" title="简述一下Java 垃圾回收机制？"></a>简述一下Java 垃圾回收机制？</h1><h1 id="如何判断一个对象是否存活？"><a href="#如何判断一个对象是否存活？" class="headerlink" title="如何判断一个对象是否存活？"></a>如何判断一个对象是否存活？</h1><h1 id="垃圾回收的优点和原理，并考虑-2-种回收机制？"><a href="#垃圾回收的优点和原理，并考虑-2-种回收机制？" class="headerlink" title="垃圾回收的优点和原理，并考虑 2 种回收机制？"></a>垃圾回收的优点和原理，并考虑 2 种回收机制？</h1><h1 id="垃圾回收器的基本原理是什么？"><a href="#垃圾回收器的基本原理是什么？" class="headerlink" title="垃圾回收器的基本原理是什么？"></a>垃圾回收器的基本原理是什么？</h1><h1 id="垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？"><a href="#垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？" class="headerlink" title="垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？"></a>垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？</h1><h1 id="深拷贝和浅拷贝？"><a href="#深拷贝和浅拷贝？" class="headerlink" title="深拷贝和浅拷贝？"></a>深拷贝和浅拷贝？</h1><h1 id="System-gc-和-Runtime-gc-会做些什么？"><a href="#System-gc-和-Runtime-gc-会做些什么？" class="headerlink" title="System.gc() 和 Runtime.gc() 会做些什么？"></a>System.gc() 和 Runtime.gc() 会做些什么？</h1><h1 id="什么是分布式垃圾回收（DGC）？它是如何工作的？"><a href="#什么是分布式垃圾回收（DGC）？它是如何工作的？" class="headerlink" title="什么是分布式垃圾回收（DGC）？它是如何工作的？"></a>什么是分布式垃圾回收（DGC）？它是如何工作的？</h1><h1 id="串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？"><a href="#串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？" class="headerlink" title="串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？"></a>串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？</h1><h1 id="在-Java-中，对象什么时候可以被垃圾回收？"><a href="#在-Java-中，对象什么时候可以被垃圾回收？" class="headerlink" title="在 Java 中，对象什么时候可以被垃圾回收？"></a>在 Java 中，对象什么时候可以被垃圾回收？</h1><h1 id="简述Minor-GC-和-Major-GC？"><a href="#简述Minor-GC-和-Major-GC？" class="headerlink" title="简述Minor GC 和 Major GC？"></a>简述Minor GC 和 Major GC？</h1><h1 id="Java-中垃圾收集的方法有哪些？"><a href="#Java-中垃圾收集的方法有哪些？" class="headerlink" title="Java 中垃圾收集的方法有哪些？"></a>Java 中垃圾收集的方法有哪些？</h1><h1 id="讲讲你理解的性能评价及测试指标？"><a href="#讲讲你理解的性能评价及测试指标？" class="headerlink" title="讲讲你理解的性能评价及测试指标？"></a>讲讲你理解的性能评价及测试指标？</h1><h1 id="常用的性能优化方式有哪些？"><a href="#常用的性能优化方式有哪些？" class="headerlink" title="常用的性能优化方式有哪些？"></a>常用的性能优化方式有哪些？</h1><h1 id="说说分布式缓存和一致性哈希？"><a href="#说说分布式缓存和一致性哈希？" class="headerlink" title="说说分布式缓存和一致性哈希？"></a>说说分布式缓存和一致性哈希？</h1><h1 id="同步与异步？阻塞与非阻塞？"><a href="#同步与异步？阻塞与非阻塞？" class="headerlink" title="同步与异步？阻塞与非阻塞？"></a>同步与异步？阻塞与非阻塞？</h1><h1 id="什么是GC调优？"><a href="#什么是GC调优？" class="headerlink" title="什么是GC调优？"></a>什么是GC调优？</h1><h1 id="常见异步的手段有哪些？"><a href="#常见异步的手段有哪些？" class="headerlink" title="常见异步的手段有哪些？"></a>常见异步的手段有哪些？</h1><p>内存模型以及分区，每个区放什么<br>一个对象从创建到销毁都是怎么在这些部分里存活和转移的<br>内存的哪些部分会参与GC的回收，回收策略是什么<br>Java的内存模型是怎么设计的，为什么要这么设计<br>结合内存模型的设计谈谈volatile关键字的作用</p>
+<p>深入Java虚拟机的内存结构<br>Java底层字节码分析<br>类加载机制详细讲解<br>个内存区域垃圾回收机制<br>深入讲解垃圾收集器<br>JDK调优工具</p>
+<p>1、什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？</p>
+<p>2、Java代码是怎么运行的？</p>
+<p>3、Java虚拟机是如何加载Java类的?</p>
+<p>4、JVM运行内存的分类</p>
+<p>5、如何监控和诊断JVM堆内和堆外内存使用？</p>
+<p>6、Java四引用是什么？</p>
+<p>7、如何理解JVM内置的编译或GC日志？</p>
+<p>8、JVM的永久代中会发生垃圾回收么？</p>
+<p>9、Java中的两种异常类型是什么？他们有什么区别？</p>
+<p>10、JVM是如何实现同步的？</p>
+<p>11、Java内存模型是什么？</p>
+<p>12、即时编译器有哪些优化？</p>
+<p>13、在什么情况下重复读写操作会被优化？</p>
+<p>14、什么样的垃圾才被回收？</p>
+<p>15、什么时候会导致垃圾回收？</p>
+<p>16、如何利用JFR和JMC监控Java程序？</p>
+<p>17、如何利用Unsafe API 绕开 JVM的控制？</p>
+<p>18、如何利用字节码注入为已有代码加料？</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/interview/" rel="tag"># interview</a>
+          
+            <a href="/tags/jvm/" rel="tag"># jvm</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/20/concurrent-question/" rel="next" title="并发 常见面试题">
+                <i class="fa fa-chevron-left"></i> 并发 常见面试题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/20/spring-question/" rel="prev" title="spring 常见面试题">
+                spring 常见面试题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Java-内存分配？"><span class="nav-number">1.</span> <span class="nav-text">(1) Java 内存分配？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Java-堆的结构是什么样子的？"><span class="nav-number">2.</span> <span class="nav-text">(2) Java 堆的结构是什么样子的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是堆中的永久代（Perm-Gen-space）"><span class="nav-number">3.</span> <span class="nav-text">什么是堆中的永久代（Perm Gen space）?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说说各个区域的作用？"><span class="nav-number">4.</span> <span class="nav-text">说说各个区域的作用？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-中会存在内存泄漏吗，简述一下？"><span class="nav-number">5.</span> <span class="nav-text">Java 中会存在内存泄漏吗，简述一下？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-类加载过程？"><span class="nav-number">6.</span> <span class="nav-text">Java 类加载过程？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#描述一下-JVM-加载-Class-文件的原理机制"><span class="nav-number">7.</span> <span class="nav-text">描述一下 JVM 加载 Class 文件的原理机制?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是类加载器？"><span class="nav-number">8.</span> <span class="nav-text">什么是类加载器？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类加载器有哪些？"><span class="nav-number">9.</span> <span class="nav-text">类加载器有哪些？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是tomcat类加载机制？"><span class="nav-number">10.</span> <span class="nav-text">什么是tomcat类加载机制？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类加载器双亲委派模型机制？"><span class="nav-number">11.</span> <span class="nav-text">类加载器双亲委派模型机制？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是GC-为什么要有-GC？"><span class="nav-number">12.</span> <span class="nav-text">什么是GC? 为什么要有 GC？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述一下Java-垃圾回收机制？"><span class="nav-number">13.</span> <span class="nav-text">简述一下Java 垃圾回收机制？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何判断一个对象是否存活？"><span class="nav-number">14.</span> <span class="nav-text">如何判断一个对象是否存活？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收的优点和原理，并考虑-2-种回收机制？"><span class="nav-number">15.</span> <span class="nav-text">垃圾回收的优点和原理，并考虑 2 种回收机制？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收器的基本原理是什么？"><span class="nav-number">16.</span> <span class="nav-text">垃圾回收器的基本原理是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？"><span class="nav-number">17.</span> <span class="nav-text">垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深拷贝和浅拷贝？"><span class="nav-number">18.</span> <span class="nav-text">深拷贝和浅拷贝？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#System-gc-和-Runtime-gc-会做些什么？"><span class="nav-number">19.</span> <span class="nav-text">System.gc() 和 Runtime.gc() 会做些什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是分布式垃圾回收（DGC）？它是如何工作的？"><span class="nav-number">20.</span> <span class="nav-text">什么是分布式垃圾回收（DGC）？它是如何工作的？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？"><span class="nav-number">21.</span> <span class="nav-text">串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-Java-中，对象什么时候可以被垃圾回收？"><span class="nav-number">22.</span> <span class="nav-text">在 Java 中，对象什么时候可以被垃圾回收？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简述Minor-GC-和-Major-GC？"><span class="nav-number">23.</span> <span class="nav-text">简述Minor GC 和 Major GC？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-中垃圾收集的方法有哪些？"><span class="nav-number">24.</span> <span class="nav-text">Java 中垃圾收集的方法有哪些？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#讲讲你理解的性能评价及测试指标？"><span class="nav-number">25.</span> <span class="nav-text">讲讲你理解的性能评价及测试指标？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用的性能优化方式有哪些？"><span class="nav-number">26.</span> <span class="nav-text">常用的性能优化方式有哪些？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#说说分布式缓存和一致性哈希？"><span class="nav-number">27.</span> <span class="nav-text">说说分布式缓存和一致性哈希？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同步与异步？阻塞与非阻塞？"><span class="nav-number">28.</span> <span class="nav-text">同步与异步？阻塞与非阻塞？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是GC调优？"><span class="nav-number">29.</span> <span class="nav-text">什么是GC调优？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见异步的手段有哪些？"><span class="nav-number">30.</span> <span class="nav-text">常见异步的手段有哪些？</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

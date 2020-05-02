@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="新冠形病毒(Novel Conronavirus Pneumonia)疫情数据模拟。   该模拟参考网上公开数据，模拟(数据可能不准确)只是为了让大家心里有个数，不要出门或尽量少出门。  由于建模使用数据误差较大，结果仅供参考。   需要数据   全国人口统计数据 行政区划分数据 人口流动数据 全国各小区数据 高考各大高校录取数据 疫情数据 ( 卫健委公布的各省市确诊人数、 同行数据 ) 使模">
+<meta name="keywords" content="data">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新冠形病毒疫情传染数据模拟">
+<meta property="og:url" content="http://weikeqin.cn/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="新冠形病毒(Novel Conronavirus Pneumonia)疫情数据模拟。   该模拟参考网上公开数据，模拟(数据可能不准确)只是为了让大家心里有个数，不要出门或尽量少出门。  由于建模使用数据误差较大，结果仅供参考。   需要数据   全国人口统计数据 行政区划分数据 人口流动数据 全国各小区数据 高考各大高校录取数据 疫情数据 ( 卫健委公布的各省市确诊人数、 同行数据 ) 使模">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-17T08:09:43.687Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="新冠形病毒疫情传染数据模拟">
+<meta name="twitter:description" content="新冠形病毒(Novel Conronavirus Pneumonia)疫情数据模拟。   该模拟参考网上公开数据，模拟(数据可能不准确)只是为了让大家心里有个数，不要出门或尽量少出门。  由于建模使用数据误差较大，结果仅供参考。   需要数据   全国人口统计数据 行政区划分数据 人口流动数据 全国各小区数据 高考各大高校录取数据 疫情数据 ( 卫健委公布的各省市确诊人数、 同行数据 ) 使模">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>新冠形病毒疫情传染数据模拟 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">新冠形病毒疫情传染数据模拟
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-02 15:42:33" itemprop="dateCreated datePublished" datetime="2020-02-02T15:42:33+08:00">2020-02-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/data/" itemprop="url" rel="index"><span itemprop="name">data</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/" class="leancloud_visitors" data-flag-title="新冠形病毒疫情传染数据模拟">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>  新冠形病毒(Novel Conronavirus Pneumonia)疫情数据模拟。</p>
+<p>  该模拟参考网上公开数据，模拟(数据可能不准确)只是为了让大家心里有个数，不要出门或尽量少出门。<br>  由于建模使用数据误差较大，结果仅供参考。</p>
+<p>  需要数据 </p>
+<ol>
+<li>全国人口统计数据</li>
+<li>行政区划分数据</li>
+<li>人口流动数据</li>
+<li>全国各小区数据</li>
+<li>高考各大高校录取数据</li>
+<li><p>疫情数据 ( 卫健委公布的各省市确诊人数、 同行数据 )</p>
+<p>使模型更加准确所需数据</p>
+</li>
+<li>通信运营商数据  (从2019.12.01~2020.02.16 用于通过手机定位)<br>中国联通已经开始行动了，发送 cxmyd#身份证后四位 到 10010 可查询近14日内到访的省市信息(驻留超过4小时)，公益服务。</li>
+<li><p>确诊人数经纬度坐标数据  (用于预防)</p>
+<p>使模型更加准确需要优化的点：</p>
+</li>
+<li>数据层面<br>人口数据更详细，具体到 城市具体到街道、小区，城镇具体到 村 甚至 小组。<br>人口流动数据更详细， @通信运营商@中国电信@中国移动@中国联通@今日头条@美团@阿里巴巴@京东</li>
+<li>建模层面<br>数据统计需要耗费大量人力物力，不可能做到100%<br>在当前数据的情况下，需要部分数据缺失，部分数据延迟<br>根据 概率论和数理统计 以及 离散数学 去估计、模拟可能的情况。         </li>
+</ol>
+<a id="more"></a>
+<h1 id="1-数据准备"><a href="#1-数据准备" class="headerlink" title="(1) 数据准备"></a>(1) 数据准备</h1><ol>
+<li>全国人口统计数据</li>
+<li>行政区划分数据</li>
+<li>人口流动数据</li>
+<li>全国各小区数据<br>高考各大高校录取数据</li>
+<li>卫健委每天确诊数据</li>
+<li><p>确诊数据 + 疑似数据</p>
+<p>使模型更加准确所需数据</p>
+</li>
+<li>通信运营商数据  (从2019.12.01~2020.02.16 用于通过手机定位)</li>
+<li>确诊人数经纬度坐标数据  (用于预防)</li>
+</ol>
+<h2 id="1-1-国家统计局-人口普查数据"><a href="#1-1-国家统计局-人口普查数据" class="headerlink" title="(1.1) 国家统计局-人口普查数据"></a>(1.1) 国家统计局-人口普查数据</h2><p> <a href="http://www.gov.cn/shuju/2017sjcs/sjxqpage.htm" target="_blank" rel="noopener">中华人民共和国中央人民政府-数据-数据详情-总人口</a><br> <a href="http://spcx.www.gov.cn/ZFW-AccessPlatform/gov/np/export.do?selectLegend=%25E5%25B9%25B4%25E6%259C%25AB%25E4%25BA%25BA%25E5%258F%25A3%25EF%25BC%2588%25E4%25B8%2587%25E4%25BA%25BA%25EF%25BC%2589&amp;startYear=2002&amp;endYear=2018" target="_blank" rel="noopener">总人口数据下载</a></p>
+<p> <a href="http://www.stats.gov.cn/tjsj/pcsj/" target="_blank" rel="noopener">国家统计局-普查数据</a><br> <a href="http://www.stats.gov.cn/tjsj/pcsj/rkpc/6rp/indexce.htm" target="_blank" rel="noopener">2010年第6次人口普查数据</a></p>
+<p> <a href="http://www.stats.gov.cn/tjsj/pcsj/rkpc/6rp/lefte.htm" target="_blank" rel="noopener">第6次人口普查数据 索引</a></p>
+<p> 对应下载文件  <a href="http://www.stats.gov.cn/tjsj/pcsj/rkpc/6rp/excel/A0101a.xls" target="_blank" rel="noopener">http://www.stats.gov.cn/tjsj/pcsj/rkpc/6rp/excel/A0101a.xls</a></p>
+<p> 各县市人口通过百度百科获取，结果基本准确。数据会有一些偏差。<br> 村镇人口通过百度百科获取，结果不太准确</p>
+<h3 id="1-1-1-各年全国总人口"><a href="#1-1-1-各年全国总人口" class="headerlink" title="(1.1.1) 各年全国总人口"></a>(1.1.1) 各年全国总人口</h3><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>统计时间</th>
+<th>年末人口（万人）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>17</td>
+<td>2018</td>
+<td>139538</td>
+</tr>
+<tr>
+<td>16</td>
+<td>2017</td>
+<td>139008</td>
+</tr>
+<tr>
+<td>15</td>
+<td>2016</td>
+<td>138271</td>
+</tr>
+<tr>
+<td>14</td>
+<td>2015</td>
+<td>137462</td>
+</tr>
+<tr>
+<td>13</td>
+<td>2014</td>
+<td>136782</td>
+</tr>
+<tr>
+<td>12</td>
+<td>2013</td>
+<td>136072</td>
+</tr>
+<tr>
+<td>11</td>
+<td>2012</td>
+<td>135404</td>
+</tr>
+<tr>
+<td>10</td>
+<td>2011</td>
+<td>134735</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2010</td>
+<td>134091</td>
+</tr>
+<tr>
+<td>8</td>
+<td>2009</td>
+<td>133450</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2008</td>
+<td>132802</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2007</td>
+<td>132129</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2006</td>
+<td>131448</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2005</td>
+<td>130756</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2004</td>
+<td>129988</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2003</td>
+<td>129227</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2002</td>
+<td>128453</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-1-2-全国总人口详细"><a href="#1-1-2-全国总人口详细" class="headerlink" title="(1.1.2) 全国总人口详细"></a>(1.1.2) 全国总人口详细</h3><table>
+<thead>
+<tr>
+<th>地区</th>
+<th>户数 合计</th>
+<th>户数  家庭户</th>
+<th>户数   集体户</th>
+<th>合计</th>
+<th>(合计)男</th>
+<th>(合计)女</th>
+<th>性别比(女=100)</th>
+<th>(家庭户)小计</th>
+<th>(家庭户) 男</th>
+<th>(家庭户)女</th>
+<th>(家庭户) 性别比  (女=100)</th>
+<th>(集体户)小计</th>
+<th>(集体户)男</th>
+<th>(集体户)女</th>
+<th>(集体户) 性别比 (女=100)</th>
+<th>平均家庭  户规模 （人/户）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全    国</td>
+<td>417722698</td>
+<td>401934196</td>
+<td>15788502</td>
+<td>1332810869</td>
+<td>682329104</td>
+<td>650481765</td>
+<td>104.90</td>
+<td>1239981250</td>
+<td>627410399</td>
+<td>612570851</td>
+<td>102.42</td>
+<td>92829619</td>
+<td>54918705</td>
+<td>37910914</td>
+<td>144.86</td>
+<td>3.09</td>
+</tr>
+<tr>
+<td>北    京</td>
+<td>7355291</td>
+<td>6680552</td>
+<td>674739</td>
+<td>19612368</td>
+<td>10126430</td>
+<td>9485938</td>
+<td>106.75</td>
+<td>16389723</td>
+<td>8173161</td>
+<td>8216562</td>
+<td>99.47</td>
+<td>3222645</td>
+<td>1953269</td>
+<td>1269376</td>
+<td>153.88</td>
+<td>2.45</td>
+</tr>
+<tr>
+<td>天    津</td>
+<td>3963604</td>
+<td>3661992</td>
+<td>301612</td>
+<td>12938693</td>
+<td>6907091</td>
+<td>6031602</td>
+<td>114.52</td>
+<td>10262186</td>
+<td>5129604</td>
+<td>5132582</td>
+<td>99.94</td>
+<td>2676507</td>
+<td>1777487</td>
+<td>899020</td>
+<td>197.71</td>
+<td>2.80</td>
+</tr>
+<tr>
+<td>河    北</td>
+<td>20813492</td>
+<td>20395116</td>
+<td>418376</td>
+<td>71854210</td>
+<td>36430286</td>
+<td>35423924</td>
+<td>102.84</td>
+<td>68538709</td>
+<td>34552649</td>
+<td>33986060</td>
+<td>101.67</td>
+<td>3315501</td>
+<td>1877637</td>
+<td>1437864</td>
+<td>130.59</td>
+<td>3.36</td>
+</tr>
+<tr>
+<td>山    西</td>
+<td>10654162</td>
+<td>10330207</td>
+<td>323955</td>
+<td>35712101</td>
+<td>18338760</td>
+<td>17373341</td>
+<td>105.56</td>
+<td>33484131</td>
+<td>16988087</td>
+<td>16496044</td>
+<td>102.98</td>
+<td>2227970</td>
+<td>1350673</td>
+<td>877297</td>
+<td>153.96</td>
+<td>3.24</td>
+</tr>
+<tr>
+<td>内 蒙 古</td>
+<td>8470472</td>
+<td>8205498</td>
+<td>264974</td>
+<td>24706291</td>
+<td>12838243</td>
+<td>11868048</td>
+<td>108.17</td>
+<td>23071690</td>
+<td>11725291</td>
+<td>11346399</td>
+<td>103.34</td>
+<td>1634601</td>
+<td>1112952</td>
+<td>521649</td>
+<td>213.35</td>
+<td>2.81</td>
+</tr>
+<tr>
+<td>辽    宁</td>
+<td>15334912</td>
+<td>14994046</td>
+<td>340866</td>
+<td>43746323</td>
+<td>22147745</td>
+<td>21598578</td>
+<td>102.54</td>
+<td>41755874</td>
+<td>20956756</td>
+<td>20799118</td>
+<td>100.76</td>
+<td>1990449</td>
+<td>1190989</td>
+<td>799460</td>
+<td>148.97</td>
+<td>2.78</td>
+</tr>
+<tr>
+<td>吉    林</td>
+<td>9162183</td>
+<td>8998492</td>
+<td>163691</td>
+<td>27452815</td>
+<td>13907218</td>
+<td>13545597</td>
+<td>102.67</td>
+<td>26457769</td>
+<td>13358390</td>
+<td>13099379</td>
+<td>101.98</td>
+<td>995046</td>
+<td>548828</td>
+<td>446218</td>
+<td>123.00</td>
+<td>2.94</td>
+</tr>
+<tr>
+<td>黑 龙 江</td>
+<td>13192935</td>
+<td>13000088</td>
+<td>192847</td>
+<td>38313991</td>
+<td>19426106</td>
+<td>18887885</td>
+<td>102.85</td>
+<td>36884039</td>
+<td>18603181</td>
+<td>18280858</td>
+<td>101.76</td>
+<td>1429952</td>
+<td>822925</td>
+<td>607027</td>
+<td>135.57</td>
+<td>2.84</td>
+</tr>
+<tr>
+<td>上    海</td>
+<td>8893483</td>
+<td>8253257</td>
+<td>640226</td>
+<td>23019196</td>
+<td>11854916</td>
+<td>11164280</td>
+<td>106.19</td>
+<td>20593430</td>
+<td>10318168</td>
+<td>10275262</td>
+<td>100.42</td>
+<td>2425766</td>
+<td>1536748</td>
+<td>889018</td>
+<td>172.86</td>
+<td>2.50</td>
+</tr>
+<tr>
+<td>江    苏</td>
+<td>25635291</td>
+<td>24381782</td>
+<td>1253509</td>
+<td>78660941</td>
+<td>39626707</td>
+<td>39034234</td>
+<td>101.52</td>
+<td>71685839</td>
+<td>35542124</td>
+<td>36143715</td>
+<td>98.34</td>
+<td>6975102</td>
+<td>4084583</td>
+<td>2890519</td>
+<td>141.31</td>
+<td>2.94</td>
+</tr>
+<tr>
+<td>浙    江</td>
+<td>20060115</td>
+<td>18854021</td>
+<td>1206094</td>
+<td>54426891</td>
+<td>27965641</td>
+<td>26461250</td>
+<td>105.69</td>
+<td>49425543</td>
+<td>25037320</td>
+<td>24388223</td>
+<td>102.66</td>
+<td>5001348</td>
+<td>2928321</td>
+<td>2073027</td>
+<td>141.26</td>
+<td>2.62</td>
+</tr>
+<tr>
+<td>安    徽</td>
+<td>19322432</td>
+<td>18861956</td>
+<td>460476</td>
+<td>59500468</td>
+<td>30245513</td>
+<td>29254955</td>
+<td>103.39</td>
+<td>56493891</td>
+<td>28462853</td>
+<td>28031038</td>
+<td>101.54</td>
+<td>3006577</td>
+<td>1782660</td>
+<td>1223917</td>
+<td>145.65</td>
+<td>3.00</td>
+</tr>
+<tr>
+<td>福    建</td>
+<td>11971873</td>
+<td>11206317</td>
+<td>765556</td>
+<td>36894217</td>
+<td>18981054</td>
+<td>17913163</td>
+<td>105.96</td>
+<td>33397663</td>
+<td>16901083</td>
+<td>16496580</td>
+<td>102.45</td>
+<td>3496554</td>
+<td>2079971</td>
+<td>1416583</td>
+<td>146.83</td>
+<td>2.98</td>
+</tr>
+<tr>
+<td>江    西</td>
+<td>11847841</td>
+<td>11542527</td>
+<td>305314</td>
+<td>44567797</td>
+<td>23003521</td>
+<td>21564276</td>
+<td>106.67</td>
+<td>42181417</td>
+<td>21600070</td>
+<td>20581347</td>
+<td>104.95</td>
+<td>2386380</td>
+<td>1403451</td>
+<td>982929</td>
+<td>142.78</td>
+<td>3.65</td>
+</tr>
+<tr>
+<td>山    东</td>
+<td>30794664</td>
+<td>30105454</td>
+<td>689210</td>
+<td>95792719</td>
+<td>48446944</td>
+<td>47345775</td>
+<td>102.33</td>
+<td>89855501</td>
+<td>45023357</td>
+<td>44832144</td>
+<td>100.43</td>
+<td>5937218</td>
+<td>3423587</td>
+<td>2513631</td>
+<td>136.20</td>
+<td>2.98</td>
+</tr>
+<tr>
+<td>河    南</td>
+<td>26404973</td>
+<td>25928729</td>
+<td>476244</td>
+<td>94029939</td>
+<td>47493063</td>
+<td>46536876</td>
+<td>102.05</td>
+<td>90028072</td>
+<td>45262137</td>
+<td>44765935</td>
+<td>101.11</td>
+<td>4001867</td>
+<td>2230926</td>
+<td>1770941</td>
+<td>125.97</td>
+<td>3.47</td>
+</tr>
+<tr>
+<td>湖    北</td>
+<td>17253385</td>
+<td>16695121</td>
+<td>558264</td>
+<td>57237727</td>
+<td>29391247</td>
+<td>27846480</td>
+<td>105.55</td>
+<td>52745625</td>
+<td>26826301</td>
+<td>25919324</td>
+<td>103.50</td>
+<td>4492102</td>
+<td>2564946</td>
+<td>1927156</td>
+<td>133.09</td>
+<td>3.16</td>
+</tr>
+<tr>
+<td>湖    南</td>
+<td>19029894</td>
+<td>18625710</td>
+<td>404184</td>
+<td>65700762</td>
+<td>33776459</td>
+<td>31924303</td>
+<td>105.80</td>
+<td>61911446</td>
+<td>31611459</td>
+<td>30299987</td>
+<td>104.33</td>
+<td>3789316</td>
+<td>2165000</td>
+<td>1624316</td>
+<td>133.29</td>
+<td>3.32</td>
+</tr>
+<tr>
+<td>广    东</td>
+<td>32222752</td>
+<td>28630609</td>
+<td>3592143</td>
+<td>104320459</td>
+<td>54400538</td>
+<td>49919921</td>
+<td>108.98</td>
+<td>88979305</td>
+<td>45465958</td>
+<td>43513347</td>
+<td>104.49</td>
+<td>15341154</td>
+<td>8934580</td>
+<td>6406574</td>
+<td>139.46</td>
+<td>3.11</td>
+</tr>
+<tr>
+<td>广    西</td>
+<td>13467663</td>
+<td>13151404</td>
+<td>316259</td>
+<td>46023761</td>
+<td>23924704</td>
+<td>22099057</td>
+<td>108.26</td>
+<td>43970320</td>
+<td>22733969</td>
+<td>21236351</td>
+<td>107.05</td>
+<td>2053441</td>
+<td>1190735</td>
+<td>862706</td>
+<td>138.02</td>
+<td>3.34</td>
+</tr>
+<tr>
+<td>海    南</td>
+<td>2451819</td>
+<td>2331149</td>
+<td>120670</td>
+<td>8671485</td>
+<td>4592283</td>
+<td>4079202</td>
+<td>112.58</td>
+<td>8060519</td>
+<td>4231490</td>
+<td>3829029</td>
+<td>110.51</td>
+<td>610966</td>
+<td>360793</td>
+<td>250173</td>
+<td>144.22</td>
+<td>3.46</td>
+</tr>
+<tr>
+<td>重    庆</td>
+<td>10272559</td>
+<td>10000965</td>
+<td>271594</td>
+<td>28846170</td>
+<td>14608870</td>
+<td>14237300</td>
+<td>102.61</td>
+<td>26994017</td>
+<td>13542424</td>
+<td>13451593</td>
+<td>100.68</td>
+<td>1852153</td>
+<td>1066446</td>
+<td>785707</td>
+<td>135.73</td>
+<td>2.70</td>
+</tr>
+<tr>
+<td>四    川</td>
+<td>26383458</td>
+<td>25794161</td>
+<td>589297</td>
+<td>80417528</td>
+<td>40827834</td>
+<td>39589694</td>
+<td>103.13</td>
+<td>76207174</td>
+<td>38380622</td>
+<td>37826552</td>
+<td>101.46</td>
+<td>4210354</td>
+<td>2447212</td>
+<td>1763142</td>
+<td>138.80</td>
+<td>2.95</td>
+</tr>
+<tr>
+<td>贵    州</td>
+<td>10745630</td>
+<td>10558461</td>
+<td>187169</td>
+<td>34748556</td>
+<td>17905471</td>
+<td>16843085</td>
+<td>106.31</td>
+<td>33571308</td>
+<td>17153547</td>
+<td>16417761</td>
+<td>104.48</td>
+<td>1177248</td>
+<td>751924</td>
+<td>425324</td>
+<td>176.79</td>
+<td>3.18</td>
+</tr>
+<tr>
+<td>云    南</td>
+<td>12695396</td>
+<td>12339961</td>
+<td>355435</td>
+<td>45966766</td>
+<td>23856696</td>
+<td>22110070</td>
+<td>107.90</td>
+<td>43626674</td>
+<td>22391253</td>
+<td>21235421</td>
+<td>105.44</td>
+<td>2340092</td>
+<td>1465443</td>
+<td>874649</td>
+<td>167.55</td>
+<td>3.54</td>
+</tr>
+<tr>
+<td>西    藏</td>
+<td>689521</td>
+<td>670838</td>
+<td>18683</td>
+<td>3002165</td>
+<td>1542652</td>
+<td>1459513</td>
+<td>105.70</td>
+<td>2837769</td>
+<td>1429541</td>
+<td>1408228</td>
+<td>101.51</td>
+<td>164396</td>
+<td>113111</td>
+<td>51285</td>
+<td>220.55</td>
+<td>4.23</td>
+</tr>
+<tr>
+<td>陕    西</td>
+<td>11084516</td>
+<td>10718563</td>
+<td>365953</td>
+<td>37327379</td>
+<td>19287575</td>
+<td>18039804</td>
+<td>106.92</td>
+<td>34462115</td>
+<td>17556257</td>
+<td>16905858</td>
+<td>103.85</td>
+<td>2865264</td>
+<td>1731318</td>
+<td>1133946</td>
+<td>152.68</td>
+<td>3.22</td>
+</tr>
+<tr>
+<td>甘    肃</td>
+<td>7113833</td>
+<td>6900369</td>
+<td>213464</td>
+<td>25575263</td>
+<td>13064193</td>
+<td>12511070</td>
+<td>104.42</td>
+<td>24052594</td>
+<td>12141360</td>
+<td>11911234</td>
+<td>101.93</td>
+<td>1522669</td>
+<td>922833</td>
+<td>599836</td>
+<td>153.85</td>
+<td>3.49</td>
+</tr>
+<tr>
+<td>青    海</td>
+<td>1586635</td>
+<td>1529039</td>
+<td>57596</td>
+<td>5626723</td>
+<td>2913793</td>
+<td>2712930</td>
+<td>107.40</td>
+<td>5284525</td>
+<td>2675766</td>
+<td>2608759</td>
+<td>102.57</td>
+<td>342198</td>
+<td>238027</td>
+<td>104171</td>
+<td>228.50</td>
+<td>3.46</td>
+</tr>
+<tr>
+<td>宁    夏</td>
+<td>1945064</td>
+<td>1882205</td>
+<td>62859</td>
+<td>6301350</td>
+<td>3227404</td>
+<td>3073946</td>
+<td>104.99</td>
+<td>5970133</td>
+<td>3015722</td>
+<td>2954411</td>
+<td>102.08</td>
+<td>331217</td>
+<td>211682</td>
+<td>119535</td>
+<td>177.09</td>
+<td>3.17</td>
+</tr>
+<tr>
+<td>新    疆</td>
+<td>6902850</td>
+<td>6705607</td>
+<td>197243</td>
+<td>21815815</td>
+<td>11270147</td>
+<td>10545668</td>
+<td>106.87</td>
+<td>20802249</td>
+<td>10620499</td>
+<td>10181750</td>
+<td>104.31</td>
+<td>1013566</td>
+<td>649648</td>
+<td>363918</td>
+<td>178.51</td>
+<td>3.10</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-2-民政局-行政区划数据"><a href="#1-2-民政局-行政区划数据" class="headerlink" title="(1.2) 民政局-行政区划数据"></a>(1.2) 民政局-行政区划数据</h2><p>民政部、国家统计局：</p>
+<p>  <a href="http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html" target="_blank" rel="noopener">国家统计局-2018年统计用区划代码和城乡划分代码(截止2018年10月31日)</a></p>
+<p>  <a href="http://www.mca.gov.cn/article/sj/xzqh/2019/" target="_blank" rel="noopener">中华人民共和国民政部-中华人民共和国行政区划代码</a><br>  <a href="http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/" target="_blank" rel="noopener">中华人民共和国国家统计局-统计用区划和城乡划分代码</a><br>  <a href="http://www.stats.gov.cn/tjsj/tjbz/200911/t20091125_8667.html" target="_blank" rel="noopener">中华人民共和国国家统计局-统计用区划代码和城乡划分代码编制规则</a></p>
+<p>  <a href="http://www.mca.gov.cn/article/sj/xzqh/1980/201903/201903011447.html" target="_blank" rel="noopener">2018年12月中华人民共和国县以上行政区划代码</a><br>  <a href="http://www.mca.gov.cn/article/sj/xzqh/2019/201912/20191200022455.shtml" target="_blank" rel="noopener">2019年11月中华人民共和国县以上行政区划代码</a></p>
+<h2 id="1-3-人口流动数据"><a href="#1-3-人口流动数据" class="headerlink" title="(1.3) 人口流动数据"></a>(1.3) 人口流动数据</h2><p>  假设流动人口 ≈ 春运期间 飞机 + 火车(高铁) + 汽车 + 摩托车 总和 </p>
+<p>  <a href="http://www.umetrip.com/mskyweb/main/index.html?hrefParam=tk" target="_blank" rel="noopener">机票-航旅纵横</a><br>  <a href="https://flights.ctrip.com/" target="_blank" rel="noopener">机票-携程</a><br>  <a href="https://www.12306.cn/index/" target="_blank" rel="noopener">火车票</a><br>  <a href="https://bus.ctrip.com/" target="_blank" rel="noopener">汽车票</a></p>
+<h2 id="1-4-全国各小区数据"><a href="#1-4-全国各小区数据" class="headerlink" title="(1.4) 全国各小区数据"></a>(1.4) 全国各小区数据</h2><p>  小区 + 村(屯)</p>
+<p>  <a href="http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html" target="_blank" rel="noopener">国家统计局-2018年统计用区划代码和城乡划分代码(截止2018年10月31日)</a></p>
+<p>  房地产中介 网站获取小区数据<br>  <a href="https://bj.lianjia.com/xiaoqu/dongcheng/" target="_blank" rel="noopener">北京-东城-小区</a>  <a href="https://www.lianjia.com/city/" target="_blank" rel="noopener">链家-所有城市</a><br>  <a href="https://bj.5i5j.com/xiaoqu/n2/" target="_blank" rel="noopener">北京-小区</a>  <a href>我爱我家-所有城市</a><br> <a href="https://beijing.anjuke.com/" target="_blank" rel="noopener">北京小区</a>    <a href="https://www.anjuke.com/sy-city.html" target="_blank" rel="noopener">安居客-所有城市</a></p>
+<h3 id="1-4-1-高考各大高校录取数据"><a href="#1-4-1-高考各大高校录取数据" class="headerlink" title="(1.4.1) 高考各大高校录取数据"></a>(1.4.1) 高考各大高校录取数据</h3><p>  这个是为了统计武汉到各个省市的学生数据 </p>
+<h2 id="1-5-公布的疫情数据"><a href="#1-5-公布的疫情数据" class="headerlink" title="(1.5)  公布的疫情数据"></a>(1.5)  公布的疫情数据</h2><p>  <a href="http://www.nhc.gov.cn/xcs/xxgzbd/gzbd_index.shtml" target="_blank" rel="noopener">国家卫生健康委员会-&gt;疫情通报</a></p>
+<p>  <a href="https://h5.peopleapp.com/txcx/index.html" target="_blank" rel="noopener">新型冠状病毒感染的肺炎-确诊患者同行程查询工具-人民日报</a><br>  <a href="https://2019ncov.nosugartech.com/data.json?439373" target="_blank" rel="noopener">https://2019ncov.nosugartech.com/data.json?439373</a>   </p>
+<p>  <a href="https://ncov.dxy.cn/ncovh5/view/pneumonia" target="_blank" rel="noopener">新型冠状病毒肺炎-疫情实时动态-丁香园</a></p>
+<p>  <a href="https://news.163.com/special/epidemic/" target="_blank" rel="noopener">肺炎疫情实时动态播报-网易新闻</a><br>  <a href="https://c.m.163.com/ug/api/wuhan/app/data/list-total?t=1581731399558" target="_blank" rel="noopener">https://c.m.163.com/ug/api/wuhan/app/data/list-total?t=1581731399558</a> </p>
+<p>  <a href="https://news.qq.com//zt2020/page/feiyan.htm" target="_blank" rel="noopener">新型冠状病毒肺炎-疫情实时追踪</a><br>  <a href="https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5&amp;callback=jQuery341008224555239086584_1581732532940&amp;_=1581732532941" target="_blank" rel="noopener">https://view.inews.qq.com/g2/getOnsInfo?name=disease_h5&amp;callback=jQuery341008224555239086584_1581732532940&amp;_=1581732532941</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1]  <a href="http://www.gov.cn/shuju/2017sjcs/sjxqpage.htm" target="_blank" rel="noopener">中华人民共和国中央人民政府-数据-数据详情-总人口</a><br>[2] <a href="http://spcx.www.gov.cn/ZFW-AccessPlatform/gov/np/export.do?selectLegend=%25E5%25B9%25B4%25E6%259C%25AB%25E4%25BA%25BA%25E5%258F%25A3%25EF%25BC%2588%25E4%25B8%2587%25E4%25BA%25BA%25EF%25BC%2589&amp;startYear=2002&amp;endYear=2018" target="_blank" rel="noopener">总人口数据下载</a>ß<br>[3] <a href="http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2018/index.html" target="_blank" rel="noopener">国家统计局-2018年统计用区划代码和城乡划分代码(截止2018年10月31日)</a><br>[4] <a href="http://www.umetrip.com/mskyweb/main/index.html?hrefParam=tk" target="_blank" rel="noopener">机票-航旅纵横</a><br>[5] <a href="https://flights.ctrip.com/" target="_blank" rel="noopener">机票-携程</a><br>[6] <a href="https://www.12306.cn/index/" target="_blank" rel="noopener">火车票</a><br>[7] <a href="https://bus.ctrip.com/" target="_blank" rel="noopener">汽车票</a><br>[8]   <a href="https://bj.lianjia.com/xiaoqu/dongcheng/" target="_blank" rel="noopener">北京-东城-小区</a><br>[9] <a href="https://bj.5i5j.com/xiaoqu/n2/" target="_blank" rel="noopener">北京-小区</a>  <a href>我爱我家-所有城市</a><br>[10] <a href="https://beijing.anjuke.com/" target="_blank" rel="noopener">北京小区</a>    <a href="https://www.anjuke.com/sy-city.html" target="_blank" rel="noopener">安居客-所有城市</a><br>[11] <a href="http://www.nhc.gov.cn/xcs/xxgzbd/gzbd_index.shtml" target="_blank" rel="noopener">国家卫生健康委员会-&gt;疫情通报</a><br>[12] <a href="https://h5.peopleapp.com/txcx/index.html" target="_blank" rel="noopener">新型冠状病毒感染的肺炎-确诊患者同行程查询工具</a><br>[13] <a href="https://ncov.dxy.cn/ncovh5/view/pneumonia" target="_blank" rel="noopener">新型冠状病毒肺炎-疫情实时动态-丁香园</a><br>[14] <a href="https://news.163.com/special/epidemic/" target="_blank" rel="noopener">肺炎疫情实时动态播报-网易新闻</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/data/" rel="tag"># data</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/21/elasticsearch-mapping-analysis/" rel="next" title="elasticsearch 映射和分析">
+                <i class="fa fa-chevron-left"></i> elasticsearch 映射和分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/02/java-concurrent-programming/" rel="prev" title="java并发编程">
+                java并发编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-数据准备"><span class="nav-number">1.</span> <span class="nav-text">(1) 数据准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-国家统计局-人口普查数据"><span class="nav-number">1.1.</span> <span class="nav-text">(1.1) 国家统计局-人口普查数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-各年全国总人口"><span class="nav-number">1.1.1.</span> <span class="nav-text">(1.1.1) 各年全国总人口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-全国总人口详细"><span class="nav-number">1.1.2.</span> <span class="nav-text">(1.1.2) 全国总人口详细</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-民政局-行政区划数据"><span class="nav-number">1.2.</span> <span class="nav-text">(1.2) 民政局-行政区划数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-人口流动数据"><span class="nav-number">1.3.</span> <span class="nav-text">(1.3) 人口流动数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-全国各小区数据"><span class="nav-number">1.4.</span> <span class="nav-text">(1.4) 全国各小区数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-高考各大高校录取数据"><span class="nav-number">1.4.1.</span> <span class="nav-text">(1.4.1) 高考各大高校录取数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-公布的疫情数据"><span class="nav-number">1.5.</span> <span class="nav-text">(1.5)  公布的疫情数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

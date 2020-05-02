@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="orientdb启动后可以在 http://localhost:2480 打开前端管理界面操作，也可以在shell里操作   orientdb的很多语句很像mysql和neo4j，学习的时候可以用来对比 常用语句    orientdb mysql     连接数据库 CONNECT remote:127.0.0.1 root root mysql -u root -p root   查看所有">
+<meta name="keywords" content="orientdb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="orientdb 常用语句">
+<meta property="og:url" content="http://weikeqin.cn/2019/06/30/orientdb-sql/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="orientdb启动后可以在 http://localhost:2480 打开前端管理界面操作，也可以在shell里操作   orientdb的很多语句很像mysql和neo4j，学习的时候可以用来对比 常用语句    orientdb mysql     连接数据库 CONNECT remote:127.0.0.1 root root mysql -u root -p root   查看所有">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-28T02:13:26.373Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="orientdb 常用语句">
+<meta name="twitter:description" content="orientdb启动后可以在 http://localhost:2480 打开前端管理界面操作，也可以在shell里操作   orientdb的很多语句很像mysql和neo4j，学习的时候可以用来对比 常用语句    orientdb mysql     连接数据库 CONNECT remote:127.0.0.1 root root mysql -u root -p root   查看所有">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2019/06/30/orientdb-sql/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>orientdb 常用语句 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2019/06/30/orientdb-sql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">orientdb 常用语句
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-06-30 21:33:50" itemprop="dateCreated datePublished" datetime="2019-06-30T21:33:50+08:00">2019-06-30</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/orientdb/" itemprop="url" rel="index"><span itemprop="name">orientdb</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/30/orientdb-sql/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/30/orientdb-sql/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/06/30/orientdb-sql/" class="leancloud_visitors" data-flag-title="orientdb 常用语句">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>  orientdb启动后可以在 <a href="http://localhost:2480" target="_blank" rel="noopener">http://localhost:2480</a> 打开前端管理界面操作，也可以在shell里操作</p>
+<p>  orientdb的很多语句很像mysql和neo4j，学习的时候可以用来对比</p>
+<h1 id="常用语句"><a href="#常用语句" class="headerlink" title="常用语句"></a>常用语句</h1><table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">orientdb</th>
+<th style="text-align:left">mysql</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">连接数据库</td>
+<td style="text-align:left">CONNECT remote:127.0.0.1 root root</td>
+<td style="text-align:left">mysql -u root -p root</td>
+</tr>
+<tr>
+<td style="text-align:left">查看所有数据库</td>
+<td style="text-align:left">LIST DATABASES</td>
+<td style="text-align:left">show databases</td>
+</tr>
+<tr>
+<td style="text-align:left">创建数据库</td>
+<td style="text-align:left">CREATE DATABASE remote:127.0.0.1/db_test_wkq root root</td>
+<td style="text-align:left">create database db_test_wkq</td>
+</tr>
+<tr>
+<td style="text-align:left">使用某个数据库</td>
+<td style="text-align:left">CONNECT remote:127.0.0.1/db_test_wkq root root</td>
+<td style="text-align:left">use db_test_wkq</td>
+</tr>
+<tr>
+<td style="text-align:left">查询节点类型(表)个数</td>
+<td style="text-align:left">LIST CLASSES <br>  select expand(classes) from metadata:schema</td>
+<td style="text-align:left">show tables</td>
+</tr>
+<tr>
+<td style="text-align:left">创建某类节点</td>
+<td style="text-align:left">CREATE CLASS TestVertex extends V</td>
+<td style="text-align:left">create table table1</td>
+</tr>
+<tr>
+<td style="text-align:left">查看某个类型的结构</td>
+<td style="text-align:left">INFO CLASS OUser</td>
+<td style="text-align:left">desc table1</td>
+</tr>
+<tr>
+<td style="text-align:left">查看某个类型的数据</td>
+<td style="text-align:left">BROWSE CLASS OUser</td>
+<td style="text-align:left">select <code>*</code> from OUser limit 20</td>
+</tr>
+</tbody>
+</table>
+<pre><code>CREATE DATABASE &lt;database-url&gt; [&lt;user&gt;] [&lt;password&gt;] [&lt;storage-type&gt;] [&lt;db-type&gt;] [&lt;[options]&gt;]
+</code></pre><p>创建数据库 CREATE DATABASE PLOCAL:/usr/local/orientdb/databases/db_test_wkq<br>         CREATE DATABASE remote:127.0.0.1/db_test_wkq root root  plocal  graph</p>
+<a id="more"></a>  
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">orientdb</th>
+<th style="text-align:left">mysql</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">新增节点(CRUD)</td>
+<td style="text-align:left">insert into v1 (brand, name) values (“宝马”, “车型1”)</td>
+<td style="text-align:left">insert into v1 (brand, name) values (“宝马”, “车型1”)</td>
+</tr>
+<tr>
+<td style="text-align:left">新增节点(Graph)</td>
+<td style="text-align:left">CREATE VERTEX V1 SET brand = ‘宝马’, name = ‘车型1’</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">更新节点(CRUD)</td>
+<td style="text-align:left">UPDATE Employee SET local=TRUE WHERE city=’London’</td>
+<td style="text-align:left">UPDATE Employee SET local=TRUE WHERE city=’London’</td>
+</tr>
+<tr>
+<td style="text-align:left">更新节点(Graph)</td>
+<td style="text-align:left">UPDATE Employee MERGE { local : TRUE } WHERE city=’London’</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">删除节点</td>
+<td style="text-align:left">DELETE FROM Employee WHERE city &lt;&gt; ‘London’</td>
+<td style="text-align:left">DELETE FROM Employee WHERE city &lt;&gt; ‘London’</td>
+</tr>
+<tr>
+<td style="text-align:left">新增边</td>
+<td style="text-align:left">CREATE EDGE E FROM #22:33 TO #22:55 CONTENT { “name”: “Jay”,  “surname”: “Miner” }</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">更新边</td>
+<td style="text-align:left">UPDATE EDGE hasAssignee SET foo = ‘bar’ UPSERT WHERE id = 56</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">删除边</td>
+<td style="text-align:left">DELETE EDGE #22:38482</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">查询</td>
+<td style="text-align:left">MATCH  {class: Person, as: people, where: (name = ‘John’)} RETURN people</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">查看某个类型的数据</td>
+<td style="text-align:left">SELECT FROM Person</td>
+</tr>
+</tbody>
+</table>
+<h1 id="基础操作"><a href="#基础操作" class="headerlink" title="基础操作"></a>基础操作</h1><h2 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h2><p> // <code>mysql -u root -p root</code><br> <code>CONNECT remote:localhost root root</code></p>
+<h1 id="查看有哪些库"><a href="#查看有哪些库" class="headerlink" title="查看有哪些库"></a>查看有哪些库</h1><p>  mysql <code>show databses ;</code><br>  orientdb  <code>list databases ;</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">orientdb &#123;server=remote:localhost&#125;&gt; list databases;</span><br><span class="line"></span><br><span class="line">Found 3 databases:</span><br><span class="line"></span><br><span class="line">* test</span><br><span class="line">* demodb</span><br><span class="line">* test_wkq</span><br></pre></td></tr></table></figure>
+<h1 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h1><p> <code>create database remote:localhost/mydb root root plocal graph -restore=/tmp/backup</code><br> <code>create database remote:localhost/test root root</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">orientdb &#123;server=remote:localhost/test&#125;&gt; create database remote:localhost/test root admin</span><br><span class="line"></span><br><span class="line">Creating database [remote:localhost/test] using the storage type [PLOCAL]...</span><br><span class="line">Database created successfully.</span><br><span class="line"></span><br><span class="line">Current database is: remote:localhost/test</span><br><span class="line">orientdb &#123;db=test&#125;&gt; list databases;</span><br></pre></td></tr></table></figure>
+<h1 id="使用某个库"><a href="#使用某个库" class="headerlink" title="使用某个库"></a>使用某个库</h1><p>// user test_wkq<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">orientdb &#123;server=remote:localhost&#125;&gt; CONNECT remote:localhost/test_wkq root root</span><br><span class="line"></span><br><span class="line">Connecting to database [remote:localhost/test_wkq] with user 'root'...OK</span><br></pre></td></tr></table></figure></p>
+<h1 id="查看节点类型个数"><a href="#查看节点类型个数" class="headerlink" title="查看节点类型个数"></a>查看节点类型个数</h1><p>// show tables;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">orientdb &#123;db=test_wkq&#125;&gt; LIST CLASSES;</span><br><span class="line"></span><br><span class="line">CLASSES                                                                                                                         </span><br><span class="line">+----+-------------------+-------------+---------------------------------------------------------+-----+                        </span><br><span class="line">|#   |NAME               |SUPER-CLASSES|CLUSTERS                                                 |COUNT|                        </span><br><span class="line">+----+-------------------+-------------+---------------------------------------------------------+-----+                        </span><br><span class="line">|0   |_studio            |             |_studio(17),_studio_1(18),_studio_2(19),_studio_3(20)    |    1|                        </span><br><span class="line">|1   |E                  |             |e(13),e_1(14),e_2(15),e_3(16)                            |    0|                        </span><br><span class="line">|2   |FriendOf           |[E]          |friendof(25),friendof_1(26),friendof_2(27),friendof_3(28)|    2|                        </span><br><span class="line">|3   |OFunction          |             |ofunction(6)                                             |    0|                        </span><br><span class="line">|4   |OGeometryCollection|[OShape]     |-                                                        |    0|                        </span><br><span class="line">|5   |OIdentity          |             |-                                                        |    0|                        </span><br><span class="line">|6   |OLineString        |[OShape]     |-                                                        |    0|                        </span><br><span class="line">|7   |OMultiLineString   |[OShape]     |-                                                        |    0|                        </span><br><span class="line">|8   |OMultiPoint        |[OShape]     |-                                                        |    0|                        </span><br><span class="line">|9   |OMultiPolygon      |[OShape]     |-                                                        |    0|                        </span><br><span class="line">|10  |OPoint             |[OShape]     |-                                                        |    0|                        </span><br><span class="line">|11  |OPolygon           |[OShape]     |-                                                        |    0|                        </span><br><span class="line">|12  |ORectangle         |[OShape]     |-                                                        |    0|                        </span><br><span class="line">|13  |ORestricted        |             |-                                                        |    0|                        </span><br><span class="line">|14  |ORole              |[OIdentity]  |orole(4)                                                 |    3|                        </span><br><span class="line">|15  |OSchedule          |             |oschedule(8)                                             |    0|                        </span><br><span class="line">|16  |OSequence          |             |osequence(7)                                             |    0|                        </span><br><span class="line">|17  |OShape             |             |-                                                        |    0|                        </span><br><span class="line">|18  |OTriggered         |             |-                                                        |    0|                        </span><br><span class="line">|19  |OUser              |[OIdentity]  |ouser(5)                                                 |    3|                        </span><br><span class="line">|20  |Person             |[V]          |person(21),person_1(22),person_2(23),person_3(24)        |    3|                        </span><br><span class="line">|21  |V                  |             |v(9),v_1(10),v_2(11),v_3(12)                             |    0|                        </span><br><span class="line">+----+-------------------+-------------+---------------------------------------------------------+-----+                        </span><br><span class="line">|    |TOTAL              |             |                                                         |   12|                        </span><br><span class="line">+----+-------------------+-------------+---------------------------------------------------------+-----+</span><br></pre></td></tr></table></figure>
+<h1 id="创建某种节点"><a href="#创建某种节点" class="headerlink" title="创建某种节点"></a>创建某种节点</h1><p>orientdb {db=test_wkq}&gt; CREATE CLASS Table1 extends V</p>
+<p>Class created successfully.</p>
+<p>orientdb&gt; CREATE CLASS Student</p>
+<p>Class created successfully. Total classes in database now: 15</p>
+<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>orientdb&gt; CREATE PROPERTY Student.name STRING</p>
+<p>Property created successfully with id=1</p>
+<p>orientdb&gt; CREATE PROPERTY Student.surname STRING</p>
+<p>Property created successfully with id=2</p>
+<p>orientdb&gt; CREATE PROPERTY Student.birthDate DATE</p>
+<p>Property created successfully with id=3</p>
+<h1 id="查看某个类型的结构"><a href="#查看某个类型的结构" class="headerlink" title="查看某个类型的结构"></a>查看某个类型的结构</h1><p>// desc OUser<br>orientdb {db=test_wkq}&gt; INFO CLASS OUser</p>
+<p>CLASS ‘OUser’</p>
+<p>Records…………..: 3<br>Super classes……..: [OIdentity]<br>Default cluster……: ouser (id=5)<br>Supported clusters…: ouser(5)<br>Cluster selection….: round-robin<br>Oversize………….: 0.0</p>
+<p>PROPERTIES<br>+—-+——–+—————–+———+——–+——–+—-+—-+——-+——-+<br>|#   |NAME    |LINKED-TYPE/CLASS|MANDATORY|READONLY|NOT-NULL|MIN |MAX |COLLATE|DEFAULT|<br>+—-+——–+—————–+———+——–+——–+—-+—-+——-+——-+<br>|0   |password|                 |true     |false   |true    |    |    |default|       |<br>|1   |roles   |ORole            |false    |false   |false   |    |    |default|       |<br>|2   |name    |                 |true     |false   |true    |1   |    |ci     |       |<br>|3   |status  |                 |true     |false   |true    |    |    |default|       |<br>+—-+——–+—————–+———+——–+——–+—-+—-+——-+——-+</p>
+<p>INDEXES (1 altogether)<br>+—-+———-+———-+<br>|#   |NAME      |PROPERTIES|<br>+—-+———-+———-+<br>|0   |OUser.name|[name]    |<br>+—-+———-+———-+</p>
+<p>orientdb&gt; ALTER PROPERTY Student.name MIN 3<br>Property updated successfully</p>
+<p>orientdb&gt; ALTER PROPERTY Student.name MANDATORY true</p>
+<h1 id="查看某个类型的数据-默认最多显示20条"><a href="#查看某个类型的数据-默认最多显示20条" class="headerlink" title="查看某个类型的数据(默认最多显示20条)"></a>查看某个类型的数据(默认最多显示20条)</h1><p>// select * from OUser limit 20 ;<br>orientdb {db=test_wkq}&gt; BROWSE CLASS OUser</p>
+<p>+—-+—-+——+——+——+——+—————————————————————————————————————–+<br>|#   |@RID|@CLASS|name  |status|roles |password                                                                                                         |<br>+—-+—-+——+——+——+——+—————————————————————————————————————–+<br>|0   |#5:0|OUser |admin |ACTIVE|[#4:0]|{PBKDF2WithHmacSHA256}AFD543552898111E1C874350E7A09398E20A15B098E2010E:E42843B52BE6EDA36DA6282920E75876C7DDFBA…|<br>|1   |#5:1|OUser |reader|ACTIVE|[#4:1]|{PBKDF2WithHmacSHA256}9339EAE81055AE1CA400CBC511AAD42DE5E416841B709D53:D2F810E5E1D2EFA7E7E7DA65E7D1338F2F76904…|<br>|2   |#5:2|OUser |writer|ACTIVE|[#4:2]|{PBKDF2WithHmacSHA256}67CED97F7AF9C6B445E120CF4B06EA4D40A745DB330D42D6:A5B4D1A71C166578EDF78B4873A5F74E1D5330B…|<br>+—-+—-+——+——+——+——+—————————————————————————————————————–+</p>
+<h1 id="查看第一条记录"><a href="#查看第一条记录" class="headerlink" title="查看第一条记录"></a>查看第一条记录</h1><p>// select * from table order by id asc limit 1 ;<br>orientdb {db=test_wkq}&gt; DISPLAY RECORD 0</p>
+<p>DOCUMENT @class:OUser @rid:#5:0 @version:1<br>+—-+——–+—————————————————————————————————————————–+<br>|#   |NAME    |VALUE                                                                                                                        |<br>+—-+——–+—————————————————————————————————————————–+<br>|0   |password|{PBKDF2WithHmacSHA256}AFD543552898111E1C874350E7A09398E20A15B098E2010E:E42843B52BE6EDA36DA6282920E75876C7DDFBA4A135503E:65536|<br>|1   |roles   |[#4:0]                                                                                                                       |<br>|2   |name    |admin                                                                                                                        |<br>|3   |status  |ACTIVE                                                                                                                       |<br>+—-+——–+—————————————————————————————————————————–+</p>
+<p>orientdb {db=test_wkq}&gt; SELECT <code>Version</code> FROM <code>OUser</code>;</p>
+<p>+—-+———+<br>|#   |<code>Version</code>|<br>+—-+———+<br>|0   |         |<br>|1   |         |<br>|2   |         |<br>+—-+———+</p>
+<p>3 item(s) found. Query executed in 0.029 sec(s).<br>orientdb {db=test_wkq}&gt;</p>
+<h1 id="合并重复节点"><a href="#合并重复节点" class="headerlink" title="合并重复节点"></a>合并重复节点</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select expand($c)</span><br><span class="line">let $a = ( SELECT EXPAND(out(&apos;E1&apos;).out(&apos;E3&apos;)) FROM V1 WHERE id = &lt;someIdThatV1Has&gt;),</span><br><span class="line">$b = ( SELECT EXPAND(out(&apos;E1&apos;).out(&apos;E2&apos;).out(&apos;E3&apos;)) FROM V1 WHERE id = &lt;someIdThatV1Has&gt;),</span><br><span class="line">$c = unionAll( $a, $b )</span><br></pre></td></tr></table></figure>
+<h1 id="查询所有类别"><a href="#查询所有类别" class="headerlink" title="查询所有类别"></a>查询所有类别</h1><p> <code>select expand(classes) from metadata:schema</code></p>
+<h1 id="查询某个类别-表-结构"><a href="#查询某个类别-表-结构" class="headerlink" title="查询某个类别(表)结构"></a>查询某个类别(表)结构</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select expand(properties) from (</span><br><span class="line">   select expand(classes) from metadata:schema</span><br><span class="line">) where name = &apos;OUser&apos;</span><br><span class="line"></span><br><span class="line">select customFields from (</span><br><span class="line">    select expand(classes) from metadata:schema</span><br><span class="line">) where name=&quot;OUser&quot;</span><br></pre></td></tr></table></figure>
+<h1 id="查询所有索引"><a href="#查询所有索引" class="headerlink" title="查询所有索引"></a>查询所有索引</h1><p>  <code>select expand(indexes) from metadata:indexmanager</code></p>
+<h1 id="Querying-database-metadata"><a href="#Querying-database-metadata" class="headerlink" title="Querying database metadata"></a>Querying database metadata</h1><p>  <code>SELECT FROM metadata:database</code></p>
+<h1 id="Querying-storage-metadata"><a href="#Querying-storage-metadata" class="headerlink" title="Querying storage metadata"></a>Querying storage metadata</h1><p>  <code>SELECT FROM metadata:storage</code></p>
+<p>// 创建节点类型<br>CREATE CLASS V1 EXTENDS V<br>// 插入节点<br>CREATE VERTEX V1 SET brand = ‘maruti’, name = ‘swift’</p>
+<p>CREATE EDGE USER_RELATION_FRIEND FROM<br>    (SELECT FROM userList where id = ${input.FROM_ID}) TO (SELECT FROM userList where id = ${input.TO_ID})<br>    set weight=${input.WEIGHT}”}</p>
+<h1 id="SSELECT"><a href="#SSELECT" class="headerlink" title="SSELECT"></a>SSELECT</h1><p>  <code>SELECT FROM OUser</code></p>
+<h2 id="SELECT"><a href="#SELECT" class="headerlink" title="SELECT"></a>SELECT</h2><p>  <code>SELECT FROM CLUSTER:Ouser</code></p>
+<h2 id="记录ID要对一个或多个记录ID执行，请使用标识符作为目标"><a href="#记录ID要对一个或多个记录ID执行，请使用标识符作为目标" class="headerlink" title="记录ID要对一个或多个记录ID执行，请使用标识符作为目标"></a>记录ID要对一个或多个记录ID执行，请使用标识符作为目标</h2><p>  <code>SELECT FROM #10:3SELECT FROM [#10:1, #10:30, #10:5]</code></p>
+<h2 id="索引要对索引执行查询，请INDEX为目标名称添加前缀。"><a href="#索引要对索引执行查询，请INDEX为目标名称添加前缀。" class="headerlink" title="索引要对索引执行查询，请INDEX为目标名称添加前缀。"></a>索引要对索引执行查询，请INDEX为目标名称添加前缀。</h2><p>  <code>SELECT VALUE FROM INDEX:dictionary WHERE key=&#39;Jay&#39;</code></p>
+<h2 id="模糊匹配"><a href="#模糊匹配" class="headerlink" title="模糊匹配"></a>模糊匹配</h2><p>  <code>SELECT FROM OUser WHERE name LIKE &#39;l%&#39;</code></p>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>  <code>SELECT FROM Employee WHERE city=&#39;Rome&#39; ORDER BY surname ASC, name ASC</code></p>
+<h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><p>  <code>SELECT SUM(salary) FROM Employee WHERE age &lt; 40 GROUP BY job</code></p>
+<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>  <code>SELECT FROM Employee WHERE gender=&#39;male&#39; LIMIT 20</code>   </p>
+<h2 id="分页-2"><a href="#分页-2" class="headerlink" title="分页-2"></a>分页-2</h2><p>  <code>SELECT FROM Employee WHERE gender=&#39;male&#39; LIMIT 20SELECT FROM Employee WHERE gender=&#39;male&#39; SKIP 20 LIMIT 20SELECT FROM Employee WHERE gender=&#39;male&#39; SKIP 40 LIMIT 20</code>   </p>
+<h1 id="INSERT"><a href="#INSERT" class="headerlink" title="INSERT"></a>INSERT</h1><p>  INSERT语句将新数据添加到类和集群。OrientDB支持三种语法形式，用于将新数据插入数据库。</p>
+<h2 id="标准的ANSI-92语法"><a href="#标准的ANSI-92语法" class="headerlink" title="标准的ANSI-92语法"></a>标准的ANSI-92语法</h2><p>  <code>INSERT INTO    Employee(name, surname, gender) VALUES(&#39;Jay&#39;, &#39;Miner&#39;, &#39;M&#39;)</code></p>
+<h2 id="简化的ANSI-92语法"><a href="#简化的ANSI-92语法" class="headerlink" title="简化的ANSI-92语法"></a>简化的ANSI-92语法</h2><p>  <code>INSERT INTO Employee SET name=&#39;Jay&#39;, surname=&#39;Miner&#39;, gender=&#39;M&#39;</code>   </p>
+<h2 id="JSON语法"><a href="#JSON语法" class="headerlink" title="JSON语法"></a>JSON语法</h2><p>  <code>INSERT INTO Employee CONTENT {name : &#39;Jay&#39;, surname : &#39;Miner&#39;, gender : &#39;M&#39;}</code></p>
+<h1 id="UPDATE"><a href="#UPDATE" class="headerlink" title="UPDATE"></a>UPDATE</h1><p>  该UPDATE语句更改了类和集群中现有数据的值。在OrientDB中，有两种形式的语法用于更新数据库上的数据。</p>
+<h2 id="标准的ANSI-92语法-1"><a href="#标准的ANSI-92语法-1" class="headerlink" title="标准的ANSI-92语法"></a>标准的ANSI-92语法</h2><p>  <code>UPDATE Employee SET local=TRUE WHERE city=&#39;London&#39;</code></p>
+<h2 id="与MERGE关键字一起使用的JSON语法，它将更改与当前记录合并"><a href="#与MERGE关键字一起使用的JSON语法，它将更改与当前记录合并" class="headerlink" title="与MERGE关键字一起使用的JSON语法，它将更改与当前记录合并"></a>与MERGE关键字一起使用的JSON语法，它将更改与当前记录合并</h2><p>  <code>UPDATE Employee MERGE { local : TRUE } WHERE city=&#39;London&#39;</code></p>
+<h1 id="DELETE"><a href="#DELETE" class="headerlink" title="DELETE"></a>DELETE</h1><p>   <code>DELETE FROM Employee WHERE city &lt;&gt; &#39;London&#39;</code></p>
+<p> CREATE INDEX T.id ON T(id) UNIQUE</p>
+<p> <a href="http://orientdb.com/docs/3.0.x/gettingstarted/Tutorial-Working-with-graphs.html" target="_blank" rel="noopener">Tutorial-Working-with-graphs</a></p>
+<p>在1.4.x版本中，OrientDB开始将一些边缘作为轻量级边缘进行管理。轻量级边缘没有记录ID，但物理存储为顶点内的链接。请注意，OrientDB仅在边缘没有属性时才使用轻量级边缘，否则它使用标准边缘。</p>
+<p>从逻辑的角度来看，Lightweight Edges是所有效果中的边缘，因此所有图形函数都可以使用它们。这是为了提高性能并减少磁盘空间。</p>
+<p>由于轻量级边缘不作为数据库中的单独记录存在，因此某些查询将无法按预期工作。例如，</p>
+<p>orientdb&gt; SELECT FROM E<br>对于大多数情况，使用边连接顶点，因此该查询不会特别导致任何问题。但是，它不会在结果集中返回Lightweight Edges。如果您需要直接查询边缘（包括没有属性的边缘），请禁用“轻量级边缘”功能。</p>
+<p>要禁用轻量级边缘功能，请执行以下命令。</p>
+<p>orientdb&gt; ALTER DATABASE CUSTOM useLightweightEdges=FALSE<br>您只需要执行一次此命令。OrientDB现在生成新边缘作为标准边缘，而不是轻量级边缘。请注意，这不会影响现有边缘。</p>
+<p>orientdb&gt; CREATE PROPERTY Owns.out LINK Person</p>
+<p>orientdb&gt; CREATE PROPERTY Owns.in LINK Car</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://orientdb.com/docs/3.0.x/sql/SQL-Commands.html" target="_blank" rel="noopener">SQL-Commands</a><br>[2] <a href="http://orientdb.com/docs/3.0.x/console/Console-Commands.html" target="_blank" rel="noopener">Console-Commands</a><br>[3] <a href="http://orientdb.com/docs/3.0.x/gettingstarted/demodb/queries/" target="_blank" rel="noopener">queries-demo</a><br>[4] <a href="http://orientdb.com/docs/3.0.x/gettingstarted/Tutorial-Working-with-graphs.html" target="_blank" rel="noopener">Tutorial-Working-with-graphs</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/orientdb/" rel="tag"># orientdb</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/13/seckill-system/" rel="next" title="秒杀系统">
+                <i class="fa fa-chevron-left"></i> 秒杀系统
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/03/springcloud-note/" rel="prev" title="springcloud和dubbo之间的选择">
+                springcloud和dubbo之间的选择 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用语句"><span class="nav-number">1.</span> <span class="nav-text">常用语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础操作"><span class="nav-number">2.</span> <span class="nav-text">基础操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#连接数据库"><span class="nav-number">2.1.</span> <span class="nav-text">连接数据库</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看有哪些库"><span class="nav-number">3.</span> <span class="nav-text">查看有哪些库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建数据库"><span class="nav-number">4.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用某个库"><span class="nav-number">5.</span> <span class="nav-text">使用某个库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看节点类型个数"><span class="nav-number">6.</span> <span class="nav-text">查看节点类型个数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#创建某种节点"><span class="nav-number">7.</span> <span class="nav-text">创建某种节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#赋值"><span class="nav-number">7.1.</span> <span class="nav-text">赋值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看某个类型的结构"><span class="nav-number">8.</span> <span class="nav-text">查看某个类型的结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看某个类型的数据-默认最多显示20条"><span class="nav-number">9.</span> <span class="nav-text">查看某个类型的数据(默认最多显示20条)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看第一条记录"><span class="nav-number">10.</span> <span class="nav-text">查看第一条记录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#合并重复节点"><span class="nav-number">11.</span> <span class="nav-text">合并重复节点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询所有类别"><span class="nav-number">12.</span> <span class="nav-text">查询所有类别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询某个类别-表-结构"><span class="nav-number">13.</span> <span class="nav-text">查询某个类别(表)结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询所有索引"><span class="nav-number">14.</span> <span class="nav-text">查询所有索引</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Querying-database-metadata"><span class="nav-number">15.</span> <span class="nav-text">Querying database metadata</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Querying-storage-metadata"><span class="nav-number">16.</span> <span class="nav-text">Querying storage metadata</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSELECT"><span class="nav-number">17.</span> <span class="nav-text">SSELECT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SELECT"><span class="nav-number">17.1.</span> <span class="nav-text">SELECT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录ID要对一个或多个记录ID执行，请使用标识符作为目标"><span class="nav-number">17.2.</span> <span class="nav-text">记录ID要对一个或多个记录ID执行，请使用标识符作为目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引要对索引执行查询，请INDEX为目标名称添加前缀。"><span class="nav-number">17.3.</span> <span class="nav-text">索引要对索引执行查询，请INDEX为目标名称添加前缀。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模糊匹配"><span class="nav-number">17.4.</span> <span class="nav-text">模糊匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序"><span class="nav-number">17.5.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合"><span class="nav-number">17.6.</span> <span class="nav-text">聚合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页"><span class="nav-number">17.7.</span> <span class="nav-text">分页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页-2"><span class="nav-number">17.8.</span> <span class="nav-text">分页-2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#INSERT"><span class="nav-number">18.</span> <span class="nav-text">INSERT</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准的ANSI-92语法"><span class="nav-number">18.1.</span> <span class="nav-text">标准的ANSI-92语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简化的ANSI-92语法"><span class="nav-number">18.2.</span> <span class="nav-text">简化的ANSI-92语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON语法"><span class="nav-number">18.3.</span> <span class="nav-text">JSON语法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UPDATE"><span class="nav-number">19.</span> <span class="nav-text">UPDATE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标准的ANSI-92语法-1"><span class="nav-number">19.1.</span> <span class="nav-text">标准的ANSI-92语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与MERGE关键字一起使用的JSON语法，它将更改与当前记录合并"><span class="nav-number">19.2.</span> <span class="nav-text">与MERGE关键字一起使用的JSON语法，它将更改与当前记录合并</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DELETE"><span class="nav-number">20.</span> <span class="nav-text">DELETE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">21.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

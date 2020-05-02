@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="(1)　-bash: mysql: command not found原因:这是由于系统默认会查找/usr/bin下的命令，如果这个命令不在这个目录下，当然会找不到命令，我们需要做的就是映射一个链接到/usr/bin目录下，相当于建立一个链接文件。[root@localhost bin]# ln -s /usr/local/mysql/bin/mysql  /usr/bin (2)　cannot">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 错误 笔记">
+<meta property="og:url" content="http://weikeqin.cn/2017/06/21/mysql-error-notes/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="(1)　-bash: mysql: command not found原因:这是由于系统默认会查找/usr/bin下的命令，如果这个命令不在这个目录下，当然会找不到命令，我们需要做的就是映射一个链接到/usr/bin目录下，相当于建立一个链接文件。[root@localhost bin]# ln -s /usr/local/mysql/bin/mysql  /usr/bin (2)　cannot">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-04-23T02:57:21.085Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 错误 笔记">
+<meta name="twitter:description" content="(1)　-bash: mysql: command not found原因:这是由于系统默认会查找/usr/bin下的命令，如果这个命令不在这个目录下，当然会找不到命令，我们需要做的就是映射一个链接到/usr/bin目录下，相当于建立一个链接文件。[root@localhost bin]# ln -s /usr/local/mysql/bin/mysql  /usr/bin (2)　cannot">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.cn/2017/06/21/mysql-error-notes/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>MySQL 错误 笔记 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.cn/2017/06/21/mysql-error-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL 错误 笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-06-21 10:28:30" itemprop="dateCreated datePublished" datetime="2017-06-21T10:28:30+08:00">2017-06-21</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/06/21/mysql-error-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/06/21/mysql-error-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/06/21/mysql-error-notes/" class="leancloud_visitors" data-flag-title="MySQL 错误 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-bash-mysql-command-not-found"><a href="#1-bash-mysql-command-not-found" class="headerlink" title="(1)　-bash: mysql: command not found"></a>(1)　-bash: mysql: command not found</h1><p>原因:这是由于系统默认会查找/usr/bin下的命令，如果这个命令不在这个目录下，当然会找不到命令，我们需要做的就是映射一个链接到/usr/bin目录下，相当于建立一个链接文件。<br><code>[root@localhost bin]# ln -s /usr/local/mysql/bin/mysql  /usr/bin</code></p>
+<h1 id="2-cannot-connect-to-local-MySQL-Server-through-socket-‘-var-lib-mysql-mysql-sock’"><a href="#2-cannot-connect-to-local-MySQL-Server-through-socket-‘-var-lib-mysql-mysql-sock’" class="headerlink" title="(2)　cannot connect to local MySQL Server through socket ‘/var/lib/mysql/mysql.sock’"></a>(2)　cannot connect to local MySQL Server through socket ‘/var/lib/mysql/mysql.sock’</h1><p>配置 /etc/my.cnf<br><code>sock = /var/lib/mysql/mysql.sock</code></p>
+<h1 id="3-can’t-connect-to-local-mysql-server-through-socket-‘-tmp-mysql-sock’"><a href="#3-can’t-connect-to-local-mysql-server-through-socket-‘-tmp-mysql-sock’" class="headerlink" title="(3)　can’t connect to local mysql server through socket ‘/tmp/mysql.sock’"></a>(3)　can’t connect to local mysql server through socket ‘/tmp/mysql.sock’</h1><p>客户端连接时会默认去找/tmp路径下的mysql.sock 所以 我们这里的第二个方案是 看能不呢把 mysql.sock复制到  /tmp路径下 </p>
+<p><code>ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock</code></p>
+<p><a href="https://blog.csdn.net/zzq900503/article/details/14163341" target="_blank" rel="noopener">error</a></p>
+<a id="more"></a>
+<h1 id="3-MySQL-server-PID-file-could-not-be-found"><a href="#3-MySQL-server-PID-file-could-not-be-found" class="headerlink" title="(3)　MySQL server PID file could not be found"></a>(3)　MySQL server PID file could not be found</h1><p>配置 /etc/my.cnf<br><code>sock = /var/lib/mysql/mysql.sock</code></p>
+<h1 id="4-Starting-MySQL-ERROR-The-server-quit-without-updating-PID-file-data00-usr-local-mysql-data-host-172-16-11-125-pid"><a href="#4-Starting-MySQL-ERROR-The-server-quit-without-updating-PID-file-data00-usr-local-mysql-data-host-172-16-11-125-pid" class="headerlink" title="(4)　Starting MySQL. ERROR! The server quit without updating PID file (/data00/usr/local/mysql/data/host-172-16-11-125.pid)."></a>(4)　Starting MySQL. ERROR! The server quit without updating PID file (/data00/usr/local/mysql/data/host-172-16-11-125.pid).</h1><p>data目录最好放到 <code>/usr/local/mysql/data</code><br>data目录所属用户不是mysql</p>
+<ol>
+<li><p>首先看文件对应的用户</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-rw-rw---- 1 root  root         4 Dec  5 18:10 mysqld_safe.pid</span><br><span class="line"></span><br><span class="line">[root@host-172-16-11-125 data]<span class="comment"># chown -R mysql /data00/usr/local/mysql/data/mysqld_safe.pid</span></span><br><span class="line">[root@host-172-16-11-125 data]<span class="comment"># chgrp -R mysql /data00/usr/local/mysql/data/mysqld_safe.pid</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可能是刚修改my.ini，哪里配置的有问题</p>
+</li>
+</ol>
+<h1 id="5-ln-failed-to-create-symbolic-link-‘-usr-bin-mysql’-File-exists"><a href="#5-ln-failed-to-create-symbolic-link-‘-usr-bin-mysql’-File-exists" class="headerlink" title="(5)　ln: failed to create symbolic link ‘/usr/bin/mysql’: File exists"></a>(5)　ln: failed to create symbolic link ‘/usr/bin/mysql’: File exists</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost bin]<span class="comment"># ln -s /usr/local/mysql/bin/mysql  /usr/bin</span></span><br><span class="line">ln: failed to create symbolic link ‘/usr/bin/mysql’: File exists</span><br><span class="line">[root@localhost bin]<span class="comment"># rm /usr/bin/mysql</span></span><br><span class="line">rm: remove symbolic link ‘/usr/bin/mysql’? yes</span><br><span class="line">[root@localhost bin]<span class="comment"># pwd</span></span><br><span class="line">/usr/<span class="built_in">local</span>/mysql/bin</span><br><span class="line">[root@localhost bin]<span class="comment"># ln -s /usr/local/mysql/bin/mysql  /usr/bin</span></span><br></pre></td></tr></table></figure>
+<h1 id="6-mysql启动不了"><a href="#6-mysql启动不了" class="headerlink" title="(6)　mysql启动不了"></a>(6)　mysql启动不了</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># /etc/init.d/mysqld restart</span></span><br><span class="line">MySQL server PID file could not be found!                  [FAILED]</span><br><span class="line">Starting MySQL...The server quit without updating PID file [FAILED]cal/mysql/data/localhost.localdomain.pid).</span><br><span class="line">[root@localhost /]<span class="comment"># service mysql start</span></span><br><span class="line">Redirecting to /bin/systemctl start  mysql.service</span><br><span class="line">Job <span class="keyword">for</span> mysqld.service failed because the control process exited with error code. See <span class="string">"systemctl status mysqld.service"</span> and <span class="string">"journalctl -xe"</span> <span class="keyword">for</span> details.</span><br><span class="line">[root@localhost /]<span class="comment"># service mysql start</span></span><br><span class="line">Redirecting to /bin/systemctl start  mysql.service</span><br><span class="line">[root@localhost /]<span class="comment"># systemctl start mariadb.service</span></span><br><span class="line">Failed to start mariadb.service: Unit mariadb.service failed to load: No such file or directory.</span><br><span class="line">[root@localhost /]<span class="comment"># systemctl start mysql</span></span><br></pre></td></tr></table></figure>
+<h1 id="7-发生系统错误-1067"><a href="#7-发生系统错误-1067" class="headerlink" title="(7)　发生系统错误 1067"></a>(7)　发生系统错误 1067</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">net start mysql</span><br><span class="line">MySQL 服务正在启动 ...</span><br><span class="line">MySQL 服务无法启动。</span><br><span class="line"></span><br><span class="line">系统出错。</span><br><span class="line"></span><br><span class="line">发生系统错误 1067。</span><br><span class="line"></span><br><span class="line">进程意外终止。</span><br></pre></td></tr></table></figure>
+<p>一定是配置文件里的某些配置不对(注意MySQL各个版本间的配置可能不一样)</p>
+<h1 id="8-your-password-has-expired-to-log-in-you-must-change-it-using-a-client-that-supports-expired-passwords"><a href="#8-your-password-has-expired-to-log-in-you-must-change-it-using-a-client-that-supports-expired-passwords" class="headerlink" title="(8)　your password has expired. to log in you must change it using a client that supports expired passwords"></a>(8)　your password has expired. to log in you must change it using a client that supports expired passwords</h1><ol>
+<li>在mysql bin目录下用./mysql -u root -p 登录</li>
+<li>账户密码过期，修改密码</li>
+</ol>
+<h1 id="9-忘记MySQL密码"><a href="#9-忘记MySQL密码" class="headerlink" title="(9)　忘记MySQL密码"></a>(9)　忘记MySQL密码</h1><p>Linux下如果忘记MySQL的root密码，可以通过修改配置的方法，重置root密码<br>修改MySQL的配置文件（默认为/etc/my.cnf）,在[mysqld]下添加一行skip-grant-tables<br>保存配置文件后，重启MySQL服务 service mysqld restart<br>再次进入MySQL命令行 mysql -uroot -p,输入密码时直接回车，就会进入MySQL数据库了，这个时候按照常规流程修改root密码即可。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">update user set password=password('newpassword') where user='root';  #MySQL-5.6修改密码命令</span><br><span class="line">update user set authentication_string=password('root') where user='root' ;  #MySQL-5.7修改密码命令</span><br><span class="line"><span class="keyword">flush</span> <span class="keyword">privileges</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mysql&gt; SET PASSWORD = PASSWORD('123456');</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; flush privileges;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h1 id="10-ERROR-1820-HY000-You-must-reset-your-password"><a href="#10-ERROR-1820-HY000-You-must-reset-your-password" class="headerlink" title="(10)　ERROR 1820 (HY000): You must reset your password"></a>(10)　ERROR 1820 (HY000): You must reset your password</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1820 (HY000): You must reset your password using ALTER USER statement befo re executing this statement.</span><br></pre></td></tr></table></figure>
+<p>解决办法：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Type '<span class="keyword">help</span>;' or '\h' for help. <span class="keyword">Type</span> <span class="string">'\c'</span> <span class="keyword">to</span> <span class="keyword">clear</span> the <span class="keyword">current</span> <span class="keyword">input</span> statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">show</span> <span class="keyword">databases</span>;</span><br><span class="line"># 第一次登录会提示你修改密码，修改密码就可以了，修改完重新登录。</span><br><span class="line">ERROR 1820 (HY000): You must <span class="keyword">reset</span> your <span class="keyword">password</span> <span class="keyword">using</span> <span class="keyword">ALTER</span> <span class="keyword">USER</span> <span class="keyword">statement</span> <span class="keyword">before</span> executing this statement.  </span><br><span class="line">mysql&gt; SET PASSWORD = PASSWORD('abc2017qwer');  # 修改密码</span><br><span class="line">Query OK, 0 rows affected, 1 warning (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; alter user 'root'@'localhost' password expire never;  # 设置密码永不过期</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; flush privileges;  # 把表里的修改同步到内存</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; exit;</span><br><span class="line">Bye</span><br></pre></td></tr></table></figure></p>
+<h1 id="11-ERROR-1045-28000-Access-denied-for-user-‘root‘-’localhost’-using-password-YES"><a href="#11-ERROR-1045-28000-Access-denied-for-user-‘root‘-’localhost’-using-password-YES" class="headerlink" title="(11)　ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES)"></a>(11)　ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1045 (28000): Access denied for user &apos;root&apos;@&apos;localhost&apos; (using password: YES)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>可能是密码输错了</li>
+<li>root用户没有localhost登录的权限，在mysql数据库的user表里插入或者更新root用户的权限</li>
+</ol>
+<h1 id="12-Establishing-SSL-connection-without-server’s-identity-verification-is-not-recommended"><a href="#12-Establishing-SSL-connection-without-server’s-identity-verification-is-not-recommended" class="headerlink" title="(12)　Establishing SSL connection without server’s identity verification is not recommended."></a>(12)　Establishing SSL connection without server’s identity verification is not recommended.</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Wed Jun 14 10:47:21 CST 2017 WARN: Establishing SSL connection without server&apos;s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn&apos;t set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to &apos;false&apos;. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.</span><br></pre></td></tr></table></figure>
+<p>连接MySQL的时候url参数里加上&amp;useSSL=false<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=jdbc:mysql://localhost:3306/text?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;useSSL=false</span><br></pre></td></tr></table></figure></p>
+<h1 id="13-1215-cannot-add-foreign-key-constraint"><a href="#13-1215-cannot-add-foreign-key-constraint" class="headerlink" title="(13)　1215 cannot add foreign key constraint"></a>(13)　1215 cannot add foreign key constraint</h1><p>可能原因：<br>（1）外键对应的字段数据类型不一致</p>
+<p>（2）设置外键时“删除时”设置为“SET NULL”</p>
+<p>（3）两张表的存储引擎不一致</p>
+<p>解决办法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">show table status from db_name where name=&apos;table_name&apos;;</span><br><span class="line">alter table table_name engine=innodb;</span><br></pre></td></tr></table></figure></p>
+<h1 id="14-ERROR-2003-HY000-Can’t-connect-to-MySQL-server-on-‘172-16-1-23’-113"><a href="#14-ERROR-2003-HY000-Can’t-connect-to-MySQL-server-on-‘172-16-1-23’-113" class="headerlink" title="(14)　ERROR 2003 (HY000): Can’t connect to MySQL server on ‘172.16.1.23’ (113)"></a>(14)　ERROR 2003 (HY000): Can’t connect to MySQL server on ‘172.16.1.23’ (113)</h1><p>113是防火墙的原因<br>修改防火墙，允许3306端口访问，或者关闭防火墙<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">service iptables stop  <span class="comment">#关闭防火墙</span></span><br><span class="line"></span><br><span class="line">systemctl stop firewalld   <span class="comment">#关闭防火墙</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="15-java-io-IOException-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x8C-xA3’-for-column-‘page-title’-at-row-892"><a href="#15-java-io-IOException-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x8C-xA3’-for-column-‘page-title’-at-row-892" class="headerlink" title="(15)　java.io.IOException: java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x8C\xA3’ for column ‘page_title’ at row 892"></a>(15)　java.io.IOException: java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x8C\xA3’ for column ‘page_title’ at row 892</h1><p>  UTF-8编码有可能是两个、三个、四个字节。Emoji表情是4个字节，而Mysql的utf8编码最多3个字节，所以数据插不进去。<br>  解决方案就是：将Mysql的编码从utf8转换成utf8mb4。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">1. 修改my.cnf(windows为my.ini)</span><br><span class="line"></span><br><span class="line">[client] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">character-set-server = utf8mb4 </span><br><span class="line">#collation-server = utf8mb4_unicode_ci </span><br><span class="line">#character-set-client-handshake = FALSE </span><br><span class="line">#init_connect=&apos;SET NAMES utf8mb4&apos;</span><br><span class="line"></span><br><span class="line">2. 将已经建好的表也转换成utf8mb4</span><br><span class="line"></span><br><span class="line">alter database DATABASE_NAME character set utf8mb4 collate utf8mb4_general_ci;  # 更改数据库编码 utf8mb4_unicode_ci</span><br><span class="line">alter table TABLE_NAME convert to character set utf8mb4 collate utf8mb4_bin;  # 更改表的编码 utf8mb4_unicode_ci</span><br><span class="line">alter table TABLE modify COL varchar(50) CHARACTER SET utf8mb4;  # 更改字段的编码</span><br><span class="line"></span><br><span class="line">修改后重启Mysql</span><br><span class="line"></span><br><span class="line">第三步可以省略</span><br><span class="line">3. 以root身份登录Mysql，修改环境变量，将character_set_client,character_set_connection,character_set_database,character_set_results,character_set_server 都修改成utf8mb4</span><br></pre></td></tr></table></figure>
+<h1 id="16-1071-Specified-key-was-too-long-max-key-length-is-767-bytes"><a href="#16-1071-Specified-key-was-too-long-max-key-length-is-767-bytes" class="headerlink" title="(16)　1071 - Specified key was too long; max key length is 767 bytes"></a>(16)　1071 - Specified key was too long; max key length is 767 bytes</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[SQL]  <span class="keyword">alter</span> <span class="keyword">table</span> page <span class="keyword">convert</span> <span class="keyword">to</span> <span class="built_in">character</span> <span class="keyword">set</span> utf8mb4 <span class="keyword">collate</span> utf8mb4_bin;</span><br><span class="line">[Err] 1071 - Specified key was too long; max key length is 767 bytes</span><br></pre></td></tr></table></figure>
+<p>数据库中的某两个字段设置unique索引的时候，出现了Specified key was too long; max key length is 767 bytes错误<br>是Mysql的字段设置的太长了，于是我把这两个字段的长度改了一下就好了</p>
+<h1 id="17-java-io-IOException-com-mysql-jdbc-exceptions-jdbc4-MySQLIntegrityConstraintViolationException-Duplicate-entry-‘15649431’-for-key-‘PRIMARY’"><a href="#17-java-io-IOException-com-mysql-jdbc-exceptions-jdbc4-MySQLIntegrityConstraintViolationException-Duplicate-entry-‘15649431’-for-key-‘PRIMARY’" class="headerlink" title="(17)　java.io.IOException: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry ‘15649431’ for key ‘PRIMARY’"></a>(17)　java.io.IOException: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry ‘15649431’ for key ‘PRIMARY’</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Exception in thread &quot;main&quot; java.io.IOException: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry &apos;15649431&apos; for key &apos;PRIMARY&apos;</span><br><span class="line">Caused by: org.xml.sax.SAXException: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry &apos;15649431&apos; for key &apos;PRIMARY&apos;</span><br></pre></td></tr></table></figure>
+<p>主键重复了</p>
+<h1 id="18-Cannot-truncate-a-table-referenced-in-a-foreign-key-constraint"><a href="#18-Cannot-truncate-a-table-referenced-in-a-foreign-key-constraint" class="headerlink" title="(18)　Cannot truncate a table referenced in a foreign key constraint"></a>(18)　Cannot truncate a table referenced in a foreign key constraint</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[SQL] <span class="keyword">truncate</span> <span class="keyword">table</span> <span class="string">`program`</span>;</span><br><span class="line">[Err] 1701 - Cannot <span class="keyword">truncate</span> a <span class="keyword">table</span> <span class="keyword">referenced</span> <span class="keyword">in</span> a foreign <span class="keyword">key</span> <span class="keyword">constraint</span> (<span class="string">`m`</span>.<span class="string">`task`</span>, <span class="keyword">CONSTRAINT</span> <span class="string">`FK_7kxuyirn7pko5dshnh5969xay`</span> FOREIGN <span class="keyword">KEY</span> (<span class="string">`pid`</span>) <span class="keyword">REFERENCES</span> <span class="string">`m`</span>.<span class="string">`program`</span> (<span class="string">`pid`</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql : <span class="keyword">INSERT</span> <span class="keyword">INTO</span> page (page_id,page_namespace,page_title,page_restrictions,page_counter,page_is_redirect,page_is_new,page_random,page_touched,page_latest,page_len) <span class="keyword">VALUES</span> (<span class="number">133506</span>,<span class="number">0</span>,<span class="string">'陳任'</span>,<span class="string">''</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="keyword">RAND</span>(),<span class="keyword">DATE_ADD</span>(<span class="string">'1970-01-01'</span>, <span class="built_in">INTERVAL</span> <span class="keyword">UNIX_TIMESTAMP</span>() <span class="keyword">SECOND</span>)+<span class="number">0</span>,<span class="number">38317407</span>,<span class="number">3004</span>) ...</span><br><span class="line">java.io.IOException: java.sql.SQLException: Incorrect <span class="keyword">string</span> <span class="keyword">value</span>: <span class="string">'\xA2\xE3'</span> <span class="keyword">for</span> <span class="keyword">column</span> <span class="string">'page_title'</span> <span class="keyword">at</span> <span class="keyword">row</span> <span class="number">642</span></span><br></pre></td></tr></table></figure>
+<h1 id="19-mysql-error-Table-“mysql”-“innodb-table-stats”-not-found"><a href="#19-mysql-error-Table-“mysql”-“innodb-table-stats”-not-found" class="headerlink" title="(19)　mysql error: Table “mysql”.“innodb_table_stats” not found"></a>(19)　mysql error: Table “mysql”.“innodb_table_stats” not found</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`innodb_index_stats`</span> (</span><br><span class="line">  <span class="string">`database_name`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`table_name`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`index_name`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`last_update`</span> <span class="keyword">timestamp</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</span><br><span class="line">  <span class="string">`stat_name`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`stat_value`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`sample_size`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`stat_description`</span> <span class="built_in">varchar</span>(<span class="number">1024</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`database_name`</span>,<span class="string">`table_name`</span>,<span class="string">`index_name`</span>,<span class="string">`stat_name`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COLLATE</span>=utf8_bin STATS_PERSISTENT=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`innodb_table_stats`</span> (</span><br><span class="line">  <span class="string">`database_name`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`table_name`</span> <span class="built_in">varchar</span>(<span class="number">64</span>) <span class="keyword">COLLATE</span> utf8_bin <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`last_update`</span> <span class="keyword">timestamp</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="keyword">CURRENT_TIMESTAMP</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CURRENT_TIMESTAMP</span>,</span><br><span class="line">  <span class="string">`n_rows`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`clustered_index_size`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`sum_of_other_index_sizes`</span> <span class="built_in">bigint</span>(<span class="number">20</span>) <span class="keyword">unsigned</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`database_name`</span>,<span class="string">`table_name`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8 <span class="keyword">COLLATE</span>=utf8_bin STATS_PERSISTENT=<span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<h1 id="20-Data-truncated-for-column"><a href="#20-Data-truncated-for-column" class="headerlink" title="(20)　Data truncated for column"></a>(20)　Data truncated for column</h1><p>由数据类型的长度不一致导致的。<br>alter table user modify column sex  enum(‘0’,’1’);</p>
+<h1 id="21-ERROR-1290-HY000-–secure-file-priv-option-so-it-cannot-execute-this-statement"><a href="#21-ERROR-1290-HY000-–secure-file-priv-option-so-it-cannot-execute-this-statement" class="headerlink" title="(21)　ERROR 1290 (HY000):  –secure-file-priv option so it cannot execute this statement"></a>(21)　ERROR 1290 (HY000):  –secure-file-priv option so it cannot execute this statement</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</span><br></pre></td></tr></table></figure>
+<p>On Ubuntu 14 and Mysql 5.5.53 this setting seems to be enabled by default. To disable it you need to add secure-file-priv = “” to your my.cnf file under the mysqld config group. eg:-<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">secure-file-priv = &quot;&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Stop the MySQL server service by going into services.msc</span><br><span class="line">Go to C:\ProgramData\MySQL\MySQL Server 5.6 (ProgramData was a hidden folder in my case).</span><br><span class="line">Open the my.ini file in Notepad.</span><br><span class="line">Search for &apos;secure-file-priv&apos;.</span><br><span class="line">Comment the line out by adding &apos;#&apos; at the start of the line.</span><br><span class="line">Save the file.</span><br><span class="line">Start the MySQL server service by going into services.msc</span><br></pre></td></tr></table></figure>
+<p>#　(22)　Can’t create/write to file ‘/tmp/ML6MLk2I’ (Errcode: 28 - No space left on device)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.sql.BatchUpdateException: Can&apos;t create/write to file &apos;/tmp/ML6MLk2I&apos; (Errcode: 28 - No space left on device)</span><br></pre></td></tr></table></figure></p>
+<h1 id="23-mysql如何查看自己数据库文件所在的位置-2016-11-12"><a href="#23-mysql如何查看自己数据库文件所在的位置-2016-11-12" class="headerlink" title="(23)　mysql如何查看自己数据库文件所在的位置 2016.11.12"></a>(23)　mysql如何查看自己数据库文件所在的位置 2016.11.12</h1><p>打开mysqml文件夹，显示的文件如下，然后找到my.ini文件,打开my.ini文件后，按ctrl+f搜索”datadir”就可以找到你数据库的物理路径。<br>如果你修改数据库文件的存储位置，可以直接在这里修改。如果想对数据库进行搬迁，只需要复制”data“这个文件夹，覆盖新环境下的”data“文件就可以了。</p>
+<h1 id="24-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><a href="#24-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes" class="headerlink" title="(24)　Got a packet bigger than ‘max_allowed_packet’ bytes"></a>(24)　Got a packet bigger than ‘max_allowed_packet’ bytes</h1><p>导入文件时提示文件太大<br>[Err] 1153 - Got a packet bigger than ‘max_allowed_packet’ bytes<br>解决方法：<br>在MySQL安装目录下找到文件my.ini，搜索[mysqld]，在其下面添加一句话<br>max_allowed_packet=1024M  （大小根据自己的情况定）<br>重启MySQL服务<br>（windows下  计算机  右键  管理  服务和应用程序  服务  找到mysql服务，重启）<br>或者 以管理员身份运行cmd  net mysql stop   net mysql start</p>
+<h1 id="25-MySQL-ibdata1文件太大如何缩小"><a href="#25-MySQL-ibdata1文件太大如何缩小" class="headerlink" title="(25)　MySQL ibdata1文件太大如何缩小"></a>(25)　MySQL ibdata1文件太大如何缩小</h1><p>2016.3.1</p>
+<p>MySql innodb如果是共享表空间，ibdata1文件越来越大，达到了30多个G，对一些没用的表进行清空：<br>truncate table xxx;<br>然后optimize table xxx; 没有效果<br>因为对共享表空间不起作用。<br>mysql ibdata1存放数据，索引等，是MYSQL的最主要的数据。</p>
+<p>如果不把数据分开存放的话，这个文件的大小很容易就上了G，甚至几十G。对于某些应用来说，并不是太合适。因此要把此文件缩小。<br>无法自动收缩，必须数据导出，删除ibdata1，然后数据导入，比较麻烦，因此需要改为每个表单独的文件。</p>
+<p>解决方法：数据文件单独存放(共享表空间如何改为每个表独立的表空间文件)。<br>步骤如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">1）备份数据库</span><br><span class="line">从命令行进入MySQL Server 5.0\bin</span><br><span class="line">备份全部数据库，执行命令</span><br><span class="line">D:\&gt;mysqldump -q -u mysql -ppassword --add-drop-table --all-databases &gt; c:/all.sql</span><br><span class="line">做完此步后，停止数据库服务。</span><br><span class="line"></span><br><span class="line">2）找到my.ini或my.cnf文件</span><br><span class="line">linux下执行 ./mysqld --verbose --help | grep -A 1 &apos;Default options&apos;</span><br><span class="line">会有类似显示：</span><br><span class="line">Default options are read from the following files in the given order:</span><br><span class="line">/etc/my.cnf ~/.my.cnf /usr/local/service/mysql3306/etc/my.cnf</span><br><span class="line"></span><br><span class="line">windows环境下可以：</span><br><span class="line">mysqld --verbose --help &gt; mysqlhelp.txt</span><br><span class="line">notepad mysqlhelp.txt</span><br><span class="line">在里面查找Default options，可以看到查找my.ini的顺序，以找到真实目录</span><br><span class="line"></span><br><span class="line">3）修改mysql配置文件</span><br><span class="line">打开my.ini或my.cnf文件</span><br><span class="line">[mysqld]下增加下面配置</span><br><span class="line">innodb_file_per_table=1</span><br><span class="line"></span><br><span class="line">验证配置是否生效，可以重启mysql后,执行</span><br><span class="line">show variables like &apos;%per_table%&apos;</span><br><span class="line">看看innodb_file_per_table变量是否为ON</span><br><span class="line"></span><br><span class="line">4）删除原数据文件</span><br><span class="line">删除原来的ibdata1文件及日志文件ib_logfile*，删除data目录下的应用数据库文件夹(mysql文件夹不要删)</span><br><span class="line"></span><br><span class="line">5）还原数据库</span><br><span class="line">启动数据库服务</span><br><span class="line"></span><br><span class="line">从命令行进入MySQL Server 5.0\bin</span><br><span class="line">还原全部数据库，执行命令mysql -uusername -pyourpassword &lt; c:/all.sql</span><br><span class="line"></span><br><span class="line">经过以上几步后，可以看到新的ibdata1文件就只有几十M了，数据及索引都变成了针对单个表的小ibd文件了，它们在相应数据库的文件夹下面。</span><br></pre></td></tr></table></figure></p>
+<h1 id="26-同一局域网内一台电脑-windows-访问另一条电脑-windows-上的mysql"><a href="#26-同一局域网内一台电脑-windows-访问另一条电脑-windows-上的mysql" class="headerlink" title="(26)　同一局域网内一台电脑(windows)访问另一条电脑(windows)上的mysql"></a>(26)　同一局域网内一台电脑(windows)访问另一条电脑(windows)上的mysql</h1><p>  被连接的那台电脑</p>
+<ol>
+<li>打开3306端口</li>
+<li>允许远程用户访问(把mysql数据库user表里的host改成%)</li>
+<li>关闭防火墙<br>备注：和telnet没关系</li>
+</ol>
+<h1 id="27-can-not-connet-mysql-10060"><a href="#27-can-not-connet-mysql-10060" class="headerlink" title="(27)　can not connet mysql 10060"></a>(27)　can not connet mysql 10060</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysqld_safe The file /usr/local/mysql/bin/mysqld</span><br><span class="line">does not exist or is not executable. Please cd to the mysql installation</span><br><span class="line">directory and restart this script from there as follows:</span><br><span class="line">./bin/mysqld_safe&amp;</span><br><span class="line">See http://dev.mysql.com/doc/mysql/en/mysqld-safe.html for more information</span><br></pre></td></tr></table></figure>
+<p>mysqld_safe只认识/usr/local/mysql/bin/mysqld路径的mysqld</p>
+<p>于是调整在当前目录创建了一个软链接，问题解决。</p>
+<p>[root@edu local]# ln -s mysql5.7/  mysql</p>
+<h1 id="28-ERROR-2013-HY000-Lost-connection-to-MySQL-server-at-‘reading-initial-communication-packet’-system-error-110"><a href="#28-ERROR-2013-HY000-Lost-connection-to-MySQL-server-at-‘reading-initial-communication-packet’-system-error-110" class="headerlink" title="(28) ERROR 2013 (HY000): Lost connection to MySQL server at ‘reading initial communication packet’, system error: 110"></a>(28) ERROR 2013 (HY000): Lost connection to MySQL server at ‘reading initial communication packet’, system error: 110</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 2013 (HY000): Lost connection to MySQL server at &apos;reading initial communication packet&apos;, system error: 110</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> mysql设置文件中“bind-address”值的问题；<br> 访问权限限制问题；<br> 防火墙、杀毒软件阻拦的问题（特别是Windows）；<br> 负载过大、最大连接限制了访问（特别正式提供服务的mysql）<br> 网络问题</p>
+</blockquote>
+<p>  <a href="https://aiezu.com/article/mysql_error_at_reading_initial_communication_packet.html" target="_blank" rel="noopener">Lost connection to MySQL server at ‘reading initial communication packet’, system error: 0</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://dev.mysql.com/doc/refman/5.7/en/preface.html" target="_blank" rel="noopener">MySQL-5.7 官方文档</a><br>[2] <a href="https://dev.mysql.com/doc/refman/5.7/en/create-user.html" target="_blank" rel="noopener">MySQL-5.6 创建用户</a><br>[3] <a href="http://www.cnblogs.com/t1508001/p/5821452.html" target="_blank" rel="noopener">安装完绿色版MySQL修改密码：ERROR 1820 (HY000): You must reset your password using ALTER USER statement befo re executing this statement.</a><br>[4] <a href="https://dev.mysql.com/doc/refman/5.7/en/alter-user.html" target="_blank" rel="noopener">alter user</a><br>[5] <a href="http://blog.csdn.net/likendsl/article/details/7530979" target="_blank" rel="noopener">让Mysql支持Emoji表情</a><br>[6] <a href="http://www.tuicool.com/articles/zAnEV3" target="_blank" rel="noopener">MySQL乱码问题以及utf8mb4字符集</a><br>[7] <a href="http://ourmysql.com/archives/1402" target="_blank" rel="noopener">清官谈mysql中utf8和utf8mb4区别</a><br>[8] <a href="https://stackoverflow.com/questions/15767652/mysql-error-table-mysql-innodb-table-stats-not-found" target="_blank" rel="noopener">mysql-error-table-mysql-innodb-table-stats-not-found</a><br>[9] <a href="http://blog.csdn.net/fhzaitian/article/details/53168551" target="_blank" rel="noopener">Incorrect string value: ‘\xF0\x9F…’ for column ‘XXX’ at row </a><br>[10] <a href="https://dev.mysql.com/doc/refman/5.7/en/charset-unicode-conversion.html" target="_blank" rel="noopener">charset-unicode-conversion</a><br>[11] <a href="http://seanlook.com/2016/10/23/mysql-utf8mb4/" target="_blank" rel="noopener">mysql-utf8mb4</a><br>[12] <a href="http://blog.csdn.net/u010098331/article/details/50752667" target="_blank" rel="noopener">MySQL server PID file could not be found!</a><br>[13] <a href="http://blog.csdn.net/kobejayandy/article/details/46974185" target="_blank" rel="noopener">Mysql JDBC 连接串参数说明</a><br>[14] <a href="http://dev.mysql.com/doc/refman/5.1/en/connector-j-reference-configuration-properties.html" target="_blank" rel="noopener">connector-j-reference-configuration-properties</a><br>[15] <a href="http://www.jianshu.com/p/0f10c218d6fc" target="_blank" rel="noopener">mysql导出导入文件问题整理</a><br>[16] <a href="https://stackoverflow.com/questions/32737478/how-should-i-tackle-secure-file-priv-in-mysql" target="_blank" rel="noopener">how-should-i-tackle-secure-file-priv-in-mysql  </a><br>[17] <a href="https://www.kancloud.cn/digest/mysqlsummary/132839" target="_blank" rel="noopener">Mysql导出逗号分隔的csv文件</a><br>[18] <a href="http://www.cnblogs.com/stublue/archive/2012/07/02/2573860.html" target="_blank" rel="noopener">mysql导出数据  null值被处理成\N</a><br>[19] <a href="https://stackoverflow.com/questions/7415710/mysql-writing-file-error-errcode-28" target="_blank" rel="noopener">mysql-writing-file-error-errcode-28</a><br>[20] <a href="https://stackoverflow.com/questions/11997012/mysql-cant-create-write-to-file-tmp-sql-3c6-0-myi-errcode-2-what-does" target="_blank" rel="noopener">mysql-cant-create-write-to-file-tmp-sql-3c6-0-myi-errcode-2-what-does </a><br>[21] <a href="http://www.cnblogs.com/paul8339/p/5649151.html" target="_blank" rel="noopener">Mysql删除数据后，磁盘空间未释放的解决办法</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/21/word2vec/" rel="next" title="word2vec">
+                <i class="fa fa-chevron-left"></i> word2vec
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/22/tomcat-notes/" rel="prev" title="Tomcat 笔记">
+                Tomcat 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">162</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-bash-mysql-command-not-found"><span class="nav-number">1.</span> <span class="nav-text">(1)　-bash: mysql: command not found</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-cannot-connect-to-local-MySQL-Server-through-socket-‘-var-lib-mysql-mysql-sock’"><span class="nav-number">2.</span> <span class="nav-text">(2)　cannot connect to local MySQL Server through socket ‘/var/lib/mysql/mysql.sock’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-can’t-connect-to-local-mysql-server-through-socket-‘-tmp-mysql-sock’"><span class="nav-number">3.</span> <span class="nav-text">(3)　can’t connect to local mysql server through socket ‘/tmp/mysql.sock’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-MySQL-server-PID-file-could-not-be-found"><span class="nav-number">4.</span> <span class="nav-text">(3)　MySQL server PID file could not be found</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Starting-MySQL-ERROR-The-server-quit-without-updating-PID-file-data00-usr-local-mysql-data-host-172-16-11-125-pid"><span class="nav-number">5.</span> <span class="nav-text">(4)　Starting MySQL. ERROR! The server quit without updating PID file (/data00/usr/local/mysql/data/host-172-16-11-125.pid).</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-ln-failed-to-create-symbolic-link-‘-usr-bin-mysql’-File-exists"><span class="nav-number">6.</span> <span class="nav-text">(5)　ln: failed to create symbolic link ‘/usr/bin/mysql’: File exists</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-mysql启动不了"><span class="nav-number">7.</span> <span class="nav-text">(6)　mysql启动不了</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-发生系统错误-1067"><span class="nav-number">8.</span> <span class="nav-text">(7)　发生系统错误 1067</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-your-password-has-expired-to-log-in-you-must-change-it-using-a-client-that-supports-expired-passwords"><span class="nav-number">9.</span> <span class="nav-text">(8)　your password has expired. to log in you must change it using a client that supports expired passwords</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-忘记MySQL密码"><span class="nav-number">10.</span> <span class="nav-text">(9)　忘记MySQL密码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-ERROR-1820-HY000-You-must-reset-your-password"><span class="nav-number">11.</span> <span class="nav-text">(10)　ERROR 1820 (HY000): You must reset your password</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#11-ERROR-1045-28000-Access-denied-for-user-‘root‘-’localhost’-using-password-YES"><span class="nav-number">12.</span> <span class="nav-text">(11)　ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#12-Establishing-SSL-connection-without-server’s-identity-verification-is-not-recommended"><span class="nav-number">13.</span> <span class="nav-text">(12)　Establishing SSL connection without server’s identity verification is not recommended.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#13-1215-cannot-add-foreign-key-constraint"><span class="nav-number">14.</span> <span class="nav-text">(13)　1215 cannot add foreign key constraint</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#14-ERROR-2003-HY000-Can’t-connect-to-MySQL-server-on-‘172-16-1-23’-113"><span class="nav-number">15.</span> <span class="nav-text">(14)　ERROR 2003 (HY000): Can’t connect to MySQL server on ‘172.16.1.23’ (113)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#15-java-io-IOException-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x8C-xA3’-for-column-‘page-title’-at-row-892"><span class="nav-number">16.</span> <span class="nav-text">(15)　java.io.IOException: java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x8C\xA3’ for column ‘page_title’ at row 892</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#16-1071-Specified-key-was-too-long-max-key-length-is-767-bytes"><span class="nav-number">17.</span> <span class="nav-text">(16)　1071 - Specified key was too long; max key length is 767 bytes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#17-java-io-IOException-com-mysql-jdbc-exceptions-jdbc4-MySQLIntegrityConstraintViolationException-Duplicate-entry-‘15649431’-for-key-‘PRIMARY’"><span class="nav-number">18.</span> <span class="nav-text">(17)　java.io.IOException: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry ‘15649431’ for key ‘PRIMARY’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#18-Cannot-truncate-a-table-referenced-in-a-foreign-key-constraint"><span class="nav-number">19.</span> <span class="nav-text">(18)　Cannot truncate a table referenced in a foreign key constraint</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#19-mysql-error-Table-“mysql”-“innodb-table-stats”-not-found"><span class="nav-number">20.</span> <span class="nav-text">(19)　mysql error: Table “mysql”.“innodb_table_stats” not found</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#20-Data-truncated-for-column"><span class="nav-number">21.</span> <span class="nav-text">(20)　Data truncated for column</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#21-ERROR-1290-HY000-–secure-file-priv-option-so-it-cannot-execute-this-statement"><span class="nav-number">22.</span> <span class="nav-text">(21)　ERROR 1290 (HY000):  –secure-file-priv option so it cannot execute this statement</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#23-mysql如何查看自己数据库文件所在的位置-2016-11-12"><span class="nav-number">23.</span> <span class="nav-text">(23)　mysql如何查看自己数据库文件所在的位置 2016.11.12</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#24-Got-a-packet-bigger-than-‘max-allowed-packet’-bytes"><span class="nav-number">24.</span> <span class="nav-text">(24)　Got a packet bigger than ‘max_allowed_packet’ bytes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#25-MySQL-ibdata1文件太大如何缩小"><span class="nav-number">25.</span> <span class="nav-text">(25)　MySQL ibdata1文件太大如何缩小</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#26-同一局域网内一台电脑-windows-访问另一条电脑-windows-上的mysql"><span class="nav-number">26.</span> <span class="nav-text">(26)　同一局域网内一台电脑(windows)访问另一条电脑(windows)上的mysql</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#27-can-not-connet-mysql-10060"><span class="nav-number">27.</span> <span class="nav-text">(27)　can not connet mysql 10060</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#28-ERROR-2013-HY000-Lost-connection-to-MySQL-server-at-‘reading-initial-communication-packet’-system-error-110"><span class="nav-number">28.</span> <span class="nav-text">(28) ERROR 2013 (HY000): Lost connection to MySQL server at ‘reading initial communication packet’, system error: 110</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">29.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
