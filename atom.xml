@@ -513,9 +513,9 @@
       <category term="distributed" scheme="http://weikeqin.com/categories/distributed/"/>
     
     
-      <category term="lock" scheme="http://weikeqin.com/tags/lock/"/>
-    
       <category term="distributed" scheme="http://weikeqin.com/tags/distributed/"/>
+    
+      <category term="lock" scheme="http://weikeqin.com/tags/lock/"/>
     
   </entry>
   

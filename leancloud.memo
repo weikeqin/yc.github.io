@@ -168,6 +168,7 @@
 {"title":"Java内存模型","url":"/2020/02/03/java-mermory-model/"},
 {"title":"mysql explain 详解","url":"/2020/02/05/mysql-explain/"},
 {"title":"github搜索","url":"/2020/02/23/github-search/"},
+{"title":"域名重定向 hexo博客更换域名","url":"/2020/03/02/domain-redirection/"},
 {"title":"设计模式","url":"/2020/03/14/design-pattern/"},
 {"title":"chrome-notes","url":"/2020/03/20/chrome-notes/"},
 {"title":"JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack","url":"/2020/03/28/jvm-performance-tuning-monitoring-tool/"},
