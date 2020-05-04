@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="各组件配置使用运行流程：  1、请求统一通过API网关（Zuul）来访问内部服务.  2、网关接收到请求后，从注册中心（Eureka）获取可用服务  3、由Ribbon进行均衡负载后，分发到后端具体实例  4、微服务之间通过Feign进行通信处理业务  5、Hystrix负责处理服务超时熔断  6、Turbine监控服务间的调用和熔断相关指标   springcloud提供了微服务所需的全套组件，">
+  <meta name="description" content="小型的项目用什么语言都行，爱用什么用什么。但是，真正的企业级架构就不一样了，其中并不仅仅只是 RESTful API 或 RPC，还有各种配套设施和控制系统，比如：应用网关，服务发现、配置中心、健康检查、服务监控、服务治理（熔断、限流、幂等、重试、隔离、事务补偿）、Tracing监控、SOA/ESB、CQRS、EDA……    本文不会告诉你必须用什么，但是会告诉你两者的优缺点。   rest">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="springcloud和dubbo之间的选择">
-<meta property="og:url" content="http://weikeqin.com/2019/07/03/springcloud-note/index.html">
+<meta property="og:title" content="REST VS RPC">
+<meta property="og:url" content="http://weikeqin.com/2019/07/03/rest-vs-rpc/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="各组件配置使用运行流程：  1、请求统一通过API网关（Zuul）来访问内部服务.  2、网关接收到请求后，从注册中心（Eureka）获取可用服务  3、由Ribbon进行均衡负载后，分发到后端具体实例  4、微服务之间通过Feign进行通信处理业务  5、Hystrix负责处理服务超时熔断  6、Turbine监控服务间的调用和熔断相关指标   springcloud提供了微服务所需的全套组件，">
+<meta property="og:description" content="小型的项目用什么语言都行，爱用什么用什么。但是，真正的企业级架构就不一样了，其中并不仅仅只是 RESTful API 或 RPC，还有各种配套设施和控制系统，比如：应用网关，服务发现、配置中心、健康检查、服务监控、服务治理（熔断、限流、幂等、重试、隔离、事务补偿）、Tracing监控、SOA/ESB、CQRS、EDA……    本文不会告诉你必须用什么，但是会告诉你两者的优缺点。   rest">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-17T15:09:49.771Z">
+<meta property="og:updated_time" content="2020-05-03T05:51:29.999Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="springcloud和dubbo之间的选择">
-<meta name="twitter:description" content="各组件配置使用运行流程：  1、请求统一通过API网关（Zuul）来访问内部服务.  2、网关接收到请求后，从注册中心（Eureka）获取可用服务  3、由Ribbon进行均衡负载后，分发到后端具体实例  4、微服务之间通过Feign进行通信处理业务  5、Hystrix负责处理服务超时熔断  6、Turbine监控服务间的调用和熔断相关指标   springcloud提供了微服务所需的全套组件，">
+<meta name="twitter:title" content="REST VS RPC">
+<meta name="twitter:description" content="小型的项目用什么语言都行，爱用什么用什么。但是，真正的企业级架构就不一样了，其中并不仅仅只是 RESTful API 或 RPC，还有各种配套设施和控制系统，比如：应用网关，服务发现、配置中心、健康检查、服务监控、服务治理（熔断、限流、幂等、重试、隔离、事务补偿）、Tracing监控、SOA/ESB、CQRS、EDA……    本文不会告诉你必须用什么，但是会告诉你两者的优缺点。   rest">
 
 
 
@@ -132,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://weikeqin.com/2019/07/03/springcloud-note/">
+  <link rel="canonical" href="http://weikeqin.com/2019/07/03/rest-vs-rpc/">
 
 
 
@@ -142,7 +142,7 @@
   };
 </script>
 
-  <title>springcloud和dubbo之间的选择 | 沧海一粟</title>
+  <title>REST VS RPC | 沧海一粟</title>
   
 
 
@@ -371,7 +371,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/03/springcloud-note/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/03/rest-vs-rpc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -388,7 +388,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">springcloud和dubbo之间的选择
+          <h1 class="post-title" itemprop="name headline">REST VS RPC
               
             
           </h1>
@@ -446,8 +446,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/07/03/springcloud-note/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/03/springcloud-note/" itemprop="commentCount"></span>
+                <a href="/2019/07/03/rest-vs-rpc/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/03/rest-vs-rpc/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -455,7 +455,7 @@
 
           
           
-             <span id="/2019/07/03/springcloud-note/" class="leancloud_visitors" data-flag-title="springcloud和dubbo之间的选择">
+             <span id="/2019/07/03/rest-vs-rpc/" class="leancloud_visitors" data-flag-title="REST VS RPC">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -493,7 +493,15 @@
       
 
       
-        <p>各组件配置使用运行流程：<br>  1、请求统一通过API网关（Zuul）来访问内部服务.<br>  2、网关接收到请求后，从注册中心（Eureka）获取可用服务<br>  3、由Ribbon进行均衡负载后，分发到后端具体实例<br>  4、微服务之间通过Feign进行通信处理业务<br>  5、Hystrix负责处理服务超时熔断<br>  6、Turbine监控服务间的调用和熔断相关指标</p>
+        <blockquote>
+<p> 小型的项目用什么语言都行，爱用什么用什么。但是，真正的企业级架构就不一样了，其中并不仅仅只是 RESTful API 或 RPC，还有各种配套设施和控制系统，比如：应用网关，服务发现、配置中心、健康检查、服务监控、服务治理（熔断、限流、幂等、重试、隔离、事务补偿）、Tracing监控、SOA/ESB、CQRS、EDA……</p>
+</blockquote>
+<p>  本文不会告诉你必须用什么，但是会告诉你两者的优缺点。</p>
+<p>  rest 以 springcloud为例，rpc以dubbo为例。</p>
+<blockquote>
+<p> 从性能上来讲，在数据量小（单个请求小于20K）并发大的场景下，rpc的性能比restful api的性能要好。<br> 从上手、使用、维护 方面来说，springcloud更容易上手、维护。</p>
+</blockquote>
+<p>各组件配置使用运行流程：<br>  1、请求统一通过API网关（Zuul）来访问内部服务.<br>  2、网关接收到请求后，从注册中心（Eureka）获取可用服务<br>  3、由Ribbon进行均衡负载后，分发到后端具体实例<br>  4、微服务之间通过Feign进行通信处理业务<br>  5、Hystrix负责处理服务超时熔断<br>  6、Turbine监控服务间的调用和熔断相关指标</p>
 <p>  springcloud提供了微服务所需的全套组件，降低了架构和开发成本，解决了微服务的多个痛点问题。具体如下：</p>
 <ol>
 <li>注册中心</li>
@@ -503,7 +511,7 @@
 <li>服务的限流、降级、熔断</li>
 </ol>
 <p>   如果使用dubbo，配置中心、分布式跟踪这些内容都需要自己去集成，无形中增加了难度。</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/u010664947/article/details/80007767" target="_blank" rel="noopener">比较spring cloud和dubbo，各自的优缺点是什么</a><br>[2] <a href="http://www.ityouknow.com/springcloud/2017/10/19/micro-service-practice.html" target="_blank" rel="noopener">中小型互联网公司微服务实践-经验和教训</a><br>[3] <a href="https://www.zhihu.com/question/269983910" target="_blank" rel="noopener">SpringBoot和SpringCloud为什么会那么火？对开发有哪些帮助？</a><br>[4] <a href="https://blog.csdn.net/u010963948/article/details/78488045" target="_blank" rel="noopener">项目中为什么首先spring cloud，而不是dubbo</a><br>[5] <a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">Microservices-微服务原文</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/kobejayandy/article/details/52078275" target="_blank" rel="noopener">微服务架构的基础框架选择：Spring Cloud还是Dubbo？</a><br>[2] <a href="https://blog.csdn.net/u010664947/article/details/80007767" target="_blank" rel="noopener">比较spring cloud和dubbo，各自的优缺点是什么</a><br>[3] <a href="http://www.ityouknow.com/springcloud/2017/10/19/micro-service-practice.html" target="_blank" rel="noopener">中小型互联网公司微服务实践-经验和教训</a><br>[4] <a href="https://www.zhihu.com/question/269983910" target="_blank" rel="noopener">SpringBoot和SpringCloud为什么会那么火？对开发有哪些帮助？</a><br>[5] <a href="https://blog.csdn.net/u010963948/article/details/78488045" target="_blank" rel="noopener">项目中为什么首先spring cloud，而不是dubbo</a><br>[6] <a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">Microservices-微服务原文</a></p>
 
       
     </div>
@@ -552,8 +560,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/30/orientdb-sql/" rel="next" title="orientdb 常用语句">
-                <i class="fa fa-chevron-left"></i> orientdb 常用语句
+              <a href="/2019/07/03/springcloud-notes/" rel="next" title="springcloud笔记">
+                <i class="fa fa-chevron-left"></i> springcloud笔记
               </a>
             
           </div>
@@ -641,7 +649,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">163</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

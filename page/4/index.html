@@ -1873,7 +1873,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/03/springcloud-note/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/03/rest-vs-rpc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -1892,8 +1892,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/07/03/springcloud-note/" itemprop="url">
-                  springcloud和dubbo之间的选择
+                <a class="post-title-link" href="/2019/07/03/rest-vs-rpc/" itemprop="url">
+                  REST VS RPC
                 </a>
               
             
@@ -1952,8 +1952,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/07/03/springcloud-note/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/03/springcloud-note/" itemprop="commentCount"></span>
+                <a href="/2019/07/03/rest-vs-rpc/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/03/rest-vs-rpc/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1961,7 +1961,7 @@
 
           
           
-             <span id="/2019/07/03/springcloud-note/" class="leancloud_visitors" data-flag-title="springcloud和dubbo之间的选择">
+             <span id="/2019/07/03/rest-vs-rpc/" class="leancloud_visitors" data-flag-title="REST VS RPC">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1994,7 +1994,15 @@
       
         
           
-            <p>各组件配置使用运行流程：<br>  1、请求统一通过API网关（Zuul）来访问内部服务.<br>  2、网关接收到请求后，从注册中心（Eureka）获取可用服务<br>  3、由Ribbon进行均衡负载后，分发到后端具体实例<br>  4、微服务之间通过Feign进行通信处理业务<br>  5、Hystrix负责处理服务超时熔断<br>  6、Turbine监控服务间的调用和熔断相关指标</p>
+            <blockquote>
+<p> 小型的项目用什么语言都行，爱用什么用什么。但是，真正的企业级架构就不一样了，其中并不仅仅只是 RESTful API 或 RPC，还有各种配套设施和控制系统，比如：应用网关，服务发现、配置中心、健康检查、服务监控、服务治理（熔断、限流、幂等、重试、隔离、事务补偿）、Tracing监控、SOA/ESB、CQRS、EDA……</p>
+</blockquote>
+<p>  本文不会告诉你必须用什么，但是会告诉你两者的优缺点。</p>
+<p>  rest 以 springcloud为例，rpc以dubbo为例。</p>
+<blockquote>
+<p> 从性能上来讲，在数据量小（单个请求小于20K）并发大的场景下，rpc的性能比restful api的性能要好。<br> 从上手、使用、维护 方面来说，springcloud更容易上手、维护。</p>
+</blockquote>
+<p>各组件配置使用运行流程：<br>  1、请求统一通过API网关（Zuul）来访问内部服务.<br>  2、网关接收到请求后，从注册中心（Eureka）获取可用服务<br>  3、由Ribbon进行均衡负载后，分发到后端具体实例<br>  4、微服务之间通过Feign进行通信处理业务<br>  5、Hystrix负责处理服务超时熔断<br>  6、Turbine监控服务间的调用和熔断相关指标</p>
 <p>  springcloud提供了微服务所需的全套组件，降低了架构和开发成本，解决了微服务的多个痛点问题。具体如下：</p>
 <ol>
 <li>注册中心</li>
@@ -2004,7 +2012,7 @@
 <li>服务的限流、降级、熔断</li>
 </ol>
 <p>   如果使用dubbo，配置中心、分布式跟踪这些内容都需要自己去集成，无形中增加了难度。</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/u010664947/article/details/80007767" target="_blank" rel="noopener">比较spring cloud和dubbo，各自的优缺点是什么</a><br>[2] <a href="http://www.ityouknow.com/springcloud/2017/10/19/micro-service-practice.html" target="_blank" rel="noopener">中小型互联网公司微服务实践-经验和教训</a><br>[3] <a href="https://www.zhihu.com/question/269983910" target="_blank" rel="noopener">SpringBoot和SpringCloud为什么会那么火？对开发有哪些帮助？</a><br>[4] <a href="https://blog.csdn.net/u010963948/article/details/78488045" target="_blank" rel="noopener">项目中为什么首先spring cloud，而不是dubbo</a><br>[5] <a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">Microservices-微服务原文</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/kobejayandy/article/details/52078275" target="_blank" rel="noopener">微服务架构的基础框架选择：Spring Cloud还是Dubbo？</a><br>[2] <a href="https://blog.csdn.net/u010664947/article/details/80007767" target="_blank" rel="noopener">比较spring cloud和dubbo，各自的优缺点是什么</a><br>[3] <a href="http://www.ityouknow.com/springcloud/2017/10/19/micro-service-practice.html" target="_blank" rel="noopener">中小型互联网公司微服务实践-经验和教训</a><br>[4] <a href="https://www.zhihu.com/question/269983910" target="_blank" rel="noopener">SpringBoot和SpringCloud为什么会那么火？对开发有哪些帮助？</a><br>[5] <a href="https://blog.csdn.net/u010963948/article/details/78488045" target="_blank" rel="noopener">项目中为什么首先spring cloud，而不是dubbo</a><br>[6] <a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">Microservices-微服务原文</a></p>
 
           
         
@@ -2058,7 +2066,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/06/30/orientdb-sql/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/03/springcloud-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="WKQ">
@@ -2077,8 +2085,8 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/30/orientdb-sql/" itemprop="url">
-                  orientdb 常用语句
+                <a class="post-title-link" href="/2019/07/03/springcloud-notes/" itemprop="url">
+                  springcloud笔记
                 </a>
               
             
@@ -2104,7 +2112,7 @@
                 
               
 
-              <time title="创建时间：2019-06-30 21:33:50" itemprop="dateCreated datePublished" datetime="2019-06-30T21:33:50+08:00">2019-06-30</time>
+              <time title="创建时间：2019-07-03 20:31:58" itemprop="dateCreated datePublished" datetime="2019-07-03T20:31:58+08:00">2019-07-03</time>
             
 
             
@@ -2122,7 +2130,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/orientdb/" itemprop="url" rel="index"><span itemprop="name">orientdb</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
 
                 
                 
@@ -2137,8 +2145,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/30/orientdb-sql/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/06/30/orientdb-sql/" itemprop="commentCount"></span>
+                <a href="/2019/07/03/springcloud-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/07/03/springcloud-notes/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -2146,7 +2154,7 @@
 
           
           
-             <span id="/2019/06/30/orientdb-sql/" class="leancloud_visitors" data-flag-title="orientdb 常用语句">
+             <span id="/2019/07/03/springcloud-notes/" class="leancloud_visitors" data-flag-title="springcloud笔记">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -2178,68 +2186,19 @@
 
       
         
-          <p>  orientdb启动后可以在 <a href="http://localhost:2480" target="_blank" rel="noopener">http://localhost:2480</a> 打开前端管理界面操作，也可以在shell里操作</p>
-<p>  orientdb的很多语句很像mysql和neo4j，学习的时候可以用来对比</p>
-<h1 id="常用语句"><a href="#常用语句" class="headerlink" title="常用语句"></a>常用语句</h1><table>
-<thead>
-<tr>
-<th style="text-align:left"></th>
-<th style="text-align:left">orientdb</th>
-<th style="text-align:left">mysql</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">连接数据库</td>
-<td style="text-align:left">CONNECT remote:127.0.0.1 root root</td>
-<td style="text-align:left">mysql -u root -p root</td>
-</tr>
-<tr>
-<td style="text-align:left">查看所有数据库</td>
-<td style="text-align:left">LIST DATABASES</td>
-<td style="text-align:left">show databases</td>
-</tr>
-<tr>
-<td style="text-align:left">创建数据库</td>
-<td style="text-align:left">CREATE DATABASE remote:127.0.0.1/db_test_wkq root root</td>
-<td style="text-align:left">create database db_test_wkq</td>
-</tr>
-<tr>
-<td style="text-align:left">使用某个数据库</td>
-<td style="text-align:left">CONNECT remote:127.0.0.1/db_test_wkq root root</td>
-<td style="text-align:left">use db_test_wkq</td>
-</tr>
-<tr>
-<td style="text-align:left">查询节点类型(表)个数</td>
-<td style="text-align:left">LIST CLASSES <br>  select expand(classes) from metadata:schema</td>
-<td style="text-align:left">show tables</td>
-</tr>
-<tr>
-<td style="text-align:left">创建某类节点</td>
-<td style="text-align:left">CREATE CLASS TestVertex extends V</td>
-<td style="text-align:left">create table table1</td>
-</tr>
-<tr>
-<td style="text-align:left">查看某个类型的结构</td>
-<td style="text-align:left">INFO CLASS OUser</td>
-<td style="text-align:left">desc table1</td>
-</tr>
-<tr>
-<td style="text-align:left">查看某个类型的数据</td>
-<td style="text-align:left">BROWSE CLASS OUser</td>
-<td style="text-align:left">select <code>*</code> from OUser limit 20</td>
-</tr>
-</tbody>
-</table>
-<pre><code>CREATE DATABASE &lt;database-url&gt; [&lt;user&gt;] [&lt;password&gt;] [&lt;storage-type&gt;] [&lt;db-type&gt;] [&lt;[options]&gt;]
-</code></pre><p>创建数据库 CREATE DATABASE PLOCAL:/usr/local/orientdb/databases/db_test_wkq<br>         CREATE DATABASE remote:127.0.0.1/db_test_wkq root root  plocal  graph</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/30/orientdb-sql/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <p>各组件配置使用运行流程：<br>  1、请求统一通过API网关（Zuul）来访问内部服务.<br>  2、网关接收到请求后，从注册中心（Eureka）获取可用服务<br>  3、由Ribbon进行均衡负载后，分发到后端具体实例<br>  4、微服务之间通过Feign进行通信处理业务<br>  5、Hystrix负责处理服务超时熔断<br>  6、Turbine监控服务间的调用和熔断相关指标</p>
+<p>  springcloud提供了微服务所需的全套组件，降低了架构和开发成本，解决了微服务的多个痛点问题。具体如下：</p>
+<ol>
+<li>注册中心</li>
+<li>配置中心</li>
+<li>服务间的调用方式</li>
+<li>链路追踪</li>
+<li>服务的限流、降级、熔断</li>
+</ol>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://spring.io/projects/spring-cloud" target="_blank" rel="noopener">spring-cloud</a><br>[2] <a href="https://www.springcloud.cc/" target="_blank" rel="noopener">springcloud中文网</a><br>[3] <a href="http://www.ityouknow.com/springcloud/2017/05/01/simple-springcloud.html" target="_blank" rel="noopener">springcloud(一)：大话Spring Cloud-纯洁的微笑</a><br>[4] <a href="https://blog.csdn.net/forezp/article/details/70148833" target="_blank" rel="noopener">史上最简单的 SpringCloud 教程 | 终章-方志朋</a><br>[5] <a href="http://blog.didispace.com/spring-cloud-learning/" target="_blank" rel="noopener">Spring Cloud 从入门到精通</a><br>[6] <a href="http://springcloud.cn/" target="_blank" rel="noopener">Spring Cloud中国社区</a></p>
+
+          
         
       
     </div>
@@ -2323,7 +2282,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">163</span>
+                    <span class="site-state-item-count">164</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

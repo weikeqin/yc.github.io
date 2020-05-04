@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://weikeqin.com/2020/04/18/vim-notes/</loc>
+    <lastmod>2020-05-03</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/04/18/vs-code-notes/</loc>
+    <lastmod>2020-05-03</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2019/07/03/springcloud-notes/</loc>
+    <lastmod>2020-05-03</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2019/07/03/rest-vs-rpc/</loc>
+    <lastmod>2020-05-03</lastmod>
+  </url>  <url>
     <loc>http://weikeqin.com/2020/03/02/domain-redirection/</loc>
-    <lastmod>2020-05-02</lastmod>
+    <lastmod>2020-05-03</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/03/16/git-notes/</loc>
     <lastmod>2020-05-02</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2020/04/18/vs-code-notes/</loc>
-    <lastmod>2020-05-01</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2020/04/18/vim-notes/</loc>
-    <lastmod>2020-05-01</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2019/05/13/seckill-system/</loc>
     <lastmod>2020-05-01</lastmod>
@@ -54,9 +60,6 @@
   </url>  <url>
     <loc>http://weikeqin.com/2020/03/20/chrome-notes/</loc>
     <lastmod>2020-03-20</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2019/07/03/springcloud-note/</loc>
-    <lastmod>2020-03-17</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2018/03/01/python-log/</loc>
     <lastmod>2020-03-16</lastmod>
@@ -376,10 +379,10 @@
     <loc>http://weikeqin.com/2019/05/06/mysql-slow-reason/</loc>
     <lastmod>2019-08-19</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2019/05/06/mysql-order-by/</loc>
+    <loc>http://weikeqin.com/2018/04/20/mysql-question/</loc>
     <lastmod>2019-08-19</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2018/04/20/mysql-question/</loc>
+    <loc>http://weikeqin.com/2019/05/06/mysql-order-by/</loc>
     <lastmod>2019-08-19</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/05/01/massive-data-processing-interview-questions/</loc>
@@ -451,10 +454,10 @@
     <loc>http://weikeqin.com/2018/07/08/software-engineer-knowledge/</loc>
     <lastmod>2019-07-03</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2017/05/01/simhash/</loc>
+    <loc>http://weikeqin.com/2017/05/23/securecrt/</loc>
     <lastmod>2019-07-03</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2017/05/23/securecrt/</loc>
+    <loc>http://weikeqin.com/2017/05/01/simhash/</loc>
     <lastmod>2019-07-03</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2018/11/16/java-sort/</loc>
