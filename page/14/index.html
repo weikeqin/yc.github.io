@@ -370,6 +370,731 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/03/neo4j-shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/03/neo4j-shell/" itemprop="url">
+                  neo4j-shell 使用 笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-03 19:49:55" itemprop="dateCreated datePublished" datetime="2017-05-03T19:49:55+08:00">2017-05-03</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/03/neo4j-shell/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/05/03/neo4j-shell/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/03/neo4j-shell/" class="leancloud_visitors" data-flag-title="neo4j-shell 使用 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>  Neo4j-shell是Neo4j数据库的命令行操作界面，(类似于MySQL的Command Line) 使用方便，操作简单。</p>
+<p>  步骤：</p>
+<ol>
+<li>首先修改<code>neo4j.conf</code>配置文件，必须要修改配置后可以使用neo4j-shell。</li>
+<li>启动Neo4j数据库。</li>
+<li>使用 neo4j-shell</li>
+</ol>
+<h1 id="1-修改neo4j-conf配置文件"><a href="#1-修改neo4j-conf配置文件" class="headerlink" title="1.　  修改neo4j.conf配置文件"></a>1.　  修改<code>neo4j.conf</code>配置文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 修改233行，去掉前面的#，允许使用neo4j-shell，类似于mysql 命令行之类的</span><br><span class="line"># Enable a remote shell server which Neo4j Shell clients can log in to.</span><br><span class="line">dbms.shell.enabled=true</span><br><span class="line"></span><br><span class="line"># 修改235行，去掉#，设置连接neo4j-shell的端口，一般都是localhost或者127.0.0.1，这样安全，其他地址的话，一般使用https就行</span><br><span class="line"># The network interface IP the shell will listen on (use 0.0.0.0 for all interfaces).</span><br><span class="line">dbms.shell.host=127.0.0.1</span><br><span class="line"></span><br><span class="line"># 修改237行，去掉#，设置neo4j-shell端口，端口可以自定义，只要不和其他端口冲突就行</span><br><span class="line"># The port the shell will listen on, default is 1337.</span><br><span class="line">dbms.shell.port=1337</span><br></pre></td></tr></table></figure>
+<h1 id="2-启动Neo4j数据库"><a href="#2-启动Neo4j数据库" class="headerlink" title="2　启动Neo4j数据库"></a>2　启动Neo4j数据库</h1><p>  用 <code>neo4j start</code>(linux) 或 <code>neo4j console</code>(windows) 启动Neo4j数据库</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/03/neo4j-shell/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/simhash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/01/simhash/" itemprop="url">
+                  SimHash 算法 笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-01 17:49:14" itemprop="dateCreated datePublished" datetime="2017-05-01T17:49:14+08:00">2017-05-01</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/01/simhash/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/05/01/simhash/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/01/simhash/" class="leancloud_visitors" data-flag-title="SimHash 算法 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>根据《数学之美》里的介绍，相似哈希(SimHash)是<a href="https://dl.acm.org/author_page.cfm?id=81100202109&amp;coll=DL&amp;dl=ACM&amp;trk=0" target="_blank" rel="noopener">Moses S. Charikar</a> 在2002年提出的 <a href="https://dl.acm.org/citation.cfm?id=509965" target="_blank" rel="noopener">《Similarity estimation techniques from rounding algorithms》</a>但真正得到重视是当Google在网页爬虫中使用它，并把它发表在WWW会议上以后。</p>
+<p>  simhash是google用来处理海量文本去重的算法。 google出品，你懂的。<br>  simhash最牛逼的一点就是将一个文档，最后转换成一个64位的字节，暂且称之为特征字，<br>  然后判断重复只需要判断他们的特征字的距离是不是&lt;n（根据经验这个n一般取值为3），就可以判断两个文档是否相似。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/01/simhash/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/hash/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/01/hash/" itemprop="url">
+                  hash
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-01 14:56:58" itemprop="dateCreated datePublished" datetime="2017-05-01T14:56:58+08:00">2017-05-01</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/01/hash/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/05/01/hash/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/01/hash/" class="leancloud_visitors" data-flag-title="hash">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Hash （哈希，或者散列）函数在计算机领域，尤其是数据快速查找领域，加密领域用的极广。</p>
+<p>其作用是将一个大的数据集映射到一个小的数据集上面（这些小的数据集叫做哈希值，或者散列值）。</p>
+<p>  一个应用是Hash table（散列表，也叫哈希表），是根据哈希值 (Key value) 而直接进行访问的数据结构。<br>  也就是说，它通过把哈希值映射到表中一个位置来访问记录，以加快查找的速度。下面是一个典型的 hash 函数 / 表示意图：</p>
+<p><img src="/img/algorithm/hash/hash.jpg" alt="hash"></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/01/hash/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/massive-data-processing-interview-questions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/01/massive-data-processing-interview-questions/" itemprop="url">
+                  海量数据处理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-05-01 14:43:58" itemprop="dateCreated datePublished" datetime="2017-05-01T14:43:58+08:00">2017-05-01</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/data/" itemprop="url" rel="index"><span itemprop="name">data</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/01/massive-data-processing-interview-questions/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/05/01/massive-data-processing-interview-questions/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/05/01/massive-data-processing-interview-questions/" class="leancloud_visitors" data-flag-title="海量数据处理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>  有1000亿条记录，每条记录由url,ip,时间组成，设计一个系统能够快速查询以下内容<br>  1.给定url和时间段（精确到分钟）统计url的访问次数<br>  2.给定ip和时间段（精确到分钟）统计ip的访问次数</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://blog.csdn.net/v_july_v/article/details/6685962" target="_blank" rel="noopener">海量数据处理面试题集锦</a><br>[2] <a href="https://blog.csdn.net/v_JULY_v/article/details/7382693" target="_blank" rel="noopener">教你如何迅速秒杀掉：99%的海量数据处理面试题</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/bitmap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -390,7 +1115,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/2017/05/01/bitmap/" itemprop="url">
-                  BitMap
+                  位图
                 </a>
               
             
@@ -458,7 +1183,7 @@
 
           
           
-             <span id="/2017/05/01/bitmap/" class="leancloud_visitors" data-flag-title="BitMap">
+             <span id="/2017/05/01/bitmap/" class="leancloud_visitors" data-flag-title="位图">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -490,9 +1215,33 @@
 
       
         
-          <p>  对无重复的数据进行排序</p>
-<p>  给定数据（2，4，1，12，9，7，6）如何对它排序？</p>
-<p>  方法1：基本的排序方法包括冒泡，快排等。<br>  方法2：使用BitMap算法</p>
+          <blockquote>
+<p> 在遇到有关联关系 并且 数据量很大时，会遇到一个很头疼的问题，就是要处理的数据量太大，效率很低。<br> 比如用户画像系统、每天的活跃用户、商品适配、人际关系 等。</p>
+</blockquote>
+<blockquote>
+<p> 以用户画像系统为例，如果用户数 &lt; 500万 并且 标签数 也不多，可以用传统的关系型数据库直接查询。<br> 但是当数据数很多 或者 查询比较复杂时，关系型数据会效率会很低。就得想想其它办法。</p>
+</blockquote>
+<blockquote>
+<ol>
+<li>优化算法</li>
+<li>数据压缩</li>
+<li>压缩维度展示(类似数据压缩)</li>
+</ol>
+</blockquote>
+<h1 id="1-优化算法"><a href="#1-优化算法" class="headerlink" title="(1) 优化算法"></a>(1) 优化算法</h1><p>用户画像系统<br>  用户     张三、李四<br>  用户标签  学生、单身、90后、程序员</p>
+<p>统计 标签是90后 程序员 的用户<br>   mysql条件查询   </p>
+<p>统计 标签是90后 或 程序员 的用户个数<br>  mysql 查询 取并集 </p>
+<p>  当 用户数过多 (500万用户) 或 标签过多(10万标签) 时，mysql的效率很低。</p>
+<p>  假设<br>   user_id int类型，占4字节， 1千万用户    也就是 4 <em> 40 000 000 byte = 160M<br>   user_name  varchar(8) 使用utf-8编码 占24字节  也就是 24 </em> 40 000 000 byte = 480M</p>
+<p>   tag_id int类型，占4字节，10万标签   也就是 4 * 100000 byte = 400 000 = 400K</p>
+<p>   用户 和 标签 是多对多关系，假设有一张 用户标签表， 有1千万行 10万列， 每一行需要  (user_id + 100 000 tag_id ) <em> 4 byte </em> 10 000 000 ≈ 4000G</p>
+<p>  得换一种办法。</p>
+<p>bitmap<br>  一个标签对应多个用户<br>  标签id化，用户id化 (倒排索引)</p>
+<p>  每个标签 一个bitmap ，这个bitmap存储了用户信息，用户是500万，实际存储需要 2^23 bit = 2^23 / 8 byte ≈ 1MB<br>  有 10万标签 100 000 * 1MB = 100 GB</p>
+<p>  这个算的是所有的用户和标签，实际上可以只处理需要的。可以过滤掉很多用户和标签。<br>  用户数过滤一部分，其实 一个bitmap 实际存储会变成 2^22 bit = 2^22 / 8 byte  ≈ 0.5MB<br>  只处理常用的标签，实际常用的大概1000，1000 * 0.5MB = 5G</p>
+<p>  根据标签查对应用户，拿到结果后 并集 交集 差集 </p>
+<p>统计 标签是90后 程序员 的用户<br>  根据标签查对应用户，拿到结果后 交集</p>
+<p>统计 标签是90后 或 程序员 的用户个数<br>  根据标签查对应用户，拿到结果后 并集</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/05/01/bitmap/#more" rel="contents">
@@ -1466,745 +2215,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/04/18/intellij-idea-install-and-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/18/intellij-idea-install-and-config/" itemprop="url">
-                  IntelliJ-IDEA 使用笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-04-18 14:04:28" itemprop="dateCreated datePublished" datetime="2017-04-18T14:04:28+08:00">2017-04-18</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/18/intellij-idea-install-and-config/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/04/18/intellij-idea-install-and-config/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/04/18/intellij-idea-install-and-config/" class="leancloud_visitors" data-flag-title="IntelliJ-IDEA 使用笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  看到好多人说idea好用，自己也想试试。结果发现上手的时候比较难，一旦上手，真的是爱不释手。<br>  比eclipse好用多了。<br>  举一个很简单的例子。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在main方法里写了下面一行代码</span><br><span class="line"> double a;</span><br><span class="line"> a = args[2]; // idea 会在这行代码下标红线，提示有错误</span><br></pre></td></tr></table></figure>
-<h1 id="1-下载及安装"><a href="#1-下载及安装" class="headerlink" title="(1)　下载及安装"></a>(1)　下载及安装</h1><p>  <a href="http://www.jetbrains.com/idea/download/#section=windows" target="_blank" rel="noopener">http://www.jetbrains.com/idea/download/#section=windows</a><br>  <a href="http://www.jetbrains.com/idea/download/download-thanks.html?platform=windowsZip&amp;code=IIC" target="_blank" rel="noopener">http://www.jetbrains.com/idea/download/download-thanks.html?platform=windowsZip&amp;code=IIC</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/18/intellij-idea-install-and-config/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/04/18/eclipse-install-config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/18/eclipse-install-config/" itemprop="url">
-                  Eclipse 安装 配置
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-04-18 10:42:57" itemprop="dateCreated datePublished" datetime="2017-04-18T10:42:57+08:00">2017-04-18</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/18/eclipse-install-config/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/04/18/eclipse-install-config/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/04/18/eclipse-install-config/" class="leancloud_visitors" data-flag-title="Eclipse 安装 配置">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-下载及安装"><a href="#1-下载及安装" class="headerlink" title="1 下载及安装"></a>1 下载及安装</h1><p>  在Eclipse<a href="https://www.eclipse.org/downloads/eclipse-packages/" target="_blank" rel="noopener">官网 下载页面</a>选择对应的版本下载，这里提供一个<a href="https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/neon/3/eclipse-jee-neon-3-win32-x86_64.zip" target="_blank" rel="noopener">下载链接</a><br>  下载的是zip安装包，解压完就可以使用</p>
-<h1 id="2-配置"><a href="#2-配置" class="headerlink" title="2 配置"></a>2 配置</h1><h2 id="1-设置JDK"><a href="#1-设置JDK" class="headerlink" title="1.设置JDK"></a>1.设置JDK</h2><p>   Window  -  Preferences  -  Java  -  Installed JREs  -  Add  - Standard VM  -  选中JDK安装目录的jdk1.7.0_80文件夹<br><img src="/img/tools/Eclipse/Eclipse配置JDK.png" alt="Eclipse配置JDK"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/18/eclipse-install-config/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/04/14/neo4j-import-data/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/14/neo4j-import-data/" itemprop="url">
-                  Neo4j 批量 导入 数据 的 几种方式
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-04-14 21:34:35" itemprop="dateCreated datePublished" datetime="2017-04-14T21:34:35+08:00">2017-04-14</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/14/neo4j-import-data/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/04/14/neo4j-import-data/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/04/14/neo4j-import-data/" class="leancloud_visitors" data-flag-title="Neo4j 批量 导入 数据 的 几种方式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  Neo4j是一个比较新的数据库，ETL工具较少，公司一个项目需要导入上百亿数据，想找一个最合适的方案来导入数据。<br>  于是就想测测各种导入方式的效率以及成本</p>
-<h1 id="常见数据插入方式概览"><a href="#常见数据插入方式概览" class="headerlink" title="常见数据插入方式概览"></a>常见数据插入方式概览</h1><p>目前主要有以下几种数据插入方式：</p>
-<ol>
-<li>Cypher create 语句，为每一条数据写一个create</li>
-<li>Cypher <a href="https://neo4j.com/docs/developer-manual/current/cypher/clauses/load-csv/" target="_blank" rel="noopener">load csv</a> 语句，将数据转成CSV格式，通过LOAD CSV读取数据。</li>
-<li>官方提供的<a href="https://neo4j.com/developer/guide-import-csv/#_super_fast_batch_importer_for_huge_datasets" target="_blank" rel="noopener">neo4j-import</a>工具，未来将被<a href="https://neo4j.com/docs/operations-manual/current/tools/import/" target="_blank" rel="noopener">neo4j-admin import</a>代替</li>
-<li>官方提供的Java API - <a href="https://neo4j.com/docs/java-reference/current/javadocs/org/neo4j/unsafe/batchinsert/BatchInserter.html" target="_blank" rel="noopener">BatchInserter</a></li>
-<li>大牛编写的 <a href="https://github.com/jexp/batch-import" target="_blank" rel="noopener">batch-import</a> 工具</li>
-<li><a href="https://github.com/neo4j-contrib/neo4j-apoc-procedures" target="_blank" rel="noopener">neo4j-apoc</a>　　load.csv + apoc.load.relationship</li>
-<li><p>针对实际业务场景，定制化开发</p>
-<p>这些工具有什么不同呢？速度如何？适用的场景分别是什么？</p>
-</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/14/neo4j-import-data/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/04/14/neo4j-apoc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/14/neo4j-apoc/" itemprop="url">
-                  Neo4j APOC 初识
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-04-14 21:33:50" itemprop="dateCreated datePublished" datetime="2017-04-14T21:33:50+08:00">2017-04-14</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/04/14/neo4j-apoc/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/04/14/neo4j-apoc/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/04/14/neo4j-apoc/" class="leancloud_visitors" data-flag-title="Neo4j APOC 初识">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  前一段时间有个朋友提了个问题，A和B是朋友关系，经过算法发现，A和C也是朋友关系，在cypher中怎么用A和B的关系来表示A和C的关系。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 旧版本的语句</span><br><span class="line">start n1=node(1), n2=node(1725535), n3=node(1725534)</span><br><span class="line">match (n1)-[r]-&gt;(n2)</span><br><span class="line">with n1 ,n2, n3, type(r) as rt</span><br><span class="line">create (n1)-[:rt]-&gt;(n3)</span><br><span class="line">return n1, n2, n3;</span><br></pre></td></tr></table></figure>
-<p>  自己测试了半天发现没有办法，Cypher里定义关系时，不支持动态参数。</p>
-<p>  后来查了半天资料，发现可以用<a href="https://github.com/neo4j-contrib/neo4j-apoc-procedures" target="_blank" rel="noopener">Neo4j APOC</a>解决</p>
-<p>  最后发现有两种方式可以解决：</p>
-<ol>
-<li>用Neo4j APOC，使用apoc.cypher.run可以动态构造cypher 或者 apoc.create.relationship</li>
-<li>把一条语句拆分成两条，在第二条语句里动态拼CQL(可能会有CQL注入的风险)</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/14/neo4j-apoc/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2252,7 +2262,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

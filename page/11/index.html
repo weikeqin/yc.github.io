@@ -370,6 +370,739 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/10/16/druid-db-pool-config-java/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/16/druid-db-pool-config-java/" itemprop="url">
+                  Druid 连接池 配置 (java无框架)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-10-16 09:22:40" itemprop="dateCreated datePublished" datetime="2017-10-16T09:22:40+08:00">2017-10-16</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/16/druid-db-pool-config-java/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/10/16/druid-db-pool-config-java/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/16/druid-db-pool-config-java/" class="leancloud_visitors" data-flag-title="Druid 连接池 配置 (java无框架)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>为什么必须使用数据库连接池:</p>
+<p>1.普通的JDBC数据库连接使用DriverManager来获取，每次向数据库建立连接时都要将Connection加载到内存中，再验证用户名和密码。需要数据库连接的时候，就向数据库要求一个，执行完后就断开连接，这样的方式会消耗大量的资源和时间，数据库的连接资源并没有得到很好的重复利用。若是同时有几百人甚至几千人在线，频繁地进行数据库连接操作，这将会占用很多的系统资源，严重的甚至会造成服务器的奔溃。</p>
+<p>2.使用DriverManager方式获取JDBC数据库连接，每一次数据库连接，操作完会后都要断开，否则，如果程序出现异常而未能关闭，将会导致数据库系统内存泄漏，最终将导致重启数据库。</p>
+<p>3.同时，这种开发不能控制被创建的连接对象数，系统资源会被毫无顾忌地分配出去，若果连接过多，也可能导致内存泄漏，服务器奔溃。</p>
+<p>使用数据库连接池，可以避免以上几种问题。数据库连接池允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；释放空闲空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接漏洞；连接池的数据库连接数受最大连接数和最小连接数控制，因此不会出现连接过多内存泄漏的情况。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/16/druid-db-pool-config-java/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/10/12/web-crawler-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/12/web-crawler-notes/" itemprop="url">
+                  爬虫 笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-10-12 17:27:07" itemprop="dateCreated datePublished" datetime="2017-10-12T17:27:07+08:00">2017-10-12</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/12/web-crawler-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/10/12/web-crawler-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/10/12/web-crawler-notes/" class="leancloud_visitors" data-flag-title="爬虫 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>爬虫(Spider)，反爬虫(Anti-Spider)，反反爬虫(Anti-Anti-Spider)，这之间的斗争恢宏壮阔…</p>
+<p>Day 1 小莫想要某站上所有的电影，写了标准的爬虫(基于HttpClient库)，不断地遍历某站的电影列表页面，根据 Html 分析电影名字存进自己的数据库。这个站点的运维小黎发现某个时间段请求量陡增，分析日志发现都是 IP(1.1.1.1)这个用户，并且 useragent 还是 JavaClient1.6 ，基于这两点判断非人类后直接在Nginx 服务器上封杀。</p>
+<p>Day 2 小莫电影只爬了一半，于是也针对性的变换了下策略：1. useragent 模仿百度(“Baiduspider…”)，2. IP每爬半个小时就换一个IP代理。小黎也发现了对应的变化，于是在 Nginx 上设置了一个频率限制，每分钟超过120次请求的再屏蔽IP。 同时考虑到百度家的爬虫有可能会被误伤，想想市场部门每月几十万的投放，于是写了个脚本，通过 hostname 检查下这个 ip 是不是真的百度家的，对这些 ip 设置一个白名单。</p>
+<p>Day 3 小莫发现了新的限制后，想着我也不急着要这些数据，留给服务器慢慢爬吧，于是修改了代码，随机1-3秒爬一次，爬10次休息10秒，每天只在8-12，18-20点爬，隔几天还休息一下。小黎看着新的日志头都大了，再设定规则不小心会误伤真实用户，于是准备换了一个思路，当3个小时的总请求超过50次的时候弹出一个验证码弹框，没有准确正确输入的话就把 IP 记录进黑名单。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/12/web-crawler-notes/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/09/21/crawler-xiecheng/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/21/crawler-xiecheng/" itemprop="url">
+                  爬取 携程
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-09-21 18:01:18" itemprop="dateCreated datePublished" datetime="2017-09-21T18:01:18+08:00">2017-09-21</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/21/crawler-xiecheng/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/09/21/crawler-xiecheng/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/09/21/crawler-xiecheng/" class="leancloud_visitors" data-flag-title="爬取 携程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>主页面url<br><code>http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22</code></p>
+<p>获取数据url<br><code>http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c802fde883e64a3c8fba0e99e45d023c&amp;rk=2.7090996922689414192821&amp;CK=1D7795E4EB96B7578AA673D6EF346C33&amp;r=0.2337708871934405872019</code></p>
+<p>首次搜索<br>    <a href="http://flights.ctrip.com/domestic/Search/FirstRoute/?ddate1=2017-09-22&amp;ddate2=2017-09-22&amp;dcity1=BJS&amp;acity1=KMG" target="_blank" rel="noopener">http://flights.ctrip.com/domestic/Search/FirstRoute/?ddate1=2017-09-22&amp;ddate2=2017-09-22&amp;dcity1=BJS&amp;acity1=KMG</a><br>    <a href="http://flights.ctrip.com/domestic/booking/BJS-KMG---D-adu-1/?dayoffset=1&amp;ddate1=2017-09-22&amp;ddate2=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/domestic/booking/BJS-KMG---D-adu-1/?dayoffset=1&amp;ddate1=2017-09-22&amp;ddate2=2017-09-22</a><br>重新搜索<br>    <a href="http://flights.ctrip.com/booking/bjs-kmg---d-adu-1/?ddate1=2017-09-22&amp;ddate2=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/booking/bjs-kmg---d-adu-1/?ddate1=2017-09-22&amp;ddate2=2017-09-22</a>    往返<br>    <a href="http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22</a>    单程</p>
+<p> 往返<br>    <code>var url = &quot;//flights.ctrip.com/domesticsearch/search/SearchRoundRecommend?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=3c10647ccad04412a33567f25335875a&amp;CK=97017DBB47A37AFE6BE4D99105F78AFE&quot;;</code><br> 单程<br>    <code>var url = &quot;//flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=66c9c383c12f4dc685a9ad3e5834a7c4&amp;CK=D6BF57FFFC0A4E89AF51CF7186A1944E&quot;;</code></p>
+<p>根据直接获取json的url拿到数据解析后就能获得航班信息，这个url里有4个参数，需要从搜索主页的页面里获取<br>单程和往返的原理一样，就是往返多了一个返回日期，其他都一样</p>
+<p> LogToken不变 r不变  CK有变化 rk用Math.random</p>
+<p>  LogToken<br>  rk<br>  CK<br>  r  在主页面的第34行</p>
+<p>  LogToken和CK根据主页面24行的url可以得到，r值在主页面34行可以得到</p>
+<p> 获取的json数据的url，爬取数据用的url<br>  单程<br>     <a href="http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c96a69a7ca9142be9f0e3192f44f9f07&amp;rk=1.445840834132689163412&amp;CK=6A53EEBD27EBBE6785AF7951EC03EB1E&amp;r=0.3795051054613884121115" target="_blank" rel="noopener">http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c96a69a7ca9142be9f0e3192f44f9f07&amp;rk=1.445840834132689163412&amp;CK=6A53EEBD27EBBE6785AF7951EC03EB1E&amp;r=0.3795051054613884121115</a><br>  往返<br>      <a href="http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=584465ec999045db9a546e1ce6a04a3f&amp;rk=4.057381591787214165342&amp;CK=D76BF5FFFC0A4E89AF51CF7186A1944E&amp;r=0.543402675163338674414" target="_blank" rel="noopener">http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=584465ec999045db9a546e1ce6a04a3f&amp;rk=4.057381591787214165342&amp;CK=D76BF5FFFC0A4E89AF51CF7186A1944E&amp;r=0.543402675163338674414</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/21/crawler-xiecheng/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/09/02/jvm-monitoring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/02/jvm-monitoring/" itemprop="url">
+                  JVM 监控
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-09-02 07:26:06" itemprop="dateCreated datePublished" datetime="2017-09-02T07:26:06+08:00">2017-09-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/02/jvm-monitoring/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/09/02/jvm-monitoring/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/09/02/jvm-monitoring/" class="leancloud_visitors" data-flag-title="JVM 监控">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>  昨天天发现Tomcat占用2G物理内存，11G虚拟内存，感觉就起了一个web项目，而且是在内网，没几个人用呀。内存占用怎么这么高。</p>
+<p>  Tomcat使用的大多是默认配置。就改了个conf/context.xml server.xml</p>
+<p>  遇到问题了，先想想怎么解决，暂时能想到的是用分析工具分析一下了。我用的是jdk1.8.0_111， ${JAVA_HOME}/bin目录里有两个工具jmc.exe　jvisualvm.exe<br>这两个工具就是今天的主角了。用来监控JVM的。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/02/jvm-monitoring/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/08/29/string-stringbuilder-stringbuffer-compare/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1446,728 +2179,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/07/19/nlp-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/19/nlp-notes/" itemprop="url">
-                  NLP 资料
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-19 14:22:08" itemprop="dateCreated datePublished" datetime="2017-07-19T14:22:08+08:00">2017-07-19</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/19/nlp-notes/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/07/19/nlp-notes/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/07/19/nlp-notes/" class="leancloud_visitors" data-flag-title="NLP 资料">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  NLP(Nature Language Processing)自然语言处理</p>
-<p>   funNLP   <a href="https://github.com/fighting41love/funNLP" target="_blank" rel="noopener">https://github.com/fighting41love/funNLP</a> </p>
-<p>  中英文敏感词、语言检测、中外手机/电话归属地/运营商查询、名字推断性别、手机号抽取、身份证抽取、邮箱抽取、中日文人名库、中文缩写库、拆字词典、词汇情感值、停用词、反动词表、暴恐词表、繁简体转换、英文模拟中文发音、汪峰歌词生成器、职业名称词库、同义词库、反义词库、否定词库、汽车品牌词库、汽车零件词库、连续英文切割、各种中文词向量、公司名字大全、古诗词库、IT词库、财经词库、成语词库、地名词库、历史名人词库、诗词词库、医学词库、饮食词库、法律词库、汽车词库、动物词库、中文聊天语料、中文谣言数据、百度中文问答数据集、句子相似度匹配算法集合、bert资源、文本生成&amp;摘要相关工具、cocoNLP信息抽取工具、国内电话号码正则匹配、清华大学XLORE:中英文跨语言百科知识图谱、清华大学人工智能技术系列报告、自然语言生成、NLU太难了系列、自动对联数据及机器人、用户名黑名单列表、罪名法务名词及分类模型、微信公众号语料、cs224n深度学习自然语言处理课程、中文手写汉字识别、中文自然语言处理 语料/数据集、变量命名神器、分词语料库+代码、任务型对话英文数据集、ASR 语音数据集 + 基于深度学习的中文语音识别系统、笑声检测器、Microsoft多语言数字/单位/如日期时间识别包、中华新华字典数据库及api(包括常用歇后语、成语、词语和汉字)、文档图谱自动生成、SpaCy 中文模型、Common Voice语音识别数据集新版、神经网络关系抽取、基于bert的命名实体识别、关键词(Keyphrase)抽取包pke、基于医疗领域知识图谱的问答系统、基于依存句法与语义角色标注的事件三元组抽取、依存句法分析4万句高质量标注数据、cnocr：用来做中文OCR的Python3包、中文人物关系知识图谱项目、中文nlp竞赛项目及代码汇总、中文字符数据、speech-aligner: 从“人声语音”及其“语言文本”产生音素级别时间对齐标注的工具、AmpliGraph: 知识图谱表示学习(Python)库：知识图谱概念链接预测、Scattertext 文本可视化(python)、语言/知识表示工具：BERT &amp; ERNIE、中文对比英文自然语言处理NLP的区别综述、Synonyms中文近义词工具包、HarvestText领域自适应文本挖掘工具（新词发现-情感分析-实体链接等）、word2word：(Python)方便易用的多语言词-词对集：62种语言/3,564个多语言对、语音识别语料生成工具：从具有音频/字幕的在线视频创建自动语音识别(ASR)语料库、构建医疗实体识别的模型（包含词典和语料标注）、单文档非监督的关键词抽取、Kashgari中使用gpt-2语言模型、开源的金融投资数据提取工具、文本自动摘要库TextTeaser: 仅支持英文、人民日报语料处理工具集、一些关于自然语言的基本模型、基于14W歌曲知识库的问答尝试–功能包括歌词接龙and已知歌词找歌曲以及歌曲歌手歌词三角关系的问答、基于Siamese bilstm模型的相似句子判定模型并提供训练数据集和测试数据集、用Transformer编解码模型实现的根据Hacker News文章标题自动生成评论、用BERT进行序列标记和文本分类的模板代码、LitBank：NLP数据集——支持自然语言处理和计算人文学科任务的100部带标记英文小说语料、百度开源的基准信息抽取系统、虚假新闻数据集、Facebook: LAMA语言模型分析，提供Transformer-XL/BERT/ELMo/GPT预训练语言模型的统一访问接口、CommonsenseQA：面向常识的英文QA挑战、中文知识图谱资料、数据及工具、各大公司内部里大牛分享的技术文档 PDF 或者 PPT、自然语言生成SQL语句（英文）、中文NLP数据增强（EDA）工具、英文NLP数据增强工具 、基于医药知识图谱的智能问答系统、京东商品知识图谱、基于mongodb存储的军事领域知识图谱问答项目、基于远监督的中文关系抽取、语音情感分析、中文ULMFiT-情感分析-文本分类-语料及模型、一个拍照做题程序、世界各国大规模人名库、一个利用有趣中文语料库 qingyun 训练出来的中文聊天机器人、中文聊天机器人seqGAN、省市区镇行政区划数据带拼音标注、教育行业新闻语料库包含自动文摘功能、开放了对话机器人-知识图谱-语义理解-自然语言处理工具及数据、中文知识图谱：基于百度百科中文页面-抽取三元组信息-构建中文知识图谱、masr: 中文语音识别-提供预训练模型-高识别率、Python音频数据增广库、中文全词覆盖BERT及两份阅读理解数据、ConvLab：开源多域端到端对话系统平台、中文自然语言处理数据集、基于最新版本rasa搭建的对话系统、基于TensorFlow和BERT的管道式实体及关系抽取、一个小型的证券知识图谱/知识库、复盘所有NLP比赛的TOP方案、OpenCLaP：多领域开源中文预训练语言模型仓库、UER：基于不同语料+编码器+目标任务的中文预训练模型仓库、中文自然语言处理向量合集、基于金融-司法领域(兼有闲聊性质)的聊天机器人、g2pC：基于上下文的汉语读音自动标记模块、Zincbase 知识图谱构建工具包、诗歌质量评价/细粒度情感诗歌语料库、快速转化「中文数字」和「阿拉伯数字」、百度知道问答语料库、基于知识图谱的问答系统、jieba_fast 加速版的jieba、正则表达式教程、中文阅读理解数据集、基于BERT等最新语言模型的抽取式摘要提取、Python利用深度学习进行文本摘要的综合指南、知识图谱深度学习相关资料整理、维基大规模平行文本语料、StanfordNLP 0.2.0：纯Python版自然语言处理包、NeuralNLP-NeuralClassifier：腾讯开源深度学习文本分类工具、端到端的封闭域对话系统、中文命名实体识别：NeuroNER vs. BertNER、新闻事件线索抽取、2019年百度的三元组抽取比赛：“科学空间队”源码、基于依存句法的开放域文本知识三元组抽取和知识库构建、中文的GPT2训练代码、ML-NLP - 机器学习(Machine Learning)NLP面试中常考到的知识点和代码实现、nlp4han:中文自然语言处理工具集(断句/分词/词性标注/组块/句法分析/语义分析/NER/N元语法/HMM/代词消解/情感分析/拼写检查、XLM：Facebook的跨语言预训练语言模型、用基于BERT的微调和特征提取方法来进行知识图谱百度百科人物词条属性抽取、中文自然语言处理相关的开放任务-数据集-当前最佳结果、CoupletAI - 基于CNN+Bi-LSTM+Attention 的自动对对联系统、抽象知识图谱、MiningZhiDaoQACorpus - 580万百度知道问答数据挖掘项目。</p>
-<h1 id="比较好的文章"><a href="#比较好的文章" class="headerlink" title="比较好的文章"></a>比较好的文章</h1><p><a href="https://blog.csdn.net/qq_36330643/article/details/80772390" target="_blank" rel="noopener">中文自然语言处理可能是 NLP 中最难的？</a><br><a href="https://blog.csdn.net/qq_36330643/article/details/80691224" target="_blank" rel="noopener">未来数据领域的珠穆朗玛峰之中文自然语言处理</a></p>
-<h1 id="比较好的个人博客"><a href="#比较好的个人博客" class="headerlink" title="比较好的个人博客"></a>比较好的个人博客</h1><p><a href="http://www.cnblogs.com/maybe2030/" target="_blank" rel="noopener">Poll的笔记</a><br><a href="http://www.52caml.com/home/" target="_blank" rel="noopener">计算广告与机器学习</a><br><a href="http://www.semocean.com/" target="_blank" rel="noopener"></a></p>
-<p><a href="http://www.cnblogs.com/jerrylead/tag/Machine%20Learning/" target="_blank" rel="noopener">http://www.cnblogs.com/jerrylead/tag/Machine%20Learning/</a>    Machine Learning<br><a href="http://www.javashuo.com/tag/NLP/list-7.html" target="_blank" rel="noopener">http://www.javashuo.com/tag/NLP/list-7.html</a><br><a href="http://www.cnblogs.com/DianaCody/" target="_blank" rel="noopener">http://www.cnblogs.com/DianaCody/</a>    </p>
-<h1 id="国内自然语言处理产品"><a href="#国内自然语言处理产品" class="headerlink" title="国内自然语言处理产品"></a>国内自然语言处理产品</h1><p>百度自然语言处理<br>   <a href="https://cloud.baidu.com/product/nlp" target="_blank" rel="noopener">https://cloud.baidu.com/product/nlp</a><br>腾讯文智</p>
-<p>阿里巴巴</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/19/nlp-notes/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/07/15/mysql-sqlserver-translate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/15/mysql-sqlserver-translate/" itemprop="url">
-                  MySQL与SQLServer相互转换
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-15 15:52:01" itemprop="dateCreated datePublished" datetime="2017-07-15T15:52:01+08:00">2017-07-15</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/15/mysql-sqlserver-translate/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/07/15/mysql-sqlserver-translate/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/07/15/mysql-sqlserver-translate/" class="leancloud_visitors" data-flag-title="MySQL与SQLServer相互转换">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>  环境：<br>  Windows XP sp2<br>  MS SQL Server 2OOO sp1<br>  MySql 5.0.41</p>
-<h1 id="1：MSSQLServer数据库导入到MySql数据库"><a href="#1：MSSQLServer数据库导入到MySql数据库" class="headerlink" title="1：MSSQLServer数据库导入到MySql数据库"></a>1：MSSQLServer数据库导入到MySql数据库</h1><p>步骤：</p>
-<p>1.安装mysql数据库的ODBC驱动，mysql-connector-odbc-3.51.23-win32.msi，下载并安装。</p>
-<p>2.在Mysql中创建数据库实例。</p>
-<p>3.打开控制面板 –&gt; 管理工具 –&gt; 数据源ODBC，在用户DSN中添加一个MySQL ODBC 3.51数据源。</p>
-<p>4.在登录login选项卡中输入数据源名称Data Source Name，此处输入MysqlDNS（也可以自己随便命名，<br>  只要在后面导入数据的时候选择正确的数据源名字就行），然后输入服务器Server，用户User，密码Password，<br>  输入正确后选择要导入的数据库，Database选择你需要导入的数据库。<br>  在连接选项connect options中根据需要设置MySql使用的端口port和字符集Character Set。</p>
-<p>  注：字符集一定要和Mysql服务器相对应，如果Mysql使用了gbk字符集，则一定要设置字符集为gbk，<br>      否则导入到Sql Server可能会出现问号乱码。</p>
-<p>5.打开sql server企业管理器，选择该数据库，单击右键选择所有任务 –&gt; 导出数据。</p>
-<p>6.‘选择数据源’为默认，‘选择目的’为刚刚安装的mySQL数据源，用户/系统DSN为MysqlDNS。<br>  在‘指定表复制或查询’中选择‘从源数据库复制表和视图’，在‘选择源表和视图’里，选择需要导入的表，<br>  即可将数据从MSSQLServer数据库导入到MySql数据库中。</p>
-<h1 id="2：MySql数据库导入到MSSQL数据库中"><a href="#2：MySql数据库导入到MSSQL数据库中" class="headerlink" title="2：MySql数据库导入到MSSQL数据库中"></a>2：MySql数据库导入到MSSQL数据库中</h1><p>1.安装mysql数据库的ODBC驱动，mysql-connector-odbc-3.51.19-win32.msi</p>
-<p>2.打开控制面板\管理工具\数据源ODBC，在用户DSN中添加一个MySQL ODBC 3.51数据源。</p>
-<p>3.在登录login选项卡中输入数据源名称Data Source Name，此处输入MysqlDNS;然后输入服务器，<br>  用户User，密码Password，输入正确后选择要导入的数据库。<br>  在连接选项connect options中根据需要设置MySql使用的端口port和字符集Character Set。</p>
-<p>  注：字符集一定要和Mysql服务器相对应，如果Mysql使用了gbk字符集，则一定要设置字符集为gbk，<br>      否则导入到Sql 可能会出现问号乱码。</p>
-<p>4.打开sql server企业管理器，新建一数据库MySql。选择该数据库，单击右键选择所有任务\导入数据。</p>
-<p>5.选择数据源为其它(ODBC数据源)，用户/系统DSN为MysqlDNS。其余根据向导进行，<br>  即可将数据从MySql数据库导入到MSSQL数据库中</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://www.cnblogs.com/losesea/archive/2012/11/08/2760536.html" target="_blank" rel="noopener">Mysql和SqlServer互相转换</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/07/13/buy-tickets-on-12306/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/13/buy-tickets-on-12306/" itemprop="url">
-                  12306 买 卧铺 下铺票
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-13 10:25:29" itemprop="dateCreated datePublished" datetime="2017-07-13T10:25:29+08:00">2017-07-13</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/daily/" itemprop="url" rel="index"><span itemprop="name">daily</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/07/13/buy-tickets-on-12306/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/07/13/buy-tickets-on-12306/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/07/13/buy-tickets-on-12306/" class="leancloud_visitors" data-flag-title="12306 买 卧铺 下铺票">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  在12306上买票时推荐使用电信、联通的网，其他运营商的网质量不太好。可能会影响抢票结果。<br>  有的时候甚至查不到票。我用的是方正的网，发现手机上可以查到票，电脑上查不到票。<br>  结果用手机开热点(电信网)，电脑连上以后很快就查出票了。</p>
-<p>  在12306买票</p>
-<ol>
-<li>首先要登录</li>
-<li>在<a href="https://kyfw.12306.cn/otn/leftTicket/init" target="_blank" rel="noopener">车票预订</a>页面输入出发站、目的地、出发日，<br>然后点击查询，选择合适的车次，然后点击预订。</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/13/buy-tickets-on-12306/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/06/22/tomcat-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/22/tomcat-notes/" itemprop="url">
-                  Tomcat 笔记
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-06-22 16:51:08" itemprop="dateCreated datePublished" datetime="2017-06-22T16:51:08+08:00">2017-06-22</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/06/22/tomcat-notes/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/06/22/tomcat-notes/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/06/22/tomcat-notes/" class="leancloud_visitors" data-flag-title="Tomcat 笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  使用Tomcat时遇到的一些问题，记的一些笔记</p>
-<h1 id="Tomcat配置"><a href="#Tomcat配置" class="headerlink" title="Tomcat配置"></a>Tomcat配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 并发配置 --&gt;</span><br><span class="line">&lt;Connector executor=&quot;tomcatThreadPool&quot; port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">		    URIEncoding=&quot;UTF-8&quot; </span><br><span class="line">			maxThreads=&quot;30000&quot;</span><br><span class="line">            minSpareThreads=&quot;512&quot;</span><br><span class="line">            maxSpareThreads=&quot;2048&quot;</span><br><span class="line">		    connectionTimeout=&quot;20000&quot;</span><br><span class="line">			keepAliveTimeout=&quot;15000&quot;</span><br><span class="line">            maxKeepAliveRequests=&quot;1&quot;</span><br><span class="line">		    redirectPort=&quot;8443&quot; </span><br><span class="line">			enableLookups=&quot;false&quot; acceptCount=&quot;35000&quot; disableUploadTimeout=&quot;true&quot; /&gt;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/22/tomcat-notes/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2215,7 +2226,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

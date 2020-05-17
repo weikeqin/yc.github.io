@@ -370,6 +370,732 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/17/neo4j-apoc-use/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/17/neo4j-apoc-use/" itemprop="url">
+                  Neo4j APOC 使用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-17 12:02:37" itemprop="dateCreated datePublished" datetime="2018-04-17T12:02:37+08:00">2018-04-17</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/17/neo4j-apoc-use/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/17/neo4j-apoc-use/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/04/17/neo4j-apoc-use/" class="leancloud_visitors" data-flag-title="Neo4j APOC 使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="1-下载配置"><a href="#1-下载配置" class="headerlink" title="(1) 下载配置"></a>(1) 下载配置</h1><h2 id="1-1-下载对应版本的apoc-jar包"><a href="#1-1-下载对应版本的apoc-jar包" class="headerlink" title="(1.1) 下载对应版本的apoc jar包"></a>(1.1) 下载对应版本的apoc jar包</h2><ol>
+<li><p>从<a href="https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases" target="_blank" rel="noopener">github apoc各个版本下载地址</a>下载对应版本的apoc jar包，并放到 <code>$NEO4J_HOME/plugs</code> 目录下</p>
+<p><code>wget https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.3.0.2/apoc-3.3.0.2-all.jar</code></p>
+</li>
+</ol>
+<h2 id="1-2-配置-neo4j-conf-配置文件"><a href="#1-2-配置-neo4j-conf-配置文件" class="headerlink" title="(1.2) 配置 neo4j.conf 配置文件"></a>(1.2) 配置 neo4j.conf 配置文件</h2><p>在 <code>neo4j.conf</code> 最后一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dbms.security.procedures.unrestricted=apoc.*</span><br><span class="line">apoc.import.file.enabled=true</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">neo4j-sh (?)$ return apoc.version();</span><br><span class="line">+----------------+</span><br><span class="line">| apoc.version() |</span><br><span class="line">+----------------+</span><br><span class="line">| &quot;3.3.0.2&quot;      |</span><br><span class="line">+----------------+</span><br><span class="line">1 row</span><br><span class="line">29 ms</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/17/neo4j-apoc-use/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/03/02/canvas-fingerprinting/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/02/canvas-fingerprinting/" itemprop="url">
+                  帆布指纹
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-02 08:55:15" itemprop="dateCreated datePublished" datetime="2018-03-02T08:55:15+08:00">2018-03-02</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/02/canvas-fingerprinting/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/02/canvas-fingerprinting/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/02/canvas-fingerprinting/" class="leancloud_visitors" data-flag-title="帆布指纹">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>  一般情况下，网站或者广告联盟都会非常想要一种技术方式可以在网络上精确定位到每一个个体，这样可以通过收集这些个体的数据，通过分析后更加精准的去推送广告（精准化营销）或其他有针对性的一些活动。<br>  Cookie技术是非常受欢迎的一种。当用户访问一个网站时，网站可以在用户当前的浏览器Cookie中永久植入一个含有唯一标示符（UUID）的信息，并通过这个信息将用户所有行为（浏览了哪些页面？搜索了哪些关键字？对什么感兴趣？点了哪些按钮？用了哪些功能？看了哪些商品？把哪些放入了购物车等等）关联起来。<br>  但是Cookie可以伪装，在浏览器隐私窗口，不同用户，甚至是爬虫时无法区分。<br>  这个时候，提出一种 “帆布指纹识别”技术 ，这种技术可以避免以上的缺点。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bin2hex</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// From: http://phpjs.org/functions</span></span><br><span class="line">  <span class="comment">// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)</span></span><br><span class="line">  <span class="comment">// +   bugfixed by: Onno Marsman</span></span><br><span class="line">  <span class="comment">// +   bugfixed by: Linuxworld</span></span><br><span class="line">  <span class="comment">// +   improved by: ntoniazzi (http://phpjs.org/functions/bin2hex:361#comment_177616)</span></span><br><span class="line">  <span class="comment">// *     example 1: bin2hex('Kev');</span></span><br><span class="line">  <span class="comment">// *     returns 1: '4b6576'</span></span><br><span class="line">  <span class="comment">// *     example 2: bin2hex(String.fromCharCode(0x00));</span></span><br><span class="line">  <span class="comment">// *     returns 2: '00'</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i, l, o = <span class="string">""</span>, n;</span><br><span class="line"></span><br><span class="line">  s += <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>, l = s.length; i &lt; l; i++) &#123;</span><br><span class="line">    n = s.charCodeAt(i).toString(<span class="number">16</span>)</span><br><span class="line">    o += n.length &lt; <span class="number">2</span> ? <span class="string">"0"</span> + n : n;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"><span class="keyword">var</span> txt = <span class="string">'http://security.tencent.com/'</span>;</span><br><span class="line">ctx.textBaseline = <span class="string">"top"</span>;</span><br><span class="line">ctx.font = <span class="string">"14px 'Arial'"</span>;</span><br><span class="line">ctx.textBaseline = <span class="string">"tencent"</span>;</span><br><span class="line">ctx.fillStyle = <span class="string">"#f60"</span>;</span><br><span class="line">ctx.fillRect(<span class="number">125</span>,<span class="number">1</span>,<span class="number">62</span>,<span class="number">20</span>);</span><br><span class="line">ctx.fillStyle = <span class="string">"#069"</span>;</span><br><span class="line">ctx.fillText(txt, <span class="number">2</span>, <span class="number">15</span>);</span><br><span class="line">ctx.fillStyle = <span class="string">"rgba(102, 204, 0, 0.7)"</span>;</span><br><span class="line">ctx.fillText(txt, <span class="number">4</span>, <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b64 = canvas.toDataURL().replace(<span class="string">"data:image/png;base64,"</span>,<span class="string">""</span>);</span><br><span class="line"><span class="keyword">var</span> bin = atob(b64);</span><br><span class="line"><span class="keyword">var</span> crc = bin2hex(bin.slice(<span class="number">-16</span>,<span class="number">-12</span>));</span><br><span class="line"><span class="built_in">console</span>.log(crc);</span><br></pre></td></tr></table></figure>
+<p>以上代码在chrome浏览器里运行会得到一个结果 <code>3c5c9044</code> ，在火狐会得到 <code>7e7f4d86</code>，在IE会得到 <code>5ec31ae3</code><br>只要用户用同一浏览器，产生的 帆布指纹就不会变。这样就可以达到反爬虫的效果。<br>缺点是 公司批量购买的电脑，批量安装系统，这些电脑的结果可能会一样。</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://security.tencent.com/index.php/blog/msg/59" target="_blank" rel="noopener">取代cookie的网站追踪技术：”帆布指纹识别”初探</a><br>[2] <a href="http://www.cnblogs.com/xiezhengcai/p/4252008.html" target="_blank" rel="noopener">帆布指纹识别（CANVAS FINGERPRINTING）</a><br>[3] <a href="https://github.com/Valve/fingerprintJS" target="_blank" rel="noopener">fingerprintJS</a><br>[4] <a href="https://panopticlick.eff.org/browser-uniqueness.pdf" target="_blank" rel="noopener">browser-uniqueness.pdf</a><br>[5] <a href="https://segmentfault.com/a/1190000013010835" target="_blank" rel="noopener">Token 认证的来龙去脉</a><br>[6] <a href="https://segmentfault.com/a/1190000014527692" target="_blank" rel="noopener">token认证</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/03/01/python-log/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/python-log/" itemprop="url">
+                  python-log
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-01 20:01:15" itemprop="dateCreated datePublished" datetime="2018-03-01T20:01:15+08:00">2018-03-01</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/01/python-log/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/01/python-log/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/01/python-log/" class="leancloud_visitors" data-flag-title="python-log">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Python日志"><a href="#Python日志" class="headerlink" title="Python日志"></a>Python日志</h1><p>  python确实挺简单，用起来确实挺方便，但是python的日志我真想说一句头疼</p>
+<h2 id="只输出到文件"><a href="#只输出到文件" class="headerlink" title="只输出到文件"></a>只输出到文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line"></span><br><span class="line"># 改成对应的日志路径，推荐使用绝对路径</span><br><span class="line">logging.basicConfig(level=logging.INFO,</span><br><span class="line">                    filename=&apos;log.log&apos;,</span><br><span class="line">                    filemode=&apos;a&apos;,</span><br><span class="line">                    format=&apos;%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s&apos;)</span><br><span class="line">					</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    #print(&quot;hello world&quot;)</span><br><span class="line">	logging.info(&quot;hello world&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://python.jobbole.com/81666/" target="_blank" rel="noopener">http://python.jobbole.com/81666/</a><br>[] <a href="https://www.jianshu.com/p/4f6ff84cb3e9" target="_blank" rel="noopener">https://www.jianshu.com/p/4f6ff84cb3e9</a><br>[] <a href="https://my.oschina.net/leejun2005/blog/126713" target="_blank" rel="noopener">https://my.oschina.net/leejun2005/blog/126713</a>    python 日志模块 logging 详解<br>[] <a href="http://logbook.readthedocs.io/en/stable/" target="_blank" rel="noopener">http://logbook.readthedocs.io/en/stable/</a><br>[] <a href="https://github.com/getlogbook/logbook" target="_blank" rel="noopener">https://github.com/getlogbook/logbook</a><br>[] <a href="https://github.com/metachris/logzero" target="_blank" rel="noopener">https://github.com/metachris/logzero</a><br>[] <a href="https://www.jianshu.com/p/d615bf01e37b" target="_blank" rel="noopener">https://www.jianshu.com/p/d615bf01e37b</a>    python logging日志模块以及多进程日志<br>[] <a href="http://blog.csdn.net/liuchunming033/article/details/39080457" target="_blank" rel="noopener">http://blog.csdn.net/liuchunming033/article/details/39080457</a>    Python中的logging模块就这么用<br>[] <a href="https://www.jianshu.com/p/72fb43127c85" target="_blank" rel="noopener">https://www.jianshu.com/p/72fb43127c85</a>    Python日志教程</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/02/06/python-error-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/06/python-error-notes/" itemprop="url">
+                  python-error-notes
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-02-06 20:34:12" itemprop="dateCreated datePublished" datetime="2018-02-06T20:34:12+08:00">2018-02-06</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/06/python-error-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/02/06/python-error-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/02/06/python-error-notes/" class="leancloud_visitors" data-flag-title="python-error-notes">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="1-command-‘C-Program-Files-x86-Microsoft-Visual-Studio-14-0-VC-BIN-x86-amd64-cl-exe’-failed-with-exit-status-4"><a href="#1-command-‘C-Program-Files-x86-Microsoft-Visual-Studio-14-0-VC-BIN-x86-amd64-cl-exe’-failed-with-exit-status-4" class="headerlink" title="(1)　command ‘C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\x86_amd64\cl.exe’ failed with exit status 4"></a>(1)　command ‘C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\x86_amd64\cl.exe’ failed with exit status 4</h1><blockquote>
+<ol>
+<li>把cl.exe所在目录添加到环境变量里    C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin</li>
+<li>安装VS 2015</li>
+</ol>
+</blockquote>
+<p>  <a href="http://landinghub.visualstudio.com/visual-cpp-build-tools" target="_blank" rel="noopener">visual-cpp-build-tools</a><br>  <a href="http://download.microsoft.com/download/5/d/1/5d1ec81e-bc59-448f-9ab6-27636d5cc18a/vs2015.3.com_chs.iso" target="_blank" rel="noopener">vs2015离线安装包</a><br>  <a href="ed2k://|file|cn_visual_studio_enterprise_2015_with_update_3_x86_x64_dvd_8923298.iso|7787208704|A1C1D2AFBC09D8778C92CF19DEC8F4F4|/" target="_blank" rel="noopener">离线安装包-国内</a></p>
+<p>安装大概需要80分钟左右</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/06/python-error-notes/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/01/19/httpclient-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1717,794 +2443,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/12/06/crawler-wenshu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/06/crawler-wenshu/" itemprop="url">
-                  爬取 裁判文书
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-06 15:07:53" itemprop="dateCreated datePublished" datetime="2017-12-06T15:07:53+08:00">2017-12-06</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/06/crawler-wenshu/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/12/06/crawler-wenshu/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/12/06/crawler-wenshu/" class="leancloud_visitors" data-flag-title="爬取 裁判文书">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  裁判文书爬取只写了思路，有部分内容没公开。这篇文章只提供思路，不提供实现。仅供参考。</p>
-<p>  如果经济允许，可以直接购买裁判文书网的文书，一年10万元，和爬虫工程师开销和代理费用来说，10万元很划算了。</p>
-<p>  如果做实验使用，可以邮件或者加qq群在群里要，数量在百万以下一般会直接给。也免得增加文书网服务器的压力。</p>
-<p>  文书网已经放弃使用瑞数，现在使用的是免费的sojson加密</p>
-<p>  2019-04-09 文书网停服更新</p>
-<p>  2019-01-31 疯狂封ip</p>
-<p>  2018-08-07 增加7道爬虫防御，增加反爬难度，文书列表页返回的docId加密 </p>
-<p>  2018-01-31 修改获取vl5x的js 还是eval函数，原理没变，换了换字符</p>
-<p>  2017-06-23 更新反爬策略 增加反爬难度 用的瑞数的产品  每一次请求翻页都要过一次验证码，加密一次密钥，带密钥访问下一个页面</p>
-<p>  谨以此文献给在我生命中留下回忆的非结构化团队。谢谢领导给了我充足的时间研究裁判文书网。</p>
-<h1 id="1-2019-06版-爬取裁判文书"><a href="#1-2019-06版-爬取裁判文书" class="headerlink" title="(1) 2019-06版 爬取裁判文书"></a>(1) 2019-06版 爬取裁判文书</h1><p>  首先找获取数据的页面。</p>
-<p>  <img src="/img/crawler/wenshu.court.gov.cn/list-param-20190615.jpg" alt="页面请求参数"></p>
-<p>  <img src="/img/crawler/wenshu.court.gov.cn/list-result-20190615.png" alt="页面返回内容"></p>
-<p>  浏览器 F12 很快就可以找到返回数据的list页面  <a href="http://wenshu.court.gov.cn/List/ListContent" target="_blank" rel="noopener">http://wenshu.court.gov.cn/List/ListContent</a>  ，不过返回的数据是加密的。</p>
-<!--
-_gscu_2116842793=63779915qgb1yu13
-Hm_lvt_d2caefee2de09b8a6ea438d74fd98db2=1563779915,1566086565
-_gscbrs_2116842793=1
-ASP.NET_SessionId=idb3djsyycsgjqh3qczb2lak
-VCode=1f5c5e18-ebbf-484f-b76e-277b2fd7ae39
-vjkl5=bdd0fb393ff1ba20401b4183865cbe2d7e270673
-Hm_lpvt_d2caefee2de09b8a6ea438d74fd98db2=1566088072
-_gscs_2116842793=66086564j3813s19|pv:12
--->
-<p>  用的是Post请求，请求参数有 Param  Index Page Order Direction vl5x number guid ，cookie里的参数有 _gscu_2116842793  Hm_lvt_d2caefee2de09b8a6ea438d74fd98db2  _gscbrs_2116842793  ASP.NET_SessionId  vjkl5   Hm_lpvt_d2caefee2de09b8a6ea438d74fd98db2  _gscs_2116842793，用于反爬参数的有3个，vl5x、number、guid 。</p>
-<p>  <code>ctrl + F</code> 搜索 guid number vl5x 发现<br>  guid 是通过js生成。<br>  number 第一页默认是 wens 后面的是数字<br>  vl5x 通过混淆加密的js获得。在获取时要另获取vjkl5参数才能计算出vl5x</p>
-<p>  <code>data: { &quot;Param&quot;: listparam, &quot;Index&quot;: index, &quot;Page&quot;: page, &quot;Order&quot;: order, &quot;Direction&quot;: direction, &quot;vl5x&quot;: getKey(), &quot;number&quot;: yzm1, &quot;guid&quot;: guid1 },</code></p>
-<p>  <a href="http://wenshu.court.gov.cn/Assets/js/Lawyee.CPWSW.JsTree.js" target="_blank" rel="noopener">Lawyee.CPWSW.JsTree.js</a><br>  <a href="http://wenshu.court.gov.cn/Assets/js/20180919/Lawyee.CPWSW.List.js" target="_blank" rel="noopener">Lawyee.CPWSW.List.js</a><br>  <a href="http://wenshu.court.gov.cn/Assets/js/20180914/Lawyee.CPWSW.ListExtend.js" target="_blank" rel="noopener">Lawyee.CPWSW.ListExtend.js</a><br>  <a href="http://wenshu.court.gov.cn/Assets/Js/pako.min.js" target="_blank" rel="noopener">pako.min.js</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/06/crawler-wenshu/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/12/03/neo4j-recover-data/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/03/neo4j-recover-data/" itemprop="url">
-                  neo4j 误删 数据 恢复
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-12-03 22:31:49" itemprop="dateCreated datePublished" datetime="2017-12-03T22:31:49+08:00">2017-12-03</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/03/neo4j-recover-data/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/12/03/neo4j-recover-data/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/12/03/neo4j-recover-data/" class="leancloud_visitors" data-flag-title="neo4j 误删 数据 恢复">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>neo4j误删数据恢复</p>
-<p>今天有一个朋友告诉我他误操作，删了几十G的数据，问我有没有什么办法可以恢复数据。<br>说来也巧了，今天我在测试大数据量下load csv的性能，导入三次删除三次，理论上数据库为空，data目录下的文件应该&lt;1MB，但是我一看，800M，肯定有日志呀。<br>正好碰到他问我这个问题，首先告诉他不要慌，有办法，然后google了一下，是neo4j的其中一个作者(Stefan Armbruster，带飞机帽的那个)在stackoverflow回答的，还好，谢天谢地。</p>
-<!--
-不小心写了一句MATCH p=()-[]->() delete p;
-刚才40G，执行这句话15秒，现在看只有14g了
--->
-<p>用这个恢复数据<br><a href="https://github.com/neo4j/neo4j/blob/3.0/tools/src/main/java/org/neo4j/tools/applytx/DatabaseRebuildTool.java" target="_blank" rel="noopener">https://github.com/neo4j/neo4j/blob/3.0/tools/src/main/java/org/neo4j/tools/applytx/DatabaseRebuildTool.java</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/03/neo4j-recover-data/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/11/15/java-interview/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/15/java-interview/" itemprop="url">
-                  Java
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-11-15 20:27:03" itemprop="dateCreated datePublished" datetime="2017-11-15T20:27:03+08:00">2017-11-15</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/15/java-interview/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/11/15/java-interview/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/11/15/java-interview/" class="leancloud_visitors" data-flag-title="Java">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  Java面试题 前200页 转自<a href="https://github.com/tangyouhua/program-resource/blob/master/program-interview/java-baidu-200.md" target="_blank" rel="noopener">Java 面试题：百度前200页都在这里了</a></p>
-<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
-<li>操作系统中 heap 和 stack 的区别 </li>
-<li>什么是基于注解的切面实现</li>
-<li>什么是 对象/关系 映射集成模块</li>
-<li>什么是 Java 的反射机制</li>
-<li>什么是 ACID</li>
-<li>BS与CS的联系与区别</li>
-<li>Cookie 和 Session的区别</li>
-<li>fail-fast 与 fail-safe 机制有什么区别</li>
-<li>get 和 post请求的区别</li>
-<li>Interface 与 abstract 类的区别</li>
-<li>IOC的优点是什么</li>
-<li>IO 和 NIO的区别，NIO优点</li>
-<li>Java 8 / Java 7 为我们提供了什么新功能</li>
-<li>什么是竞态条件？ 举个例子说明。</li>
-<li>JRE、JDK、JVM 及 JIT 之间有什么不同</li>
-<li>MVC的各个部分都有那些技术来实现?如何实现?</li>
-<li>RPC 通信和 RMI 区别 </li>
-<li>什么是 Web Service（Web服务）</li>
-<li>JSWDL开发包的介绍。JAXP、JAXM的解释。SOAP、UDDI,WSDL解释。 </li>
-<li>WEB容器主要有哪些功能? 并请列出一些常见的WEB容器名字。</li>
-<li>一个”.java”源文件中是否可以包含多个类（不是内部类）？有什么限制</li>
-<li>简单说说你了解的类加载器。是否实现过类加载器</li>
-<li>解释一下什么叫AOP（面向切面编程）</li>
-<li>请简述 Servlet 的生命周期及其相关的方法</li>
-<li>请简述一下 Ajax 的原理及实现步骤</li>
-<li>简单描述Struts的主要功能</li>
-<li>什么是 N 层架构</li>
-<li>什么是CORBA？用途是什么</li>
-<li>什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”</li>
-<li>什么是正则表达式？用途是什么？哪个包使用正则表达式来实现模式匹配</li>
-<li>什么是懒加载（Lazy Loading）</li>
-<li>什么是尾递归，为什么需要尾递归</li>
-<li>什么是控制反转（Inversion of Control）与依赖注入（Dependency Injection）</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/15/java-interview/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/11/14/crawler-google-translate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/14/crawler-google-translate/" itemprop="url">
-                  爬取 谷歌翻译
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-11-14 10:12:54" itemprop="dateCreated datePublished" datetime="2017-11-14T10:12:54+08:00">2017-11-14</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/11/14/crawler-google-translate/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/11/14/crawler-google-translate/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/11/14/crawler-google-translate/" class="leancloud_visitors" data-flag-title="爬取 谷歌翻译">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>  领导交给我一个任务，有一些英文的文章，翻译成中文，用谷歌翻译试试。那就试试呗。</p>
-<p>  F12 经过多次测试，发现请求 <a href="https://translate.google.cn/translate_a/single" target="_blank" rel="noopener">https://translate.google.cn/translate_a/single</a> 带一些参数就可以爬取谷歌翻译<br>  第一步 访问 <a href="https://translate.google.cn/" target="_blank" rel="noopener">https://translate.google.cn/</a> 获取TKK<br>  第二步 根据TKK和文本算出tk值，然后访问 <a href="https://translate.google.cn/translate_a/single" target="_blank" rel="noopener">https://translate.google.cn/translate_a/single</a> 时加上参数，就可以爬取到翻译后的内容了。</p>
-<p>  步骤如下:</p>
-<p>Get方式<br><a href="https://translate.google.cn/translate_a/single?client=t&amp;sl=en&amp;tl=zh-CN&amp;hl=zh-CN&amp;dt=at&amp;dt=bd&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qca&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;ie=UTF-8&amp;oe=UTF-8&amp;source=btn&amp;ssel=3&amp;tsel=0&amp;kc=2&amp;tk=750300.857549&amp;q=test" target="_blank" rel="noopener">https://translate.google.cn/translate_a/single?client=t&amp;sl=en&amp;tl=zh-CN&amp;hl=zh-CN&amp;dt=at&amp;dt=bd&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qca&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;ie=UTF-8&amp;oe=UTF-8&amp;source=btn&amp;ssel=3&amp;tsel=0&amp;kc=2&amp;tk=750300.857549&amp;q=test</a></p>
-<p>Post方式<br><a href="https://translate.google.cn/translate_a/single?client=t&amp;sl=en&amp;tl=zh-CN&amp;hl=zh-CN&amp;dt=at&amp;dt=bd&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qca&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;ie=UTF-8&amp;oe=UTF-8&amp;pc=1&amp;otf=1&amp;ssel=3&amp;tsel=0&amp;kc=1&amp;tk=280278.139719" target="_blank" rel="noopener">https://translate.google.cn/translate_a/single?client=t&amp;sl=en&amp;tl=zh-CN&amp;hl=zh-CN&amp;dt=at&amp;dt=bd&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qca&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;ie=UTF-8&amp;oe=UTF-8&amp;pc=1&amp;otf=1&amp;ssel=3&amp;tsel=0&amp;kc=1&amp;tk=280278.139719</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/14/crawler-google-translate/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2552,7 +2490,7 @@ _gscs_2116842793=66086564j3813s19|pv:12
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>

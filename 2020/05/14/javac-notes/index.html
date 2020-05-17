@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '4MYO215Y0R',
+      apiKey: '63ec2e526818df599ef4caa3c72f3459',
+      indexName: 'weikeqin',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"没有找到相关内容: ${query}","hits_stats":"${hits} 条相关记录，共耗时 ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近有一个需求，需要测试一下新数据库(mysql优化版)某个表的写入速度和查询速度，需要从我们的测试环境数据库查数据，插入到新的测试环境的新数据库。 本地连不上测试的数据库 有很多应用服务器，但是所有的服务器不能连外网，只能访问公司内网。 测试环境的应用可以连测试的数据库 想写个python脚本，但是服务器上python是2.7的，而且很多包没有。 想了想，应用服务器部署了java程序，jav">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jdk javac 使用笔记">
+<meta property="og:url" content="http://weikeqin.com/2020/05/14/javac-notes/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="最近有一个需求，需要测试一下新数据库(mysql优化版)某个表的写入速度和查询速度，需要从我们的测试环境数据库查数据，插入到新的测试环境的新数据库。 本地连不上测试的数据库 有很多应用服务器，但是所有的服务器不能连外网，只能访问公司内网。 测试环境的应用可以连测试的数据库 想写个python脚本，但是服务器上python是2.7的，而且很多包没有。 想了想，应用服务器部署了java程序，jav">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-05-17T15:31:53.614Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jdk javac 使用笔记">
+<meta name="twitter:description" content="最近有一个需求，需要测试一下新数据库(mysql优化版)某个表的写入速度和查询速度，需要从我们的测试环境数据库查数据，插入到新的测试环境的新数据库。 本地连不上测试的数据库 有很多应用服务器，但是所有的服务器不能连外网，只能访问公司内网。 测试环境的应用可以连测试的数据库 想写个python脚本，但是服务器上python是2.7的，而且很多包没有。 想了想，应用服务器部署了java程序，jav">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="沧海一粟" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://weikeqin.com/2020/05/14/javac-notes/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>jdk javac 使用笔记 | 沧海一粟</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">沧海一粟</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="undefined" class="github-corner" target="_blank" title aria-label><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/05/14/javac-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">jdk javac 使用笔记
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-05-14 10:27:20" itemprop="dateCreated datePublished" datetime="2020-05-14T10:27:20+08:00">2020-05-14</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/14/javac-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2020/05/14/javac-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/05/14/javac-notes/" class="leancloud_visitors" data-flag-title="jdk javac 使用笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p> 最近有一个需求，需要测试一下新数据库(mysql优化版)某个表的写入速度和查询速度，需要从我们的测试环境数据库查数据，插入到新的测试环境的新数据库。<br> 本地连不上测试的数据库<br> 有很多应用服务器，但是所有的服务器不能连外网，只能访问公司内网。<br> 测试环境的应用可以连测试的数据库<br> 想写个python脚本，但是服务器上python是2.7的，而且很多包没有。<br> 想了想，应用服务器部署了java程序，java的包都有，想写一个java脚本来测试。(没错是java脚本)</p>
+</blockquote>
+<blockquote>
+<p> 测试环境数据库     db_test_old  192.168.1.10<br> 新测试环境新数据库  db_test_new  192.168.2.11<br> 测试环境应用       test-java    192.168.3.12</p>
+</blockquote>
+<blockquote>
+<p> 在idea里写完脚本，运行没问题，然后在 terminal 运行，被啪啪的打脸</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="1-想象中运行java文件的样子"><a href="#1-想象中运行java文件的样子" class="headerlink" title="(1) 想象中运行java文件的样子"></a>(1) 想象中运行java文件的样子</h1><h2 id="1-1-查看jdk版本"><a href="#1-1-查看jdk版本" class="headerlink" title="(1.1) 查看jdk版本"></a>(1.1) 查看jdk版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ java -version</span><br><span class="line">java version &quot;1.8.0_172&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_172-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.172-b11, mixed mode)</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="1-2-新建一个HelloWord-java文件测试"><a href="#1-2-新建一个HelloWord-java文件测试" class="headerlink" title="(1.2) 新建一个HelloWord.java文件测试"></a>(1.2) 新建一个HelloWord.java文件测试</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ pwd</span><br><span class="line">/home/wkq/workspaces/java_test</span><br><span class="line">vi HelloWorld.java</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class HelloWorld&#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		System.out.println(&quot;Hello, World!&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-编译HelloWorld-java"><a href="#1-3-编译HelloWorld-java" class="headerlink" title="(1.3) 编译HelloWorld.java"></a>(1.3) 编译HelloWorld.java</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ javac HelloWorld.java</span><br><span class="line"></span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br></pre></td></tr></table></figure>
+<h2 id="1-4-运行HelloWorld"><a href="#1-4-运行HelloWorld" class="headerlink" title="(1.4) 运行HelloWorld"></a>(1.4) 运行HelloWorld</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ pwd</span><br><span class="line">/home/wkq/workspaces/java_test</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ ll</span><br><span class="line">total 8</span><br><span class="line">-rw-rw-r-- 1 wkq wkq 427 May 17 18:48 HelloWorld.class</span><br><span class="line">-rw-rw-r-- 1 wkq wkq 112 May 17 18:47 HelloWorld.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java HelloWorld</span><br><span class="line">Hello, World!</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 没问题，很完美</p>
+</blockquote>
+<h2 id="1-5-被打脸的一幕"><a href="#1-5-被打脸的一幕" class="headerlink" title="(1.5) 被打脸的一幕"></a>(1.5) 被打脸的一幕</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ java HelloWorld.class</span><br><span class="line">Error: Could not find or load main class HelloWorld.class</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 竟然不能运行 class文件<br> 被打脸后才明白，java的参数，传入的是main函数所在的类的名字，而不是class文件；java会根据类名自动去找class文件。</p>
+</blockquote>
+<p><br></p>
+<h1 id="2-复盘"><a href="#2-复盘" class="headerlink" title="(2) 复盘"></a>(2) 复盘</h1><h2 id="2-1-查看jdk版本"><a href="#2-1-查看jdk版本" class="headerlink" title="(2.1) 查看jdk版本"></a>(2.1) 查看jdk版本</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ java -version</span><br><span class="line">java version &quot;1.8.0_172&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_172-b11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.172-b11, mixed mode)</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-新建MysqlLoadDataTest-java"><a href="#2-2-新建MysqlLoadDataTest-java" class="headerlink" title="(2.2) 新建MysqlLoadDataTest.java"></a>(2.2) 新建MysqlLoadDataTest.java</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi MySqlLoadDataTest.java</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">package cn.wkq.java.test;</span><br><span class="line"></span><br><span class="line">import java.sql.*;</span><br><span class="line">import java.util.*;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * MySqlLoadDataTest</span><br><span class="line"> *</span><br><span class="line"> * @author: weikeqin.cn@gmail.com</span><br><span class="line"> * @date: 2020-05-13 20:06</span><br><span class="line"> **/</span><br><span class="line">public class MySqlLoadDataTest &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * @param args</span><br><span class="line">     */</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        MySqlLoadDataTest t = new MySqlLoadDataTest();</span><br><span class="line">        t.loadData();</span><br><span class="line">        System.out.println(&quot;执行完了。&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     *</span><br><span class="line">     */</span><br><span class="line">    public void loadData() &#123;</span><br><span class="line"></span><br><span class="line">        int batchSize = 100;</span><br><span class="line">        // </span><br><span class="line">        String driverClassName = &quot;com.mysql.jdbc.Driver&quot;;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            Class.forName(driverClassName);</span><br><span class="line">        &#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // 省略其它逻辑</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-编译"><a href="#2-3-编译" class="headerlink" title="(2.3) 编译"></a>(2.3) 编译</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ pwd</span><br><span class="line">/home/wkq/workspaces/java_test</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javac -encoding &quot;utf-8&quot; MySqlLoadDataTest.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br></pre></td></tr></table></figure>
+<h2 id="2-4-运行"><a href="#2-4-运行" class="headerlink" title="(2.4) 运行"></a>(2.4) 运行</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ java MySqlLoadDataTest</span><br><span class="line">Error: Could not find or load main class MySqlLoadDataTest</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java cn.wkq.java.test.MySqlLoadDataTest</span><br><span class="line">Error: Could not find or load main class cn.wkq.java.test.MySqlLoadDataTest</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br></pre></td></tr></table></figure>
+<h2 id="2-5-注释掉第一行包名重新运行"><a href="#2-5-注释掉第一行包名重新运行" class="headerlink" title="(2.5) 注释掉第一行包名重新运行"></a>(2.5) 注释掉第一行包名重新运行</h2><blockquote>
+<p> 如果把 文件的第一行注释掉，重新编译运行会出现 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ vi MySqlLoadDataTest.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ </span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javac -encoding &quot;utf-8&quot; MySqlLoadDataTest.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java MySqlLoadDataTest</span><br><span class="line">java.lang.ClassNotFoundException: com.mysql.jdbc.Driver</span><br><span class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)</span><br><span class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)</span><br><span class="line">	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)</span><br><span class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)</span><br><span class="line">	at java.lang.Class.forName0(Native Method)</span><br><span class="line">	at java.lang.Class.forName(Class.java:264)</span><br><span class="line">	at MySqlLoadDataTest.loadData(MySqlLoadDataTest.java:35)</span><br><span class="line">	at MySqlLoadDataTest.main(MySqlLoadDataTest.java:20)</span><br><span class="line">?????</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ pwd</span><br><span class="line">/home/wkq/workspaces/java_test</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ cd /home/wkq/lib/</span><br><span class="line">[wkq@VM_77_25_centos lib]$ wget &quot;https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.47/mysql-connector-java-5.1.47.jar&quot;</span><br><span class="line">--2020-05-17 21:59:08--  https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.47/mysql-connector-java-5.1.47.jar</span><br><span class="line">Resolving repo1.maven.org (repo1.maven.org)... 151.101.24.209</span><br><span class="line">Connecting to repo1.maven.org (repo1.maven.org)|151.101.24.209|:443... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 1007502 (984K) [application/java-archive]</span><br><span class="line">Saving to: &apos;mysql-connector-java-5.1.47.jar&apos;</span><br><span class="line"></span><br><span class="line">100%[=====================================================================================&gt;] 1,007,502   10.1KB/s   in 85s</span><br><span class="line"></span><br><span class="line">2020-05-17 22:00:34 (11.6 KB/s) - &apos;mysql-connector-java-5.1.47.jar&apos; saved [1007502/1007502]</span><br><span class="line"></span><br><span class="line">[wkq@VM_77_25_centos lib]$</span><br><span class="line">[wkq@VM_77_25_centos lib]$ ll</span><br><span class="line">total 988</span><br><span class="line">-rw-rw-r-- 1 wkq wkq 1007502 Aug  7  2018 mysql-connector-java-5.1.47.jar</span><br><span class="line">[wkq@VM_77_25_centos lib]$ pwd</span><br><span class="line">/home/wkq/lib</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java -Dfile.encoding=UTF-8 -classpath /home/wkq/lib/mysql-connector-java-5.1.47.jar:/home/wkq/workspaces/java_test MySqlLoadDataTest</span><br><span class="line">执行完了。</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 在注释了第一行包路径后，重新编译<br> 指定了classpath后就可以运行成功。<br> 但是现在还有一个问题，测试的时候可以写一个java文件，但是实际开发的时候肯定不能不带包名</p>
+</blockquote>
+<h2 id="2-6-不注释第一行包名，把MySqlLoadDataTest-class换个目录"><a href="#2-6-不注释第一行包名，把MySqlLoadDataTest-class换个目录" class="headerlink" title="(2.6) 不注释第一行包名，把MySqlLoadDataTest.class换个目录"></a>(2.6) 不注释第一行包名，把MySqlLoadDataTest.class换个目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ ll</span><br><span class="line">total 16</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  427 May 17 18:48 HelloWorld.class</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  112 May 17 18:47 HelloWorld.java</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  752 May 17 22:17 MySqlLoadDataTest.java</span><br><span class="line">drwxrwxr-x 3 wkq wkq 4096 May 17 22:17 cn</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ pwd</span><br><span class="line">/home/wkq/workspaces/java_test</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java cn.wkq.java.test.MySqlLoadDataTest</span><br><span class="line">java.lang.ClassNotFoundException: com.mysql.jdbc.Driver</span><br><span class="line">	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)</span><br><span class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)</span><br><span class="line">	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:349)</span><br><span class="line">	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)</span><br><span class="line">	at java.lang.Class.forName0(Native Method)</span><br><span class="line">	at java.lang.Class.forName(Class.java:264)</span><br><span class="line">	at cn.wkq.java.test.MySqlLoadDataTest.loadData(MySqlLoadDataTest.java:35)</span><br><span class="line">	at cn.wkq.java.test.MySqlLoadDataTest.main(MySqlLoadDataTest.java:20)</span><br><span class="line">?????</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java -Dfile.encoding=UTF-8 -classpath /home/wkq/lib/mysql-connector-java-5.1.47.jar cn.wkq.java.test.MySqlLoadDataTest</span><br><span class="line">Error: Could not find or load main class cn.wkq.java.test.MySqlLoadDataTest</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java -Dfile.encoding=UTF-8 -classpath /home/wkq/lib/mysql-connector-java-5.1.47.jar:/home/wkq/workspaces/java_test cn.wkq.java.test.MySqlLoadDataTest</span><br><span class="line">执行完了。</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">&gt;  可以看到，运行成功了，果然是加了包名以后，编译的main方法放到了对应目录下。</span><br><span class="line">&gt;  终于用教训理解了全限定类名</span><br><span class="line">&gt;  用教训理解了 Java 会根据包名对应出目录结构，并从class path搜索该目录去找class文件。 (默认是当前目录，如果运行时不在当前目录需要指定 classpath)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## (2.7) 不注释第一行包名，不换目录 </span><br><span class="line"></span><br><span class="line">&gt;  正常情况下，我们写完java代码，直接编译后就可以运行，不可能再对每个文件创建目录。所以得换个办法。</span><br><span class="line"></span><br><span class="line">```log</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ rm -rf cn/</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javac -Dfile.encoding=UTF-8 -d MySqlLoadDataTest.java</span><br><span class="line">javac: invalid flag: -Dfile.encoding=UTF-8</span><br><span class="line">Usage: javac &lt;options&gt; &lt;source files&gt;</span><br><span class="line">use -help for a list of possible options</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javac -Dfile.encoding=UTF-8 -d . MySqlLoadDataTest.java</span><br><span class="line">javac: invalid flag: -Dfile.encoding=UTF-8</span><br><span class="line">Usage: javac &lt;options&gt; &lt;source files&gt;</span><br><span class="line">use -help for a list of possible options</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javac -encoding &quot;utf-8&quot; -d . MySqlLoadDataTest.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ ll</span><br><span class="line">total 16</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  427 May 17 18:48 HelloWorld.class</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  112 May 17 18:47 HelloWorld.java</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  752 May 17 22:17 MySqlLoadDataTest.java</span><br><span class="line">drwxrwxr-x 3 wkq wkq 4096 May 17 22:29 cn</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java -Dfile.encoding=UTF-8 -classpath /home/wkq/lib/mysql-connector-java-5.1.47.jar:/home/wkq/workspaces/java_test cn.wkq.java.test.MySqlLoadDataTest</span><br><span class="line">执行完了。</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 果然可以运行</p>
+</blockquote>
+<h2 id="编译java文件到指定目录"><a href="#编译java文件到指定目录" class="headerlink" title="编译java文件到指定目录"></a>编译java文件到指定目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$ javac -encoding &quot;utf-8&quot; -d /home/wkq/workspaces/test_target/ MySqlLoadDataTest.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ ll</span><br><span class="line">total 16</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  427 May 17 18:48 HelloWorld.class</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  112 May 17 18:47 HelloWorld.java</span><br><span class="line">-rw-rw-r-- 1 wkq wkq  752 May 17 22:17 MySqlLoadDataTest.java</span><br><span class="line">drwxrwxr-x 3 wkq wkq 4096 May 17 22:29 cn</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ cd /home/wkq/workspaces/test_target/</span><br><span class="line">[wkq@VM_77_25_centos test_target]$ ll</span><br><span class="line">total 4</span><br><span class="line">drwxrwxr-x 3 wkq wkq 4096 May 17 22:32 cn</span><br><span class="line">[wkq@VM_77_25_centos test_target]$</span><br><span class="line">[wkq@VM_77_25_centos test_target]$ java -Dfile.encoding=UTF-8 -classpath /home/wkq/lib/mysql-connector-java-5.1.47.jar:/home/wkq/workspaces/java_test cn.wkq.java.test.MySqlLoadDataTest</span><br><span class="line">执行完了。</span><br><span class="line">[wkq@VM_77_25_centos test_target]$</span><br></pre></td></tr></table></figure>
+<h2 id="开发工具idea是怎么编译代码的"><a href="#开发工具idea是怎么编译代码的" class="headerlink" title="开发工具idea是怎么编译代码的"></a>开发工具idea是怎么编译代码的</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac -d target src/cn/wkq/java/test/*.java</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/wkq/software/jdk1.8.0_172/bin/javac -encoding &quot;utf-8&quot; -d /home/wkq/workspaces/java_test/target/ /home/wkq/workspaces/java_test/src/*.java</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>jdk目录 /home/wkq/software/jdk1.8.0_172/bin/<br>java代码目录  /home/wkq/workspaces/java_test/src/<br>编译后存放目录 /home/wkq/workspaces/java_test/target/</p>
+</blockquote>
+<h2 id="开发工具idea是怎么运行代码的"><a href="#开发工具idea是怎么运行代码的" class="headerlink" title="开发工具idea是怎么运行代码的"></a>开发工具idea是怎么运行代码的</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/wkq/software/jdk1.8.0_172/bin/java -Dfile.encoding=UTF-8 -classpath /home/wkq/lib/mysql-connector-java-5.1.47.jar:/home/wkq/workspaces/java_test cn.wkq.java.test.MySqlLoadDataTest</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>jdk目录 /home/wkq/software/jdk1.8.0_172/bin/<br>指定 classpath目录 -classpath /home/wkq/lib/mysql-connector-java-5.1.47.jar:/home/wkq/workspaces/java_test<br>运行main方法 cn.wkq.java.test.MySqlLoadDataTest</p>
+</blockquote>
+<h1 id="javac命令"><a href="#javac命令" class="headerlink" title="javac命令"></a>javac命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ /home/wkq/software/jdk1.8.0_172/bin/javac</span><br><span class="line">Usage: javac &lt;options&gt; &lt;source files&gt;</span><br><span class="line">where possible options include:</span><br><span class="line">  -g                         Generate all debugging info</span><br><span class="line">  -g:none                    Generate no debugging info</span><br><span class="line">  -g:&#123;lines,vars,source&#125;     Generate only some debugging info</span><br><span class="line">  -nowarn                    Generate no warnings</span><br><span class="line">  -verbose                   Output messages about what the compiler is doing</span><br><span class="line">  -deprecation               Output source locations where deprecated APIs are used</span><br><span class="line">  -classpath &lt;path&gt;          Specify where to find user class files and annotation processors</span><br><span class="line">  -cp &lt;path&gt;                 Specify where to find user class files and annotation processors</span><br><span class="line">  -sourcepath &lt;path&gt;         Specify where to find input source files</span><br><span class="line">  -bootclasspath &lt;path&gt;      Override location of bootstrap class files</span><br><span class="line">  -extdirs &lt;dirs&gt;            Override location of installed extensions</span><br><span class="line">  -endorseddirs &lt;dirs&gt;       Override location of endorsed standards path</span><br><span class="line">  -proc:&#123;none,only&#125;          Control whether annotation processing and/or compilation is done.</span><br><span class="line">  -processor &lt;class1&gt;[,&lt;class2&gt;,&lt;class3&gt;...] Names of the annotation processors to run; bypasses default discovery process</span><br><span class="line">  -processorpath &lt;path&gt;      Specify where to find annotation processors</span><br><span class="line">  -parameters                Generate metadata for reflection on method parameters</span><br><span class="line">  -d &lt;directory&gt;             Specify where to place generated class files</span><br><span class="line">  -s &lt;directory&gt;             Specify where to place generated source files</span><br><span class="line">  -h &lt;directory&gt;             Specify where to place generated native header files</span><br><span class="line">  -implicit:&#123;none,class&#125;     Specify whether or not to generate class files for implicitly referenced files</span><br><span class="line">  -encoding &lt;encoding&gt;       Specify character encoding used by source files</span><br><span class="line">  -source &lt;release&gt;          Provide source compatibility with specified release</span><br><span class="line">  -target &lt;release&gt;          Generate class files for specific VM version</span><br><span class="line">  -profile &lt;profile&gt;         Check that API used is available in the specified profile</span><br><span class="line">  -version                   Version information</span><br><span class="line">  -help                      Print a synopsis of standard options</span><br><span class="line">  -Akey[=value]              Options to pass to annotation processors</span><br><span class="line">  -X                         Print a synopsis of nonstandard options</span><br><span class="line">  -J&lt;flag&gt;                   Pass &lt;flag&gt; directly to the runtime system</span><br><span class="line">  -Werror                    Terminate compilation if warnings occur</span><br><span class="line">  @&lt;filename&gt;                Read options and filenames from file</span><br><span class="line"></span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h1 id="java命令"><a href="#java命令" class="headerlink" title="java命令"></a>java命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ /home/wkq/software/jdk1.8.0_172/bin/java</span><br><span class="line">Usage: java [-options] class [args...]</span><br><span class="line">           (to execute a class)</span><br><span class="line">   or  java [-options] -jar jarfile [args...]</span><br><span class="line">           (to execute a jar file)</span><br><span class="line">where options include:</span><br><span class="line">    -d32	  use a 32-bit data model if available</span><br><span class="line">    -d64	  use a 64-bit data model if available</span><br><span class="line">    -server	  to select the &quot;server&quot; VM</span><br><span class="line">                  The default VM is server.</span><br><span class="line"></span><br><span class="line">    -cp &lt;class search path of directories and zip/jar files&gt;</span><br><span class="line">    -classpath &lt;class search path of directories and zip/jar files&gt;</span><br><span class="line">                  A : separated list of directories, JAR archives,</span><br><span class="line">                  and ZIP archives to search for class files.</span><br><span class="line">    -D&lt;name&gt;=&lt;value&gt;</span><br><span class="line">                  set a system property</span><br><span class="line">    -verbose:[class|gc|jni]</span><br><span class="line">                  enable verbose output</span><br><span class="line">    -version      print product version and exit</span><br><span class="line">    -version:&lt;value&gt;</span><br><span class="line">                  Warning: this feature is deprecated and will be removed</span><br><span class="line">                  in a future release.</span><br><span class="line">                  require the specified version to run</span><br><span class="line">    -showversion  print product version and continue</span><br><span class="line">    -jre-restrict-search | -no-jre-restrict-search</span><br><span class="line">                  Warning: this feature is deprecated and will be removed</span><br><span class="line">                  in a future release.</span><br><span class="line">                  include/exclude user private JREs in the version search</span><br><span class="line">    -? -help      print this help message</span><br><span class="line">    -X            print help on non-standard options</span><br><span class="line">    -ea[:&lt;packagename&gt;...|:&lt;classname&gt;]</span><br><span class="line">    -enableassertions[:&lt;packagename&gt;...|:&lt;classname&gt;]</span><br><span class="line">                  enable assertions with specified granularity</span><br><span class="line">    -da[:&lt;packagename&gt;...|:&lt;classname&gt;]</span><br><span class="line">    -disableassertions[:&lt;packagename&gt;...|:&lt;classname&gt;]</span><br><span class="line">                  disable assertions with specified granularity</span><br><span class="line">    -esa | -enablesystemassertions</span><br><span class="line">                  enable system assertions</span><br><span class="line">    -dsa | -disablesystemassertions</span><br><span class="line">                  disable system assertions</span><br><span class="line">    -agentlib:&lt;libname&gt;[=&lt;options&gt;]</span><br><span class="line">                  load native agent library &lt;libname&gt;, e.g. -agentlib:hprof</span><br><span class="line">                  see also, -agentlib:jdwp=help and -agentlib:hprof=help</span><br><span class="line">    -agentpath:&lt;pathname&gt;[=&lt;options&gt;]</span><br><span class="line">                  load native agent library by full pathname</span><br><span class="line">    -javaagent:&lt;jarpath&gt;[=&lt;options&gt;]</span><br><span class="line">                  load Java programming language agent, see java.lang.instrument</span><br><span class="line">    -splash:&lt;imagepath&gt;</span><br><span class="line">                  show splash screen with specified image</span><br><span class="line">See http://www.oracle.com/technetwork/java/javase/documentation/index.html for more details.</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javac.html" target="_blank" rel="noopener">javac</a><br>[2] <a href="https://imshuai.com/using-javac" target="_blank" rel="noopener">第1期：抛开IDE，了解一下javac如何编译</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/13/guava-cache/" rel="next" title="guava-cache">
+                <i class="fa fa-chevron-left"></i> guava-cache
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/16/elk-notes/" rel="prev" title="Elasticsearch Logstash Kibana 笔记">
+                Elasticsearch Logstash Kibana 笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WKQ</p>
+              <p class="site-description motion-element" itemprop="description">不积跬步无以至千里</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">168</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:weikeqin.cn@gmail.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://plus.google.com/u/0/107737814703120725006" target="_blank" title="Google"><i class="fa fa-fw fa-google"></i>Google</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://twitter.com/wkq278276130" target="_blank" title="Twitter"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.facebook.com/keqin.wei.5" target="_blank" title="FB Page"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://stackoverflow.com/users/8054088/wkq" target="_blank" title="StackOverflow"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-想象中运行java文件的样子"><span class="nav-number">1.</span> <span class="nav-text">(1) 想象中运行java文件的样子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-查看jdk版本"><span class="nav-number">1.1.</span> <span class="nav-text">(1.1) 查看jdk版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-新建一个HelloWord-java文件测试"><span class="nav-number">1.2.</span> <span class="nav-text">(1.2) 新建一个HelloWord.java文件测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-编译HelloWorld-java"><span class="nav-number">1.3.</span> <span class="nav-text">(1.3) 编译HelloWorld.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-运行HelloWorld"><span class="nav-number">1.4.</span> <span class="nav-text">(1.4) 运行HelloWorld</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-被打脸的一幕"><span class="nav-number">1.5.</span> <span class="nav-text">(1.5) 被打脸的一幕</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-复盘"><span class="nav-number">2.</span> <span class="nav-text">(2) 复盘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-查看jdk版本"><span class="nav-number">2.1.</span> <span class="nav-text">(2.1) 查看jdk版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-新建MysqlLoadDataTest-java"><span class="nav-number">2.2.</span> <span class="nav-text">(2.2) 新建MysqlLoadDataTest.java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-编译"><span class="nav-number">2.3.</span> <span class="nav-text">(2.3) 编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-运行"><span class="nav-number">2.4.</span> <span class="nav-text">(2.4) 运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-注释掉第一行包名重新运行"><span class="nav-number">2.5.</span> <span class="nav-text">(2.5) 注释掉第一行包名重新运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-6-不注释第一行包名，把MySqlLoadDataTest-class换个目录"><span class="nav-number">2.6.</span> <span class="nav-text">(2.6) 不注释第一行包名，把MySqlLoadDataTest.class换个目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译java文件到指定目录"><span class="nav-number">2.7.</span> <span class="nav-text">编译java文件到指定目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发工具idea是怎么编译代码的"><span class="nav-number">2.8.</span> <span class="nav-text">开发工具idea是怎么编译代码的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发工具idea是怎么运行代码的"><span class="nav-number">2.9.</span> <span class="nav-text">开发工具idea是怎么运行代码的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#javac命令"><span class="nav-number">3.</span> <span class="nav-text">javac命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java命令"><span class="nav-number">4.</span> <span class="nav-text">java命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动 v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Mist</a> v6.3.0
+  <span>｜one of Hosted by 
+	 <a href="https://pages.coding.me" rel="external nofollow">Coding Pages</a>
+  </span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=65182271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+    
+  
+  <script src="//cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz',
+        appKey: 'IeozLmM20GuvfcslfWgdNXP0',
+        placeholder: '期待您的评论',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=6.3.0"></script>
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Ca876j76FoCQi1SShjT0qC6k-gzGzoHsz", "IeozLmM20GuvfcslfWgdNXP0");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -370,6 +370,736 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/16/canal-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/16/canal-notes/" itemprop="url">
+                  canal 笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-16 10:28:03" itemprop="dateCreated datePublished" datetime="2018-05-16T10:28:03+08:00">2018-05-16</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/16/canal-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/16/canal-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/16/canal-notes/" class="leancloud_visitors" data-flag-title="canal 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1-配置MySQL"><a href="#1-配置MySQL" class="headerlink" title="(1) 配置MySQL"></a>(1) 配置MySQL</h1><h2 id="1-1-修改MySQL配置文件"><a href="#1-1-修改MySQL配置文件" class="headerlink" title="(1.1) 修改MySQL配置文件"></a>(1.1) 修改MySQL配置文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]  </span><br><span class="line">log-bin=mysql-bin </span><br><span class="line">binlog-format=ROW </span><br><span class="line">server_id=1</span><br></pre></td></tr></table></figure>
+<h2 id="1-2-MySQL添加对应用户"><a href="#1-2-MySQL添加对应用户" class="headerlink" title="(1.2) MySQL添加对应用户"></a>(1.2) MySQL添加对应用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CREATE USER canal IDENTIFIED BY &apos;canal&apos;;    </span><br><span class="line"></span><br><span class="line">GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;canal&apos;@&apos;%&apos;;  </span><br><span class="line"></span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-校验用户对应权限"><a href="#1-3-校验用户对应权限" class="headerlink" title="(1.3) 校验用户对应权限"></a>(1.3) 校验用户对应权限</h2><p>  1、 <code>show master status ;</code><br>      如果正常显示binlog，则没问题，如果提示 <code>Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation</code> ，则没有对应 REPLICATION CLIENT 权限</p>
+<p>  2、 <code>show slave status ;</code><br>      如果提示 <code>Access denied; you need (at least one of) the REPLICATION SLAVE privilege(s) for this operation</code> ，则没有对应 REPLICATION SLAVE 权限</p>
+<h1 id="2-启动canal"><a href="#2-启动canal" class="headerlink" title="(2) 启动canal"></a>(2) 启动canal</h1><p>  执行 <code>./bin/startup.sh</code> 即可启动</p>
+<h2 id="2-1-canal启动时canal-log"><a href="#2-1-canal启动时canal-log" class="headerlink" title="(2.1) canal启动时canal.log"></a>(2.1) canal启动时canal.log</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2018-07-23 20:27:47.576 [main] INFO  com.alibaba.otter.canal.deployer.CanalLauncher - ## the canal server is running now ......</span><br><span class="line">2018-07-23 20:27:47.721 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx1 successful.</span><br><span class="line">2018-07-23 20:27:47.802 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx2 successful.</span><br><span class="line">2018-07-23 20:27:47.862 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx3 successful.</span><br><span class="line">2018-07-23 20:27:47.921 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx4 successful.</span><br><span class="line">2018-07-23 20:27:47.987 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx5 successful.</span><br><span class="line">2018-07-23 20:27:48.044 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx6 successful.</span><br><span class="line">2018-07-23 20:27:48.094 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx7 successful.</span><br></pre></td></tr></table></figure>
+<h2 id="2-2-canal正常启动时对应的日志"><a href="#2-2-canal正常启动时对应的日志" class="headerlink" title="(2.2) canal正常启动时对应的日志"></a>(2.2) canal正常启动时对应的日志</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2018-07-23 20:27:47.429 [canal-instance-scan-0] INFO  c.a.o.c.i.spring.support.PropertyPlaceholderConfigurer - Loading properties file from class path resource [canal.properties]</span><br><span class="line">2018-07-23 20:27:47.436 [canal-instance-scan-0] INFO  c.a.o.c.i.spring.support.PropertyPlaceholderConfigurer - Loading properties file from class path resource [xxx/instance.properties]</span><br><span class="line">2018-07-23 20:27:47.444 [canal-instance-scan-0] WARN  org.springframework.beans.TypeConverterDelegate - PropertyEditor [com.sun.beans.editors.EnumEditor] found through deprecated global PropertyEditorManager fallback - consider using a more isolated form of registration, e.g. on the BeanWrapper/BeanFactory!</span><br><span class="line">2018-07-23 20:27:47.451 [canal-instance-scan-0] INFO  c.a.otter.canal.instance.spring.CanalInstanceWithSpring - start CannalInstance for 1-xxx </span><br><span class="line">2018-07-23 20:27:47.453 [canal-instance-scan-0] INFO  c.a.otter.canal.instance.core.AbstractCanalInstance - start successful....</span><br><span class="line">2018-07-23 20:27:47.666 [destination = xxx , address = /127.0.0.1:3306 , EventParser] WARN  c.a.otter.canal.parse.inbound.mysql.MysqlEventParser - prepare to find start position just show master status</span><br></pre></td></tr></table></figure>
+<h1 id="3-canal复制原理"><a href="#3-canal复制原理" class="headerlink" title="(3) canal复制原理"></a>(3) canal复制原理</h1><p> 复制如何工作，整体上来说，复制有3个步骤：</p>
+<p> (1) master将改变记录到二进制日志(binary log)中（这些记录叫做二进制日志事件，binary log events）；</p>
+<p> (2) slave将master的binary log events复制到它的中继日志(relay log)中；</p>
+<p> (3) slave读取中继日志中的事件，将其重放到备库数据之上。</p>
+<p>下图描述了复制的过程：</p>
+<p> <img src="/img/database/mysql/canal/canal_copy.jpg" alt="canal复制"></p>
+<h1 id="4-遇到的问题"><a href="#4-遇到的问题" class="headerlink" title="(4) 遇到的问题"></a>(4) 遇到的问题</h1><h2 id="4-1-Error-When-doing-Client-Authentication-ErrorPacket"><a href="#4-1-Error-When-doing-Client-Authentication-ErrorPacket" class="headerlink" title="(4.1) Error When doing Client Authentication:ErrorPacket"></a>(4.1) Error When doing Client Authentication:ErrorPacket</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.io.IOException: connect /127.0.0.1:3306 failure:java.io.IOException: Error When doing Client Authentication:ErrorPacket [errorNumber=1045, fieldCount=-1, message=Access denied for user &apos;canal&apos;@&apos;localhost&apos; (using password: YES), sqlState=28000, sqlStateMarker=#]</span><br><span class="line">	at com.alibaba.otter.canal.parse.driver.mysql.MysqlConnector.negotiate(MysqlConnector.java:208)</span><br><span class="line">	at com.alibaba.otter.canal.parse.driver.mysql.MysqlConnector.connect(MysqlConnector.java:71)</span><br><span class="line">	at com.alibaba.otter.canal.parse.inbound.mysql.MysqlConnection.connect(MysqlConnection.java:56)</span><br><span class="line">	at com.alibaba.otter.canal.parse.inbound.mysql.MysqlEventParser.preDump(MysqlEventParser.java:86)</span><br><span class="line">	at com.alibaba.otter.canal.parse.inbound.AbstractEventParser$3.run(AbstractEventParser.java:157)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br></pre></td></tr></table></figure>
+<p>  1、 用户名密码不正确</p>
+<h2 id="4-2-Access-denied-you-need-at-least-one-of-the-SUPER-REPLICATION-CLIENT-privilege-s-for-this-operation"><a href="#4-2-Access-denied-you-need-at-least-one-of-the-SUPER-REPLICATION-CLIENT-privilege-s-for-this-operation" class="headerlink" title="(4.2) Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation"></a>(4.2) Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR com.alibaba.otter.canal.common.alarm.LogAlarmHandler - destination:xx</span><br><span class="line">[com.alibaba.otter.canal.parse.exception.CanalParseException: command : &apos;show master status&apos; has an error!</span><br><span class="line">Caused by: java.io.IOException: ErrorPacket [errorNumber=1227, fieldCount=-1, message=Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation, sqlState=42000, sqlStateMarker=#]</span><br><span class="line"> with command: show master status</span><br></pre></td></tr></table></figure>
+<p>  用canal账户登录后发现可以查看对应数据库对应表的数据，但是 <code>show master status</code> 提示 Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation</p>
+<p>  1、<code>instance.properties</code>配置文件里配置的用户没有REPLICATION权限<br>  2、canal instance.properties 配置错误<br>  3、配置文件里用户名密码不正确<br>  4、MySQL对应用户不存在<br>  5、MySQL配置不对</p>
+<p>  给canal用户对应的replication权限<br>  <code>grant replication client on *.*  to &#39;canal&#39;@&#39;%&#39;;</code><br>  <code>flush privileges</code></p>
+<h2 id="4-3-Access-denied-you-need-at-least-one-of-the-REPLICATION-SLAVE-privilege-s-for-this-operation"><a href="#4-3-Access-denied-you-need-at-least-one-of-the-REPLICATION-SLAVE-privilege-s-for-this-operation" class="headerlink" title="(4.3) Access denied; you need (at least one of) the REPLICATION SLAVE privilege(s) for this operation"></a>(4.3) Access denied; you need (at least one of) the REPLICATION SLAVE privilege(s) for this operation</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[destination = xxx , address = /127.0.0.1:3306 , EventParser] ERROR com.alibaba.otter.canal.common.alarm.LogAlarmHandler - destination:xx[java.io.IOException: Received error packet: errno = 1227, sqlstate = 42000 errmsg = Access denied; you need (at least one of) the REPLICATION SLAVE privilege(s) for this operation</span><br><span class="line">	at com.alibaba.otter.canal.parse.inbound.mysql.dbsync.DirectLogFetcher.fetch(DirectLogFetcher.java:95)</span><br></pre></td></tr></table></figure>
+<p>REPLICATION SLAVE 常用于建立复制时所需要用到的用户权限，也就是slave server必须被master server授权具有该权限的用户，才能通过该用户复制。<br>并且”SHOW SLAVE HOSTS”这条命令和REPLICATION SLAVE权限有关，否则执行时会报错：</p>
+<p>REPLICATION CLIENT 不可用于建立复制，有该权限时，只是多了可以使用如”SHOW SLAVE STATUS”、”SHOW MASTER STATUS”等命令。<br>在5.6.6版本以后，也可以使用”SHOW BINARY LOGS”。</p>
+<p>  权限问题<br>  <code>GRANT REPLICATION SLAVE ON *.* TO &#39;canal&#39;@&#39;%&#39;</code><br>  <code>flush privileges</code></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://github.com/alibaba/canal/wiki/AdminGuide" target="_blank" rel="noopener">canal-AdminGuide</a><br>[2] <a href="https://blog.csdn.net/xiaozhou_web/article/details/79746928" target="_blank" rel="noopener">canal配置使用</a><br>[3] <a href="http://www.learnfuture.com/Extend/ArticleContent?id=02098a4c-4036-4264-a5ae-132fbf83b5b2" target="_blank" rel="noopener">Mysql 普通账户授权replication client后登录失败问题</a><br>[4] <a href="http://blog.itpub.net/29773961/viewspace-2127425/" target="_blank" rel="noopener">REPLICATION SLAVE 与 REPLICATION CLIENT 权限</a><br>[5] <a href="http://www.phpcompass.com/article-496.html" target="_blank" rel="noopener">对replication slave,replication client的一点说明</a><br>[6] <a href="https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html" target="_blank" rel="noopener">MySQL 5.6 Reference Manual – 6.2.1 Privileges Provided by MySQL</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/16/springboot-error-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/16/springboot-error-note/" itemprop="url">
+                  springboot error
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-16 10:28:03" itemprop="dateCreated datePublished" datetime="2018-05-16T10:28:03+08:00">2018-05-16</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/16/springboot-error-note/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/16/springboot-error-note/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/16/springboot-error-note/" class="leancloud_visitors" data-flag-title="springboot error">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="1-maven-plugins-maven-compiler-plugin-3-8-0-compile-failed-missing-org-objectweb-asm-ClassVisitor"><a href="#1-maven-plugins-maven-compiler-plugin-3-8-0-compile-failed-missing-org-objectweb-asm-ClassVisitor" class="headerlink" title="(1)  maven.plugins:maven-compiler-plugin:3.8.0:compile failed   missing: org/objectweb/asm/ClassVisitor"></a>(1)  maven.plugins:maven-compiler-plugin:3.8.0:compile failed   missing: org/objectweb/asm/ClassVisitor</h1><p>  在使用 springboot 2.1.3 后，开始出现这个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project model: Execution default-compile of goal org.apache.</span><br><span class="line">maven.plugins:maven-compiler-plugin:3.8.0:compile failed: Unable to load the mojo &apos;compile&apos; in the plugin &apos;org.apache.maven.plugins:maven-compiler-plugin:3.8.0&apos;. A required class is</span><br><span class="line">missing: org/objectweb/asm/ClassVisitor</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @  ---</span><br><span class="line">[WARNING] Error injecting: org.apache.maven.plugin.compiler.CompilerMojo</span><br><span class="line">com.google.inject.ProvisionException: Unable to provision, see the following errors:</span><br><span class="line"></span><br><span class="line">1) Error injecting constructor, java.lang.NoClassDefFoundError: org/objectweb/asm/ClassVisitor</span><br><span class="line">  at org.codehaus.plexus.languages.java.jpms.LocationManager.&lt;init&gt;(Unknown Source)</span><br></pre></td></tr></table></figure>
+<p>  maven-compiler-plugin 版本问题，指定版本</p>
+<p>  方法一，在pluginManagement指定</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.7.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  方法二，在每个模块里手动指定<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">classifier</span>&gt;</span>exec<span class="tag">&lt;/<span class="name">classifier</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/16/springboot-error-note/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/10/elasticsearch-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/10/elasticsearch-notes/" itemprop="url">
+                  ElasticSearch 笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-10 14:37:45" itemprop="dateCreated datePublished" datetime="2018-05-10T14:37:45+08:00">2018-05-10</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/10/elasticsearch-notes/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/05/10/elasticsearch-notes/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/10/elasticsearch-notes/" class="leancloud_visitors" data-flag-title="ElasticSearch 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p> Elasticsearch 是一个分布式的开源搜索和分析引擎，适用于所有类型的数据，包括文本、数字、地理空间、结构化和非结构化数据。<br> Elasticsearch 是一个实时的分布式搜索分析引擎，它被用作全文检索、结构化搜索、分析以及这三个功能的组合。</p>
+</blockquote>
+<blockquote>
+<p> Elasticsearch 的用途是什么？<br> Elasticsearch 在速度和可扩展性方面都表现出色，而且还能够索引多种类型的内容，这意味着其可用于多种用例：<br> 应用程序搜索<br> 网站搜索<br> 企业搜索<br> 日志处理和分析<br> 基础设施指标和容器监测<br> 应用程序性能监测<br> 地理空间数据分析和可视化<br> 安全分析<br> 业务分析</p>
+</blockquote>
+<h1 id="基础入门"><a href="#基础入门" class="headerlink" title="基础入门"></a>基础入门</h1><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>  ElasticSearch下载完解压就可以使用，很方便。</p>
+<h3 id="官网下载地址"><a href="#官网下载地址" class="headerlink" title="官网下载地址"></a>官网下载地址</h3><p>  <a href="https://www.elastic.co/downloads/" target="_blank" rel="noopener">https://www.elastic.co/downloads/</a><br>  <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">https://www.elastic.co/downloads/elasticsearch</a><br>  <a href="https://www.elastic.co/cn/downloads/elasticsearch" target="_blank" rel="noopener">https://www.elastic.co/cn/downloads/elasticsearch</a></p>
+<p>  <a href="https://www.elastic.co/downloads/past-releases/elasticsearch-5-6-3" target="_blank" rel="noopener">https://www.elastic.co/downloads/past-releases/elasticsearch-5-6-3</a><br>  <a href="https://www.elastic.co/downloads/past-releases/elasticsearch-6-6-2" target="_blank" rel="noopener">https://www.elastic.co/downloads/past-releases/elasticsearch-6-6-2</a><br>  <a href="https://www.elastic.co/downloads/past-releases#elasticsearch" target="_blank" rel="noopener">https://www.elastic.co/downloads/past-releases#elasticsearch</a></p>
+<p>  <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-linux-x86_64.tar.gz" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-linux-x86_64.tar.gz</a></p>
+<p>  <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-darwin-x86_64.tar.gz" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-darwin-x86_64.tar.gz</a></p>
+<p>  <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-windows-x86_64.zip" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-windows-x86_64.zip</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/10/elasticsearch-notes/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/distributed-question/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/20/distributed-question/" itemprop="url">
+                  分布式 常见面试题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-04-20 09:33:23" itemprop="dateCreated datePublished" datetime="2018-04-20T09:33:23+08:00">2018-04-20</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/distributed/" itemprop="url" rel="index"><span itemprop="name">distributed</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/20/distributed-question/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/20/distributed-question/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/04/20/distributed-question/" class="leancloud_visitors" data-flag-title="分布式 常见面试题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>什么是CAP定理？<br>说说CAP理论和BASE理论？<br>什么是最终一致性？最终一致性实现方式？<br>什么是一致性Hash？<br>讲讲分布式事务？<br>如何实现分布式锁？<br>如何实现分布式 Session?<br>如何保证消息的一致性?<br>负载均衡的理解？<br>正向代理和反向代理？<br>CDN实现原理？<br>怎么提升系统的QPS和吞吐？<br>Dubbo的底层实现原理和机制？<br>描述一个服务从发布到被消费的详细过程？<br>分布式系统怎么做服务治理？<br>消息中间件如何解决消息丢失问题？<br>Dubbo的服务请求失败怎么处理？<br>对分布式事务的理解？<br>如何实现负载均衡,有哪些算法可以实现?<br>Zookeeper的用途,选举的原理是什么?<br>讲讲数据的垂直拆分水平拆分？<br>zookeeper原理和适用场景？<br>zookeeper watch机制？<br>redis/zk节点宕机如何处理？<br>分布式集群下如何做到唯一序列号？<br>用过哪些MQ,怎么用的,和其他mq比较有什么优缺点,MQ的连接是线程安全的吗？<br>MQ系统的数据如何保证不丢失？<br>列举出能想到的数据库分库分表策略？</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/network-question/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1428,732 +2158,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/17/neo4j-apoc-use/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/17/neo4j-apoc-use/" itemprop="url">
-                  Neo4j APOC 使用
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-17 12:02:37" itemprop="dateCreated datePublished" datetime="2018-04-17T12:02:37+08:00">2018-04-17</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/17/neo4j-apoc-use/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/17/neo4j-apoc-use/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/17/neo4j-apoc-use/" class="leancloud_visitors" data-flag-title="Neo4j APOC 使用">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-下载配置"><a href="#1-下载配置" class="headerlink" title="(1) 下载配置"></a>(1) 下载配置</h1><h2 id="1-1-下载对应版本的apoc-jar包"><a href="#1-1-下载对应版本的apoc-jar包" class="headerlink" title="(1.1) 下载对应版本的apoc jar包"></a>(1.1) 下载对应版本的apoc jar包</h2><ol>
-<li><p>从<a href="https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases" target="_blank" rel="noopener">github apoc各个版本下载地址</a>下载对应版本的apoc jar包，并放到 <code>$NEO4J_HOME/plugs</code> 目录下</p>
-<p><code>wget https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.3.0.2/apoc-3.3.0.2-all.jar</code></p>
-</li>
-</ol>
-<h2 id="1-2-配置-neo4j-conf-配置文件"><a href="#1-2-配置-neo4j-conf-配置文件" class="headerlink" title="(1.2) 配置 neo4j.conf 配置文件"></a>(1.2) 配置 neo4j.conf 配置文件</h2><p>在 <code>neo4j.conf</code> 最后一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dbms.security.procedures.unrestricted=apoc.*</span><br><span class="line">apoc.import.file.enabled=true</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">neo4j-sh (?)$ return apoc.version();</span><br><span class="line">+----------------+</span><br><span class="line">| apoc.version() |</span><br><span class="line">+----------------+</span><br><span class="line">| &quot;3.3.0.2&quot;      |</span><br><span class="line">+----------------+</span><br><span class="line">1 row</span><br><span class="line">29 ms</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/17/neo4j-apoc-use/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/03/02/canvas-fingerprinting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/02/canvas-fingerprinting/" itemprop="url">
-                  帆布指纹
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-03-02 08:55:15" itemprop="dateCreated datePublished" datetime="2018-03-02T08:55:15+08:00">2018-03-02</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/02/canvas-fingerprinting/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/02/canvas-fingerprinting/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/02/canvas-fingerprinting/" class="leancloud_visitors" data-flag-title="帆布指纹">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>  一般情况下，网站或者广告联盟都会非常想要一种技术方式可以在网络上精确定位到每一个个体，这样可以通过收集这些个体的数据，通过分析后更加精准的去推送广告（精准化营销）或其他有针对性的一些活动。<br>  Cookie技术是非常受欢迎的一种。当用户访问一个网站时，网站可以在用户当前的浏览器Cookie中永久植入一个含有唯一标示符（UUID）的信息，并通过这个信息将用户所有行为（浏览了哪些页面？搜索了哪些关键字？对什么感兴趣？点了哪些按钮？用了哪些功能？看了哪些商品？把哪些放入了购物车等等）关联起来。<br>  但是Cookie可以伪装，在浏览器隐私窗口，不同用户，甚至是爬虫时无法区分。<br>  这个时候，提出一种 “帆布指纹识别”技术 ，这种技术可以避免以上的缺点。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bin2hex</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// From: http://phpjs.org/functions</span></span><br><span class="line">  <span class="comment">// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)</span></span><br><span class="line">  <span class="comment">// +   bugfixed by: Onno Marsman</span></span><br><span class="line">  <span class="comment">// +   bugfixed by: Linuxworld</span></span><br><span class="line">  <span class="comment">// +   improved by: ntoniazzi (http://phpjs.org/functions/bin2hex:361#comment_177616)</span></span><br><span class="line">  <span class="comment">// *     example 1: bin2hex('Kev');</span></span><br><span class="line">  <span class="comment">// *     returns 1: '4b6576'</span></span><br><span class="line">  <span class="comment">// *     example 2: bin2hex(String.fromCharCode(0x00));</span></span><br><span class="line">  <span class="comment">// *     returns 2: '00'</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i, l, o = <span class="string">""</span>, n;</span><br><span class="line"></span><br><span class="line">  s += <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>, l = s.length; i &lt; l; i++) &#123;</span><br><span class="line">    n = s.charCodeAt(i).toString(<span class="number">16</span>)</span><br><span class="line">    o += n.length &lt; <span class="number">2</span> ? <span class="string">"0"</span> + n : n;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"><span class="keyword">var</span> txt = <span class="string">'http://security.tencent.com/'</span>;</span><br><span class="line">ctx.textBaseline = <span class="string">"top"</span>;</span><br><span class="line">ctx.font = <span class="string">"14px 'Arial'"</span>;</span><br><span class="line">ctx.textBaseline = <span class="string">"tencent"</span>;</span><br><span class="line">ctx.fillStyle = <span class="string">"#f60"</span>;</span><br><span class="line">ctx.fillRect(<span class="number">125</span>,<span class="number">1</span>,<span class="number">62</span>,<span class="number">20</span>);</span><br><span class="line">ctx.fillStyle = <span class="string">"#069"</span>;</span><br><span class="line">ctx.fillText(txt, <span class="number">2</span>, <span class="number">15</span>);</span><br><span class="line">ctx.fillStyle = <span class="string">"rgba(102, 204, 0, 0.7)"</span>;</span><br><span class="line">ctx.fillText(txt, <span class="number">4</span>, <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b64 = canvas.toDataURL().replace(<span class="string">"data:image/png;base64,"</span>,<span class="string">""</span>);</span><br><span class="line"><span class="keyword">var</span> bin = atob(b64);</span><br><span class="line"><span class="keyword">var</span> crc = bin2hex(bin.slice(<span class="number">-16</span>,<span class="number">-12</span>));</span><br><span class="line"><span class="built_in">console</span>.log(crc);</span><br></pre></td></tr></table></figure>
-<p>以上代码在chrome浏览器里运行会得到一个结果 <code>3c5c9044</code> ，在火狐会得到 <code>7e7f4d86</code>，在IE会得到 <code>5ec31ae3</code><br>只要用户用同一浏览器，产生的 帆布指纹就不会变。这样就可以达到反爬虫的效果。<br>缺点是 公司批量购买的电脑，批量安装系统，这些电脑的结果可能会一样。</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://security.tencent.com/index.php/blog/msg/59" target="_blank" rel="noopener">取代cookie的网站追踪技术：”帆布指纹识别”初探</a><br>[2] <a href="http://www.cnblogs.com/xiezhengcai/p/4252008.html" target="_blank" rel="noopener">帆布指纹识别（CANVAS FINGERPRINTING）</a><br>[3] <a href="https://github.com/Valve/fingerprintJS" target="_blank" rel="noopener">fingerprintJS</a><br>[4] <a href="https://panopticlick.eff.org/browser-uniqueness.pdf" target="_blank" rel="noopener">browser-uniqueness.pdf</a><br>[5] <a href="https://segmentfault.com/a/1190000013010835" target="_blank" rel="noopener">Token 认证的来龙去脉</a><br>[6] <a href="https://segmentfault.com/a/1190000014527692" target="_blank" rel="noopener">token认证</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/03/01/python-log/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/01/python-log/" itemprop="url">
-                  python-log
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-03-01 20:01:15" itemprop="dateCreated datePublished" datetime="2018-03-01T20:01:15+08:00">2018-03-01</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/01/python-log/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/03/01/python-log/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/01/python-log/" class="leancloud_visitors" data-flag-title="python-log">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Python日志"><a href="#Python日志" class="headerlink" title="Python日志"></a>Python日志</h1><p>  python确实挺简单，用起来确实挺方便，但是python的日志我真想说一句头疼</p>
-<h2 id="只输出到文件"><a href="#只输出到文件" class="headerlink" title="只输出到文件"></a>只输出到文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import logging</span><br><span class="line"></span><br><span class="line"># 改成对应的日志路径，推荐使用绝对路径</span><br><span class="line">logging.basicConfig(level=logging.INFO,</span><br><span class="line">                    filename=&apos;log.log&apos;,</span><br><span class="line">                    filemode=&apos;a&apos;,</span><br><span class="line">                    format=&apos;%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s&apos;)</span><br><span class="line">					</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line">    #print(&quot;hello world&quot;)</span><br><span class="line">	logging.info(&quot;hello world&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://python.jobbole.com/81666/" target="_blank" rel="noopener">http://python.jobbole.com/81666/</a><br>[] <a href="https://www.jianshu.com/p/4f6ff84cb3e9" target="_blank" rel="noopener">https://www.jianshu.com/p/4f6ff84cb3e9</a><br>[] <a href="https://my.oschina.net/leejun2005/blog/126713" target="_blank" rel="noopener">https://my.oschina.net/leejun2005/blog/126713</a>    python 日志模块 logging 详解<br>[] <a href="http://logbook.readthedocs.io/en/stable/" target="_blank" rel="noopener">http://logbook.readthedocs.io/en/stable/</a><br>[] <a href="https://github.com/getlogbook/logbook" target="_blank" rel="noopener">https://github.com/getlogbook/logbook</a><br>[] <a href="https://github.com/metachris/logzero" target="_blank" rel="noopener">https://github.com/metachris/logzero</a><br>[] <a href="https://www.jianshu.com/p/d615bf01e37b" target="_blank" rel="noopener">https://www.jianshu.com/p/d615bf01e37b</a>    python logging日志模块以及多进程日志<br>[] <a href="http://blog.csdn.net/liuchunming033/article/details/39080457" target="_blank" rel="noopener">http://blog.csdn.net/liuchunming033/article/details/39080457</a>    Python中的logging模块就这么用<br>[] <a href="https://www.jianshu.com/p/72fb43127c85" target="_blank" rel="noopener">https://www.jianshu.com/p/72fb43127c85</a>    Python日志教程</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/02/06/python-error-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/06/python-error-notes/" itemprop="url">
-                  python-error-notes
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-02-06 20:34:12" itemprop="dateCreated datePublished" datetime="2018-02-06T20:34:12+08:00">2018-02-06</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/02/06/python-error-notes/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/02/06/python-error-notes/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/02/06/python-error-notes/" class="leancloud_visitors" data-flag-title="python-error-notes">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="1-command-‘C-Program-Files-x86-Microsoft-Visual-Studio-14-0-VC-BIN-x86-amd64-cl-exe’-failed-with-exit-status-4"><a href="#1-command-‘C-Program-Files-x86-Microsoft-Visual-Studio-14-0-VC-BIN-x86-amd64-cl-exe’-failed-with-exit-status-4" class="headerlink" title="(1)　command ‘C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\x86_amd64\cl.exe’ failed with exit status 4"></a>(1)　command ‘C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\x86_amd64\cl.exe’ failed with exit status 4</h1><blockquote>
-<ol>
-<li>把cl.exe所在目录添加到环境变量里    C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin</li>
-<li>安装VS 2015</li>
-</ol>
-</blockquote>
-<p>  <a href="http://landinghub.visualstudio.com/visual-cpp-build-tools" target="_blank" rel="noopener">visual-cpp-build-tools</a><br>  <a href="http://download.microsoft.com/download/5/d/1/5d1ec81e-bc59-448f-9ab6-27636d5cc18a/vs2015.3.com_chs.iso" target="_blank" rel="noopener">vs2015离线安装包</a><br>  <a href="ed2k://|file|cn_visual_studio_enterprise_2015_with_update_3_x86_x64_dvd_8923298.iso|7787208704|A1C1D2AFBC09D8778C92CF19DEC8F4F4|/" target="_blank" rel="noopener">离线安装包-国内</a></p>
-<p>安装大概需要80分钟左右</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/02/06/python-error-notes/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2201,7 +2205,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">164</span>
+                    <span class="site-state-item-count">168</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
