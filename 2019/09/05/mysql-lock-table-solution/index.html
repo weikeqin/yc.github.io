@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="前几天同事在晚上上线的时候执行sql语句造成锁表，想总结一下以避免后续发生。 (1)  遇到锁表快速解决办法　　依次执行1-6步，运行第6步生成的语句即可。 　　如果特别着急，运行 1  2  6 步 以及第6步生成的kill语句 即可。     1.　 第1步　查看表是否在使用。   show open tables where in_use &amp;gt; 0 ;如果查询结果为空。则证明表没有在">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-04T06:36:52.383Z">
+<meta property="og:updated_time" content="2020-05-19T01:37:39.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 锁表后快速解决方法 及 锁表原因">
 <meta name="twitter:description" content="前几天同事在晚上上线的时候执行sql语句造成锁表，想总结一下以避免后续发生。 (1)  遇到锁表快速解决办法　　依次执行1-6步，运行第6步生成的语句即可。 　　如果特别着急，运行 1  2  6 步 以及第6步生成的kill语句 即可。     1.　 第1步　查看表是否在使用。   show open tables where in_use &amp;gt; 0 ;如果查询结果为空。则证明表没有在">
@@ -154,7 +154,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      hm.src = "https://hm.baidu.com/hm.js?d1ad0ae2a9976c44d556abc07cda1365";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -498,17 +498,14 @@
 <p>　　如果特别着急，运行 1  2  6 步 以及第6步生成的kill语句 即可。  </p>
 <p>  1.　<strong> 第1步　查看表是否在使用。</strong></p>
 <blockquote>
-<p> <code>show open tables where in_use &gt; 0 ;</code><br>如果查询结果为空。则证明表没有在使用。结束。</p>
-</blockquote>
-<blockquote>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  show open tables where in_use &gt; 0 ;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p> <code>show open tables where in_use &gt; 0 ;</code><br>如果查询结果为空。则证明表没有在使用。结束。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  show open tables where in_use &gt; 0 ;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <blockquote>
 <p> 如果查询结果不为空，继续后续的步骤。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  show open tables where in_use &gt; 0 ;</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">| Database | Table | In_use | Name_locked |</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">| test     | t     |      1 |           0 |</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <p>2.　<strong> 第2步　查看数据库当前的进程，看一下有无正在执行的慢SQL记录线程。  </strong></p>
 <blockquote>
-<p> <code>show  processlist;</code></p>
+<p> <code>show  processlist;</code><br> show processlist 是显示用户正在运行的线程，需要注意的是，除了 root 用户能看到所有正在运行的线程外，其他用户都只能看到自己正在运行的线程，看不到其它用户正在运行的线程。<br> SHOW PROCESSLIST shows which threads are running. If you have the PROCESS privilege, you can see all threads. Otherwise, you can see only your own threads (that is, threads associated with the MySQL account that you are using). If you do not use the FULL keyword, only the first 100 characters of each statement are shown in the Info field.</p>
 </blockquote>
 <p>3.　<strong> 第3步　当前运行的所有事务  </strong></p>
 <blockquote>
@@ -520,10 +517,7 @@
 </blockquote>
 <p>5.　<strong> 第5步　锁等待的对应关系 </strong></p>
 <blockquote>
-<p><code>SELECT * FROM information_schema.INNODB_LOCK_waits;</code></p>
-</blockquote>
-<blockquote>
-<p> 看事务表INNODB_TRX，里面是否有正在锁定的事务线程，看看ID是否在show processlist里面的sleep线程中，如果是，就证明这个sleep的线程事务一直没有commit或者rollback而是卡住了，我们需要手动kill掉。<br> 搜索的结果是在事务表发现了很多任务，这时候最好都kill掉。</p>
+<p><code>SELECT * FROM information_schema.INNODB_LOCK_waits;</code><br> 看事务表INNODB_TRX，里面是否有正在锁定的事务线程，看看ID是否在show processlist里面的sleep线程中，如果是，就证明这个sleep的线程事务一直没有commit或者rollback而是卡住了，我们需要手动kill掉。<br> 搜索的结果是在事务表发现了很多任务，这时候最好都kill掉。</p>
 </blockquote>
 <p>6.　<strong> 第6步　批量删除事务表中的事务 </strong></p>
 <blockquote>
@@ -552,7 +546,14 @@
 <li>MDL中读写锁之间的互斥关系怎样的?</li>
 <li>如何安全的给小表增加字段?</li>
 </ol>
-<h1 id="2-复盘"><a href="#2-复盘" class="headerlink" title="(2) 复盘"></a>(2) 复盘</h1><p>  自己创建了一个测试的表<code>t</code>，插入了两条数据。然后手动构造锁表和死锁模拟。</p>
+<h1 id="2-复盘"><a href="#2-复盘" class="headerlink" title="(2) 复盘"></a>(2) 复盘</h1><blockquote>
+<p> 自己创建了一个测试的表<code>t</code>，插入了两条数据。然后手动构造锁表和死锁模拟。<br> 测试的时候用的root用户测试</p>
+</blockquote>
+<blockquote>
+<p> show processlist 是显示用户正在运行的线程，需要注意的是，除了 root 用户能看到所有正在运行的线程外，其他用户都只能看到自己正在运行的线程，看不到其它用户正在运行的线程。<br> SHOW PROCESSLIST shows which threads are running. If you have the PROCESS privilege, you can see all threads. Otherwise, you can see only your own threads (that is, threads associated with the MySQL account that you are using). If you do not use the FULL keyword, only the first 100 characters of each statement are shown in the Info field.</p>
+</blockquote>
+<blockquote>
+</blockquote>
 <h2 id="2-1-创建表t并插入2条数据"><a href="#2-1-创建表t并插入2条数据" class="headerlink" title="(2.1) 创建表t并插入2条数据"></a>(2.1) 创建表t并插入2条数据</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`t`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`c`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`t`</span> (<span class="keyword">id</span>, c)</span><br><span class="line"><span class="keyword">VALUES</span> </span><br><span class="line">(<span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">(<span class="number">2</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
 <h2 id="2-2-准备多个shell模拟锁表"><a href="#2-2-准备多个shell模拟锁表" class="headerlink" title="(2.2) 准备多个shell模拟锁表"></a>(2.2) 准备多个shell模拟锁表</h2><pre><code>可以看到我打开三个shell，用root创建了三个连接，分别是 15  40  41 
@@ -646,7 +647,7 @@
 </ol>
 <h2 id="4-4-转义导致死锁问题"><a href="#4-4-转义导致死锁问题" class="headerlink" title="(4.4) 转义导致死锁问题"></a>(4.4) 转义导致死锁问题</h2><p>前天在开发中，还遇到过一次死锁，是在一个批处理中，要删除1000条数据，5个线程，200条数据commit一次，<br>sol：delete from 表A where id =15426169754750004759008 STORAGEDB<br>(id是主键)<br>我同事解决了，说原因是id 是char 类型，但是没有加单引号，所以没有进入id索引中，然后锁表了，所以导致死锁。</p>
 <p>这个问题的出现，应该是人为只要并发导致锁冲突吧？但是为什么不加单引号会死锁，加了单引号就能正常跑呢？  </p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/dujianxiong/article/details/90770301" target="_blank" rel="noopener">Mysql 锁、事务强制手动kill/释放</a><br>[2] <a href="https://time.geekbang.org/column/article/74687" target="_blank" rel="noopener">19 | 为什么我只查一行的语句，也执行这么慢？MySQL实战45讲 </a><br>[3] <a href="https://time.geekbang.org/column/article/69862" target="_blank" rel="noopener">06 | 全局锁和表锁 ：给表加个字段怎么有这么多阻碍？MySQL实战45讲 </a><br>[4] <a href="https://time.geekbang.org/column/article/70215" target="_blank" rel="noopener">07 | 行锁功过：怎么减少行锁对性能的影响？MySQL实战45讲</a><br>[5] <a href="https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html" target="_blank" rel="noopener">mysql 5.7 lock-tables</a><br>[6] 《高性能MySQL》 O’REILLY</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/dujianxiong/article/details/90770301" target="_blank" rel="noopener">Mysql 锁、事务强制手动kill/释放</a><br>[2] <a href="https://time.geekbang.org/column/article/74687" target="_blank" rel="noopener">19 | 为什么我只查一行的语句，也执行这么慢？MySQL实战45讲 </a><br>[3] <a href="https://time.geekbang.org/column/article/69862" target="_blank" rel="noopener">06 | 全局锁和表锁 ：给表加个字段怎么有这么多阻碍？MySQL实战45讲 </a><br>[4] <a href="https://time.geekbang.org/column/article/70215" target="_blank" rel="noopener">07 | 行锁功过：怎么减少行锁对性能的影响？MySQL实战45讲</a><br>[5] <a href="https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html" target="_blank" rel="noopener">mysql 5.7 lock-tables</a><br>[6] 《高性能MySQL》 O’REILLY<br>[7] <a href="https://dev.mysql.com/doc/refman/5.7/en/show-open-tables.html" target="_blank" rel="noopener">mysql-show-open-tables</a><br>[8] <a href="https://dev.mysql.com/doc/refman/5.7/en/show-processlist.html" target="_blank" rel="noopener">mysql-show-processlist</a></p>
 <!--
 插入10万数据
 
@@ -859,7 +860,7 @@ wwwwwww           wwwww           wwwwwww eeeeeeeeeeee   iiiiiii       k:::::k  
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">168</span>
+                    <span class="site-state-item-count">171</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1173,9 +1174,7 @@ wwwwwww           wwwww           wwwwwww eeeeeeeeeeee   iiiiiii       k:::::k  
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-count">54</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1196,7 +1195,7 @@ wwwwwww           wwwww           wwwwwww eeeeeeeeeeee   iiiiiii       k:::::k  
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/weikeqin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               

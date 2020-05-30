@@ -152,7 +152,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      hm.src = "https://hm.baidu.com/hm.js?d1ad0ae2a9976c44d556abc07cda1365";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -370,6 +370,562 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/07/08/software-engineer-knowledge/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/08/software-engineer-knowledge/" itemprop="url">
+                  leetcode 笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-08 09:46:27" itemprop="dateCreated datePublished" datetime="2018-07-08T09:46:27+08:00">2018-07-08</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/07/08/software-engineer-knowledge/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/07/08/software-engineer-knowledge/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/07/08/software-engineer-knowledge/" class="leancloud_visitors" data-flag-title="leetcode 笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>  前一段时间面试的时候接面试官会问很多算法，解决他们公司实际的业务问题，然后会引导你找到比较好，时间复杂度或者空间复杂度比较小的解。这些算法中，有些知道，有些不知道，然后在面试过程中了解到一些算法的实际应用场景。感觉学到的东西用到实际生活了，特别开心。<br>  在解决实际问题的时候发现，转化问题的能力很重要，数据结构很重要。希望可以不断累积，同时把学过的分享给大家，欢迎大家指正，交流。</p>
+<h1 id="最大连续子序列和"><a href="#最大连续子序列和" class="headerlink" title="最大连续子序列和"></a>最大连续子序列和</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>  给定K个整数的序列{ N1, N2, …, NK }，其任意连续子序列可表示为{ Ni, Ni+1, …, Nj }，其中 1 &lt;= i &lt;= j &lt;= K。<br>  最大连续子序列是所有连续子序中元素和最大的一个。求最大连续子序列之和<br>  例如给定序列{-2, 11, -4, 13, -5, -2}，其最大连续子序列为{11, -4, 13}，最大和为20。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li><p>暴力破解 尝试列举出所有的子序列，然后找出其中最大连续子序列 </p>
+<pre><code>时间复杂度 O(n^2)
+</code></pre></li>
+<li><p>分治法   分而治之 </p>
+<pre><code>时间复杂度 O(nlogn)
+</code></pre></li>
+<li><p>动态规划 根据子序列之和判断当前子序列是否加下一个元素，是否是最大子序列</p>
+<pre><code>时间复杂度 O(n)
+</code></pre></li>
+</ol>
+<p>参考文章 <a href="https://blog.csdn.net/sgbfblog/article/details/8032464" target="_blank" rel="noopener">最大连续子序列和</a></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/08/software-engineer-knowledge/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/06/04/tf-idf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/04/tf-idf/" itemprop="url">
+                  tf-idf
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-04 22:21:16" itemprop="dateCreated datePublished" datetime="2018-06-04T22:21:16+08:00">2018-06-04</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/04/tf-idf/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/06/04/tf-idf/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/06/04/tf-idf/" class="leancloud_visitors" data-flag-title="tf-idf">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>  tf-idf的具体实现，代码稍后上传到github</p>
+<p>  在进行文本特征选择的时候，有很多种方法，tf-idf是比较简单常用的一种。<br>  tf-idf选择出的是有区分度的词，对选特征词有很大的帮助。</p>
+<p>  TF-IDF（term frequency–inverse document frequency）是一种用于资讯检索与资讯探勘的常用加权技术。</p>
+<p>　TFIDF的主要思想是：如果某个词或短语在一篇文章中出现的频率TF高，并且在其他文章中很少出现，则认为此词或者短语具有很好的类别区分能力，适合用来分类。</p>
+<p>  假如一篇文件的总词语数是100个，而词语”蜜蜂”出现了3次，那么”蜜蜂”一词在该文件中的词频就是3/100=0.03。<br>  一个计算文件频率 (DF) 的方法是测定有多少份文件出现过”蜜蜂”一词，然后除以文件集里包含的文件总数。<br>  所以，如果”蜜蜂”一词在2份文件出现过，而文件总数是8份的话，其逆向文件频率就是 lg(8/2)=2。最后的TF-IDF的分数为 0.03 * 2 = 0.06。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/04/tf-idf/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/06/01/sort-algorithm-comparison/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/01/sort-algorithm-comparison/" itemprop="url">
+                  常用排序算法比较
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-06-01 17:24:19" itemprop="dateCreated datePublished" datetime="2018-06-01T17:24:19+08:00">2018-06-01</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/06/01/sort-algorithm-comparison/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/06/01/sort-algorithm-comparison/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/06/01/sort-algorithm-comparison/" class="leancloud_visitors" data-flag-title="常用排序算法比较">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>  在比较排序算法时，得先找一个标准比较，一般都使用时间复杂度和空间复杂度来衡量。</p>
+<p>  排序算法<br>　根据排序过程中使用的存储器不同，排序算法分为 内部排序 和 外部排序 两大类。<br>　　内部排序指的是待排序记录存放在计算机随机存储器中进行的排序过程<br>　　外部排序指的在排序过程中尚需对外村进行访问的排序过程</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 交换数组元素</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> array</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> i</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> j</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> tmp = array[i];</span><br><span class="line">	array[i] = array[j];</span><br><span class="line">	array[j] = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 交换数组元素</span></span><br><span class="line"><span class="comment"> *    用了一个巧妙的方法，不需要临时变量</span></span><br><span class="line"><span class="comment"> *    不足之处，就是当数组中的arr[a]+arr[b]的值大于int的最大值时，计算结果会溢出。导致arr[a]和arr[b]的值错误。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> b</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">	arr[a] = arr[a] + arr[b];</span><br><span class="line">	arr[b] = arr[a] - arr[b];</span><br><span class="line">	arr[a] = arr[a] - arr[b];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 交换数组元素</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> a</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> b</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    arr[a] ^= arr[b];</span><br><span class="line">    arr[b] ^= arr[a];</span><br><span class="line">    arr[a] ^= arr[b];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/01/sort-algorithm-comparison/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/16/canal-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -472,33 +1028,31 @@
 
       
         
-          
-            <h1 id="1-配置MySQL"><a href="#1-配置MySQL" class="headerlink" title="(1) 配置MySQL"></a>(1) 配置MySQL</h1><h2 id="1-1-修改MySQL配置文件"><a href="#1-1-修改MySQL配置文件" class="headerlink" title="(1.1) 修改MySQL配置文件"></a>(1.1) 修改MySQL配置文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]  </span><br><span class="line">log-bin=mysql-bin </span><br><span class="line">binlog-format=ROW </span><br><span class="line">server_id=1</span><br></pre></td></tr></table></figure>
-<h2 id="1-2-MySQL添加对应用户"><a href="#1-2-MySQL添加对应用户" class="headerlink" title="(1.2) MySQL添加对应用户"></a>(1.2) MySQL添加对应用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">CREATE USER canal IDENTIFIED BY &apos;canal&apos;;    </span><br><span class="line"></span><br><span class="line">GRANT SELECT, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO &apos;canal&apos;@&apos;%&apos;;  </span><br><span class="line"></span><br><span class="line">FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
-<h2 id="1-3-校验用户对应权限"><a href="#1-3-校验用户对应权限" class="headerlink" title="(1.3) 校验用户对应权限"></a>(1.3) 校验用户对应权限</h2><p>  1、 <code>show master status ;</code><br>      如果正常显示binlog，则没问题，如果提示 <code>Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation</code> ，则没有对应 REPLICATION CLIENT 权限</p>
-<p>  2、 <code>show slave status ;</code><br>      如果提示 <code>Access denied; you need (at least one of) the REPLICATION SLAVE privilege(s) for this operation</code> ，则没有对应 REPLICATION SLAVE 权限</p>
-<h1 id="2-启动canal"><a href="#2-启动canal" class="headerlink" title="(2) 启动canal"></a>(2) 启动canal</h1><p>  执行 <code>./bin/startup.sh</code> 即可启动</p>
-<h2 id="2-1-canal启动时canal-log"><a href="#2-1-canal启动时canal-log" class="headerlink" title="(2.1) canal启动时canal.log"></a>(2.1) canal启动时canal.log</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2018-07-23 20:27:47.576 [main] INFO  com.alibaba.otter.canal.deployer.CanalLauncher - ## the canal server is running now ......</span><br><span class="line">2018-07-23 20:27:47.721 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx1 successful.</span><br><span class="line">2018-07-23 20:27:47.802 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx2 successful.</span><br><span class="line">2018-07-23 20:27:47.862 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx3 successful.</span><br><span class="line">2018-07-23 20:27:47.921 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx4 successful.</span><br><span class="line">2018-07-23 20:27:47.987 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx5 successful.</span><br><span class="line">2018-07-23 20:27:48.044 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx6 successful.</span><br><span class="line">2018-07-23 20:27:48.094 [canal-instance-scan-0] INFO  c.a.o.canal.deployer.monitor.SpringInstanceConfigMonitor - auto notify start xxx7 successful.</span><br></pre></td></tr></table></figure>
-<h2 id="2-2-canal正常启动时对应的日志"><a href="#2-2-canal正常启动时对应的日志" class="headerlink" title="(2.2) canal正常启动时对应的日志"></a>(2.2) canal正常启动时对应的日志</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2018-07-23 20:27:47.429 [canal-instance-scan-0] INFO  c.a.o.c.i.spring.support.PropertyPlaceholderConfigurer - Loading properties file from class path resource [canal.properties]</span><br><span class="line">2018-07-23 20:27:47.436 [canal-instance-scan-0] INFO  c.a.o.c.i.spring.support.PropertyPlaceholderConfigurer - Loading properties file from class path resource [xxx/instance.properties]</span><br><span class="line">2018-07-23 20:27:47.444 [canal-instance-scan-0] WARN  org.springframework.beans.TypeConverterDelegate - PropertyEditor [com.sun.beans.editors.EnumEditor] found through deprecated global PropertyEditorManager fallback - consider using a more isolated form of registration, e.g. on the BeanWrapper/BeanFactory!</span><br><span class="line">2018-07-23 20:27:47.451 [canal-instance-scan-0] INFO  c.a.otter.canal.instance.spring.CanalInstanceWithSpring - start CannalInstance for 1-xxx </span><br><span class="line">2018-07-23 20:27:47.453 [canal-instance-scan-0] INFO  c.a.otter.canal.instance.core.AbstractCanalInstance - start successful....</span><br><span class="line">2018-07-23 20:27:47.666 [destination = xxx , address = /127.0.0.1:3306 , EventParser] WARN  c.a.otter.canal.parse.inbound.mysql.MysqlEventParser - prepare to find start position just show master status</span><br></pre></td></tr></table></figure>
-<h1 id="3-canal复制原理"><a href="#3-canal复制原理" class="headerlink" title="(3) canal复制原理"></a>(3) canal复制原理</h1><p> 复制如何工作，整体上来说，复制有3个步骤：</p>
-<p> (1) master将改变记录到二进制日志(binary log)中（这些记录叫做二进制日志事件，binary log events）；</p>
-<p> (2) slave将master的binary log events复制到它的中继日志(relay log)中；</p>
-<p> (3) slave读取中继日志中的事件，将其重放到备库数据之上。</p>
-<p>下图描述了复制的过程：</p>
-<p> <img src="/img/database/mysql/canal/canal_copy.jpg" alt="canal复制"></p>
-<h1 id="4-遇到的问题"><a href="#4-遇到的问题" class="headerlink" title="(4) 遇到的问题"></a>(4) 遇到的问题</h1><h2 id="4-1-Error-When-doing-Client-Authentication-ErrorPacket"><a href="#4-1-Error-When-doing-Client-Authentication-ErrorPacket" class="headerlink" title="(4.1) Error When doing Client Authentication:ErrorPacket"></a>(4.1) Error When doing Client Authentication:ErrorPacket</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.io.IOException: connect /127.0.0.1:3306 failure:java.io.IOException: Error When doing Client Authentication:ErrorPacket [errorNumber=1045, fieldCount=-1, message=Access denied for user &apos;canal&apos;@&apos;localhost&apos; (using password: YES), sqlState=28000, sqlStateMarker=#]</span><br><span class="line">	at com.alibaba.otter.canal.parse.driver.mysql.MysqlConnector.negotiate(MysqlConnector.java:208)</span><br><span class="line">	at com.alibaba.otter.canal.parse.driver.mysql.MysqlConnector.connect(MysqlConnector.java:71)</span><br><span class="line">	at com.alibaba.otter.canal.parse.inbound.mysql.MysqlConnection.connect(MysqlConnection.java:56)</span><br><span class="line">	at com.alibaba.otter.canal.parse.inbound.mysql.MysqlEventParser.preDump(MysqlEventParser.java:86)</span><br><span class="line">	at com.alibaba.otter.canal.parse.inbound.AbstractEventParser$3.run(AbstractEventParser.java:157)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br></pre></td></tr></table></figure>
-<p>  1、 用户名密码不正确</p>
-<h2 id="4-2-Access-denied-you-need-at-least-one-of-the-SUPER-REPLICATION-CLIENT-privilege-s-for-this-operation"><a href="#4-2-Access-denied-you-need-at-least-one-of-the-SUPER-REPLICATION-CLIENT-privilege-s-for-this-operation" class="headerlink" title="(4.2) Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation"></a>(4.2) Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR com.alibaba.otter.canal.common.alarm.LogAlarmHandler - destination:xx</span><br><span class="line">[com.alibaba.otter.canal.parse.exception.CanalParseException: command : &apos;show master status&apos; has an error!</span><br><span class="line">Caused by: java.io.IOException: ErrorPacket [errorNumber=1227, fieldCount=-1, message=Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation, sqlState=42000, sqlStateMarker=#]</span><br><span class="line"> with command: show master status</span><br></pre></td></tr></table></figure>
-<p>  用canal账户登录后发现可以查看对应数据库对应表的数据，但是 <code>show master status</code> 提示 Access denied; you need (at least one of) the SUPER, REPLICATION CLIENT privilege(s) for this operation</p>
-<p>  1、<code>instance.properties</code>配置文件里配置的用户没有REPLICATION权限<br>  2、canal instance.properties 配置错误<br>  3、配置文件里用户名密码不正确<br>  4、MySQL对应用户不存在<br>  5、MySQL配置不对</p>
-<p>  给canal用户对应的replication权限<br>  <code>grant replication client on *.*  to &#39;canal&#39;@&#39;%&#39;;</code><br>  <code>flush privileges</code></p>
-<h2 id="4-3-Access-denied-you-need-at-least-one-of-the-REPLICATION-SLAVE-privilege-s-for-this-operation"><a href="#4-3-Access-denied-you-need-at-least-one-of-the-REPLICATION-SLAVE-privilege-s-for-this-operation" class="headerlink" title="(4.3) Access denied; you need (at least one of) the REPLICATION SLAVE privilege(s) for this operation"></a>(4.3) Access denied; you need (at least one of) the REPLICATION SLAVE privilege(s) for this operation</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[destination = xxx , address = /127.0.0.1:3306 , EventParser] ERROR com.alibaba.otter.canal.common.alarm.LogAlarmHandler - destination:xx[java.io.IOException: Received error packet: errno = 1227, sqlstate = 42000 errmsg = Access denied; you need (at least one of) the REPLICATION SLAVE privilege(s) for this operation</span><br><span class="line">	at com.alibaba.otter.canal.parse.inbound.mysql.dbsync.DirectLogFetcher.fetch(DirectLogFetcher.java:95)</span><br></pre></td></tr></table></figure>
-<p>REPLICATION SLAVE 常用于建立复制时所需要用到的用户权限，也就是slave server必须被master server授权具有该权限的用户，才能通过该用户复制。<br>并且”SHOW SLAVE HOSTS”这条命令和REPLICATION SLAVE权限有关，否则执行时会报错：</p>
-<p>REPLICATION CLIENT 不可用于建立复制，有该权限时，只是多了可以使用如”SHOW SLAVE STATUS”、”SHOW MASTER STATUS”等命令。<br>在5.6.6版本以后，也可以使用”SHOW BINARY LOGS”。</p>
-<p>  权限问题<br>  <code>GRANT REPLICATION SLAVE ON *.* TO &#39;canal&#39;@&#39;%&#39;</code><br>  <code>flush privileges</code></p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://github.com/alibaba/canal/wiki/AdminGuide" target="_blank" rel="noopener">canal-AdminGuide</a><br>[2] <a href="https://blog.csdn.net/xiaozhou_web/article/details/79746928" target="_blank" rel="noopener">canal配置使用</a><br>[3] <a href="http://www.learnfuture.com/Extend/ArticleContent?id=02098a4c-4036-4264-a5ae-132fbf83b5b2" target="_blank" rel="noopener">Mysql 普通账户授权replication client后登录失败问题</a><br>[4] <a href="http://blog.itpub.net/29773961/viewspace-2127425/" target="_blank" rel="noopener">REPLICATION SLAVE 与 REPLICATION CLIENT 权限</a><br>[5] <a href="http://www.phpcompass.com/article-496.html" target="_blank" rel="noopener">对replication slave,replication client的一点说明</a><br>[6] <a href="https://dev.mysql.com/doc/refman/5.6/en/privileges-provided.html" target="_blank" rel="noopener">MySQL 5.6 Reference Manual – 6.2.1 Privileges Provided by MySQL</a></p>
-
-          
+          <blockquote>
+<p>使用canal前需要准备以下几个内容 </p>
+<ol>
+<li>安装配置MySQL<br> 1.1 安装 mysql，<br> 1.2 配置 mysql binlog使用ROW模式<br> 1.3 在MySQL添加对应的canal用户<br> 1.4 检查canal用户生效</li>
+<li>下载canal并配置<br>2.1 下载canal<br>2.2 配置 canal<br>2.3 启动canal (需要JDK&gt;=1.6.25)</li>
+</ol>
+</blockquote>
+<h1 id="1-配置MySQL"><a href="#1-配置MySQL" class="headerlink" title="(1) 配置MySQL"></a>(1) 配置MySQL</h1><h2 id="1-1-安装MySQL"><a href="#1-1-安装MySQL" class="headerlink" title="(1.1) 安装MySQL"></a>(1.1) 安装MySQL</h2><blockquote>
+<p> 参考 <a href="https://dev.mysql.com/doc/refman/5.7/en/installing.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/installing.html</a> </p>
+</blockquote>
+<h2 id="1-2-修改MySQL配置文件"><a href="#1-2-修改MySQL配置文件" class="headerlink" title="(1.2) 修改MySQL配置文件"></a>(1.2) 修改MySQL配置文件</h2><blockquote>
+<p>canal的原理是基于mysql binlog技术，所以需要开启mysql的binlog写入功能，并且配置binlog模式为row.</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]  </span><br><span class="line"><span class="built_in">log</span>-bin=mysql-bin  <span class="comment"># 开启 binlog</span></span><br><span class="line">binlog-format=ROW  <span class="comment"># 选择 ROW 模式</span></span><br><span class="line">server_id=1        <span class="comment"># 配置 MySQL replaction ，不能和 canal 的 slaveId 重复</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-3-MySQL添加canal用户并授权"><a href="#1-3-MySQL添加canal用户并授权" class="headerlink" title="(1.3) MySQL添加canal用户并授权"></a>(1.3) MySQL添加canal用户并授权</h2><blockquote>
+<p>  canal的原理是模拟自己为mysql slave，所以需要mysql slave的相关权限 </p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> canal <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'canal'</span>;    </span><br><span class="line"></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>, <span class="keyword">REPLICATION</span> <span class="keyword">SLAVE</span>, <span class="keyword">REPLICATION</span> <span class="keyword">CLIENT</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'canal'</span>@<span class="string">'%'</span>;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">FLUSH</span> <span class="keyword">PRIVILEGES</span>;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/16/canal-notes/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1610,559 +2164,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/spring-question/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/20/spring-question/" itemprop="url">
-                  spring 常见面试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-20 09:31:39" itemprop="dateCreated datePublished" datetime="2018-04-20T09:31:39+08:00">2018-04-20</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/20/spring-question/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/20/spring-question/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/20/spring-question/" class="leancloud_visitors" data-flag-title="spring 常见面试题">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>为什么需要代理模式？<br>讲讲静态代理模式的优点及其瓶颈？<br>对Java 接口代理模式的实现原理的理解？<br>如何使用 Java 反射实现动态代理？<br>Java 接口代理模式的指定增强？<br>谈谈对Cglib 类增强动态代理的实现？<br>怎么理解面向切面编程的切面？<br>讲解OOP与AOP的简单对比？<br>讲解JDK 动态代理和 CGLIB 代理原理以及区别？<br>讲解Spring 框架中基于 Schema 的 AOP 实现原理？<br>讲解Spring 框架中如何基于 AOP 实现的事务管理？<br>谈谈对控制反转的设计思想的理解？<br>怎么理解 Spring IOC 容器？<br>Spring IOC 怎么管理 Bean 之间的依赖关系，怎么避免循环依赖？<br>对Spring IOC 容器的依赖注入的理解？<br>说说对Spring IOC 的单例模式和高级特性？<br>BeanFactory 和 FactoryBean 有什么区别？<br>BeanFactory 和 ApplicationContext 又有什么不同？<br>Spring 在 Bean 创建过程中是如何解决循环依赖的？<br>谈谈Spring Bean 创建过程中的设计模式？</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/jvm-question/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/20/jvm-question/" itemprop="url">
-                  jvm 常见面试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-20 09:31:31" itemprop="dateCreated datePublished" datetime="2018-04-20T09:31:31+08:00">2018-04-20</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/20/jvm-question/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/20/jvm-question/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/20/jvm-question/" class="leancloud_visitors" data-flag-title="jvm 常见面试题">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="1-Java-内存分配？"><a href="#1-Java-内存分配？" class="headerlink" title="(1) Java 内存分配？"></a>(1) Java 内存分配？</h1><p> 1)<br>  Java虚拟机在执行Java的过程中会把管理的内存划分为若干个不同的数据区域。这些区域有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，而有的区域则依赖线程的启动和结束而创建和销毁。<br>  程序计数器、java虚拟机栈、本地方法栈、堆、方法区、常量池<br>  <a href="https://blog.csdn.net/OyangYujun/article/details/41173747" target="_blank" rel="noopener">Java内存区域划分、内存分配原理</a>  </p>
-<p> 2)<br>  <a href="https://blog.csdn.net/shimiso/article/details/8595564" target="_blank" rel="noopener">Java 内存分配全面浅析</a>  </p>
-<h1 id="2-Java-堆的结构是什么样子的？"><a href="#2-Java-堆的结构是什么样子的？" class="headerlink" title="(2) Java 堆的结构是什么样子的？"></a>(2) Java 堆的结构是什么样子的？</h1><p>  站在垃圾收集器的角度来看，可以把内存分为新生代与老年代。</p>
-<h1 id="什么是堆中的永久代（Perm-Gen-space）"><a href="#什么是堆中的永久代（Perm-Gen-space）" class="headerlink" title="什么是堆中的永久代（Perm Gen space）?"></a>什么是堆中的永久代（Perm Gen space）?</h1><h1 id="说说各个区域的作用？"><a href="#说说各个区域的作用？" class="headerlink" title="说说各个区域的作用？"></a>说说各个区域的作用？</h1><p>  程序计数器<br>  java虚拟机栈<br>  本地方法栈<br>  堆<br>  方法区<br>  常量池</p>
-<h1 id="Java-中会存在内存泄漏吗，简述一下？"><a href="#Java-中会存在内存泄漏吗，简述一下？" class="headerlink" title="Java 中会存在内存泄漏吗，简述一下？"></a>Java 中会存在内存泄漏吗，简述一下？</h1><p>  在 Java 中，内存泄漏就是存在一些被分配的对象，这些对象有下面两个特点，首先，这些对象是可达的，即在有向图中，存在通路可以与其相连（也就是说仍存在该内存对象的引用）；其次，这些对象是无用的，即程序以后不会再使用这些对象。如果对象满足这两个条件，这些对象就可以判定为 Java 中的内存泄漏，这些对象不会被 GC 所回收，然而它却占用内存。</p>
-<h1 id="Java-类加载过程？"><a href="#Java-类加载过程？" class="headerlink" title="Java 类加载过程？"></a>Java 类加载过程？</h1><h1 id="描述一下-JVM-加载-Class-文件的原理机制"><a href="#描述一下-JVM-加载-Class-文件的原理机制" class="headerlink" title="描述一下 JVM 加载 Class 文件的原理机制?"></a>描述一下 JVM 加载 Class 文件的原理机制?</h1><h1 id="什么是类加载器？"><a href="#什么是类加载器？" class="headerlink" title="什么是类加载器？"></a>什么是类加载器？</h1><h1 id="类加载器有哪些？"><a href="#类加载器有哪些？" class="headerlink" title="类加载器有哪些？"></a>类加载器有哪些？</h1><h1 id="什么是tomcat类加载机制？"><a href="#什么是tomcat类加载机制？" class="headerlink" title="什么是tomcat类加载机制？"></a>什么是tomcat类加载机制？</h1><h1 id="类加载器双亲委派模型机制？"><a href="#类加载器双亲委派模型机制？" class="headerlink" title="类加载器双亲委派模型机制？"></a>类加载器双亲委派模型机制？</h1><h1 id="什么是GC-为什么要有-GC？"><a href="#什么是GC-为什么要有-GC？" class="headerlink" title="什么是GC? 为什么要有 GC？"></a>什么是GC? 为什么要有 GC？</h1><h1 id="简述一下Java-垃圾回收机制？"><a href="#简述一下Java-垃圾回收机制？" class="headerlink" title="简述一下Java 垃圾回收机制？"></a>简述一下Java 垃圾回收机制？</h1><h1 id="如何判断一个对象是否存活？"><a href="#如何判断一个对象是否存活？" class="headerlink" title="如何判断一个对象是否存活？"></a>如何判断一个对象是否存活？</h1><h1 id="垃圾回收的优点和原理，并考虑-2-种回收机制？"><a href="#垃圾回收的优点和原理，并考虑-2-种回收机制？" class="headerlink" title="垃圾回收的优点和原理，并考虑 2 种回收机制？"></a>垃圾回收的优点和原理，并考虑 2 种回收机制？</h1><h1 id="垃圾回收器的基本原理是什么？"><a href="#垃圾回收器的基本原理是什么？" class="headerlink" title="垃圾回收器的基本原理是什么？"></a>垃圾回收器的基本原理是什么？</h1><h1 id="垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？"><a href="#垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？" class="headerlink" title="垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？"></a>垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？</h1><h1 id="深拷贝和浅拷贝？"><a href="#深拷贝和浅拷贝？" class="headerlink" title="深拷贝和浅拷贝？"></a>深拷贝和浅拷贝？</h1><h1 id="System-gc-和-Runtime-gc-会做些什么？"><a href="#System-gc-和-Runtime-gc-会做些什么？" class="headerlink" title="System.gc() 和 Runtime.gc() 会做些什么？"></a>System.gc() 和 Runtime.gc() 会做些什么？</h1><h1 id="什么是分布式垃圾回收（DGC）？它是如何工作的？"><a href="#什么是分布式垃圾回收（DGC）？它是如何工作的？" class="headerlink" title="什么是分布式垃圾回收（DGC）？它是如何工作的？"></a>什么是分布式垃圾回收（DGC）？它是如何工作的？</h1><h1 id="串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？"><a href="#串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？" class="headerlink" title="串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？"></a>串行（serial）收集器和吞吐量（throughput）收集器的区别是什么？</h1><h1 id="在-Java-中，对象什么时候可以被垃圾回收？"><a href="#在-Java-中，对象什么时候可以被垃圾回收？" class="headerlink" title="在 Java 中，对象什么时候可以被垃圾回收？"></a>在 Java 中，对象什么时候可以被垃圾回收？</h1><h1 id="简述Minor-GC-和-Major-GC？"><a href="#简述Minor-GC-和-Major-GC？" class="headerlink" title="简述Minor GC 和 Major GC？"></a>简述Minor GC 和 Major GC？</h1><h1 id="Java-中垃圾收集的方法有哪些？"><a href="#Java-中垃圾收集的方法有哪些？" class="headerlink" title="Java 中垃圾收集的方法有哪些？"></a>Java 中垃圾收集的方法有哪些？</h1><h1 id="讲讲你理解的性能评价及测试指标？"><a href="#讲讲你理解的性能评价及测试指标？" class="headerlink" title="讲讲你理解的性能评价及测试指标？"></a>讲讲你理解的性能评价及测试指标？</h1><h1 id="常用的性能优化方式有哪些？"><a href="#常用的性能优化方式有哪些？" class="headerlink" title="常用的性能优化方式有哪些？"></a>常用的性能优化方式有哪些？</h1><h1 id="说说分布式缓存和一致性哈希？"><a href="#说说分布式缓存和一致性哈希？" class="headerlink" title="说说分布式缓存和一致性哈希？"></a>说说分布式缓存和一致性哈希？</h1><h1 id="同步与异步？阻塞与非阻塞？"><a href="#同步与异步？阻塞与非阻塞？" class="headerlink" title="同步与异步？阻塞与非阻塞？"></a>同步与异步？阻塞与非阻塞？</h1><h1 id="什么是GC调优？"><a href="#什么是GC调优？" class="headerlink" title="什么是GC调优？"></a>什么是GC调优？</h1><h1 id="常见异步的手段有哪些？"><a href="#常见异步的手段有哪些？" class="headerlink" title="常见异步的手段有哪些？"></a>常见异步的手段有哪些？</h1><p>内存模型以及分区，每个区放什么<br>一个对象从创建到销毁都是怎么在这些部分里存活和转移的<br>内存的哪些部分会参与GC的回收，回收策略是什么<br>Java的内存模型是怎么设计的，为什么要这么设计<br>结合内存模型的设计谈谈volatile关键字的作用</p>
-<p>深入Java虚拟机的内存结构<br>Java底层字节码分析<br>类加载机制详细讲解<br>个内存区域垃圾回收机制<br>深入讲解垃圾收集器<br>JDK调优工具</p>
-<p>1、什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”？</p>
-<p>2、Java代码是怎么运行的？</p>
-<p>3、Java虚拟机是如何加载Java类的?</p>
-<p>4、JVM运行内存的分类</p>
-<p>5、如何监控和诊断JVM堆内和堆外内存使用？</p>
-<p>6、Java四引用是什么？</p>
-<p>7、如何理解JVM内置的编译或GC日志？</p>
-<p>8、JVM的永久代中会发生垃圾回收么？</p>
-<p>9、Java中的两种异常类型是什么？他们有什么区别？</p>
-<p>10、JVM是如何实现同步的？</p>
-<p>11、Java内存模型是什么？</p>
-<p>12、即时编译器有哪些优化？</p>
-<p>13、在什么情况下重复读写操作会被优化？</p>
-<p>14、什么样的垃圾才被回收？</p>
-<p>15、什么时候会导致垃圾回收？</p>
-<p>16、如何利用JFR和JMC监控Java程序？</p>
-<p>17、如何利用Unsafe API 绕开 JVM的控制？</p>
-<p>18、如何利用字节码注入为已有代码加料？</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/concurrent-question/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/20/concurrent-question/" itemprop="url">
-                  并发 常见面试题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2018-04-20 09:31:18" itemprop="dateCreated datePublished" datetime="2018-04-20T09:31:18+08:00">2018-04-20</time>
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/04/20/concurrent-question/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/04/20/concurrent-question/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/04/20/concurrent-question/" class="leancloud_visitors" data-flag-title="并发 常见面试题">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="什么是多线程并发和并行？"><a href="#什么是多线程并发和并行？" class="headerlink" title="什么是多线程并发和并行？"></a>什么是多线程并发和并行？</h1><h1 id="什么是线程安全问题？"><a href="#什么是线程安全问题？" class="headerlink" title="什么是线程安全问题？"></a>什么是线程安全问题？</h1><h1 id="什么是共享变量的内存可见性问题？"><a href="#什么是共享变量的内存可见性问题？" class="headerlink" title="什么是共享变量的内存可见性问题？"></a>什么是共享变量的内存可见性问题？</h1><h1 id="什么是Java中原子性操作？"><a href="#什么是Java中原子性操作？" class="headerlink" title="什么是Java中原子性操作？"></a>什么是Java中原子性操作？</h1><h1 id="什么是Java中的CAS操作-AtomicLong实现原理？"><a href="#什么是Java中的CAS操作-AtomicLong实现原理？" class="headerlink" title="什么是Java中的CAS操作,AtomicLong实现原理？"></a>什么是Java中的CAS操作,AtomicLong实现原理？</h1><h1 id="什么是Java指令重排序？"><a href="#什么是Java指令重排序？" class="headerlink" title="什么是Java指令重排序？"></a>什么是Java指令重排序？</h1><h1 id="Java中Synchronized关键字的内存语义是什么？"><a href="#Java中Synchronized关键字的内存语义是什么？" class="headerlink" title="Java中Synchronized关键字的内存语义是什么？"></a>Java中Synchronized关键字的内存语义是什么？</h1><h1 id="Java中Volatile关键字的内存语义是什么？"><a href="#Java中Volatile关键字的内存语义是什么？" class="headerlink" title="Java中Volatile关键字的内存语义是什么？"></a>Java中Volatile关键字的内存语义是什么？</h1><h1 id="什么是伪共享-为何会出现，以及如何避免？"><a href="#什么是伪共享-为何会出现，以及如何避免？" class="headerlink" title="什么是伪共享,为何会出现，以及如何避免？"></a>什么是伪共享,为何会出现，以及如何避免？</h1><h1 id="什么是可重入锁、乐观锁、悲观锁、公平锁、非公平锁、独占锁、共享锁？"><a href="#什么是可重入锁、乐观锁、悲观锁、公平锁、非公平锁、独占锁、共享锁？" class="headerlink" title="什么是可重入锁、乐观锁、悲观锁、公平锁、非公平锁、独占锁、共享锁？"></a>什么是可重入锁、乐观锁、悲观锁、公平锁、非公平锁、独占锁、共享锁？</h1><h1 id="讲讲ThreadLocal-的实现原理？"><a href="#讲讲ThreadLocal-的实现原理？" class="headerlink" title="讲讲ThreadLocal 的实现原理？"></a>讲讲ThreadLocal 的实现原理？</h1><h1 id="ThreadLocal-作为变量的线程隔离方式，其内部是如何做的？"><a href="#ThreadLocal-作为变量的线程隔离方式，其内部是如何做的？" class="headerlink" title="ThreadLocal 作为变量的线程隔离方式，其内部是如何做的？"></a>ThreadLocal 作为变量的线程隔离方式，其内部是如何做的？</h1><h1 id="说说InheritableThreadLocal-的实现原理？"><a href="#说说InheritableThreadLocal-的实现原理？" class="headerlink" title="说说InheritableThreadLocal 的实现原理？"></a>说说InheritableThreadLocal 的实现原理？</h1><h1 id="InheritableThreadLocal-是如何弥补-ThreadLocal-不支持继承的特性？"><a href="#InheritableThreadLocal-是如何弥补-ThreadLocal-不支持继承的特性？" class="headerlink" title="InheritableThreadLocal 是如何弥补 ThreadLocal 不支持继承的特性？"></a>InheritableThreadLocal 是如何弥补 ThreadLocal 不支持继承的特性？</h1><h1 id="CyclicBarrier内部的实现与-CountDownLatch-有何不同？"><a href="#CyclicBarrier内部的实现与-CountDownLatch-有何不同？" class="headerlink" title="CyclicBarrier内部的实现与 CountDownLatch 有何不同？"></a>CyclicBarrier内部的实现与 CountDownLatch 有何不同？</h1><h1 id="随机数生成器-Random-类如何使用-CAS-算法保证多线程下新种子的唯一性？"><a href="#随机数生成器-Random-类如何使用-CAS-算法保证多线程下新种子的唯一性？" class="headerlink" title="随机数生成器 Random 类如何使用 CAS 算法保证多线程下新种子的唯一性？"></a>随机数生成器 Random 类如何使用 CAS 算法保证多线程下新种子的唯一性？</h1><h1 id="ThreadLocalRandom-是如何利用-ThreadLocal-的原理来解决-Random-的局限性？"><a href="#ThreadLocalRandom-是如何利用-ThreadLocal-的原理来解决-Random-的局限性？" class="headerlink" title="ThreadLocalRandom 是如何利用 ThreadLocal 的原理来解决 Random 的局限性？"></a>ThreadLocalRandom 是如何利用 ThreadLocal 的原理来解决 Random 的局限性？</h1><h1 id="Spring-框架中如何使用-ThreadLocal-实现-request-scope-作用域-Bean？"><a href="#Spring-框架中如何使用-ThreadLocal-实现-request-scope-作用域-Bean？" class="headerlink" title="Spring 框架中如何使用 ThreadLocal 实现 request scope 作用域 Bean？"></a>Spring 框架中如何使用 ThreadLocal 实现 request scope 作用域 Bean？</h1><h1 id="并发包中锁的实现底层（对AQS的理解）？"><a href="#并发包中锁的实现底层（对AQS的理解）？" class="headerlink" title="并发包中锁的实现底层（对AQS的理解）？"></a>并发包中锁的实现底层（对AQS的理解）？</h1><h1 id="讲讲独占锁-ReentrantLock-原理？"><a href="#讲讲独占锁-ReentrantLock-原理？" class="headerlink" title="讲讲独占锁 ReentrantLock 原理？"></a>讲讲独占锁 ReentrantLock 原理？</h1><h1 id="谈谈读写锁-ReentrantReadWriteLock-原理？"><a href="#谈谈读写锁-ReentrantReadWriteLock-原理？" class="headerlink" title="谈谈读写锁 ReentrantReadWriteLock 原理？"></a>谈谈读写锁 ReentrantReadWriteLock 原理？</h1><h1 id="StampedLock-锁原理的理解？"><a href="#StampedLock-锁原理的理解？" class="headerlink" title="StampedLock 锁原理的理解？"></a>StampedLock 锁原理的理解？</h1><h1 id="谈下对基于链表的非阻塞无界队列-ConcurrentLinkedQueue-原理的理解？"><a href="#谈下对基于链表的非阻塞无界队列-ConcurrentLinkedQueue-原理的理解？" class="headerlink" title="谈下对基于链表的非阻塞无界队列 ConcurrentLinkedQueue 原理的理解？"></a>谈下对基于链表的非阻塞无界队列 ConcurrentLinkedQueue 原理的理解？</h1><h1 id="ConcurrentLinkedQueue-内部是如何使用-CAS-非阻塞算法来保证多线程下入队出队操作的线程安全？"><a href="#ConcurrentLinkedQueue-内部是如何使用-CAS-非阻塞算法来保证多线程下入队出队操作的线程安全？" class="headerlink" title="ConcurrentLinkedQueue 内部是如何使用 CAS 非阻塞算法来保证多线程下入队出队操作的线程安全？"></a>ConcurrentLinkedQueue 内部是如何使用 CAS 非阻塞算法来保证多线程下入队出队操作的线程安全？</h1><h1 id="基于链表的阻塞队列-LinkedBlockingQueue-原理。"><a href="#基于链表的阻塞队列-LinkedBlockingQueue-原理。" class="headerlink" title="基于链表的阻塞队列 LinkedBlockingQueue 原理。"></a>基于链表的阻塞队列 LinkedBlockingQueue 原理。</h1><h1 id="阻塞队列LinkedBlockingQueue-内部是如何使用两个独占锁-ReentrantLock-以及对应的条件变量保证多线程先入队出队操作的线程安全？"><a href="#阻塞队列LinkedBlockingQueue-内部是如何使用两个独占锁-ReentrantLock-以及对应的条件变量保证多线程先入队出队操作的线程安全？" class="headerlink" title="阻塞队列LinkedBlockingQueue 内部是如何使用两个独占锁 ReentrantLock 以及对应的条件变量保证多线程先入队出队操作的线程安全？"></a>阻塞队列LinkedBlockingQueue 内部是如何使用两个独占锁 ReentrantLock 以及对应的条件变量保证多线程先入队出队操作的线程安全？</h1><h1 id="分析下JUC-中倒数计数器-CountDownLatch-的使用与原理？"><a href="#分析下JUC-中倒数计数器-CountDownLatch-的使用与原理？" class="headerlink" title="分析下JUC 中倒数计数器 CountDownLatch 的使用与原理？"></a>分析下JUC 中倒数计数器 CountDownLatch 的使用与原理？</h1><h1 id="CountDownLatch-与线程的-Join-方法区别是什么？"><a href="#CountDownLatch-与线程的-Join-方法区别是什么？" class="headerlink" title="CountDownLatch 与线程的 Join 方法区别是什么？"></a>CountDownLatch 与线程的 Join 方法区别是什么？</h1><h1 id="讲讲对JUC-中回环屏障-CyclicBarrier-的使用？"><a href="#讲讲对JUC-中回环屏障-CyclicBarrier-的使用？" class="headerlink" title="讲讲对JUC 中回环屏障 CyclicBarrier 的使用？"></a>讲讲对JUC 中回环屏障 CyclicBarrier 的使用？</h1><h1 id="CyclicBarrier内部的实现与-CountDownLatch-有何不同？-1"><a href="#CyclicBarrier内部的实现与-CountDownLatch-有何不同？-1" class="headerlink" title="CyclicBarrier内部的实现与 CountDownLatch 有何不同？"></a>CyclicBarrier内部的实现与 CountDownLatch 有何不同？</h1><h1 id="Semaphore-的内部实现是怎样的？"><a href="#Semaphore-的内部实现是怎样的？" class="headerlink" title="Semaphore 的内部实现是怎样的？"></a>Semaphore 的内部实现是怎样的？</h1><h1 id="并发组件CopyOnWriteArrayList-是如何通过写时拷贝实现并发安全的-List？"><a href="#并发组件CopyOnWriteArrayList-是如何通过写时拷贝实现并发安全的-List？" class="headerlink" title="并发组件CopyOnWriteArrayList 是如何通过写时拷贝实现并发安全的 List？"></a>并发组件CopyOnWriteArrayList 是如何通过写时拷贝实现并发安全的 List？</h1>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2205,7 +2211,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">168</span>
+                    <span class="site-state-item-count">171</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2519,9 +2525,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-count">54</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2542,7 +2546,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/weikeqin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               

@@ -113,14 +113,14 @@
 
 
   <meta name="description" content="Redis的各项功能解决了哪些问题？   先看一下Redis是一个什么东西。官方简介解释到：Redis是一个基于BSD开源的项目，是一个把结构化的数据放在内存中的一个存储系统，你可以把它作为数据库，缓存和消息中间件来使用。同时支持strings，lists，hashes，sets，sorted sets，bitmaps，hyperloglogs和geospatial indexes等数据类型。">
-<meta name="keywords" content="nosql,redis">
+<meta name="keywords" content="cache,redis">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis的各项功能解决了哪些问题">
 <meta property="og:url" content="http://weikeqin.com/2019/09/08/redis-solve-what-problem/index.html">
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="Redis的各项功能解决了哪些问题？   先看一下Redis是一个什么东西。官方简介解释到：Redis是一个基于BSD开源的项目，是一个把结构化的数据放在内存中的一个存储系统，你可以把它作为数据库，缓存和消息中间件来使用。同时支持strings，lists，hashes，sets，sorted sets，bitmaps，hyperloglogs和geospatial indexes等数据类型。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-17T13:57:26.573Z">
+<meta property="og:updated_time" content="2020-05-30T14:45:55.787Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis的各项功能解决了哪些问题">
 <meta name="twitter:description" content="Redis的各项功能解决了哪些问题？   先看一下Redis是一个什么东西。官方简介解释到：Redis是一个基于BSD开源的项目，是一个把结构化的数据放在内存中的一个存储系统，你可以把它作为数据库，缓存和消息中间件来使用。同时支持strings，lists，hashes，sets，sorted sets，bitmaps，hyperloglogs和geospatial indexes等数据类型。">
@@ -154,7 +154,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      hm.src = "https://hm.baidu.com/hm.js?d1ad0ae2a9976c44d556abc07cda1365";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -498,6 +498,11 @@
 <p> 先看一下Redis是一个什么东西。官方简介解释到：Redis是一个基于BSD开源的项目，是一个把结构化的数据放在内存中的一个存储系统，你可以把它作为数据库，缓存和消息中间件来使用。同时支持strings，lists，hashes，sets，sorted sets，bitmaps，hyperloglogs和geospatial indexes等数据类型。它还内建了复制，lua脚本，LRU，事务等功能，通过redis sentinel实现高可用，通过redis cluster实现了自动分片。以及事务，发布/订阅，自动故障转移等等。</p>
 </blockquote>
 <a id="more"></a>
+<p>  Zset、发布订阅、消息队列、Redis的分布式锁、日志系统、消息队列、数据清洗</p>
+<p>redis常用5中value类型<br> String<br>    字符串   session<br>            uuid<br>            VFS in memory  (小文件)<br>    数值    限流器<br>           点击率<br>           统计<br>    bitmap  用户统计<br>                统计用户登陆天数<br>                统计当天活跃用户<br>                权限 (linux 文件权限)<br>            二进制<br> list<br>      有序放入<br>      同向  栈<br>      异向  队列<br>            数组</p>
+<pre><code>评论 分页 
+抢红包       
+</code></pre><p> hash<br> set<br> sorted set  实时排序 </p>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://mp.weixin.qq.com/s?__biz=MzAxNDMwMTMwMw==&amp;mid=2247492250&amp;idx=2&amp;sn=2adb0b7d865d49a4b314801021192760" target="_blank" rel="noopener">Redis 的各项功能解决了哪些问题？</a><br>[2] <a href="https://www.cnblogs.com/linianhui/p/what-problem-does-redis-solve.html" target="_blank" rel="noopener">Redis 的各项功能解决了哪些问题？</a></p>
 
       
@@ -519,7 +524,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/nosql/" rel="tag"># nosql</a>
+            <a href="/tags/cache/" rel="tag"># cache</a>
           
             <a href="/tags/redis/" rel="tag"># redis</a>
           
@@ -638,7 +643,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">168</span>
+                    <span class="site-state-item-count">171</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -952,9 +957,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-count">54</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -975,7 +978,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/weikeqin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               

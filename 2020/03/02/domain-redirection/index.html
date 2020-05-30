@@ -120,7 +120,7 @@
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。 在具体更换域名前的测试中，发现github.com还是比coding.net好用。  (1) 博客">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-03T05:18:53.342Z">
+<meta property="og:updated_time" content="2020-05-21T13:06:30.009Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="域名重定向 hexo博客更换域名">
 <meta name="twitter:description" content="在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。 在具体更换域名前的测试中，发现github.com还是比coding.net好用。  (1) 博客">
@@ -154,7 +154,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      hm.src = "https://hm.baidu.com/hm.js?d1ad0ae2a9976c44d556abc07cda1365";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -497,7 +497,7 @@
 <p> 在很长的一段时间里，使用的是多域名，主要有 weikeqin.cn  weikeqin.com，但是两个域名解析到的是同一个博客，想把 weikeqin.cn 的流量全部转到 weikeqin.com，因为有些时候 .cn 不如 .com 域名，在某个特殊的时候感觉特别明显。然后就有了这篇文章。<br> 在具体更换域名前的测试中，发现github.com还是比coding.net好用。<br><br></p>
 </blockquote>
 <h1 id="1-博客域名更换"><a href="#1-博客域名更换" class="headerlink" title="(1) 博客域名更换"></a>(1) 博客域名更换</h1><blockquote>
-<p> 域名的重定向的方法有 1.域名转发    2.301重定向    3.JS跳转<br> 方法一，域名注册商支持域名转发功能才行！国内的绝大部分域名注册商不支持。<br> 方法二，是Web 服务器给访问老域名的请求返回一个 301 或者 302，然后跳转到新域名上。 由于使用的是 github.com coding.net 的page服务，这个方法也不可行。<br> 方法三，使用js跳转。具体方法如下。</p>
+<p> 域名的重定向的方法有 1.域名转发    2.301重定向    3.JS跳转<br> 方法一，域名注册商支持域名转发功能才行！国内的绝大部分域名注册商不支持。<br> 方法二，是Web 服务器给访问老域名的请求返回一个 301 或者 302，然后跳转到新域名上。 如果转发前的域名和转发后的域名访问的都是中国大陆的服务器而且已经备案，可以直接通过域名解析配置 显性URL 301重定向。 由于使用的是 github.com coding.net 的page服务，解析到的不是中国大陆的服务器，这个方法也不可行。<br> 方法三，使用js跳转。具体方法如下。</p>
 </blockquote>
 <h2 id="1-1-index-html"><a href="#1-1-index-html" class="headerlink" title="(1.1) index.html"></a>(1.1) index.html</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>新域名 https://weikeqin.com<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span> 跳转中，访问新域名站点 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"https://weikeqin.com"</span> <span class="attr">target</span>=<span class="string">"_blank"</span>&gt;</span> https://weikeqin.com <span class="tag">&lt;/<span class="name">a</span>&gt;</span> <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"><span class="built_in">console</span>.log(<span class="string">"index.html"</span>)</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="javascript"><span class="built_in">window</span>.location.href = <span class="string">"https://weikeqin.com"</span>;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -521,7 +521,7 @@
 <p>  <a href="http://weikeqin.cn/2017/03/16/git-notes/" target="_blank" rel="noopener">http://weikeqin.cn/2017/03/16/git-notes/</a><br>  <a href="https://weikeqin.cn/2017/03/16/git-notes/" target="_blank" rel="noopener">https://weikeqin.cn/2017/03/16/git-notes/</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GET http://weikeqin.cn/2017/03/16/git-notes/ 404 (Not Found)</span><br><span class="line">/2017/03/16/git-notes/:1 A cookie associated with a cross-site resource at http://hm.baidu.com/ was set without the `SameSite` attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with `SameSite=None` and `Secure`. You can review cookies in developer tools under Application&gt;Storage&gt;Cookies and see more details at https://www.chromestatus.com/feature/5088147346030592 and https://www.chromestatus.com/feature/5633521622188032.</span><br><span class="line">/2017/03/16/git-notes/:1 A cookie associated with a cross-site resource at http://baidu.com/ was set without the `SameSite` attribute. A future release of Chrome will only deliver cookies with cross-site requests if they are set with `SameSite=None` and `Secure`. You can review cookies in developer tools under Application&gt;Storage&gt;Cookies and see more details at https://www.chromestatus.com/feature/5088147346030592 and https://www.chromestatus.com/feature/5633521622188032.</span><br><span class="line">Navigated to http://weikeqin.cn/2017/03/16/git-notes/</span><br><span class="line">VM62:7 404.html</span><br><span class="line">VM62:12 old_url = http://weikeqin.cn/2017/03/16/git-notes/</span><br><span class="line">VM62:13 new_url = http://weikeqin.com/2017/03/16/git-notes/</span><br><span class="line">Navigated to http://weikeqin.com/2017/03/16/git-notes/</span><br></pre></td></tr></table></figure>
 <p>  可以看到 weikeqin.cn 重定向到 weikeqin.com 了</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.jianshu.com/p/2c31cfb6c9b1" target="_blank" rel="noopener">Github Pages页面重定向到新网址，实现域名跳转</a><br>[2] <a href="https://github.com/HeTianCong/HeTianCong.github.io" target="_blank" rel="noopener">HeTianCong.github.io</a><br>[3] <a href="https://blog.meow.page/2019/04/08/setup-after-changing-my-hexo-blog-domain/" target="_blank" rel="noopener">在更换 hexo 博客的域名后需要做的配置工作</a><br>[4] <a href="https://github.com/weikeqin/weikeqin.cn.github.io" target="_blank" rel="noopener">weikeqin.cn.github.io</a><br>[5] <a href="https://stackoverflow.com/questions/9276817/301-redirect-for-site-hosted-at-github" target="_blank" rel="noopener">301-redirect-for-site-hosted-at-github</a><br>[6] <a href="https://stackoverflow.com/questions/5302663/permanent-redirect-from-github-gh-pages" target="_blank" rel="noopener">Permanent redirect from Github gh-pages</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.jianshu.com/p/2c31cfb6c9b1" target="_blank" rel="noopener">Github Pages页面重定向到新网址，实现域名跳转</a><br>[2] <a href="https://github.com/HeTianCong/HeTianCong.github.io" target="_blank" rel="noopener">HeTianCong.github.io</a><br>[3] <a href="https://blog.meow.page/2019/04/08/setup-after-changing-my-hexo-blog-domain/" target="_blank" rel="noopener">在更换 hexo 博客的域名后需要做的配置工作</a><br>[4] <a href="https://github.com/weikeqin/weikeqin.cn.github.io" target="_blank" rel="noopener">weikeqin.cn.github.io</a><br>[5] <a href="https://stackoverflow.com/questions/9276817/301-redirect-for-site-hosted-at-github" target="_blank" rel="noopener">301-redirect-for-site-hosted-at-github</a><br>[6] <a href="https://stackoverflow.com/questions/5302663/permanent-redirect-from-github-gh-pages" target="_blank" rel="noopener">Permanent redirect from Github gh-pages</a><br>[7] <a href="https://www.diebaosoft.com/3113.html" target="_blank" rel="noopener">网站域名301重定向的五大别样方法</a><br>[8] <a href="https://help.aliyun.com/knowledge_detail/29725.html?spm=5176.8208715.110.6.6d3a3cdaFZDqKd#h2-url-6" target="_blank" rel="noopener">云解析 DNS &gt; 操作指南 &gt; 解析记录管理 &gt; 添加解析记录 &gt; 添加解析记录 </a><br>[9] <a href="https://help.aliyun.com/knowledge_detail/39834.html" target="_blank" rel="noopener">云解析 DNS &gt; 操作指南 &gt; 解析生效测试方法</a></p>
 
       
     </div>
@@ -659,7 +659,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">168</span>
+                    <span class="site-state-item-count">171</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -973,9 +973,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-count">54</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -996,7 +994,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/weikeqin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               

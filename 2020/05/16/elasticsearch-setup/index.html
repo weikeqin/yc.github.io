@@ -112,18 +112,18 @@
 
 
 
-  <meta name="description" content="elasticsearch 配置笔记">
+  <meta name="description" content="elasticsearch 配置笔记 Elasticsearch has three configuration files:123elasticsearch.yml for configuring Elasticsearchjvm.options for configuring Elasticsearch JVM settingslog4j2.properties for configuri">
 <meta name="keywords" content="elasticsearch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="elasticsearch-setup">
 <meta property="og:url" content="http://weikeqin.com/2020/05/16/elasticsearch-setup/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="elasticsearch 配置笔记">
+<meta property="og:description" content="elasticsearch 配置笔记 Elasticsearch has three configuration files:123elasticsearch.yml for configuring Elasticsearchjvm.options for configuring Elasticsearch JVM settingslog4j2.properties for configuri">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-17T15:32:45.526Z">
+<meta property="og:updated_time" content="2020-05-30T14:43:48.058Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elasticsearch-setup">
-<meta name="twitter:description" content="elasticsearch 配置笔记">
+<meta name="twitter:description" content="elasticsearch 配置笔记 Elasticsearch has three configuration files:123elasticsearch.yml for configuring Elasticsearchjvm.options for configuring Elasticsearch JVM settingslog4j2.properties for configuri">
 
 
 
@@ -154,7 +154,7 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?d4a41cd2b759aa5c8e03c8d94cd23ed9";
+      hm.src = "https://hm.baidu.com/hm.js?d1ad0ae2a9976c44d556abc07cda1365";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -494,7 +494,32 @@
 
       
         <p>  elasticsearch 配置笔记</p>
+<p>Elasticsearch has three configuration files:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">elasticsearch.yml for configuring Elasticsearch</span><br><span class="line">jvm.options for configuring Elasticsearch JVM settings</span><br><span class="line">log4j2.properties for configuring Elasticsearch logging</span><br></pre></td></tr></table></figure></p>
+<h1 id="ES-Server-配置"><a href="#ES-Server-配置" class="headerlink" title="ES Server 配置"></a>ES Server 配置</h1><h2 id="ES-配置"><a href="#ES-配置" class="headerlink" title="ES 配置"></a>ES 配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#自动创建索引</span><br><span class="line">action.auto_create_index: .monitoring*,.watches,.triggered_watches,.watcher-history*,.ml*</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可重新加载配置<br> Just like the settings values in elasticsearch.yml, changes to the keystore contents are not automatically applied to the running Elasticsearch node. Re-reading settings requires a node restart. However, certain secure settings are marked as reloadable. </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">POST _nodes/reload_secure_settings</span><br><span class="line">POST _nodes/&lt;node_id&gt;/reload_secure_settings</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST &quot;localhost:9200/_nodes/reload_secure_settings?pretty&quot; -H &apos;Content-Type: application/json&apos; -d&apos;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;secure_settings_password&quot;: &quot;s3cr3t&quot; </span><br><span class="line">&#125;</span><br><span class="line">&apos;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
+<h2 id="jvm配置"><a href="#jvm配置" class="headerlink" title="jvm配置"></a>jvm配置</h2><p>  可以通过配置 <code>jvm.options文件 或</code>ES_JAVA_OPTS`环境变量配置es jvm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Xmx16g</span><br><span class="line">8-9:-Xmx20g</span><br></pre></td></tr></table></figure>
+<h2 id="ES日志配置"><a href="#ES日志配置" class="headerlink" title="ES日志配置"></a>ES日志配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">######## Server JSON ############################</span><br><span class="line">appender.rolling.type = RollingFile </span><br><span class="line">appender.rolling.name = rolling</span><br><span class="line">appender.rolling.fileName = $&#123;sys:es.logs.base_path&#125;$&#123;sys:file.separator&#125;$&#123;sys:es.logs.cluster_name&#125;_server.json </span><br><span class="line">appender.rolling.layout.type = ESJsonLayout </span><br><span class="line">appender.rolling.layout.type_name = server </span><br><span class="line">appender.rolling.filePattern = $&#123;sys:es.logs.base_path&#125;$&#123;sys:file.separator&#125;$&#123;sys:es.logs.cluster_name&#125;-%d&#123;yyyy-MM-dd&#125;-%i.json.gz </span><br><span class="line">appender.rolling.policies.type = Policies</span><br><span class="line">appender.rolling.policies.time.type = TimeBasedTriggeringPolicy </span><br><span class="line">appender.rolling.policies.time.interval = 1 </span><br><span class="line">appender.rolling.policies.time.modulate = true </span><br><span class="line">appender.rolling.policies.size.type = SizeBasedTriggeringPolicy </span><br><span class="line">appender.rolling.policies.size.size = 256MB </span><br><span class="line">appender.rolling.strategy.type = DefaultRolloverStrategy</span><br><span class="line">appender.rolling.strategy.fileIndex = nomax</span><br><span class="line">appender.rolling.strategy.action.type = Delete </span><br><span class="line">appender.rolling.strategy.action.basepath = $&#123;sys:es.logs.base_path&#125;</span><br><span class="line">appender.rolling.strategy.action.condition.type = IfFileName </span><br><span class="line">appender.rolling.strategy.action.condition.glob = $&#123;sys:es.logs.cluster_name&#125;-* </span><br><span class="line">appender.rolling.strategy.action.condition.nested_condition.type = IfAccumulatedFileSize </span><br><span class="line">appender.rolling.strategy.action.condition.nested_condition.exceeds = 2GB </span><br><span class="line">################################################</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 设置ES log级别</p>
+<ol>
+<li><code>-E logger.org.elasticsearch.transport=trace</code>  debug in single node </li>
+<li>修改 <code>elasticsearch.yml</code>  <code>logger.org.elasticsearch.transport: info</code>  es未启动时配置</li>
+<li>动态修改日志级别  dynamically need to adjust a logging level on an actively-running cluster.</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">PUT /_cluster/settings</span><br><span class="line">&#123;</span><br><span class="line">  &quot;transient&quot;: &#123;</span><br><span class="line">    &quot;logger.org.elasticsearch.transport&quot;: &quot;trace&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ol start="4">
+<li>修改 <code>log4j2.properties</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">logger.transport.name = org.elasticsearch.transport</span><br><span class="line">logger.transport.level = trace</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/setup.html</a><br>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/targz.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/targz.html</a><br>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html</a><br>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html</a><br>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/secure-settings.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/secure-settings.html</a><br>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/logging.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/logging.html</a><br>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/auditing-settings.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/auditing-settings.html</a><br>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-settings.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/ccr-settings.html</a><br>  <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-settings.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/elasticsearch/reference/current/ilm-settings.html</a></p>
 
       
@@ -553,6 +578,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/25/redis-data-types/" rel="prev" title="redis-data-types">
+                redis-data-types <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -629,7 +658,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">168</span>
+                    <span class="site-state-item-count">171</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -943,9 +972,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-count">54</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -966,7 +993,7 @@
             <div class="links-of-author motion-element">
               
                 <span class="links-of-author-item">
-                  <a href="https://github.com/wkq278276130" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  <a href="https://github.com/weikeqin" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
                   
                 </span>
               
@@ -1022,7 +1049,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ES-Server-配置"><span class="nav-number">1.</span> <span class="nav-text">ES Server 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ES-配置"><span class="nav-number">1.1.</span> <span class="nav-text">ES 配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jvm配置"><span class="nav-number">1.2.</span> <span class="nav-text">jvm配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ES日志配置"><span class="nav-number">1.3.</span> <span class="nav-text">ES日志配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
