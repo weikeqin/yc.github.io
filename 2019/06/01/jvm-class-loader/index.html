@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="首先问几个问题 JVM类加载机制解决了什么问题？ JVM类加载机制的过程？ Java的代码如果要加密不让别人获取到有什么办法？ Spring是怎么找到加了@Component等注解的类?   (1) JVM加载class过程  一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载(Loading)、验证(Verification)、准备(Preparation)、">
+<meta name="keywords" content="java,jvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM类加载机制">
+<meta property="og:url" content="http://weikeqin.com/2019/06/01/jvm-class-loader/index.html">
+<meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="首先问几个问题 JVM类加载机制解决了什么问题？ JVM类加载机制的过程？ Java的代码如果要加密不让别人获取到有什么办法？ Spring是怎么找到加了@Component等注解的类?   (1) JVM加载class过程  一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载(Loading)、验证(Verification)、准备(Preparation)、">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-06-05T14:34:17.118Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM类加载机制">
+<meta name="twitter:description" content="首先问几个问题 JVM类加载机制解决了什么问题？ JVM类加载机制的过程？ Java的代码如果要加密不让别人获取到有什么办法？ Spring是怎么找到加了@Component等注解的类?   (1) JVM加载class过程  一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载(Loading)、验证(Verification)、准备(Preparation)、">
+
+<link rel="canonical" href="http://weikeqin.com/2019/06/01/jvm-class-loader/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JVM类加载机制 | 沧海一粟</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113485469-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-113485469-1');
+      }
+    </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?d1ad0ae2a9976c44d556abc07cda1365";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">沧海一粟</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">天下事有难易乎？为之，则难者亦易矣；不为，则易者亦难矣。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="algolia-results">
+  <div id="algolia-stats"></div>
+  <div id="algolia-hits"></div>
+  <div id="algolia-pagination" class="algolia-pagination"></div>
+</div>
+
+      
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/weikeqin" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/06/01/jvm-class-loader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JVM类加载机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-01 12:52:34" itemprop="dateCreated datePublished" datetime="2019-06-01T12:52:34+08:00">2019-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-05 22:34:17" itemprop="dateModified" datetime="2020-06-05T22:34:17+08:00">2020-06-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/06/01/jvm-class-loader/" class="post-meta-item leancloud_visitors" data-flag-title="JVM类加载机制" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p> 首先问几个问题<br> JVM类加载机制解决了什么问题？<br> JVM类加载机制的过程？<br> Java的代码如果要加密不让别人获取到有什么办法？<br> Spring是怎么找到加了@Component等注解的类? </p>
+</blockquote>
+<h1 id="1-JVM加载class过程"><a href="#1-JVM加载class过程" class="headerlink" title="(1) JVM加载class过程"></a>(1) JVM加载class过程</h1><blockquote>
+<p> 一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载(Loading)、验证(Verification)、准备(Preparation)、解析(Resolution)、初始化(Initialization)、使用(Using)和卸载(Unloading)七个阶段。</p>
+<p> 其中验证、准备、解析三个部分统称为连接(Linking)。</p>
+<p> 加载、验证、准备、初始化和卸载这五个阶段的顺序是确定，而解析阶段则不一定：它在某些情况下可以在初始化阶段之后再开始。</p>
+</blockquote>
+<h2 id="1-1-加载"><a href="#1-1-加载" class="headerlink" title="(1.1) 加载"></a>(1.1) 加载</h2><blockquote>
+<p> 在加载阶段，Java虚拟机需要完成以下三件事情：</p>
+<ol>
+<li>通过一个类的全限定名来获取定义此类的二进制字节流。</li>
+<li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。</li>
+<li>在内存中生成一个代表这个类的 java.lang.Class 对象，作为方法区这个类的各种数据的访问入口。</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+<h2 id="1-2-验证"><a href="#1-2-验证" class="headerlink" title="(1.2) 验证"></a>(1.2) 验证</h2><blockquote>
+<p> 验证的目的是确保Class文件的字节流中包含的信息符合《Java虚拟机规范》的全部约束要求，并且不会危害虚拟机自身的安全。从整体上看，验证阶段大致上会完成下面四个阶段的检验动作：文件格式验证、元数据验证、字节码验证和符号引用验证。</p>
+</blockquote>
+<h3 id="1-2-1-文件格式验证"><a href="#1-2-1-文件格式验证" class="headerlink" title="(1.2.1) 文件格式验证"></a>(1.2.1) 文件格式验证</h3><blockquote>
+<p> 验证字节流是否符合Class文件格式的规范，并且能被当前版本的虚拟机处理，如：<br> 是否以魔数0xCAFEBABE开头<br> 主、次版本号是否在当前Java虚拟机接受范围之内<br> 常量池的常量中是否有不被支持的常量类型(检查常量tag标志)<br> 指向常量的各种索引值中是否有指向不存在的常量或不符合类型的常量<br> CONSTANT_Utf8_info型的常量中是否有不符合UTF-8编码的数据<br> Class文件中各个部分及文件本身是否有被删除的或附加的其他信息</p>
+</blockquote>
+<h3 id="1-2-2-元数据验证"><a href="#1-2-2-元数据验证" class="headerlink" title="(1.2.2) 元数据验证"></a>(1.2.2) 元数据验证</h3><blockquote>
+<p> 对字节码描述的信息进行语义分析，以保证其描述的信息符合《Java语言规范》的要求，如：</p>
+</blockquote>
+<blockquote>
+<p> 这个类是否有父类(除了java.lang.Object之外，所有的类都应当有父类)<br> 这个类的父类是否继承了不允许被继承的类(被final修饰的类)<br> 如果这个类不是抽象类，是否实现了其父类或接口之中要求实现的所有方法<br> 类中的字段、方法是否与父类产生矛盾(例如覆盖了父类的final字段，或者出现不符合规则的方法重载，例如方法参数都一致，但返回值类型却不同等)</p>
+</blockquote>
+<h3 id="1-2-3-字节码验证"><a href="#1-2-3-字节码验证" class="headerlink" title="(1.2.3) 字节码验证"></a>(1.2.3) 字节码验证</h3><blockquote>
+<p> 通过数据流分析和控制流分析，确定程序语义是合法的、符合逻辑的，如：</p>
+</blockquote>
+<p>保证任意时刻操作数栈的数据类型与指令代码序列都能配合工作，例如不会出现类似于“在操作栈放置了一个int类型的数据，使用时却按long类型来加载入本地变量表中”这样的情况<br>保证任何跳转指令都不会跳转到方法体以外的字节码指令上<br>保证方法体中的类型转换总是有效的，例如父类=子类对象是合法的，返回来就是非法的</p>
+<h3 id="1-2-4-符号引用验证"><a href="#1-2-4-符号引用验证" class="headerlink" title="(1.2.4) 符号引用验证"></a>(1.2.4) 符号引用验证</h3><blockquote>
+<p> 符号引用验证发生在虚拟机将符号引用转化为直接引用的时候，即解析阶段。主要目的是检查该类是否缺少或者被禁止访问它依赖的某些外部类、方法、字段等资源，如：<br> 符号引用中通过字符串描述的全限定名是否能找到对应的类<br> 在指定类中是否存在符合方法的字段描述符及简单名称所描述的方法和字段<br> 符号引用中的类、字段、方法的可访问性(private、protected、public、)是否可被当前类访问</p>
+</blockquote>
+<h2 id="1-3-准备"><a href="#1-3-准备" class="headerlink" title="(1.3) 准备"></a>(1.3) 准备</h2><blockquote>
+<p> 准备阶段是正式为类中定义的变量(即静态变量，被static修饰的变量)分配内存并设置类变量初始值的阶段，当类变量被final修饰时，在准备阶段就直接会被复制，不是使用初始值，如：</p>
+</blockquote>
+<blockquote>
+<p> public static int a = 123;<br> public static final int B = 123;<br> 在准备阶段a的值是0，B的值是123。</p>
+</blockquote>
+<blockquote>
+<p> 下面是，基本数据类型的初始值：<br>类型|默认值<br>—|—| int | 0 long | 0L byte | (byte)0 short | (short)0 char| ‘\u000’ float | 0.0f double | 0.0d boolean | false reference| null</p>
+</blockquote>
+<h2 id="1-4-解析"><a href="#1-4-解析" class="headerlink" title="(1.4) 解析"></a>(1.4) 解析</h2><blockquote>
+<p> 解析阶段是Java虚拟机将常量池内的符号引用替换为直接引用的过程。</p>
+</blockquote>
+<blockquote>
+<p> 符号引用(Symbolic References)：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能无歧义地定位到目标即可，引用的目标并不一定是已经加载到虚拟机内存当中的资源；<br> 直接引用(Direct References)：直接引用是可以直接指向目标的指针、相对偏移量或者是一个能间接定位到目标的句柄，如果有了直接引用，那引用的目标必定已经在虚拟机的内存中存在；</p>
+</blockquote>
+<p><br></p>
+<h2 id="1-5-初始化"><a href="#1-5-初始化" class="headerlink" title="(1.5) 初始化"></a>(1.5) 初始化</h2><p>初始化阶段就是执行<strong>类构造器 ()</strong>方法的过程，它是真正开始执行Java代码的阶段，比如给类属性赋真实的值。</p>
+<p>public static int a = 123;<br>在初始化阶段后，a的值才等于123。</p>
+<p>(1) 方法是由编译器自动收集类中的所有类变量(static变量)的赋值动作和静态语句块(static{}块)中的语句合并产生的，收集顺序是源文件中的代码顺序；<br>(2) 方法不是必须的，如果我们的源文件中没有静态语句块和静态属性的赋值，那么久不会有() 方法。<br>(3) 方法在多线程情况下会通过加锁的方式来保证同步，并且只会被执行一次<br>子类() 方法执行之前需要保证先执行父类的() 方法，所以Object类的() 方法是第一个执行的</p>
+<h2 id="1-5-使用"><a href="#1-5-使用" class="headerlink" title="(1.5) 使用"></a>(1.5) 使用</h2><h2 id="1-6-卸载"><a href="#1-6-卸载" class="headerlink" title="(1.6) 卸载"></a>(1.6) 卸载</h2><p><br></p>
+<h1 id="2-类加载器"><a href="#2-类加载器" class="headerlink" title="(2) 类加载器"></a>(2) 类加载器</h1><blockquote>
+<p> 对于任意一个类，都必须由加载它的类加载器和这个类本身一起共同确立其在Java虚拟机中的唯一性，每一个类加载器，都拥有一个独立的类名称空间。</p>
+</blockquote>
+<h2 id="2-1-类加载器类型"><a href="#2-1-类加载器类型" class="headerlink" title="(2.1) 类加载器类型"></a>(2.1) 类加载器类型</h2><p><strong> 启动类加载器(Bootstrap Class Loader) </strong></p>
+<blockquote>
+<p> 启动类加载器(Bootstrap Class Loader)：负责加载存放在lib目录，或者被-Xbootclasspath参数所指定的路径中存放的，而且是Java虚拟机能够识别的(按照文件名识别，如rt.jar、tools.jar，名字不符合的类库即使放在lib目录中也不会被加载)类库加载到虚拟机的内存中；</p>
+</blockquote>
+<p> <strong> 扩展类加载器(Extension Class Loader) </strong></p>
+<blockquote>
+<p> 扩展类加载器(Extension Class Loader)：这个类加载器是在类sun.misc.Launcher$ExtClassLoader中以Java代码的形式实现的。它负责加载\lib\ext目录中，或者被java.ext.dirs系统变量所指定的路径中所有的类库；</p>
+</blockquote>
+<p> <strong> 应用程序类加载器(Application Class Loader) </strong> </p>
+<blockquote>
+<p> 应用程序类加载器(Application Class Loader)：这个类加载器由sun.misc.Launcher$AppClassLoader来实现，也称为”系统类加载器”。它负责加载用户类路径(ClassPath)上所有的类库，开发者同样可以直接在代码中使用这个类加载器；</p>
+</blockquote>
+<h2 id="2-2-双亲委派模型"><a href="#2-2-双亲委派模型" class="headerlink" title="(2.2) 双亲委派模型"></a>(2.2) 双亲委派模型</h2><p>如图中展示的各种类加载器之间的层次关系被称为类加载器的“双亲委派模型(ParentsDelegation Model)”。双亲委派模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器。不过这里类加载器之间的父子关系一般不是以继承(Inheritance)的关系来实现的，而是通常使用组合(Composition)关系来复用父加载器的代码。</p>
+<p>双亲委派模型的工作过程是：所有类的加载都委托给父加载器去完成，当父加载器无法加载这个类的时候，子加载器才会尝试加载。</p>
+<p>双亲委派模型最大的好处就是Java中的类随着它的类加载器一起具备了一种带有优先级的层次关系，保证同一个类只会被一个加载器加载。</p>
+<h3 id="2-2-1-双亲委派模型的实现"><a href="#2-2-1-双亲委派模型的实现" class="headerlink" title="(2.2.1) 双亲委派模型的实现"></a>(2.2.1) 双亲委派模型的实现</h3><p>先检查请求加载的类型是否已经被加载过，若没有则调用父加载器的loadClass()方法，若父加载器为空则默认使用启动类加载器作为父加载器。假如父类加载器加载失败，抛出ClassNotFoundException异常的话，才调用自己的findClass()方法尝试进行加载。</p>
+<h3 id="2-2-2-破坏双亲委派模型"><a href="#2-2-2-破坏双亲委派模型" class="headerlink" title="(2.2.2) 破坏双亲委派模型"></a>(2.2.2) 破坏双亲委派模型</h3><blockquote>
+<p> 双亲委派模型主要出现过3次较大规模“被破坏”的情况：</p>
+</blockquote>
+<p>在1.2之前，由于实现自定义类加载器只有覆盖loadClass()方法，导致了双亲委派模型的破坏，在1.2之后引入了findClass()方法之后得以解决。<br>基础类型无法调用回用户的代码，如JNDI、JDBC、JCE、JAXB和JBI等，他们的接口定义是基础类型，但是他们的实现是各各厂商，这就导致了基础类型需要调用用户代码。后来引入线程上下文类加载器(Thread Context ClassLoader)得以解决。<br>双亲委派模型的第三次“被破坏”是由于用户对程序动态性的追求而导致的，这里所说的“动态性”指的是一些非常“热”门的名词：代码热替换(Hot Swap)、模块热部署(HotDeployment)等。</p>
+<h3 id="2-2-3-自定义类加载器"><a href="#2-2-3-自定义类加载器" class="headerlink" title="(2.2.3) 自定义类加载器"></a>(2.2.3) 自定义类加载器</h3><blockquote>
+<p> 自定义类加载器需要继承ClassLoader类，为了不破坏双亲委派模型，自定义类加器建议覆盖findClass()方法，不建议覆盖loadClass()方法。下面是我实现的一个加载加密class文件、防止反编译核心代码的类加载器。</p>
+</blockquote>
+<h1 id="3-遇到的问题"><a href="#3-遇到的问题" class="headerlink" title="(3) 遇到的问题"></a>(3) 遇到的问题</h1><h2 id="org-springframework-beans-factory-BeanDefinitionStoreException-Failed-to-read-candidate-component-class"><a href="#org-springframework-beans-factory-BeanDefinitionStoreException-Failed-to-read-candidate-component-class" class="headerlink" title="org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class"></a>org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class: URL [jar:file:/cn/wkq/java/test/classtest.jar!/com/xx/yy/HelloServiceImpl.class]; nested exception is java.lang.ArrayIndexOutOfBoundsException:</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> Spring在扫描指定包路径下的类时，并不会一一用类加载器加载它们，而是自己把类文件当成普通文件从本地磁盘中读进来变成一个字节数组（并没有经过JVM类加载过程），然后用ASM去解析这个字节数组得到这个类的元数据，然后判断这个类的元数据里面是否有@Component等相关Spring的注解。如果有的话后面才会进一步使用类加载器去加载这个类，没有的话就不会尝试去加载。</p>
+</blockquote>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] 《深入理解Java虚拟机：JVM高级特性与最佳实践》 周志明<br>[2] <a href="https://mp.weixin.qq.com/s/z3KRsf425RPZG-_o9EuyPg" target="_blank" rel="noopener">深入理解JVM - 类加载机制</a><br>[3] <a href="https://mp.weixin.qq.com/s/YRgEK9S2xkrK10cVp0siUQ" target="_blank" rel="noopener">80%以上Javaer可能不知道的一个Spring知识点</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java/" rel="tag"># java</a>
+              <a href="/tags/jvm/" rel="tag"># jvm</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/13/seckill-system/" rel="prev" title="秒杀系统">
+      <i class="fa fa-chevron-left"></i> 秒杀系统
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/06/30/orientdb-sql/" rel="next" title="orientdb 常用语句">
+      orientdb 常用语句 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-JVM加载class过程"><span class="nav-number">1.</span> <span class="nav-text">(1) JVM加载class过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-加载"><span class="nav-number">1.1.</span> <span class="nav-text">(1.1) 加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-验证"><span class="nav-number">1.2.</span> <span class="nav-text">(1.2) 验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-文件格式验证"><span class="nav-number">1.2.1.</span> <span class="nav-text">(1.2.1) 文件格式验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-元数据验证"><span class="nav-number">1.2.2.</span> <span class="nav-text">(1.2.2) 元数据验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-字节码验证"><span class="nav-number">1.2.3.</span> <span class="nav-text">(1.2.3) 字节码验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-4-符号引用验证"><span class="nav-number">1.2.4.</span> <span class="nav-text">(1.2.4) 符号引用验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-准备"><span class="nav-number">1.3.</span> <span class="nav-text">(1.3) 准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-解析"><span class="nav-number">1.4.</span> <span class="nav-text">(1.4) 解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-初始化"><span class="nav-number">1.5.</span> <span class="nav-text">(1.5) 初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-使用"><span class="nav-number">1.6.</span> <span class="nav-text">(1.5) 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-卸载"><span class="nav-number">1.7.</span> <span class="nav-text">(1.6) 卸载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-类加载器"><span class="nav-number">2.</span> <span class="nav-text">(2) 类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-类加载器类型"><span class="nav-number">2.1.</span> <span class="nav-text">(2.1) 类加载器类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-双亲委派模型"><span class="nav-number">2.2.</span> <span class="nav-text">(2.2) 双亲委派模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-双亲委派模型的实现"><span class="nav-number">2.2.1.</span> <span class="nav-text">(2.2.1) 双亲委派模型的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-破坏双亲委派模型"><span class="nav-number">2.2.2.</span> <span class="nav-text">(2.2.2) 破坏双亲委派模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-自定义类加载器"><span class="nav-number">2.2.3.</span> <span class="nav-text">(2.2.3) 自定义类加载器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-遇到的问题"><span class="nav-number">3.</span> <span class="nav-text">(3) 遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#org-springframework-beans-factory-BeanDefinitionStoreException-Failed-to-read-candidate-component-class"><span class="nav-number">3.1.</span> <span class="nav-text">org.springframework.beans.factory.BeanDefinitionStoreException: Failed to read candidate component class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">WKQ</p>
+  <div class="site-description" itemprop="description">不积跬步无以至千里</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/weikeqin" title="GitHub → https://github.com/weikeqin" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:weikeqin.cn@gmail.com" title="E-Mail → mailto:weikeqin.cn@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://plus.google.com/u/0/107737814703120725006" title="Google → https://plus.google.com/u/0/107737814703120725006" rel="noopener" target="_blank"><i class="fab fa-google fa-fw"></i>Google</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/wkq278276130" title="Twitter → https://twitter.com/wkq278276130" rel="noopener" target="_blank"><i class="fab fa-twitter fa-fw"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/keqin.wei.5" title="FB Page → https://www.facebook.com/keqin.wei.5" rel="noopener" target="_blank"><i class="fab fa-facebook fa-fw"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/8054088/wkq" title="StackOverflow → https://stackoverflow.com/users/8054088/wkq" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WKQ</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var canonicalURL, curProtocol;
+      //Get the <link> tag
+      var x=document.getElementsByTagName("link");
+		//Find the last canonical URL
+		if(x.length > 0){
+			for (i=0;i<x.length;i++){
+				if(x[i].rel.toLowerCase() == 'canonical' && x[i].href){
+					canonicalURL=x[i].href;
+				}
+			}
+		}
+    //Get protocol
+	    if (!canonicalURL){
+	    	curProtocol = window.location.protocol.split(':')[0];
+	    }
+	    else{
+	    	curProtocol = canonicalURL.split(':')[0];
+	    }
+      //Get current URL if the canonical URL does not exist
+	    if (!canonicalURL) canonicalURL = window.location.href;
+	    //Assign script content. Replace current URL with the canonical URL
+      !function(){var e=/([http|https]:\/\/[a-zA-Z0-9\_\.]+\.baidu\.com)/gi,r=canonicalURL,t=document.referrer;if(!e.test(r)){var n=(String(curProtocol).toLowerCase() === 'https')?"https://sp0.baidu.com/9_Q4simg2RQJ8t7jm9iCKT-xh_/s.gif":"//api.share.baidu.com/s.gif";t?(n+="?r="+encodeURIComponent(document.referrer),r&&(n+="&l="+r)):r&&(n+="?l="+r);var i=new Image;i.src=n}}(window);})();
+  </script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

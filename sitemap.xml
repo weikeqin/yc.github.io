@@ -2,6 +2,104 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://weikeqin.com/2020/05/13/guava-cache/</loc>
+    
+    <lastmod>2020-06-05T23:46:40.126Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/04/06/cache-notes/</loc>
+    
+    <lastmod>2020-06-05T15:44:44.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/04/18/vim-notes/</loc>
+    
+    <lastmod>2020-06-05T15:32:36.681Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/05/25/redis-data-types/</loc>
+    
+    <lastmod>2020-06-05T15:31:49.009Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/05/16/elasticsearch-setup/</loc>
+    
+    <lastmod>2020-06-05T14:36:07.785Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/06/01/jvm-class-loader/</loc>
+    
+    <lastmod>2020-06-05T14:34:17.118Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/03/20/chrome-notes/</loc>
+    
+    <lastmod>2020-06-05T14:32:11.459Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/11/04/java-stream/</loc>
+    
+    <lastmod>2020-06-05T12:27:59.984Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/11/04/java-lambda/</loc>
+    
+    <lastmod>2020-06-05T12:27:35.935Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/02/02/java-concurrent-programming/</loc>
+    
+    <lastmod>2020-06-03T00:13:04.762Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/02/03/java-mermory-model/</loc>
+    
+    <lastmod>2020-06-02T15:11:11.470Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/08/18/java-concurrent/</loc>
+    
+    <lastmod>2020-06-02T15:07:30.488Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/03/29/mybaits-notes/</loc>
+    
+    <lastmod>2020-06-01T02:28:35.524Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/02/05/mysql-explain/</loc>
+    
+    <lastmod>2020-06-01T02:07:06.098Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://weikeqin.com/2019/09/08/redis-solve-what-problem/</loc>
     
     <lastmod>2020-05-30T14:45:55.787Z</lastmod>
@@ -9,23 +107,9 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2020/05/25/redis-data-types/</loc>
-    
-    <lastmod>2020-05-30T14:44:55.988Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2020/05/28/redis-high-performance-analysis/</loc>
     
     <lastmod>2020-05-30T14:44:17.473Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/05/16/elasticsearch-setup/</loc>
-    
-    <lastmod>2020-05-30T14:43:48.058Z</lastmod>
     
   </url>
   
@@ -61,13 +145,6 @@
     <loc>http://weikeqin.com/2020/05/26/redis-high-performance-practice/</loc>
     
     <lastmod>2020-05-26T09:35:13.525Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/04/18/vim-notes/</loc>
-    
-    <lastmod>2020-05-24T15:18:51.914Z</lastmod>
     
   </url>
   
@@ -142,13 +219,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2020/05/13/guava-cache/</loc>
-    
-    <lastmod>2020-05-17T15:30:53.332Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/03/16/java/</loc>
     
     <lastmod>2020-05-17T15:30:36.643Z</lastmod>
@@ -212,13 +282,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2019/03/29/mybaits-notes/</loc>
-    
-    <lastmod>2020-04-28T02:01:52.680Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/06/21/mysql-error-notes/</loc>
     
     <lastmod>2020-04-23T02:57:21.085Z</lastmod>
@@ -243,13 +306,6 @@
     <loc>http://weikeqin.com/2017/03/06/springboot-note/</loc>
     
     <lastmod>2020-04-09T15:21:26.880Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/04/06/cache-notes/</loc>
-    
-    <lastmod>2020-04-06T01:24:14.703Z</lastmod>
     
   </url>
   
@@ -310,13 +366,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2020/03/20/chrome-notes/</loc>
-    
-    <lastmod>2020-03-20T02:36:24.087Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2018/03/01/python-log/</loc>
     
     <lastmod>2020-03-16T02:53:23.421Z</lastmod>
@@ -369,27 +418,6 @@
     <loc>http://weikeqin.com/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/</loc>
     
     <lastmod>2020-02-17T08:09:43.687Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/02/05/mysql-explain/</loc>
-    
-    <lastmod>2020-02-11T04:17:34.982Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/02/03/java-mermory-model/</loc>
-    
-    <lastmod>2020-02-11T04:06:42.882Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/02/02/java-concurrent-programming/</loc>
-    
-    <lastmod>2020-02-11T04:06:29.194Z</lastmod>
     
   </url>
   
@@ -534,20 +562,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2019/11/04/java-stream/</loc>
-    
-    <lastmod>2019-12-17T13:57:26.562Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2019/11/04/java-lambda/</loc>
-    
-    <lastmod>2019-12-17T13:57:26.561Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/04/20/implicit-markov-model-notes/</loc>
     
     <lastmod>2019-12-17T13:57:26.558Z</lastmod>
@@ -632,14 +646,14 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2018/06/04/tf-idf/</loc>
+    <loc>http://weikeqin.com/2017/05/04/text-analysis-application-scenarios/</loc>
     
     <lastmod>2019-11-04T06:36:52.403Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2017/05/04/text-analysis-application-scenarios/</loc>
+    <loc>http://weikeqin.com/2018/06/04/tf-idf/</loc>
     
     <lastmod>2019-11-04T06:36:52.403Z</lastmod>
     
@@ -849,14 +863,14 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2017/03/05/hello-world/</loc>
+    <loc>http://weikeqin.com/2018/01/19/httpclient-notes/</loc>
     
     <lastmod>2019-11-04T06:36:52.356Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2018/01/19/httpclient-notes/</loc>
+    <loc>http://weikeqin.com/2017/03/05/hello-world/</loc>
     
     <lastmod>2019-11-04T06:36:52.356Z</lastmod>
     
@@ -1003,14 +1017,14 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2018/04/20/mysql-question/</loc>
+    <loc>http://weikeqin.com/2019/05/06/mysql-order-by/</loc>
     
     <lastmod>2019-08-19T01:06:29.272Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2019/05/06/mysql-order-by/</loc>
+    <loc>http://weikeqin.com/2018/04/20/mysql-question/</loc>
     
     <lastmod>2019-08-19T01:06:29.272Z</lastmod>
     
@@ -1032,13 +1046,6 @@
   
   <url>
     <loc>http://weikeqin.com/2018/04/20/distributed-question/</loc>
-    
-    <lastmod>2019-08-19T01:06:29.265Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2019/08/18/java-concurrent/</loc>
     
     <lastmod>2019-08-19T01:06:29.265Z</lastmod>
     
