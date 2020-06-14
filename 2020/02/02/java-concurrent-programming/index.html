@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="并发编程最早的应用领域就是操作系统的实现。   随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。   Java 里 synchronized、wait()/notify() 相关的知识很琐碎，看懂难，会用更难。但实际上 synchronized、wait()、notify() 不过是操作系统领域里管程模型的一种实现而已，Java SDK 并发包里">
+  <meta name="description" content="为什么要使用并发编程?  随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。 很多情况下，服务器的资源使用率并不高，导致资源浪费，比如线上服务器的CPU使用率经常是10%，并发编程可以提高资源使用率。     但是在并发编程里，很多单线程的规则不太适用，就像汽车的用法不适用飞机一样。    在并发编程里，经常遇到很多诡异的bug，这些bug大多可能">
 <meta name="keywords" content="java,concurrent">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java并发编程">
 <meta property="og:url" content="http://weikeqin.com/2020/02/02/java-concurrent-programming/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="并发编程最早的应用领域就是操作系统的实现。   随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。   Java 里 synchronized、wait()/notify() 相关的知识很琐碎，看懂难，会用更难。但实际上 synchronized、wait()、notify() 不过是操作系统领域里管程模型的一种实现而已，Java SDK 并发包里">
+<meta property="og:description" content="为什么要使用并发编程?  随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。 很多情况下，服务器的资源使用率并不高，导致资源浪费，比如线上服务器的CPU使用率经常是10%，并发编程可以提高资源使用率。     但是在并发编程里，很多单线程的规则不太适用，就像汽车的用法不适用飞机一样。    在并发编程里，经常遇到很多诡异的bug，这些bug大多可能">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-03T00:13:04.762Z">
+<meta property="og:updated_time" content="2020-06-14T06:39:02.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java并发编程">
-<meta name="twitter:description" content="并发编程最早的应用领域就是操作系统的实现。   随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。   Java 里 synchronized、wait()/notify() 相关的知识很琐碎，看懂难，会用更难。但实际上 synchronized、wait()、notify() 不过是操作系统领域里管程模型的一种实现而已，Java SDK 并发包里">
+<meta name="twitter:description" content="为什么要使用并发编程?  随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。 很多情况下，服务器的资源使用率并不高，导致资源浪费，比如线上服务器的CPU使用率经常是10%，并发编程可以提高资源使用率。     但是在并发编程里，很多单线程的规则不太适用，就像汽车的用法不适用飞机一样。    在并发编程里，经常遇到很多诡异的bug，这些bug大多可能">
 
 <link rel="canonical" href="http://weikeqin.com/2020/02/02/java-concurrent-programming/">
 
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-03 08:13:04" itemprop="dateModified" datetime="2020-06-03T08:13:04+08:00">2020-06-03</time>
+                <time title="修改时间：2020-06-14 14:39:02" itemprop="dateModified" datetime="2020-06-14T14:39:02+08:00">2020-06-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,21 +280,88 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>  并发编程最早的应用领域就是操作系统的实现。</p>
-<p>  随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。</p>
-<p>  Java 里 synchronized、wait()/notify() 相关的知识很琐碎，看懂难，会用更难。但实际上 synchronized、wait()、notify() 不过是操作系统领域里管程模型的一种实现而已，Java SDK 并发包里的条件变量 Condition 也是管程里的概念，synchronized、wait()/notify()、条件变量这些知识如果单独理解，自然是管中窥豹。但是如果站在管程这个理论模型的高度，你就会发现这些知识原来这么简单，同时用起来也就得心应手了。管程作为一种解决并发问题的模型，是继信号量模型之后的一项重大创新，它与信号量在逻辑上是等价的（可以用管程实现信号量，也可以用信号量实现管程），但是相比之下管程更易用。而且，很多编程语言都支持管程，搞懂管程，对学习其他很多语言的并发编程有很大帮助。然而，很多人急于学习 Java 并发编程技术，却忽略了技术背后的理论和模型，而理论和模型却往往比具体的技术更为重要。</p>
+        <blockquote>
+<p> 为什么要使用并发编程?</p>
+<ol>
+<li>随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。</li>
+<li>很多情况下，服务器的资源使用率并不高，导致资源浪费，比如线上服务器的CPU使用率经常是10%，并发编程可以提高资源使用率。</li>
+</ol>
+</blockquote>
+<blockquote>
+<p> 但是在并发编程里，很多单线程的规则不太适用，就像汽车的用法不适用飞机一样。</p>
+</blockquote>
+<blockquote>
+<p> 在并发编程里，经常遇到很多诡异的bug，这些bug大多可能是逻辑问题或者是对使用的技术不了解导致的。</p>
+</blockquote>
+<h1 id="并发编程的三个核心问题"><a href="#并发编程的三个核心问题" class="headerlink" title="并发编程的三个核心问题"></a>并发编程的三个核心问题</h1><blockquote>
+<p> 并发编程可以总结为三个核心问题：分工、同步、互斥。</p>
+</blockquote>
+<blockquote>
+<p> Java SDK 并发包很大部分内容都是按照这三个维度组织的</p>
+</blockquote>
 <a id="more"></a>
-<p>  Java SDK 并发包乃是并发大师 Doug Lea 出品，堪称经典，它内部一定是有章可循的。</p>
-<p>  并发编程可以总结为三个核心问题：分工、同步、互斥。</p>
-<p>  分工指的是如何高效地拆解任务并分配给线程，而同步指的是线程之间如何协作，互斥则是保证同一时刻只允许一个线程访问共享资源。Java SDK 并发包很大部分内容都是按照这三个维度组织的，例如 Fork/Join 框架就是一种分工模式，CountDownLatch 就是一种典型的同步方式，而可重入锁则是一种互斥手段。</p>
+<h2 id="分工"><a href="#分工" class="headerlink" title="分工"></a>分工</h2><blockquote>
+<p> 分工指的是如何高效地拆解任务并分配给线程。</p>
+</blockquote>
+<blockquote>
+<p> Fork/Join 框架就是一种分工模式</p>
+</blockquote>
+<h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><blockquote>
+<p> 同步指的是线程之间如何协作。</p>
+</blockquote>
+<blockquote>
+<p> CountDownLatch 就是一种典型的同步方式</p>
+</blockquote>
+<h2 id="互斥"><a href="#互斥" class="headerlink" title="互斥"></a>互斥</h2><blockquote>
+<p> 互斥则是保证同一时刻只允许一个线程访问共享资源。</p>
+</blockquote>
+<blockquote>
+<p> 可重入锁则是一种互斥手段。</p>
+</blockquote>
+<h1 id="并发编程Bug的源头"><a href="#并发编程Bug的源头" class="headerlink" title="并发编程Bug的源头"></a>并发编程Bug的源头</h1><p>  Java SDK 并发包乃是并发大师 Doug Lea 出品，堪称经典，它内部一定是有章可循的。</p>
 <p>  当把并发编程核心的问题搞清楚，再回过头来看 Java SDK 并发包，你会感觉豁然开朗，它不过是针对并发问题开发出来的工具而已，此时的 SDK 并发包可以任你“盘”了。</p>
-<p>  并发编程涉及操作系统、CPU、内存等等多方面的知识。</p>
 <p>  问题背后的本质、问题的起源，同时站在理论、模型的角度讲解 Java 并发，让你的知识更成体系，融会贯通。</p>
-<p>  要理解可见性，就需要了解一些 CPU 和缓存的知识；要理解原子性，就需要理解一些操作系统的知识；很多无锁算法的实现往往也需要理解 CPU 缓存。</p>
-<p>可见性：一个线程对共享变量的修改，另外一个线程能够立刻看到。<br>  CPU缓存、内存 数据不一致导致。<br>原子性：一个或者多个操作在 CPU 执行的过程中不被中断的特性。<br>  线程切换导致。<br>有序性：程序按照代码的先后顺序执行。<br>  重排序导致。</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="https://wiki.sei.cmu.edu/confluence/display/java/2+Rules" target="_blank" rel="noopener">https://wiki.sei.cmu.edu/confluence/display/java/2+Rules</a></p>
-<p>[0] <a href="https://time.geekbang.org/column/article/83087" target="_blank" rel="noopener">为什么需要学习并发编程</a><br>[0] <a href="https://time.geekbang.org/column/article/83267" target="_blank" rel="noopener">学习攻略 | 如何才能学好并发编程？</a></p>
-<p>[1] <a href="https://time.geekbang.org/column/article/83682" target="_blank" rel="noopener">01 | 可见性、原子性和有序性问题：并发编程Bug的源头</a><br>[2] <a href="https://time.geekbang.org/column/article/84017" target="_blank" rel="noopener">02 | Java内存模型：看Java如何解决可见性和有序性问题</a><br>[3] <a href="https://time.geekbang.org/column/article/84344" target="_blank" rel="noopener">03 | 互斥锁（上）：解决原子性问题</a><br>[4] <a href="https://time.geekbang.org/column/article/84601" target="_blank" rel="noopener">04 | 互斥锁（下）：如何用一把锁保护多个资源？</a><br>[5] <a href="https://time.geekbang.org/column/article/85001" target="_blank" rel="noopener">05 | 一不小心就死锁了，怎么办？</a><br>[6] <a href="https://time.geekbang.org/column/article/85241" target="_blank" rel="noopener">06 | 用“等待-通知”机制优化循环等待</a><br>[7] <a href="https://time.geekbang.org/column/article/85702" target="_blank" rel="noopener">07 | 安全性、活跃性以及性能问题</a><br>[8] <a href="https://time.geekbang.org/column/article/86089" target="_blank" rel="noopener">08 | 管程：并发编程的万能钥匙</a><br>[9] <a href="https://time.geekbang.org/column/article/86366" target="_blank" rel="noopener">09 | Java线程（上）：Java线程的生命周期</a><br>[10] <a href="https://time.geekbang.org/column/article/86666" target="_blank" rel="noopener">10 | Java线程（中）：创建多少线程才是合适的？</a><br>[11] <a href="https://time.geekbang.org/column/article/86695" target="_blank" rel="noopener">11 | Java线程（下）：为什么局部变量是线程安全的？</a></p>
+<p>  并发编程涉及操作系统、CPU、内存等等多方面的知识。</p>
+<p>  要理解可见性，就需要了解一些 CPU 和缓存的知识；<br>  要理解原子性，就需要理解一些操作系统的知识；<br>  很多无锁算法的实现往往也需要理解 CPU 缓存。</p>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><blockquote>
+<p> 可见性：一个线程对共享变量的修改，另外一个线程能够立刻看到。<br>    CPU缓存、内存 数据不一致导致。 </p>
+</blockquote>
+<h2 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h2><blockquote>
+<p> 原子性：一个或者多个操作在 CPU 执行的过程中不被中断的特性。<br>    线程切换导致。</p>
+</blockquote>
+<h2 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h2><blockquote>
+<p> 有序性：程序按照代码的先后顺序执行。<br>    重排序导致。</p>
+</blockquote>
+<p>  并发编程最早的应用领域就是操作系统的实现。</p>
+<h1 id="并发编程"><a href="#并发编程" class="headerlink" title="并发编程"></a>并发编程</h1><h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><ol>
+<li>线程简介</li>
+<li>线程生命周期</li>
+<li>线程常用操作</li>
+<li>线程同步</li>
+</ol>
+<h2 id="并发包"><a href="#并发包" class="headerlink" title="并发包"></a>并发包</h2><p>Lock<br>Condition<br>Semaphore<br>ReadWriteLock<br>StampedLock<br>ReentrantLock<br>CountDownLatch<br>CyclicBarrier<br>并发容器<br>Atomic<br>ExecutorService<br>Feature<br>CompletableFeature<br>CompletionService<br>ForkJoin<br>ThreadLocal</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.infoq.cn/article/1ggzj_oFl8wuJFwVG9et" target="_blank" rel="noopener">简明高效的 Java 并发编程学习指南</a><br>[2] <a href="http://ifeve.com/doug-lea/" target="_blank" rel="noopener">Doug Lea并发编程文章全部译文</a></p>
+<p>  <a href="http://gee.cs.oswego.edu/" target="_blank" rel="noopener">http://gee.cs.oswego.edu/</a></p>
+<p>  <a href="https://wiki.sei.cmu.edu/confluence/display/java/2+Rules" target="_blank" rel="noopener">https://wiki.sei.cmu.edu/confluence/display/java/2+Rules</a></p>
+<p>  <a href="https://github.com/Fadezed/concurrency" target="_blank" rel="noopener">https://github.com/Fadezed/concurrency</a></p>
+<!--
+
+[0] [为什么需要学习并发编程]( https://time.geekbang.org/column/article/83087 )
+[0] [学习攻略 | 如何才能学好并发编程？]( https://time.geekbang.org/column/article/83267 )
+
+[1] [01 | 可见性、原子性和有序性问题：并发编程Bug的源头]( https://time.geekbang.org/column/article/83682 )
+[2] [02 | Java内存模型：看Java如何解决可见性和有序性问题]( https://time.geekbang.org/column/article/84017 )
+[3] [03 | 互斥锁（上）：解决原子性问题]( https://time.geekbang.org/column/article/84344 )
+[4] [04 | 互斥锁（下）：如何用一把锁保护多个资源？]( https://time.geekbang.org/column/article/84601 )
+[5] [05 | 一不小心就死锁了，怎么办？]( https://time.geekbang.org/column/article/85001 )
+[6] [06 | 用“等待-通知”机制优化循环等待]( https://time.geekbang.org/column/article/85241 )
+[7] [07 | 安全性、活跃性以及性能问题]( https://time.geekbang.org/column/article/85702 )
+[8] [08 | 管程：并发编程的万能钥匙]( https://time.geekbang.org/column/article/86089 )
+[9] [09 | Java线程（上）：Java线程的生命周期]( https://time.geekbang.org/column/article/86366 )
+[10] [10 | Java线程（中）：创建多少线程才是合适的？]( https://time.geekbang.org/column/article/86666 )
+[11] [11 | Java线程（下）：为什么局部变量是线程安全的？]( https://time.geekbang.org/column/article/86695 )
+
+-->
 
     </div>
 
@@ -379,7 +446,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#并发编程的三个核心问题"><span class="nav-number">1.</span> <span class="nav-text">并发编程的三个核心问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分工"><span class="nav-number">1.1.</span> <span class="nav-text">分工</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步"><span class="nav-number">1.2.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互斥"><span class="nav-number">1.3.</span> <span class="nav-text">互斥</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并发编程Bug的源头"><span class="nav-number">2.</span> <span class="nav-text">并发编程Bug的源头</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可见性"><span class="nav-number">2.1.</span> <span class="nav-text">可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原子性"><span class="nav-number">2.2.</span> <span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有序性"><span class="nav-number">2.3.</span> <span class="nav-text">有序性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并发编程"><span class="nav-number">3.</span> <span class="nav-text">并发编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程"><span class="nav-number">3.1.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发包"><span class="nav-number">3.2.</span> <span class="nav-text">并发包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -393,20 +460,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-count">181</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

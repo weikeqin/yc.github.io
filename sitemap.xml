@@ -2,9 +2,191 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://weikeqin.com/2020/06/06/lock/</loc>
+    
+    <lastmod>2020-06-14T15:35:34.884Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/09/jvm-config/</loc>
+    
+    <lastmod>2020-06-14T15:34:05.858Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/14/java-jmh-notes/</loc>
+    
+    <lastmod>2020-06-14T14:26:12.529Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/14/java-performance-tuning/</loc>
+    
+    <lastmod>2020-06-14T14:25:51.889Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2018/09/24/java-problem-locate/</loc>
+    
+    <lastmod>2020-06-14T07:02:59.321Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/02/02/java-concurrent-programming/</loc>
+    
+    <lastmod>2020-06-14T06:39:02.213Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/13/akka-notes/</loc>
+    
+    <lastmod>2020-06-14T03:57:03.276Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/13/concurrent-model/</loc>
+    
+    <lastmod>2020-06-14T03:54:36.795Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/06/java-thread/</loc>
+    
+    <lastmod>2020-06-13T11:23:20.755Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/10/23/java-thread-pool/</loc>
+    
+    <lastmod>2020-06-13T05:12:02.506Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/08/18/java-concurrent/</loc>
+    
+    <lastmod>2020-06-13T03:56:00.044Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/07/java-concurrent-design-pattern/</loc>
+    
+    <lastmod>2020-06-13T03:49:41.381Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/09/02/jvm-monitoring/</loc>
+    
+    <lastmod>2020-06-13T00:51:43.743Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/08/15/redis-notes/</loc>
+    
+    <lastmod>2020-06-13T00:20:11.047Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/05/23/java-parser-json/</loc>
+    
+    <lastmod>2020-06-11T15:00:48.854Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/04/18/intellij-idea-install-and-config/</loc>
+    
+    <lastmod>2020-06-10T01:41:35.559Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/01/18/elasticsearch-scroll/</loc>
+    
+    <lastmod>2020-06-08T07:48:49.450Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/04/09/google-search/</loc>
+    
+    <lastmod>2020-06-08T01:37:06.907Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/05/26/redis-high-performance-practice/</loc>
+    
+    <lastmod>2020-06-07T01:59:51.585Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://weikeqin.com/2020/05/13/guava-cache/</loc>
     
-    <lastmod>2020-06-05T23:46:40.126Z</lastmod>
+    <lastmod>2020-06-06T10:54:35.871Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/06/read-write-lock/</loc>
+    
+    <lastmod>2020-06-06T01:47:36.996Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/06/21/word2vec/</loc>
+    
+    <lastmod>2020-06-06T00:38:48.176Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2018/05/16/springboot-error-note/</loc>
+    
+    <lastmod>2020-06-06T00:33:25.438Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/02/28/spring-error/</loc>
+    
+    <lastmod>2020-06-06T00:30:08.646Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/05/28/redis-high-performance-analysis/</loc>
+    
+    <lastmod>2020-06-06T00:21:53.538Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/03/13/hexo-build-blog/</loc>
+    
+    <lastmod>2020-06-06T00:10:47.088Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/07/13/buy-tickets-on-12306/</loc>
+    
+    <lastmod>2020-06-06T00:00:02.638Z</lastmod>
     
   </url>
   
@@ -65,23 +247,9 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2020/02/02/java-concurrent-programming/</loc>
-    
-    <lastmod>2020-06-03T00:13:04.762Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2020/02/03/java-mermory-model/</loc>
     
     <lastmod>2020-06-02T15:11:11.470Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2019/08/18/java-concurrent/</loc>
-    
-    <lastmod>2020-06-02T15:07:30.488Z</lastmod>
     
   </url>
   
@@ -103,13 +271,6 @@
     <loc>http://weikeqin.com/2019/09/08/redis-solve-what-problem/</loc>
     
     <lastmod>2020-05-30T14:45:55.787Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/05/28/redis-high-performance-analysis/</loc>
-    
-    <lastmod>2020-05-30T14:44:17.473Z</lastmod>
     
   </url>
   
@@ -138,13 +299,6 @@
     <loc>http://weikeqin.com/2017/05/01/simhash/</loc>
     
     <lastmod>2020-05-28T03:26:29.531Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/05/26/redis-high-performance-practice/</loc>
-    
-    <lastmod>2020-05-26T09:35:13.525Z</lastmod>
     
   </url>
   
@@ -187,13 +341,6 @@
     <loc>http://weikeqin.com/2017/06/14/linux-notes/</loc>
     
     <lastmod>2020-05-18T08:47:04.157Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2017/10/23/java-thread-pool/</loc>
-    
-    <lastmod>2020-05-17T23:49:39.972Z</lastmod>
     
   </url>
   
@@ -317,13 +464,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2018/09/24/java-problem-locate/</loc>
-    
-    <lastmod>2020-03-31T01:45:11.977Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2020/03/28/jvm-performance-tuning-monitoring-tool/</loc>
     
     <lastmod>2020-03-30T15:37:10.124Z</lastmod>
@@ -394,13 +534,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2018/05/16/springboot-error-note/</loc>
-    
-    <lastmod>2020-03-11T06:54:52.262Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/03/17/neo4j-notes/</loc>
     
     <lastmod>2020-03-09T02:23:37.714Z</lastmod>
@@ -425,13 +558,6 @@
     <loc>http://weikeqin.com/2019/03/08/mysql-optimization-notes/</loc>
     
     <lastmod>2020-02-11T04:05:58.581Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2017/02/28/spring-error/</loc>
-    
-    <lastmod>2020-02-11T04:05:30.725Z</lastmod>
     
   </url>
   
@@ -527,13 +653,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2017/08/15/redis-notes/</loc>
-    
-    <lastmod>2019-12-30T10:48:58.553Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2019/04/10/golang/</loc>
     
     <lastmod>2019-12-18T07:23:51.628Z</lastmod>
@@ -590,23 +709,9 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2019/01/18/elasticsearch-scroll/</loc>
-    
-    <lastmod>2019-11-13T06:57:45.649Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/07/19/nlp-notes/</loc>
     
     <lastmod>2019-11-13T06:48:07.630Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2017/04/09/google-search/</loc>
-    
-    <lastmod>2019-11-06T09:02:24.687Z</lastmod>
     
   </url>
   
@@ -619,13 +724,6 @@
   
   <url>
     <loc>http://weikeqin.com/2017/06/02/wikipedia-data-downlaod/</loc>
-    
-    <lastmod>2019-11-04T06:36:52.405Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2017/06/21/word2vec/</loc>
     
     <lastmod>2019-11-04T06:36:52.405Z</lastmod>
     
@@ -779,23 +877,9 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2017/09/02/jvm-monitoring/</loc>
-    
-    <lastmod>2019-11-04T06:36:52.370Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/03/16/java-parser-xml/</loc>
     
     <lastmod>2019-11-04T06:36:52.366Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2017/05/23/java-parser-json/</loc>
-    
-    <lastmod>2019-11-04T06:36:52.365Z</lastmod>
     
   </url>
   
@@ -863,14 +947,14 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2018/01/19/httpclient-notes/</loc>
+    <loc>http://weikeqin.com/2017/03/05/hello-world/</loc>
     
     <lastmod>2019-11-04T06:36:52.356Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2017/03/05/hello-world/</loc>
+    <loc>http://weikeqin.com/2018/01/19/httpclient-notes/</loc>
     
     <lastmod>2019-11-04T06:36:52.356Z</lastmod>
     
@@ -957,13 +1041,6 @@
     <loc>http://weikeqin.com/2017/05/30/blog-notes/</loc>
     
     <lastmod>2019-10-20T06:49:46.801Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2017/04/18/intellij-idea-install-and-config/</loc>
-    
-    <lastmod>2019-10-20T06:47:04.370Z</lastmod>
     
   </url>
   
@@ -1227,13 +1304,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2017/03/13/hexo-build-blog/</loc>
-    
-    <lastmod>2019-07-03T12:31:21.653Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/05/01/hash/</loc>
     
     <lastmod>2019-07-03T12:31:21.652Z</lastmod>
@@ -1265,13 +1335,6 @@
     <loc>http://weikeqin.com/2017/11/10/crawler-sogou/</loc>
     
     <lastmod>2019-07-03T12:31:21.637Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2017/07/13/buy-tickets-on-12306/</loc>
-    
-    <lastmod>2019-07-03T12:31:21.635Z</lastmod>
     
   </url>
   

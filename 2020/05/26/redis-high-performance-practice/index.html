@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="在压测的时候看了一下缓存监控，看到监控上的数字震惊了，单分片每秒的出流量172MB。从来没想到过性能可以这么高。(优化前的) 分享一些高性能的知识点吧。  (1) 大多数情况存储的时候推荐使用byte  redis-data-types  redis-value-as-byte-vs-plain-string  jvm-serializers  string类型 redis底层存储的都是二进制">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-26T09:35:13.525Z">
+<meta property="og:updated_time" content="2020-06-07T01:59:51.585Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="redis高性能实践">
 <meta name="twitter:description" content="在压测的时候看了一下缓存监控，看到监控上的数字震惊了，单分片每秒的出流量172MB。从来没想到过性能可以这么高。(优化前的) 分享一些高性能的知识点吧。  (1) 大多数情况存储的时候推荐使用byte  redis-data-types  redis-value-as-byte-vs-plain-string  jvm-serializers  string类型 redis底层存储的都是二进制">
@@ -235,10 +235,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-05-26 10:28:15 / 修改时间：17:35:13" itemprop="dateCreated datePublished" datetime="2020-05-26T10:28:15+08:00">2020-05-26</time>
+              <time title="创建时间：2020-05-26 10:28:15" itemprop="dateCreated datePublished" datetime="2020-05-26T10:28:15+08:00">2020-05-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-07 09:59:51" itemprop="dateModified" datetime="2020-06-07T09:59:51+08:00">2020-06-07</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -296,7 +302,7 @@
 </blockquote>
 <h1 id="5"><a href="#5" class="headerlink" title="(5)"></a>(5)</h1><p>  info可以看到所有库的key数量</p>
 <p>  dbsize则是当前库key的数量</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://redis.io/documentation">redis.io/documentation</a><br>[1] <a href="https://redis.io/topics/data-types">redis.io/topics/data-types</a><br>[2] <a href="https://redis.io/topics/data-types-intro">redis.io/topics/data-types-intr</a><br>[3] <a href="https://github.com/antirez/redis-doc">redis-doc</a><br>[4] <a href="https://redis.io/topics/ldb">Redis Lua scripts debugger</a><br>[5] <a href="https://mp.weixin.qq.com/s/Yzv88PCDBstFFj0qIzTkJA">掌握这些 Redis 技巧，百亿数据量不在话下！</a><br>[6] <a href="https://blog.csdn.net/eng63538505/article/details/74670902">redis的两种存储方式string和byte对比</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://redis.io/documentation">redis.io/documentation</a><br>[1] <a href="https://redis.io/topics/data-types">redis.io/topics/data-types</a><br>[2] <a href="https://redis.io/topics/data-types-intro">redis.io/topics/data-types-intr</a><br>[3] <a href="https://github.com/antirez/redis-doc">redis-doc</a><br>[4] <a href="https://redis.io/topics/ldb">Redis Lua scripts debugger</a><br>[5] <a href="https://mp.weixin.qq.com/s/Yzv88PCDBstFFj0qIzTkJA">掌握这些 Redis 技巧，百亿数据量不在话下！</a><br>[6] <a href="https://blog.csdn.net/eng63538505/article/details/74670902">redis的两种存储方式string和byte对比</a><br>[7] <a href="https://mp.weixin.qq.com/s/6G3iuEtBOxvp-gVi_OZe9g">Redis规范你应该了解一下</a></p>
 -->
     </div>
 
@@ -395,20 +401,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">172</span>
+          <span class="site-state-item-count">181</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">100</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
