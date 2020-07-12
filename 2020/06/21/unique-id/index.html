@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="References[1] Chapter 2. The Structure of the Java Virtual Machine[2] Chapter 2. The Structure of the Java Virtual Machine">
+  <meta name="description" content="什么是分布式ID   在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java-virtual-machine-structure">
-<meta property="og:url" content="http://weikeqin.com/2020/07/01/java-virtual-machine-structure/index.html">
+<meta property="og:title" content="全局唯一ID 分布式ID">
+<meta property="og:url" content="http://weikeqin.com/2020/06/21/unique-id/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="References[1] Chapter 2. The Structure of the Java Virtual Machine[2] Chapter 2. The Structure of the Java Virtual Machine">
+<meta property="og:description" content="什么是分布式ID   在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-30T23:43:59.076Z">
+<meta property="og:updated_time" content="2020-07-12T14:18:40.165Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java-virtual-machine-structure">
-<meta name="twitter:description" content="References[1] Chapter 2. The Structure of the Java Virtual Machine[2] Chapter 2. The Structure of the Java Virtual Machine">
+<meta name="twitter:title" content="全局唯一ID 分布式ID">
+<meta name="twitter:description" content="什么是分布式ID   在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就">
 
-<link rel="canonical" href="http://weikeqin.com/2020/07/01/java-virtual-machine-structure/">
+<link rel="canonical" href="http://weikeqin.com/2020/06/21/unique-id/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>java-virtual-machine-structure | 沧海一粟</title>
+  <title>全局唯一ID 分布式ID | 沧海一粟</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113485469-1"></script>
     <script>
@@ -212,7 +212,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/07/01/java-virtual-machine-structure/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/21/unique-id/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -225,7 +225,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          java-virtual-machine-structure
+          全局唯一ID 分布式ID
         </h1>
 
         <div class="post-meta">
@@ -234,13 +234,19 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-01 07:43:14 / 修改时间：07:43:59" itemprop="dateCreated datePublished" datetime="2020-07-01T07:43:14+08:00">2020-07-01</time>
+              <time title="创建时间：2020-06-21 17:14:18" itemprop="dateCreated datePublished" datetime="2020-06-21T17:14:18+08:00">2020-06-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-12 22:18:40" itemprop="dateModified" datetime="2020-07-12T22:18:40+08:00">2020-07-12</time>
+              </span>
 
           
-            <span id="/2020/07/01/java-virtual-machine-structure/" class="post-meta-item leancloud_visitors" data-flag-title="java-virtual-machine-structure" title="阅读次数">
+            <span id="/2020/06/21/unique-id/" class="post-meta-item leancloud_visitors" data-flag-title="全局唯一ID 分布式ID" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -264,7 +270,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html" target="_blank" rel="noopener">Chapter 2. The Structure of the Java Virtual Machine</a><br>[2] <a href="https://docs.oracle.com/javase/specs/jvms/se14/html/jvms-2.html" target="_blank" rel="noopener">Chapter 2. The Structure of the Java Virtual Machine</a></p>
+        <p><strong>什么是分布式ID</strong></p>
+<blockquote>
+<p> 在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。<br>但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就叫分布式ID。</p>
+</blockquote>
+<p><strong>分布式ID需要满足那些条件</strong><br>全局唯一：必须保证ID是全局性唯一的，基本要求<br>高性能：高可用低延时，ID生成响应要块，否则反倒会成为瓶颈<br>高可用：100%的可用性是骗人的，但是也要无限接近于100%的可用性<br>好接入：要秉着拿来即用的设计原则，在系统设计和实现上要尽可能的简单<br>趋势递增：最好趋势递增，这个要求就得看具体场景了，一般不严格要求</p>
+<p><strong>有哪些生成方式</strong></p>
+<p>程序自增ID<br>关系型数据库自增ID<br>Redis</p>
+<p>UUID</p>
+<p>数据库多主模式<br>号段模式</p>
+<p>雪花算法（SnowFlake）<br>滴滴出品（TinyID）<br>百度 （Uidgenerator）<br>美团（Leaf）</p>
+<a id="more"></a>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://mp.weixin.qq.com/s?__biz=MzAxNTM4NzAyNg%3D%3D&amp;mid=2247483785&amp;idx=1&amp;sn=8b828a8ae1701b810fe3969be536cb14&amp;scene=45#wechat_redirect" target="_blank" rel="noopener">一口气说出 9种 分布式ID生成方式，面试官有点懵了</a></p>
 
     </div>
 
@@ -280,10 +297,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/24/mysql-log/" rel="prev" title="mysql-log">
-      <i class="fa fa-chevron-left"></i> mysql-log
+    <a href="/2020/06/21/jvm-notes/" rel="prev" title="jvm-notes">
+      <i class="fa fa-chevron-left"></i> jvm-notes
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/28/mysql-log/" rel="next" title="mysql-log">
+      mysql-log <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     

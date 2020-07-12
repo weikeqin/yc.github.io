@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://weikeqin.com/2020/06/21/unique-id/</loc>
+    
+    <lastmod>2020-07-12T14:18:40.165Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/28/mysql-log/</loc>
+    
+    <lastmod>2020-07-12T14:17:06.422Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/07/05/java-virtual-machine-structure/</loc>
+    
+    <lastmod>2020-07-12T14:16:54.945Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://weikeqin.com/2020/04/18/vs-code-notes/</loc>
     
     <lastmod>2020-07-10T07:21:36.096Z</lastmod>
@@ -65,13 +86,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2020/07/01/java-virtual-machine-structure/</loc>
-    
-    <lastmod>2020-06-30T23:43:59.076Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2018/08/12/jvm-memory-area/</loc>
     
     <lastmod>2020-06-30T23:27:43.770Z</lastmod>
@@ -100,13 +114,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2020/06/24/mysql-log/</loc>
-    
-    <lastmod>2020-06-24T03:38:18.412Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2019/07/03/rest-vs-rpc/</loc>
     
     <lastmod>2020-06-24T02:18:52.025Z</lastmod>
@@ -124,13 +131,6 @@
     <loc>http://weikeqin.com/2019/07/08/java-bio-nio-aio/</loc>
     
     <lastmod>2020-06-22T10:42:31.864Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/06/22/unique-id/</loc>
-    
-    <lastmod>2020-06-22T09:35:02.002Z</lastmod>
     
   </url>
   
@@ -1143,14 +1143,14 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2019/05/06/mysql-order-by/</loc>
+    <loc>http://weikeqin.com/2018/04/20/mysql-question/</loc>
     
     <lastmod>2019-08-19T01:06:29.272Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2018/04/20/mysql-question/</loc>
+    <loc>http://weikeqin.com/2019/05/06/mysql-order-by/</loc>
     
     <lastmod>2019-08-19T01:06:29.272Z</lastmod>
     

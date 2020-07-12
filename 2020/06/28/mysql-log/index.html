@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="什么是分布式ID   在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就">
+  <meta name="description" content="redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；  binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。   Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。  Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="全局唯一ID 分布式ID">
-<meta property="og:url" content="http://weikeqin.com/2020/06/22/unique-id/index.html">
+<meta property="og:title" content="mysql-log">
+<meta property="og:url" content="http://weikeqin.com/2020/06/28/mysql-log/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="什么是分布式ID   在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就">
+<meta property="og:description" content="redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；  binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。   Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。  Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-22T09:35:02.002Z">
+<meta property="og:updated_time" content="2020-07-12T14:17:06.422Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="全局唯一ID 分布式ID">
-<meta name="twitter:description" content="什么是分布式ID   在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就">
+<meta name="twitter:title" content="mysql-log">
+<meta name="twitter:description" content="redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；  binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。   Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。  Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。">
 
-<link rel="canonical" href="http://weikeqin.com/2020/06/22/unique-id/">
+<link rel="canonical" href="http://weikeqin.com/2020/06/28/mysql-log/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>全局唯一ID 分布式ID | 沧海一粟</title>
+  <title>mysql-log | 沧海一粟</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113485469-1"></script>
     <script>
@@ -212,7 +213,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/22/unique-id/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/28/mysql-log/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -225,7 +226,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          全局唯一ID 分布式ID
+          mysql-log
         </h1>
 
         <div class="post-meta">
@@ -234,13 +235,28 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-06-22 17:14:18 / 修改时间：17:35:02" itemprop="dateCreated datePublished" datetime="2020-06-22T17:14:18+08:00">2020-06-22</time>
+              <time title="创建时间：2020-06-28 09:25:22" itemprop="dateCreated datePublished" datetime="2020-06-28T09:25:22+08:00">2020-06-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-12 22:17:06" itemprop="dateModified" datetime="2020-07-12T22:17:06+08:00">2020-07-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
             </span>
 
           
-            <span id="/2020/06/22/unique-id/" class="post-meta-item leancloud_visitors" data-flag-title="全局唯一ID 分布式ID" title="阅读次数">
+            <span id="/2020/06/28/mysql-log/" class="post-meta-item leancloud_visitors" data-flag-title="mysql-log" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -264,18 +280,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong>什么是分布式ID</strong></p>
-<blockquote>
-<p> 在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。<br>但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就叫分布式ID。</p>
-</blockquote>
-<p><strong>分布式ID需要满足那些条件</strong><br>全局唯一：必须保证ID是全局性唯一的，基本要求<br>高性能：高可用低延时，ID生成响应要块，否则反倒会成为瓶颈<br>高可用：100%的可用性是骗人的，但是也要无限接近于100%的可用性<br>好接入：要秉着拿来即用的设计原则，在系统设计和实现上要尽可能的简单<br>趋势递增：最好趋势递增，这个要求就得看具体场景了，一般不严格要求</p>
-<p><strong>有哪些生成方式</strong></p>
-<p>程序自增ID<br>关系型数据库自增ID<br>Redis</p>
-<p>UUID</p>
-<p>数据库多主模式<br>号段模式</p>
-<p>雪花算法（SnowFlake）<br>滴滴出品（TinyID）<br>百度 （Uidgenerator）<br>美团（Leaf）</p>
-<a id="more"></a>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://mp.weixin.qq.com/s?__biz=MzAxNTM4NzAyNg%3D%3D&amp;mid=2247483785&amp;idx=1&amp;sn=8b828a8ae1701b810fe3969be536cb14&amp;scene=45#wechat_redirect" target="_blank" rel="noopener">一口气说出 9种 分布式ID生成方式，面试官有点懵了</a></p>
+        <p>  redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；<br>  binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。</p>
+<p>  Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。<br>  Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。(row格式会导致日志变大)</p>
+<p>  binlog是可以关的，你如果有权限，可以set sql_log_bin=0关掉本线程的binlog日志。 所以只依赖binlog来恢复就靠不住。</p>
+<p>  innodb B+树主键索引的叶子节点存的是什么，存的是页<br>  B+树的叶子节点是page （页），一个页里面可以存多个行 </p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://time.geekbang.org/column/article/68633" target="_blank" rel="noopener">02 | 日志系统：一条SQL更新语句是如何执行的？</a><br>[2] <a href="https://www.cnblogs.com/f-ck-need-u/p/9010872.html" target="_blank" rel="noopener">详细分析MySQL事务日志(redo log和undo log)</a><br>[3] <a href="https://www.cnblogs.com/f-ck-need-u/p/9001061.html" target="_blank" rel="noopener">详细分析MySQL的日志(一)</a><br>[4] <a href="https://dev.mysql.com/doc/refman/5.7/en/server-logs.html" target="_blank" rel="noopener">dev.mysql.com/doc/refman/5.7/en/server-logs.html</a><br>[5] <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-redo-log.html" target="_blank" rel="noopener">dev.mysql.com/doc/refman/5.7/en/innodb-redo-log.html</a></p>
 
     </div>
 
@@ -284,6 +293,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/mysql/" rel="tag"># mysql</a>
+          </div>
 
         
 
@@ -291,12 +303,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/21/jvm-notes/" rel="prev" title="jvm-notes">
-      <i class="fa fa-chevron-left"></i> jvm-notes
+    <a href="/2020/06/21/unique-id/" rel="prev" title="全局唯一ID 分布式ID">
+      <i class="fa fa-chevron-left"></i> 全局唯一ID 分布式ID
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/06/24/mysql-log/" rel="next" title="mysql-log">
-      mysql-log <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/05/java-virtual-machine-structure/" rel="next" title="java-virtual-machine-structure">
+      java-virtual-machine-structure <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

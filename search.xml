@@ -2,17 +2,29 @@
 <search>
   <entry>
     <title><![CDATA[java-virtual-machine-structure]]></title>
-    <url>%2F2020%2F07%2F01%2Fjava-virtual-machine-structure%2F</url>
+    <url>%2F2020%2F07%2F05%2Fjava-virtual-machine-structure%2F</url>
     <content type="text"><![CDATA[References[1] Chapter 2. The Structure of the Java Virtual Machine[2] Chapter 2. The Structure of the Java Virtual Machine]]></content>
+      <categories>
+        <category>jvm</category>
+      </categories>
+      <tags>
+        <tag>jvm</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[mysql-log]]></title>
-    <url>%2F2020%2F06%2F24%2Fmysql-log%2F</url>
+    <url>%2F2020%2F06%2F28%2Fmysql-log%2F</url>
     <content type="text"><![CDATA[redo log 是物理日志，记录的是“在某个数据页上做了什么修改”； binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。 Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。 Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。(row格式会导致日志变大) binlog是可以关的，你如果有权限，可以set sql_log_bin=0关掉本线程的binlog日志。 所以只依赖binlog来恢复就靠不住。 innodb B+树主键索引的叶子节点存的是什么，存的是页 B+树的叶子节点是page （页），一个页里面可以存多个行 References[1] 02 | 日志系统：一条SQL更新语句是如何执行的？[2] 详细分析MySQL事务日志(redo log和undo log)[3] 详细分析MySQL的日志(一)[4] dev.mysql.com/doc/refman/5.7/en/server-logs.html[5] dev.mysql.com/doc/refman/5.7/en/innodb-redo-log.html]]></content>
+      <categories>
+        <category>mysql</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[全局唯一ID 分布式ID]]></title>
-    <url>%2F2020%2F06%2F22%2Funique-id%2F</url>
+    <url>%2F2020%2F06%2F21%2Funique-id%2F</url>
     <content type="text"><![CDATA[什么是分布式ID 在我们系统数据量不大的时候，单库单表完全可以支撑现有系统，数据再大一点搞个MySQL主从同步读写分离也能对付。但随着数据日渐增长，主从同步也扛不住了，就需要对数据库进行分库分表，但分库分表后需要有一个唯一ID来标识一条数据，数据库的自增ID显然不能满足需求；特别一点的如订单、优惠券也都需要有唯一ID做标识。此时一个能够生成全局唯一ID的系统是非常必要的。那么这个全局唯一ID就叫分布式ID。 分布式ID需要满足那些条件全局唯一：必须保证ID是全局性唯一的，基本要求高性能：高可用低延时，ID生成响应要块，否则反倒会成为瓶颈高可用：100%的可用性是骗人的，但是也要无限接近于100%的可用性好接入：要秉着拿来即用的设计原则，在系统设计和实现上要尽可能的简单趋势递增：最好趋势递增，这个要求就得看具体场景了，一般不严格要求 有哪些生成方式 程序自增ID关系型数据库自增IDRedis UUID 数据库多主模式号段模式 雪花算法（SnowFlake）滴滴出品（TinyID）百度 （Uidgenerator）美团（Leaf） References[1] 一口气说出 9种 分布式ID生成方式，面试官有点懵了]]></content>
   </entry>
   <entry>
@@ -424,8 +436,8 @@
         <category>distributed</category>
       </categories>
       <tags>
-        <tag>lock</tag>
         <tag>distributed</tag>
+        <tag>lock</tag>
       </tags>
   </entry>
   <entry>

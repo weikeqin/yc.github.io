@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；  binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。   Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。  Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。">
+  <meta name="description" content="References[1] Chapter 2. The Structure of the Java Virtual Machine[2] Chapter 2. The Structure of the Java Virtual Machine">
+<meta name="keywords" content="jvm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql-log">
-<meta property="og:url" content="http://weikeqin.com/2020/06/24/mysql-log/index.html">
+<meta property="og:title" content="java-virtual-machine-structure">
+<meta property="og:url" content="http://weikeqin.com/2020/07/05/java-virtual-machine-structure/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；  binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。   Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。  Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。">
+<meta property="og:description" content="References[1] Chapter 2. The Structure of the Java Virtual Machine[2] Chapter 2. The Structure of the Java Virtual Machine">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-24T03:38:18.412Z">
+<meta property="og:updated_time" content="2020-07-12T14:16:54.945Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql-log">
-<meta name="twitter:description" content="redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；  binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。   Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。  Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。">
+<meta name="twitter:title" content="java-virtual-machine-structure">
+<meta name="twitter:description" content="References[1] Chapter 2. The Structure of the Java Virtual Machine[2] Chapter 2. The Structure of the Java Virtual Machine">
 
-<link rel="canonical" href="http://weikeqin.com/2020/06/24/mysql-log/">
+<link rel="canonical" href="http://weikeqin.com/2020/07/05/java-virtual-machine-structure/">
 
 
 <script id="page-configurations">
@@ -45,7 +46,7 @@
   };
 </script>
 
-  <title>mysql-log | 沧海一粟</title>
+  <title>java-virtual-machine-structure | 沧海一粟</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113485469-1"></script>
     <script>
@@ -212,7 +213,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/24/mysql-log/">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/07/05/java-virtual-machine-structure/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -225,7 +226,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          mysql-log
+          java-virtual-machine-structure
         </h1>
 
         <div class="post-meta">
@@ -234,13 +235,28 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-06-24 09:25:22 / 修改时间：11:38:18" itemprop="dateCreated datePublished" datetime="2020-06-24T09:25:22+08:00">2020-06-24</time>
+              <time title="创建时间：2020-07-05 07:43:14" itemprop="dateCreated datePublished" datetime="2020-07-05T07:43:14+08:00">2020-07-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-12 22:16:54" itemprop="dateModified" datetime="2020-07-12T22:16:54+08:00">2020-07-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                </span>
             </span>
 
           
-            <span id="/2020/06/24/mysql-log/" class="post-meta-item leancloud_visitors" data-flag-title="mysql-log" title="阅读次数">
+            <span id="/2020/07/05/java-virtual-machine-structure/" class="post-meta-item leancloud_visitors" data-flag-title="java-virtual-machine-structure" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -264,11 +280,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>  redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；<br>  binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。</p>
-<p>  Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。<br>  Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。(row格式会导致日志变大)</p>
-<p>  binlog是可以关的，你如果有权限，可以set sql_log_bin=0关掉本线程的binlog日志。 所以只依赖binlog来恢复就靠不住。</p>
-<p>  innodb B+树主键索引的叶子节点存的是什么，存的是页<br>  B+树的叶子节点是page （页），一个页里面可以存多个行 </p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://time.geekbang.org/column/article/68633" target="_blank" rel="noopener">02 | 日志系统：一条SQL更新语句是如何执行的？</a><br>[2] <a href="https://www.cnblogs.com/f-ck-need-u/p/9010872.html" target="_blank" rel="noopener">详细分析MySQL事务日志(redo log和undo log)</a><br>[3] <a href="https://www.cnblogs.com/f-ck-need-u/p/9001061.html" target="_blank" rel="noopener">详细分析MySQL的日志(一)</a><br>[4] <a href="https://dev.mysql.com/doc/refman/5.7/en/server-logs.html" target="_blank" rel="noopener">dev.mysql.com/doc/refman/5.7/en/server-logs.html</a><br>[5] <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-redo-log.html" target="_blank" rel="noopener">dev.mysql.com/doc/refman/5.7/en/innodb-redo-log.html</a></p>
+        <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html" target="_blank" rel="noopener">Chapter 2. The Structure of the Java Virtual Machine</a><br>[2] <a href="https://docs.oracle.com/javase/specs/jvms/se14/html/jvms-2.html" target="_blank" rel="noopener">Chapter 2. The Structure of the Java Virtual Machine</a></p>
 
     </div>
 
@@ -277,6 +289,9 @@
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/jvm/" rel="tag"># jvm</a>
+          </div>
 
         
 
@@ -284,13 +299,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/22/unique-id/" rel="prev" title="全局唯一ID 分布式ID">
-      <i class="fa fa-chevron-left"></i> 全局唯一ID 分布式ID
+    <a href="/2020/06/28/mysql-log/" rel="prev" title="mysql-log">
+      <i class="fa fa-chevron-left"></i> mysql-log
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/07/01/java-virtual-machine-structure/" rel="next" title="java-virtual-machine-structure">
-      java-virtual-machine-structure <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
