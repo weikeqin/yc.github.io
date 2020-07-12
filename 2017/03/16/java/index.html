@@ -29,7 +29,7 @@
 <meta property="og:description" content="java学习">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://weikeqin.com/img/java/J2SE的架构.jpg">
-<meta property="og:updated_time" content="2020-05-17T15:30:36.643Z">
+<meta property="og:updated_time" content="2020-06-21T01:35:45.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java">
 <meta name="twitter:description" content="java学习">
@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-17 23:30:36" itemprop="dateModified" datetime="2020-05-17T23:30:36+08:00">2020-05-17</time>
+                <time title="修改时间：2020-06-21 09:35:45" itemprop="dateModified" datetime="2020-06-21T09:35:45+08:00">2020-06-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -372,7 +372,7 @@
 <p>d.ArrayList、LinkedList、Vector的区别：ArrayList 和Vector底层是采用数组方式存储数据，Vector由于使用了synchronized方法（线程安全）所以性能上比ArrayList要差，LinkedList使用双向链表实现存储，随机存取比较慢</p>
 <p>e.HashMap的底层源码实现：当我们往HashMap中put元素的时候，先根据key的hashCode重新计算hash值，根据hash值得到这个元素在数组中的位置（即下标），如果数组该位置上已经存放有其他元素了，那么在这个位置上的元素将以链表的形式存放，新加入的放在链头，最先加入的放在链尾。如果数组该位置上没有元素，就直接将该元素放到此数组中的该位置上。</p>
 <p>f.Fail-Fast机制:在使用迭代器的过程中有其他线程修改了map，那么将抛出ConcurrentModificationException，这就是所谓fail-fast机制。这一机制在源码中的实现是通过modCount域，modCount顾名思义就是修改次数，对HashMap内容的修改都将增加这个值，那么在迭代器初始化过程中会将这个值赋给迭代器的expectedModCount。在迭代过程中，判断modCount跟expectedModCount是否相等，如果不相等就表示已经有其他线程修改了Map.</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.java.com/zh_CN/about/" target="_blank" rel="noopener">https://www.java.com/zh_CN/about/</a><br>[2] <a href="https://docs.oracle.com/javase/tutorial/" target="_blank" rel="noopener">https://docs.oracle.com/javase/tutorial/</a>　　 Java 教程<br>[3] <a href="http://www.oracle.com/technetwork/java/javamagazine/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javamagazine/index.html</a><br>[4] <a href="http://www.oracle.com/technetwork/topics/newtojava/youngdevelopers/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/topics/newtojava/youngdevelopers/index.html</a><br>[5] <a href="http://www.oracle.com/technetwork/topics/newtojava/overview/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/topics/newtojava/overview/index.html</a><br>[6] <a href="http://www.cnblogs.com/xrq730/p/4826691.html" target="_blank" rel="noopener">http://www.cnblogs.com/xrq730/p/4826691.html</a>　　Java虚拟机1：什么是Java<br>[7] <a href="http://www.importnew.com/" target="_blank" rel="noopener">http://www.importnew.com/</a>    ImportNew - 专注Java &amp; Android 技术分享<br>[8] <a href="http://www.cnblogs.com/zengkefu/p/5633342.html" target="_blank" rel="noopener">http://www.cnblogs.com/zengkefu/p/5633342.html</a><br>[9] <a href="http://blog.csdn.net/moneyshi/article/details/43056321" target="_blank" rel="noopener">http://blog.csdn.net/moneyshi/article/details/43056321</a><br>[10] <a href="http://blog.csdn.net/whorus1/article/details/51518139" target="_blank" rel="noopener">http://blog.csdn.net/whorus1/article/details/51518139</a><br>[11] <a href="https://mp.weixin.qq.com/s/ENxjkPMsBTwImD-sBTNeKw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/ENxjkPMsBTwImD-sBTNeKw</a>    46张PPT讲述JVM体系结构、GC算法和调优<br>[12] <a href="https://mp.weixin.qq.com/s/sHJoPmbpcGDe1XyyI4qKTg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/sHJoPmbpcGDe1XyyI4qKTg</a>    10种简单的Java性能优化<br>[13] <a href="https://yq.aliyun.com/articles/73581" target="_blank" rel="noopener">https://yq.aliyun.com/articles/73581</a>    2016年Java面试题整理<br>[14] <a href="https://yq.aliyun.com/articles/73584" target="_blank" rel="noopener">https://yq.aliyun.com/articles/73584</a>    Java集合类操作优化经验总结<br>[15] <a href="http://www.toutiao.com/a6409910051989258498/" target="_blank" rel="noopener">http://www.toutiao.com/a6409910051989258498/</a>    图解Java面试题——JVM<br>[16] <a href="http://www.toutiao.com/a6409986995707871489/" target="_blank" rel="noopener">http://www.toutiao.com/a6409986995707871489/</a>    2017年终BAT的JAVA面试题聚集<br>[17] <a href="http://www.tuicool.com/articles/7RRrIr" target="_blank" rel="noopener">http://www.tuicool.com/articles/7RRrIr</a>    Java 资源大全中文版</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p><a href="https://docs.oracle.com/en/java/javase/index.html" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/index.html</a><br>[1] <a href="https://www.java.com/zh_CN/about/" target="_blank" rel="noopener">https://www.java.com/zh_CN/about/</a><br>[2] <a href="https://docs.oracle.com/javase/tutorial/" target="_blank" rel="noopener">https://docs.oracle.com/javase/tutorial/</a>　　 Java 教程<br>[3] <a href="http://www.oracle.com/technetwork/java/javamagazine/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javamagazine/index.html</a><br>[4] <a href="http://www.oracle.com/technetwork/topics/newtojava/youngdevelopers/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/topics/newtojava/youngdevelopers/index.html</a><br>[5] <a href="http://www.oracle.com/technetwork/topics/newtojava/overview/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/topics/newtojava/overview/index.html</a><br>[6] <a href="http://www.cnblogs.com/xrq730/p/4826691.html" target="_blank" rel="noopener">http://www.cnblogs.com/xrq730/p/4826691.html</a>　　Java虚拟机1：什么是Java<br>[7] <a href="http://www.importnew.com/" target="_blank" rel="noopener">http://www.importnew.com/</a>    ImportNew - 专注Java &amp; Android 技术分享<br>[8] <a href="http://www.cnblogs.com/zengkefu/p/5633342.html" target="_blank" rel="noopener">http://www.cnblogs.com/zengkefu/p/5633342.html</a><br>[9] <a href="http://blog.csdn.net/moneyshi/article/details/43056321" target="_blank" rel="noopener">http://blog.csdn.net/moneyshi/article/details/43056321</a><br>[10] <a href="http://blog.csdn.net/whorus1/article/details/51518139" target="_blank" rel="noopener">http://blog.csdn.net/whorus1/article/details/51518139</a><br>[11] <a href="https://mp.weixin.qq.com/s/ENxjkPMsBTwImD-sBTNeKw" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/ENxjkPMsBTwImD-sBTNeKw</a>    46张PPT讲述JVM体系结构、GC算法和调优<br>[12] <a href="https://mp.weixin.qq.com/s/sHJoPmbpcGDe1XyyI4qKTg" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/sHJoPmbpcGDe1XyyI4qKTg</a>    10种简单的Java性能优化<br>[13] <a href="https://yq.aliyun.com/articles/73581" target="_blank" rel="noopener">https://yq.aliyun.com/articles/73581</a>    2016年Java面试题整理<br>[14] <a href="https://yq.aliyun.com/articles/73584" target="_blank" rel="noopener">https://yq.aliyun.com/articles/73584</a>    Java集合类操作优化经验总结<br>[15] <a href="http://www.toutiao.com/a6409910051989258498/" target="_blank" rel="noopener">http://www.toutiao.com/a6409910051989258498/</a>    图解Java面试题——JVM<br>[16] <a href="http://www.toutiao.com/a6409986995707871489/" target="_blank" rel="noopener">http://www.toutiao.com/a6409986995707871489/</a>    2017年终BAT的JAVA面试题聚集<br>[17] <a href="http://www.tuicool.com/articles/7RRrIr" target="_blank" rel="noopener">http://www.tuicool.com/articles/7RRrIr</a>    Java 资源大全中文版</p>
 <p>java-web error<br>[1] <a href="https://my.oschina.net/fdblog/blog/161305" target="_blank" rel="noopener">https://my.oschina.net/fdblog/blog/161305</a><br>[2] <a href="http://blog.csdn.net/zhang168/article/details/51423905" target="_blank" rel="noopener">http://blog.csdn.net/zhang168/article/details/51423905</a><br>[3] <a href="https://stackoverflow.com/questions/21783391/spring-boot-unable-to-start-embeddedwebapplicationcontext-due-to-missing-embedd" target="_blank" rel="noopener">https://stackoverflow.com/questions/21783391/spring-boot-unable-to-start-embeddedwebapplicationcontext-due-to-missing-embedd</a></p>
 <p><a href="https://www.cnblogs.com/yougewe/p/8227447.html" target="_blank" rel="noopener">一点解决版本冲突的应急思路、怎样在所有jar包文件中搜索冲突的方法？</a></p>
 
@@ -472,20 +472,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

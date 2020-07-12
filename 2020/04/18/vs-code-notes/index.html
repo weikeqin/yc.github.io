@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="(1) vs-code 设置语言  打开命令面板 ，输入 configure display language，设置语言为 zh-cn    备注：打开命令面板快捷键  mac Shift + Command + P    Windows Ctrl + Shift + p (2) vs-code 设置背景豆沙绿  修改配置文件 ~/Library/Application Support/Code/">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-05-29T06:14:59.961Z">
+<meta property="og:updated_time" content="2020-07-10T07:21:36.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vs-code-notes">
 <meta name="twitter:description" content="(1) vs-code 设置语言  打开命令面板 ，输入 configure display language，设置语言为 zh-cn    备注：打开命令面板快捷键  mac Shift + Command + P    Windows Ctrl + Shift + p (2) vs-code 设置背景豆沙绿  修改配置文件 ~/Library/Application Support/Code/">
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-29 14:14:59" itemprop="dateModified" datetime="2020-05-29T14:14:59+08:00">2020-05-29</time>
+                <time title="修改时间：2020-07-10 15:21:36" itemprop="dateModified" datetime="2020-07-10T15:21:36+08:00">2020-07-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -285,7 +285,8 @@
 <h1 id="2-vs-code-设置背景豆沙绿"><a href="#2-vs-code-设置背景豆沙绿" class="headerlink" title="(2) vs-code 设置背景豆沙绿"></a>(2) vs-code 设置背景豆沙绿</h1><p>  修改配置文件 <code>~/Library/Application Support/Code/User/settings.json</code><br>  把  <code>&quot;editor.background&quot;</code> 设置成 <code>&quot;#C7EDCC&quot;</code>，具体如下：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"workbench.colorTheme"</span>: <span class="string">"Default Light+"</span>,</span><br><span class="line">    <span class="attr">"workbench.colorCustomizations"</span>: &#123;</span><br><span class="line">        <span class="attr">"editor.background"</span>: <span class="string">"#C7EDCC"</span></span><br><span class="line">        //设置用户选中代码段的颜色 </span><br><span class="line">        //<span class="string">"editor.selectionBackground"</span>: <span class="string">"#2f00ff"</span>,</span><br><span class="line">        //搜索匹配的背景色</span><br><span class="line">        //"editor.findMatchBackground": "#ff0000",</span><br><span class="line">        //"editor.findMatchHighlightBackground": "#ff00ff",</span><br><span class="line">        //"editor.findRangeHighlightBackground": "#ff9900"</span><br><span class="line">    </span><br><span class="line">    &#125;,</span><br><span class="line">    "editor.fontSize": 16,</span><br><span class="line">    "window.openFoldersInNewWindow": "off",</span><br><span class="line">    "window.openWithoutArgumentsInNewWindow": "on",</span><br><span class="line">    "editor.largeFileOptimizations": false,</span><br><span class="line">    "editor.suggestSelection": "first",</span><br><span class="line">    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",</span><br><span class="line">    "java.configuration.checkProjectSettingsExclusions": false,</span><br><span class="line">    "extensions.autoUpdate": false,</span><br><span class="line">    "window.zoomLevel": 0,</span><br><span class="line">    "update.mode": "none"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://code.visualstudio.com/docs" target="_blank" rel="noopener">vscode-docs</a></p>
+<h1 id="删除缓存"><a href="#删除缓存" class="headerlink" title="删除缓存"></a>删除缓存</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -rf ~/Library/Application\ Support/Code/Cache/*</span><br><span class="line">rm -rf ~/Library/Application\ Support/Code/CachedData/*</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://code.visualstudio.com/docs" target="_blank" rel="noopener">vscode-docs</a><br>  <a href="https://stackoverflow.com/questions/39234428/how-do-you-clear-your-visual-studio-code-cache-on-a-mac-linux-machine" target="_blank" rel="noopener">https://stackoverflow.com/questions/39234428/how-do-you-clear-your-visual-studio-code-cache-on-a-mac-linux-machine</a> </p>
 
     </div>
 
@@ -369,7 +370,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-vs-code-设置语言"><span class="nav-number">1.</span> <span class="nav-text">(1) vs-code 设置语言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-vs-code-设置背景豆沙绿"><span class="nav-number">2.</span> <span class="nav-text">(2) vs-code 设置背景豆沙绿</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-vs-code-设置语言"><span class="nav-number">1.</span> <span class="nav-text">(1) vs-code 设置语言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-vs-code-设置背景豆沙绿"><span class="nav-number">2.</span> <span class="nav-text">(2) vs-code 设置背景豆沙绿</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除缓存"><span class="nav-number">3.</span> <span class="nav-text">删除缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -383,20 +384,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

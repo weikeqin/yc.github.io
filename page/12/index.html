@@ -210,6 +210,604 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/12/03/neo4j-recover-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/03/neo4j-recover-data/" class="post-title-link" itemprop="url">neo4j 误删 数据 恢复</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-03 22:31:49" itemprop="dateCreated datePublished" datetime="2017-12-03T22:31:49+08:00">2017-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/12/03/neo4j-recover-data/" class="post-meta-item leancloud_visitors" data-flag-title="neo4j 误删 数据 恢复" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>neo4j误删数据恢复</p>
+<p>今天有一个朋友告诉我他误操作，删了几十G的数据，问我有没有什么办法可以恢复数据。<br>说来也巧了，今天我在测试大数据量下load csv的性能，导入三次删除三次，理论上数据库为空，data目录下的文件应该&lt;1MB，但是我一看，800M，肯定有日志呀。<br>正好碰到他问我这个问题，首先告诉他不要慌，有办法，然后google了一下，是neo4j的其中一个作者(Stefan Armbruster，带飞机帽的那个)在stackoverflow回答的，还好，谢天谢地。</p>
+<!--
+不小心写了一句MATCH p=()-[]->() delete p;
+刚才40G，执行这句话15秒，现在看只有14g了
+-->
+<p>用这个恢复数据<br><a href="https://github.com/neo4j/neo4j/blob/3.0/tools/src/main/java/org/neo4j/tools/applytx/DatabaseRebuildTool.java" target="_blank" rel="noopener">https://github.com/neo4j/neo4j/blob/3.0/tools/src/main/java/org/neo4j/tools/applytx/DatabaseRebuildTool.java</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/03/neo4j-recover-data/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/11/15/java-interview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/15/java-interview/" class="post-title-link" itemprop="url">Java</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-11-15 20:27:03" itemprop="dateCreated datePublished" datetime="2017-11-15T20:27:03+08:00">2017-11-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/11/15/java-interview/" class="post-meta-item leancloud_visitors" data-flag-title="Java" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  Java面试题 前200页 转自<a href="https://github.com/tangyouhua/program-resource/blob/master/program-interview/java-baidu-200.md" target="_blank" rel="noopener">Java 面试题：百度前200页都在这里了</a></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><ul>
+<li>操作系统中 heap 和 stack 的区别 </li>
+<li>什么是基于注解的切面实现</li>
+<li>什么是 对象/关系 映射集成模块</li>
+<li>什么是 Java 的反射机制</li>
+<li>什么是 ACID</li>
+<li>BS与CS的联系与区别</li>
+<li>Cookie 和 Session的区别</li>
+<li>fail-fast 与 fail-safe 机制有什么区别</li>
+<li>get 和 post请求的区别</li>
+<li>Interface 与 abstract 类的区别</li>
+<li>IOC的优点是什么</li>
+<li>IO 和 NIO的区别，NIO优点</li>
+<li>Java 8 / Java 7 为我们提供了什么新功能</li>
+<li>什么是竞态条件？ 举个例子说明。</li>
+<li>JRE、JDK、JVM 及 JIT 之间有什么不同</li>
+<li>MVC的各个部分都有那些技术来实现?如何实现?</li>
+<li>RPC 通信和 RMI 区别 </li>
+<li>什么是 Web Service（Web服务）</li>
+<li>JSWDL开发包的介绍。JAXP、JAXM的解释。SOAP、UDDI,WSDL解释。 </li>
+<li>WEB容器主要有哪些功能? 并请列出一些常见的WEB容器名字。</li>
+<li>一个”.java”源文件中是否可以包含多个类（不是内部类）？有什么限制</li>
+<li>简单说说你了解的类加载器。是否实现过类加载器</li>
+<li>解释一下什么叫AOP（面向切面编程）</li>
+<li>请简述 Servlet 的生命周期及其相关的方法</li>
+<li>请简述一下 Ajax 的原理及实现步骤</li>
+<li>简单描述Struts的主要功能</li>
+<li>什么是 N 层架构</li>
+<li>什么是CORBA？用途是什么</li>
+<li>什么是Java虚拟机？为什么Java被称作是“平台无关的编程语言”</li>
+<li>什么是正则表达式？用途是什么？哪个包使用正则表达式来实现模式匹配</li>
+<li>什么是懒加载（Lazy Loading）</li>
+<li>什么是尾递归，为什么需要尾递归</li>
+<li>什么是控制反转（Inversion of Control）与依赖注入（Dependency Injection）</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/11/15/java-interview/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/11/14/crawler-google-translate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/14/crawler-google-translate/" class="post-title-link" itemprop="url">爬取 谷歌翻译</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-11-14 10:12:54" itemprop="dateCreated datePublished" datetime="2017-11-14T10:12:54+08:00">2017-11-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-12-09 14:47:42" itemprop="dateModified" datetime="2019-12-09T14:47:42+08:00">2019-12-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/11/14/crawler-google-translate/" class="post-meta-item leancloud_visitors" data-flag-title="爬取 谷歌翻译" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  领导交给我一个任务，有一些英文的文章，翻译成中文，用谷歌翻译试试。那就试试呗。</p>
+<p>  F12 经过多次测试，发现请求 <a href="https://translate.google.cn/translate_a/single" target="_blank" rel="noopener">https://translate.google.cn/translate_a/single</a> 带一些参数就可以爬取谷歌翻译<br>  第一步 访问 <a href="https://translate.google.cn/" target="_blank" rel="noopener">https://translate.google.cn/</a> 获取TKK<br>  第二步 根据TKK和文本算出tk值，然后访问 <a href="https://translate.google.cn/translate_a/single" target="_blank" rel="noopener">https://translate.google.cn/translate_a/single</a> 时加上参数，就可以爬取到翻译后的内容了。</p>
+<p>  步骤如下:</p>
+<p>Get方式<br><a href="https://translate.google.cn/translate_a/single?client=t&amp;sl=en&amp;tl=zh-CN&amp;hl=zh-CN&amp;dt=at&amp;dt=bd&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qca&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;ie=UTF-8&amp;oe=UTF-8&amp;source=btn&amp;ssel=3&amp;tsel=0&amp;kc=2&amp;tk=750300.857549&amp;q=test" target="_blank" rel="noopener">https://translate.google.cn/translate_a/single?client=t&amp;sl=en&amp;tl=zh-CN&amp;hl=zh-CN&amp;dt=at&amp;dt=bd&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qca&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;ie=UTF-8&amp;oe=UTF-8&amp;source=btn&amp;ssel=3&amp;tsel=0&amp;kc=2&amp;tk=750300.857549&amp;q=test</a></p>
+<p>Post方式<br><a href="https://translate.google.cn/translate_a/single?client=t&amp;sl=en&amp;tl=zh-CN&amp;hl=zh-CN&amp;dt=at&amp;dt=bd&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qca&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;ie=UTF-8&amp;oe=UTF-8&amp;pc=1&amp;otf=1&amp;ssel=3&amp;tsel=0&amp;kc=1&amp;tk=280278.139719" target="_blank" rel="noopener">https://translate.google.cn/translate_a/single?client=t&amp;sl=en&amp;tl=zh-CN&amp;hl=zh-CN&amp;dt=at&amp;dt=bd&amp;dt=ex&amp;dt=ld&amp;dt=md&amp;dt=qca&amp;dt=rw&amp;dt=rm&amp;dt=ss&amp;dt=t&amp;ie=UTF-8&amp;oe=UTF-8&amp;pc=1&amp;otf=1&amp;ssel=3&amp;tsel=0&amp;kc=1&amp;tk=280278.139719</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/11/14/crawler-google-translate/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/11/13/knowledge-graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/13/knowledge-graph/" class="post-title-link" itemprop="url">知识图谱</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-11-13 14:34:03" itemprop="dateCreated datePublished" datetime="2017-11-13T14:34:03+08:00">2017-11-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/knowledge/" itemprop="url" rel="index"><span itemprop="name">knowledge</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/11/13/knowledge-graph/" class="post-meta-item leancloud_visitors" data-flag-title="知识图谱" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  看了很多资料后，谈谈自己对知识图谱的理解。</p>
+<p>  比较好的一篇知识图谱的文章 <a href="https://mp.weixin.qq.com/s/wlMEpNHPMGsc8IbTxKs_LA" target="_blank" rel="noopener">领域应用 | 知识图谱的技术与应用</a></p>
+<h1 id="概论"><a href="#概论" class="headerlink" title="概论"></a>概论</h1><p>  随着移动互联网的发展，万物互联成为了可能，这种互联所产生的数据也在爆发式地增长，而且这些数据恰好可以作为分析关系的有效原料。如果说以往的智能分析专注在每一个个体上，在移动互联网时代则除了个体，这种个体之间的关系也必然成为我们需要深入分析的很重要一部分。 在一项任务中，只要有关系分析的需求，知识图谱就“有可能”派的上用场。</p>
+<h1 id="什么是知识图谱"><a href="#什么是知识图谱" class="headerlink" title="什么是知识图谱"></a>什么是知识图谱</h1><p>  Google知识图谱（英语：Google Knowledge Graph，也称Google知识图）是Google的一个知识库，其使用语义检索从多种来源收集信息，以提高Google搜索的质量。<br>  其目标是，用户将能够使用此功能提供的信息来解决他们查询的问题，而不必导航到其他网站并自己汇总信息。<br>  据Google称，知识图谱的信息来自许多来源，包括CIA的世界概况，Freebase和维基百科[1]。其功能与Ask.com和Wolfram Alpha等问题问答系统相似。<br>  截至2012年，其语义网络包含超过570亿个对象，超过18亿个介绍，这些不同的对象之间有链接关系，用来理解搜索关键词的含义。</p>
+<p>  知识图谱最早被应用于搜索引擎领域，旨在通过语义把碎片化的数据关联起来，让用户能直接搜索到事务（Things），而不是文本字符串（Strings）。在搜索引擎中引入知识图谱大幅的提升和优化了搜索体验。<br>  近年来，随着人工智能的再次兴起，知识图谱又被广泛的应用于聊天机器人和问答系统中，用于辅助深度理解人类的语言和支持推理，并提升人机问答的用户体验等。典型的如IBM的Watson，苹果的Siri，Google Allo，Amazon Echo，百度度秘，公子小白等。<br>  此外，知识图谱还被用来提升数据分析的能力和效果。例如著名的大数据公司Palantir利用知识图谱建立数据的关联以提升上游数据分析的效果。与知识图谱有关的语义技术也被用来提升机器与机器之间的语义互操作能力，解决机器之间的语义理解问题。例如，全球最大物联网标准化组织OneM2M就把语义和知识技术作为物联设备抽象和语义封装的技术基础。<br>  在金融、农业、电商、医疗健康、环境保护等大量的垂直领域，知识图谱都得到广泛的应用。例如，很多金融领域公司也构建了金融知识库以进行碎片化金融数据的集成与管理，并辅助金融专家进行风控控制、欺诈识别等；生物医疗专家通过集成和分析大规模的生物医学知识图谱，辅助其进行药物发现、潜在靶点识别等多方面任务。</p>
+<p>  从学术的角度，我们可以对知识图谱给一个这样的定义：“知识图谱本质上是语义网络（Semantic Network）的知识库”。但这有点抽象，所以换个角度，从实际应用的角度出发其实可以简单地把知识图谱理解成多关系图（Multi-relational Graph）。<br>  那什么叫多关系图呢？ 学过数据结构的都应该知道什么是图（Graph）。图是由节点（Vertex）和边（Edge）来构成，但这些图通常只包含一种类型的节点和边。但相反，多关系图一般包含多种类型的节点和多种类型的边。比如左下图表示一个经典的图结构，右边的图则表示多关系图，因为图里包含了多种类型的节点和边。这些类型由不同的颜色来标记。<br>  <a href>图片</a></p>
+<p>  在知识图谱里，我们通常用“实体（Entity）”来表达图里的节点、用“关系（Relation）”来表达图里的“边”。实体指的是现实世界中的事物比如人、地名、概念、药物、公司等，关系则用来表达不同实体之间的某种联系，比如人-“居住在”-北京、张三和李四是“朋友”、逻辑回归是深度学习的“先导知识”等等。</p>
+<p>  现实世界中的很多场景非常适合用知识图谱来表达。 比如一个社交网络图谱里，我们既可以有“人”的实体，也可以包含“公司”实体。人和人之间的关系可以是“朋友”，也可以是“同事”关系。人和公司之间的关系可以是“现任职”或者“曾任职”的关系。 类似的，一个风控知识图谱可以包含“电话”、“公司”的实体，电话和电话之间的关系可以是“通话”关系，而且每个公司它也会有固定的电话。 </p>
+<p>  知识图谱来源于三个方面的技术进步。一是符号人工智能、二是万维网、三是自然语言处理。<br>  在经典人工智能领域，以知识表示为中心的符号人工智能和以神经网络为中心的连接人工智能一直是两个主流方向。神经网络借助深度学习解决了大量感知层面的问题，如视觉、听觉等。知识图谱一定程度上代表符号人工智能的发展方向，被认为是进一步解决认知层面的问题，如语言理解、常识推理等，所不可或缺的技术手段。<br>  在万维网领域，Web之父Tim Berners-Lee于1998年提出了语义网（Semantic Web）的概念。传统Web是通过建立网页之间的链接发展起来的。语义网的初衷也是希望能像传统Web一样，建立数据或对象的直接链接，形成一个庞大的链接数据库或知识库。这种结构化的链接数据将使得Web上的信息更加易于被机器所理解和处理，而不仅仅像网页那样只是供人浏览。谷歌知识图谱的主要数据来源Freebase就是早期的语义网项目。<br>  在自然语言处理领域，从文本中自动或半自动抽取实体及实体之间关系的技术飞速发展，在一定程度上解决了传统知识库获取面临的可扩展性差的问题，从而提升了各种知识图谱构建的效率。<br>  当前，知识图谱技术和方法正在进一步与深度学习等进一步融合。目前人工智能领域的一个重要研究方向就是怎样基于神经网络来处理符号和实习知识图谱的处理和常识推理。可以预见，知识图谱将在人工智能相关的各个领域得到更加广泛的应用。</p>
+<h1 id="知识图谱的表示"><a href="#知识图谱的表示" class="headerlink" title="知识图谱的表示"></a>知识图谱的表示</h1><p>  知识图谱应用的前提是已经构建好了知识图谱，也可以把它认为是一个知识库。这也是为什么它可以用来回答一些搜索相关问题的原因，比如在Google搜索引擎里输入“Who is the wife of Bill Gates?”，我们直接可以得到答案-“Melinda Gates”。这是因为我们在系统层面上已经创建好了一个包含“Bill Gates”和“Melinda Gates”的实体以及他俩之间关系的知识库。所以，当我们执行搜索的时候，就可以通过关键词提取（”Bill Gates”, “Melinda Gates”, “wife”）以及知识库上的匹配可以直接获得最终的答案。这种搜索方式跟传统的搜索引擎是不一样的，一个传统的搜索引擎它返回的是网页、而不是最终的答案，所以就多了一层用户自己筛选并过滤信息的过程。<br>  <a href>图片</a></p>
+<p>  在现实世界中，实体和关系也会拥有各自的属性，比如人可以有“姓名”和“年龄”。当一个知识图谱拥有属性时，我们可以用属性图（Property Graph）来表示。下面的图表示一个简单的属性图。李明和李飞是父子关系，并且李明拥有一个138开头的电话号，这个电话号开通时间是2018年，其中2018年就可以作为关系的属性。类似的，李明本人也带有一些属性值比如年龄为25岁、职位是总经理等。<br>  <a href>图片</a></p>
+<p>  这种属性图的表达很贴近现实生活中的场景，也可以很好地描述业务中所包含的逻辑。除了属性图，知识图谱也可以用RDF来表示，它是由很多的三元组（Triples）来组成。RDF在设计上的主要特点是易于发布和分享数据，但不支持实体或关系拥有属性，如果非要加上属性，则在设计上需要做一些修改。目前来看，RDF主要还是用于学术的场景，在工业界我们更多的还是采用图数据库（比如用来存储属性图）的方式。感兴趣的读者可以参考RDF的相关文献，在文本里不多做解释。</p>
+<h1 id="知识抽取"><a href="#知识抽取" class="headerlink" title="知识抽取"></a>知识抽取</h1><p>  知识图谱的构建是后续应用的基础，而且构建的前提是需要把数据从不同的数据源中抽取出来。对于垂直领域的知识图谱来说，它们的数据源主要来自两种渠道：一种是业务本身的数据，这部分数据通常包含在公司内的数据库表并以结构化的方式存储；另一种是网络上公开、抓取的数据，这些数据通常是以网页的形式存在所以是非结构化的数据。</p>
+<p>  前者一般只需要简单预处理即可以作为后续AI系统的输入，但后者一般需要借助于自然语言处理等技术来提取出结构化信息。比如在上面的搜索例子里，Bill Gates和Malinda Gate的关系就可以从非结构化数据中提炼出来，比如维基百科等数据源。</p>
+<p>举个比较实际的例子，比如想获取电影(电影名 上映时间 导演 角色) 演员(姓名 出生年月 性别 等) 等的数据，可以从从比较专业的电影网站爬取，比如豆瓣</p>
+<h1 id="知识图谱的应用案例"><a href="#知识图谱的应用案例" class="headerlink" title="知识图谱的应用案例"></a>知识图谱的应用案例</h1><p>  当下知识图谱已在工业领域得到了广泛应用，如搜索领域的Google搜索、百度搜索，社交领域的领英经济图谱，企业信息领域的天眼查企业图谱<br>  著名的通用知识图谱中有，谷歌 Knowledge Graph 、<a href="https://ai.baidu.com/tech/kg/schema" target="_blank" rel="noopener">百度知识图谱</a>、搜狗 知立方 、YAGO、DBpedia等，它们具有规模大、领域宽，包含大量常识等特点。</p>
+<h1 id="国内应用案例"><a href="#国内应用案例" class="headerlink" title="国内应用案例"></a>国内应用案例</h1><p>  在国内，落地的，而且做得比较好的行业知识图谱，我觉得应该是<a href="http://www.tianyancha.com" target="_blank" rel="noopener">天眼查</a>的工商行业知识图谱，主要是公司和人的数据。<br>  举个例子，滴滴 官方叫法是 <a href="https://www.tianyancha.com/company/41526136" target="_blank" rel="noopener">北京小桔科技有限公司</a> 的 <a href="https://www.tianyancha.com/company/41526136?full=true" target="_blank" rel="noopener">企业关系</a> 和 <a href="https://www.tianyancha.com/company/41526136?time_full=true" target="_blank" rel="noopener">历史沿革</a><br>  点击上面的企业关系和历史沿革即可查看，可以看到 人和公司的关系，而且能够根据时间查看，点击人或者公司可以跳到对应的页面。我觉得天眼查这个企业和人的知识图谱做的确实挺好的。  如果不方便查看，下面有我的截图。<br>  备注：不是打广告，我是在使用Neo4j的时候发现有一个朋友也在使用，最后发现他们可能用Neo4j做离线存储，后来才知道是天眼查。看了一下，感觉在我所知道的国内的知识库、知识图谱里，这个是想法很好，真正落地而且应用的非常好的一个。</p>
+<p>  <img src="/img/KnowledgeGraph/tianyancha/20180509221526_tianyancha_didi.png" alt="企业关系"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/11/13/knowledge-graph/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/11/10/crawler-sogou/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/10/crawler-sogou/" class="post-title-link" itemprop="url">爬取 搜狗</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-11-10 15:34:29" itemprop="dateCreated datePublished" datetime="2017-11-10T15:34:29+08:00">2017-11-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/11/10/crawler-sogou/" class="post-meta-item leancloud_visitors" data-flag-title="爬取 搜狗" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="重要参数SUID、SNUID、SUV"><a href="#重要参数SUID、SNUID、SUV" class="headerlink" title="重要参数SUID、SNUID、SUV"></a>重要参数SUID、SNUID、SUV</h1><h2 id="SUID"><a href="#SUID" class="headerlink" title="SUID"></a>SUID</h2><p>  SUID具体的含义可以自行百度，这里只讲述它生成的过程。当我们访问sogou搜索首页的时候，Set-Cookie中便会生成一个SUID参数的内容，除非重启浏览器，不然短时间内SUID并不会改变。SUID的值应该是sogou服务端随便分配的，只有当重新开启一个session时它的值才会更新。</p>
+<h2 id="SNUID"><a href="#SNUID" class="headerlink" title="SNUID"></a>SNUID</h2><p>  SNUID是sogou反爬虫的重点，sogou是对同一个SNUID访问次数做了限制，而超过限制后，会跳转到验证码页面，只有输入验证码重新验证以后，SNUID才会更新，访问才能继续进行。那么SNUID是如何生成的呢？经过测试，应该是由javascript生成的，当然前提是要有SUID，SUID是生成SNUID的基础。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/11/10/crawler-sogou/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/11/05/mariadb-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/11/05/mariadb-notes/" class="post-title-link" itemprop="url">MariaDB 笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-11-05 09:46:39" itemprop="dateCreated datePublished" datetime="2017-11-05T09:46:39+08:00">2017-11-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/database/" itemprop="url" rel="index"><span itemprop="name">database</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/11/05/mariadb-notes/" class="post-meta-item leancloud_visitors" data-flag-title="MariaDB 笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>看到一篇新闻，MariaDB 完成 C 轮 2700 万美金融资，阿里巴巴领投，看了以后觉得MariaDB挺眼熟的，就查了一下，然后感觉这个挺有意思，试了试。<br>而且对于像谷歌、亚马逊、FaceBook、微软、Twitter、阿里巴巴等这种公司，我觉得他们使用的产品很有可能在将来会比较流行。</p>
+<p>11 月 2 日，MariaDB 宣布完成由阿里巴巴领投的 C 轮 2700 万美元的融资。融资完成后，MariaDB 社区将具备更强的实力参与数据库日益激烈的竞争。<br>MariaDB 是一家欧洲公司，其开发维护的 MariaDB 数据库是最受欢迎的开源数据库之一。总部位于芬兰赫尔辛基，在瑞典和美国设有办事处，拥有大约 1200 万名全球数据库用户。包括 booking.com、惠普、维珍移动、维基百科等。<br>MariaDB 是作为 MySQL 的一个分支。MySQL 被甲骨文收购后，MySQL 之父 Monty 为保证有一个始终开源的兼容 MySQL 的分支可用，创立了 MariaDB，名称来自其女儿 Maria 的名字。目前 MariaDB 在 Gartner 统计中是发展最快的开源数据库。</p>
+<p>MariaDB数据库管理系统是MySQL的一个分支，主要由开源社区在维护，采用GPL授权许可 MariaDB的目的是完全兼容MySQL，包括API和命令行，使之能轻松成为MySQL的代替品。在存储引擎方面，使用XtraDB（英语：XtraDB）来代替MySQL的InnoDB。 MariaDB由MySQL的创始人Michael Widenius（英语：Michael Widenius）主导开发，他早前曾以10亿美元的价格，将自己创建的公司MySQL AB卖给了SUN，此后，随着SUN被甲骨文收购，MySQL的所有权也落入Oracle的手中。MariaDB名称来自Michael Widenius的女儿Maria的名字。<br>MariaDB基于事务的Maria存储引擎，替换了MySQL的MyISAM存储引擎，它使用了Percona的 XtraDB，InnoDB的变体，分支的开发者希望提供访问即将到来的MySQL 5.4 InnoDB性能。这个版本还包括了 PrimeBase XT (PBXT) 和 FederatedX存储引擎。</p>
+<h1 id="安装-MariaDB"><a href="#安装-MariaDB" class="headerlink" title="安装 MariaDB"></a>安装 MariaDB</h1><p>我的MariaDB解压在 <code>C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64</code> 目录下，想把数据放到 <code>D:/ProfessionalSoftWare/MariaDB/data</code> 目录下，所以需要把解压完 <code>C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\data</code> 目录下的所有文件复制到 <code>D:/ProfessionalSoftWare/MariaDB/data</code><br>如果不复制，会在启动的时候报 <code>发生系统错误 1067</code> 的错误，原因是 <code>Fatal error: Can&#39;t open and lock privilege tables: Table &#39;mysql.user&#39; doesn&#39;t exist</code> </p>
+<h2 id="安装服务"><a href="#安装服务" class="headerlink" title="安装服务"></a>安装服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\bin</span><br><span class="line">λ mysqld.exe --install MariaDB  --defaults-file=&quot;C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\my.ini&quot;</span><br><span class="line">Service successfully installed.</span><br></pre></td></tr></table></figure>
+<h2 id="移除服务"><a href="#移除服务" class="headerlink" title="移除服务"></a>移除服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\bin</span><br><span class="line">λ mysqld.exe --remove MariaDB</span><br><span class="line">Service successfully removed.</span><br></pre></td></tr></table></figure>
+<h2 id="启动MariaDB服务"><a href="#启动MariaDB服务" class="headerlink" title="启动MariaDB服务"></a>启动MariaDB服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionalSoftware\MariaDB\mariadb-10.2.10-winx64\bin</span><br><span class="line">λ net start MariaDB</span><br><span class="line">MariaDB 服务正在启动 .</span><br><span class="line">MariaDB 服务已经启动成功。</span><br></pre></td></tr></table></figure>
+<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionSofware\Mariadb\Mariadb-10.2\bin</span><br><span class="line">λ mysqladmin -u root password &quot;root&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionSofware\Mariadb\Mariadb-10.2\bin</span><br><span class="line">λ mysqld --console</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] mysqld (mysqld 10.2.10-MariaDB) starting as process 10168 ...</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Mutexes and rw_locks use Windows interlocked functions</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Uses event mutexes</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Compressed tables use zlib 1.2.3</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Number of pools: 1</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Using generic crc32 instructions</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Initializing buffer pool, total size = 128M, instances = 1, chunk size = 128M</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Completed initialization of buffer pool</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Highest supported file format is Barracuda.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: 128 out of 128 rollback segments are active.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Creating shared tablespace for temporary tables</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Setting file &apos;.\ibtmp1&apos; size to 12 MB. Physically writing the file full; Please wait ...</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: File &apos;.\ibtmp1&apos; size is now 12 MB.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: Waiting for purge to start</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] InnoDB: 5.7.20 started; log sequence number 1619987</span><br><span class="line">2017-11-05 10:10:18 9084 [Note] InnoDB: Loading buffer pool(s) from C:\ProfessionSofware\Mariadb\Mariadb-10.2\data\ib_buffer_pool</span><br><span class="line">2017-11-05 10:10:18 9084 [Note] InnoDB: Buffer pool(s) load completed at 171104 10:10:18</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] Plugin &apos;FEEDBACK&apos; is disabled.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] Server socket created on IP: &apos;::&apos;.</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] Reading of all Master_info entries succeded</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] Added new Master_info &apos;&apos; to hash table</span><br><span class="line">2017-11-05 10:10:18 11052 [Note] mysqld: ready for connections.</span><br><span class="line">Version: &apos;10.2.10-MariaDB&apos;  socket: &apos;&apos;  port: 3306  mariadb.org binary distribution</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2017-11-05 11:00:24 10868 [Note] mysqld (unknown): Normal shutdown</span><br><span class="line"></span><br><span class="line">2017-11-05 11:00:24 10868 [Note] Event Scheduler: Purging the queue. 0 events</span><br><span class="line">2017-11-05 11:00:24 8456 [Note] InnoDB: FTS optimize thread exiting.</span><br><span class="line">2017-11-05 11:00:24 10868 [Note] InnoDB: Starting shutdown...</span><br><span class="line">2017-11-05 11:00:24 9084 [Note] InnoDB: Dumping buffer pool(s) to C:\ProfessionSofware\Mariadb\Mariadb-10.2\data\ib_buffer_pool</span><br><span class="line">2017-11-05 11:00:24 9084 [Note] InnoDB: Buffer pool(s) dump completed at 171104 11:00:24</span><br><span class="line">2017-11-05 11:00:25 10868 [Note] InnoDB: Shutdown completed; log sequence number 1620015</span><br><span class="line">2017-11-05 11:00:25 10868 [Note] InnoDB: Removed temporary tablespace data file: &quot;ibtmp1&quot;</span><br><span class="line">2017-11-05 11:00:25 10868 [Note] mysqld: Shutdown complete</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">C:\ProfessionSofware\Mariadb\Mariadb-10.2\bin</span><br><span class="line">λ net start mariadb</span><br><span class="line">MariaDB 服务正在启动 .</span><br><span class="line">MariaDB 服务已经启动成功。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:\ProfessionSofware\Mariadb\Mariadb-10.2\bin</span><br><span class="line">λ net stop mariadb</span><br><span class="line">MariaDB 服务正在停止.</span><br><span class="line">MariaDB 服务已成功停止。</span><br></pre></td></tr></table></figure>
+<h1 id="my-ini-配置"><a href="#my-ini-配置" class="headerlink" title="my.ini 配置"></a>my.ini 配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">#datadir=C:/ProfessionalSoftware/MariaDB/MariaDB-10.3/data</span><br><span class="line">datadir=D:/ProfessionalSoftWare/MariaDB/MariaDB-10.3/data</span><br><span class="line">port=3306</span><br><span class="line">#character-set-server=utf8</span><br><span class="line"># utf8mb4 is a superset of utf8</span><br><span class="line">character-set-server=utf8mb4</span><br><span class="line"></span><br><span class="line"># mkdir for every database</span><br><span class="line">innodb_file_per_table=1</span><br><span class="line"></span><br><span class="line"># ignore lowercase</span><br><span class="line">lower_case_table_names=1</span><br><span class="line"></span><br><span class="line"># all import biggest 1024M file to mysql</span><br><span class="line">max_allowed_packet=1024M</span><br><span class="line"></span><br><span class="line">innodb_buffer_pool_size=1017M</span><br><span class="line"></span><br><span class="line">#log</span><br><span class="line"># Binary Log</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line"># if query_time &gt; 1s sql will log</span><br><span class="line">long_query_time=1</span><br><span class="line"># if query is slow, query will log   version 5.6</span><br><span class="line">slow-query-log=1</span><br><span class="line">slow-query-log-file=D:/ProfessionalSoftWare/MariaDB/MariaDB-10.3/log/slow_query.log</span><br><span class="line">general_log=ON</span><br><span class="line">general_log_file=D:/ProfessionalSoftWare/MariaDB/MariaDB-10.3/log/all_query.log</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">port=3306</span><br><span class="line">plugin-dir=C:/ProfessionalSoftware/MariaDB/MariaDB-10.3/lib/plugin</span><br><span class="line">#default-character-set = utf8</span><br><span class="line"># utf8mb4 is a superset of utf8</span><br><span class="line">default-character-set = utf8mb4</span><br></pre></td></tr></table></figure>
+<h1 id="程序中使用"><a href="#程序中使用" class="headerlink" title="程序中使用"></a>程序中使用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mariadb.jdbc&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mariadb-java-client&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.1.2&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">driverClassName = org.mariadb.jdbc.Driver</span><br><span class="line">url = jdbc:mariadb://localhost:3306/DB&amp;useSSL=true&amp;trustServerCertificate=true</span><br><span class="line">user = admin</span><br><span class="line">password = admin</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Connection connection = DriverManager.getConnection(&quot;jdbc:mariadb://localhost:3306/DB?user=root&amp;password=myPassword&quot;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">final HikariDataSource ds = new HikariDataSource();</span><br><span class="line">ds.setMaximumPoolSize(20);</span><br><span class="line">ds.setDriverClassName(&quot;org.mariadb.jdbc.Driver&quot;);</span><br><span class="line">ds.setJdbcUrl(&quot;jdbc:mariadb://localhost:3306/db&quot;);</span><br><span class="line">ds.addDataSourceProperty(&quot;user&quot;, &quot;root&quot;);</span><br><span class="line">ds.addDataSourceProperty(&quot;password&quot;, &quot;myPassword&quot;);</span><br><span class="line">ds.setAutoCommit(false);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">jdbc:(mysql|mariadb):[replication:|failover:|sequential:|aurora:]//&lt;hostDescription&gt;[,&lt;hostDescription&gt;...]/[database][?&lt;key1&gt;=&lt;value1&gt;[&amp;&lt;key2&gt;=&lt;value2&gt;]]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.slf4j&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;1.7.25&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;logback-classic&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;1.2.3&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line"></span><br><span class="line">&lt;configuration&gt;</span><br><span class="line"></span><br><span class="line">    &lt;appender name=&quot;STDOUT&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;</span><br><span class="line">        &lt;encoder class=&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&gt;</span><br><span class="line">            &lt;pattern&gt;%d&#123;yyyy-MM-dd HH:mm:ss&#125; [%thread] %-5level %logger&#123;36&#125; - %msg%n&lt;/pattern&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;logger name=&quot;org.mariadb.jdbc&quot; level=&quot;trace&quot; additivity=&quot;false&quot;&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;STDOUT&quot;/&gt;</span><br><span class="line">    &lt;/logger&gt;</span><br><span class="line"></span><br><span class="line">    &lt;root level=&quot;error&quot;&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;STDOUT&quot;/&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line"></span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://mariadb.org/" target="_blank" rel="noopener">mariadb官网</a><br>[2] <a href="https://mariadb.com/kb/zh-cn/" target="_blank" rel="noopener">mariadb中文资料</a><br>[3] <a href="https://mariadb.com/kb/zh-cn/installing-mariadb-windows-zip-packages/" target="_blank" rel="noopener">mariadb zip包安装</a><br>[4] <a href="https://mariadb.com/kb/zh-cn/mysql_install_dbexe/" target="_blank" rel="noopener">mysql_install_dbexe</a><br>[5] <a href="https://dev.mysql.com/doc/refman/5.5/en/windows-install-archive.html" target="_blank" rel="noopener">mysql windows intall archive</a><br>[6] <a href="https://mariadb.com/kb/zh-cn/installing-mariadb-msi-packages-on-windows/" target="_blank" rel="noopener">在Windows下用 MSI 包安装 MariaDB</a><br>[7] <a href="https://mariadb.com/kb/zh-cn/installing-mariadb-alongside-mysql/" target="_blank" rel="noopener">安装 MariaDB 并同时运行 MySQL</a><br>[8] <a href="https://mariadb.com/kb/zh-cn/how-can-i-upgrade-from-mysql-to-mariadb/" target="_blank" rel="noopener">怎样从MySQL升级到 MariaDB？</a><br>[9] <a href="https://mariadb.com/kb/en/library/upgrading-mariadb-on-windows/" target="_blank" rel="noopener">升级mariadb</a><br>[10] <a href="https://mariadb.com/kb/en/library/java-connector-using-maven/" target="_blank" rel="noopener">java-connector-using-maven</a><br>[11] <a href="https://mariadb.com/kb/en/library/failover-and-high-availability-with-mariadb-connector-j/" target="_blank" rel="noopener">failover-and-high-availability-with-mariadb-connector-j</a><br>[12] <a href="https://mariadb.com/kb/en/library/option-batchmultisend-description/" target="_blank" rel="noopener">option-batchmultisend-description</a><br>[13] <a href="https://mariadb.com/kb/zh-cn/setting-character-sets-and-collations/" target="_blank" rel="noopener">设置字符集和排序规则</a><br>[14] <a href="https://mariadb.com/kb/zh-cn/general-query-log/" target="_blank" rel="noopener">一般查询日志</a><br>[15] <a href="https://mariadb.com/kb/zh-cn/cache-index/" target="_blank" rel="noopener">索引-缓存</a><br>[16] <a href="http://eastblueps.blogspot.com/2015/03/windowszip-noinstallmariadb.html" target="_blank" rel="noopener">在Windows安裝Zip (noinstall)版本的MariaDB</a><br>[17] <a href="http://www.blogjava.net/hongjunli/archive/2010/05/21/321582.html" target="_blank" rel="noopener">Windows下如何安装MariaDB</a><br>[18] <a href="https://blog.csdn.net/joyous/article/details/78641361" target="_blank" rel="noopener">Windows 下 MariaDB (zip 免安装) 的手动安装与使用</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/10/30/filddler-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -438,7 +1036,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-13 13:12:02" itemprop="dateModified" datetime="2020-06-13T13:12:02+08:00">2020-06-13</time>
+                <time title="修改时间：2020-06-19 16:46:04" itemprop="dateModified" datetime="2020-06-19T16:46:04+08:00">2020-06-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -471,7 +1069,7 @@
           <blockquote>
 <p> 在软件开发中，池一直都是一种非常优秀的设计思想，通过建立池可以有效的利用系统资源，节约系统性能。Java 中的线程池就是一种非常好的实现，从 JDK 1.5 开始 Java 提供了一个线程工厂 Executors 用来生成线程池，通过 Executors 可以方便的生成不同类型的线程池。但是要更好的理解使用线程池，就需要了解线程池的配置参数意义以及线程池的具体工作机制</p>
 </blockquote>
-<h1 id="1-使用线程池的好处"><a href="#1-使用线程池的好处" class="headerlink" title="(1) 使用线程池的好处"></a>(1) 使用线程池的好处</h1><blockquote>
+<h1 id="1-为什么要使用线程池"><a href="#1-为什么要使用线程池" class="headerlink" title="(1) 为什么要使用线程池"></a>(1) 为什么要使用线程池</h1><h2 id="1-1-使用线程池的好处"><a href="#1-1-使用线程池的好处" class="headerlink" title="(1.1) 使用线程池的好处"></a>(1.1) 使用线程池的好处</h2><blockquote>
 <p> 引用自<a href="http://ifeve.com/java-threadpool/" target="_blank" rel="noopener">http://ifeve.com/java-threadpool/</a></p>
 </blockquote>
 <blockquote>
@@ -479,9 +1077,10 @@
 <li>降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。</li>
 <li>提高响应速度。当任务到达时，任务可以不需要等到线程创建就能立即执行。</li>
 <li>提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</li>
+<li>提供更多更强大的功能：线程池具备可拓展性，允许开发人员向其中增加更多的功能。比如延时定时线程池ScheduledThreadPoolExecutor，就允许任务延期执行或定期执行。</li>
 </ol>
 </blockquote>
-<h2 id="1-1-线程池可以节约什么资源"><a href="#1-1-线程池可以节约什么资源" class="headerlink" title="(1.1) 线程池可以节约什么资源"></a>(1.1) 线程池可以节约什么资源</h2><blockquote>
+<h2 id="1-2-线程池解决了什么问题"><a href="#1-2-线程池解决了什么问题" class="headerlink" title="(1.2) 线程池解决了什么问题"></a>(1.2) 线程池解决了什么问题</h2><blockquote>
 <p> 多线程流行的原因是因为他能够处理与多进程一样的功能，并且创建线程耗费的时间、资源少，共享进程的资源。多线程有各自的线程ID，栈，PC，寄存器集合组成。共享代码段，文件，数据。<br> 在实际使用中，每个请求创建新线程的服务器在创建和销毁线程上花费的时间和消耗的系统资源，甚至可能要比花在处理实际的用户请求的时间和资源要多得多。除了创建和销毁线程的开销之外，活动的线程也需要消耗系统资源。如果在一个JVM里创建太多的线程，可能会导致系统由于过度消耗内存或“切换过度”而导致系统资源不足。为了防止资源不足，服务器应用程序需要一些办法来限制任何给定时刻处理的请求数目，尽可能减少创建和销毁线程的次数，特别是一些资源耗费比较大的线程的创建和销毁，尽量利用已有对象来进行服务，这就是“池化资源”技术产生的原因。<br> 进程是资源管理的最小单元；而线程是程序执行的最小单元。</p>
 </blockquote>
           <!--noindex-->
@@ -598,556 +1197,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/10/12/web-crawler-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/10/12/web-crawler-notes/" class="post-title-link" itemprop="url">爬虫 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-10-12 17:27:07" itemprop="dateCreated datePublished" datetime="2017-10-12T17:27:07+08:00">2017-10-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/10/12/web-crawler-notes/" class="post-meta-item leancloud_visitors" data-flag-title="爬虫 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>爬虫(Spider)，反爬虫(Anti-Spider)，反反爬虫(Anti-Anti-Spider)，这之间的斗争恢宏壮阔…</p>
-<p>Day 1 小莫想要某站上所有的电影，写了标准的爬虫(基于HttpClient库)，不断地遍历某站的电影列表页面，根据 Html 分析电影名字存进自己的数据库。这个站点的运维小黎发现某个时间段请求量陡增，分析日志发现都是 IP(1.1.1.1)这个用户，并且 useragent 还是 JavaClient1.6 ，基于这两点判断非人类后直接在Nginx 服务器上封杀。</p>
-<p>Day 2 小莫电影只爬了一半，于是也针对性的变换了下策略：1. useragent 模仿百度(“Baiduspider…”)，2. IP每爬半个小时就换一个IP代理。小黎也发现了对应的变化，于是在 Nginx 上设置了一个频率限制，每分钟超过120次请求的再屏蔽IP。 同时考虑到百度家的爬虫有可能会被误伤，想想市场部门每月几十万的投放，于是写了个脚本，通过 hostname 检查下这个 ip 是不是真的百度家的，对这些 ip 设置一个白名单。</p>
-<p>Day 3 小莫发现了新的限制后，想着我也不急着要这些数据，留给服务器慢慢爬吧，于是修改了代码，随机1-3秒爬一次，爬10次休息10秒，每天只在8-12，18-20点爬，隔几天还休息一下。小黎看着新的日志头都大了，再设定规则不小心会误伤真实用户，于是准备换了一个思路，当3个小时的总请求超过50次的时候弹出一个验证码弹框，没有准确正确输入的话就把 IP 记录进黑名单。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/10/12/web-crawler-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/09/21/crawler-xiecheng/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/09/21/crawler-xiecheng/" class="post-title-link" itemprop="url">爬取 携程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-09-21 18:01:18" itemprop="dateCreated datePublished" datetime="2017-09-21T18:01:18+08:00">2017-09-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/09/21/crawler-xiecheng/" class="post-meta-item leancloud_visitors" data-flag-title="爬取 携程" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>主页面url<br><code>http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22</code></p>
-<p>获取数据url<br><code>http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c802fde883e64a3c8fba0e99e45d023c&amp;rk=2.7090996922689414192821&amp;CK=1D7795E4EB96B7578AA673D6EF346C33&amp;r=0.2337708871934405872019</code></p>
-<p>首次搜索<br>    <a href="http://flights.ctrip.com/domestic/Search/FirstRoute/?ddate1=2017-09-22&amp;ddate2=2017-09-22&amp;dcity1=BJS&amp;acity1=KMG" target="_blank" rel="noopener">http://flights.ctrip.com/domestic/Search/FirstRoute/?ddate1=2017-09-22&amp;ddate2=2017-09-22&amp;dcity1=BJS&amp;acity1=KMG</a><br>    <a href="http://flights.ctrip.com/domestic/booking/BJS-KMG---D-adu-1/?dayoffset=1&amp;ddate1=2017-09-22&amp;ddate2=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/domestic/booking/BJS-KMG---D-adu-1/?dayoffset=1&amp;ddate1=2017-09-22&amp;ddate2=2017-09-22</a><br>重新搜索<br>    <a href="http://flights.ctrip.com/booking/bjs-kmg---d-adu-1/?ddate1=2017-09-22&amp;ddate2=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/booking/bjs-kmg---d-adu-1/?ddate1=2017-09-22&amp;ddate2=2017-09-22</a>    往返<br>    <a href="http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22</a>    单程</p>
-<p> 往返<br>    <code>var url = &quot;//flights.ctrip.com/domesticsearch/search/SearchRoundRecommend?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=3c10647ccad04412a33567f25335875a&amp;CK=97017DBB47A37AFE6BE4D99105F78AFE&quot;;</code><br> 单程<br>    <code>var url = &quot;//flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=66c9c383c12f4dc685a9ad3e5834a7c4&amp;CK=D6BF57FFFC0A4E89AF51CF7186A1944E&quot;;</code></p>
-<p>根据直接获取json的url拿到数据解析后就能获得航班信息，这个url里有4个参数，需要从搜索主页的页面里获取<br>单程和往返的原理一样，就是往返多了一个返回日期，其他都一样</p>
-<p> LogToken不变 r不变  CK有变化 rk用Math.random</p>
-<p>  LogToken<br>  rk<br>  CK<br>  r  在主页面的第34行</p>
-<p>  LogToken和CK根据主页面24行的url可以得到，r值在主页面34行可以得到</p>
-<p> 获取的json数据的url，爬取数据用的url<br>  单程<br>     <a href="http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c96a69a7ca9142be9f0e3192f44f9f07&amp;rk=1.445840834132689163412&amp;CK=6A53EEBD27EBBE6785AF7951EC03EB1E&amp;r=0.3795051054613884121115" target="_blank" rel="noopener">http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c96a69a7ca9142be9f0e3192f44f9f07&amp;rk=1.445840834132689163412&amp;CK=6A53EEBD27EBBE6785AF7951EC03EB1E&amp;r=0.3795051054613884121115</a><br>  往返<br>      <a href="http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=584465ec999045db9a546e1ce6a04a3f&amp;rk=4.057381591787214165342&amp;CK=D76BF5FFFC0A4E89AF51CF7186A1944E&amp;r=0.543402675163338674414" target="_blank" rel="noopener">http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=584465ec999045db9a546e1ce6a04a3f&amp;rk=4.057381591787214165342&amp;CK=D76BF5FFFC0A4E89AF51CF7186A1944E&amp;r=0.543402675163338674414</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/09/21/crawler-xiecheng/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/09/02/jvm-monitoring/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/09/02/jvm-monitoring/" class="post-title-link" itemprop="url">JVM 监控</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-09-02 07:26:06" itemprop="dateCreated datePublished" datetime="2017-09-02T07:26:06+08:00">2017-09-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-13 08:51:43" itemprop="dateModified" datetime="2020-06-13T08:51:43+08:00">2020-06-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/09/02/jvm-monitoring/" class="post-meta-item leancloud_visitors" data-flag-title="JVM 监控" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  昨天天发现Tomcat占用2G物理内存，11G虚拟内存，感觉就起了一个web项目，而且是在内网，没几个人用呀。内存占用怎么这么高。</p>
-<p>  Tomcat使用的大多是默认配置。就改了个conf/context.xml server.xml</p>
-<p>  遇到问题了，先想想怎么解决，暂时能想到的是用分析工具分析一下了。我用的是jdk1.8.0_111， ${JAVA_HOME}/bin目录里有两个工具jmc.exe　jvisualvm.exe<br>这两个工具就是今天的主角了。用来监控JVM的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/09/02/jvm-monitoring/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/08/29/string-stringbuilder-stringbuffer-compare/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/29/string-stringbuilder-stringbuffer-compare/" class="post-title-link" itemprop="url">String StringBuilder StringBuffer 对比</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-08-29 21:48:20" itemprop="dateCreated datePublished" datetime="2017-08-29T21:48:20+08:00">2017-08-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/08/29/string-stringbuilder-stringbuffer-compare/" class="post-meta-item leancloud_visitors" data-flag-title="String StringBuilder StringBuffer 对比" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>　　我们都知道在一个循环内拼接字符串不能直接用+，而是要用StringBuilder或者StringBuffer代替。<br>　　但是在循环内拼接字符串影响会有多大呢，会对程序产生多大影响呢，是0.1s还是1s，还是… ，用数据来说话。</p>
-<p>　　还有一个问题就是，循环内每次要输出一句话，用String+还是用StringBuilder好呢。<br>　　顺便也测一下。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/08/29/string-stringbuilder-stringbuffer-compare/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/08/23/crawler-weibo/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/23/crawler-weibo/" class="post-title-link" itemprop="url">爬取 微博</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-08-23 16:28:48" itemprop="dateCreated datePublished" datetime="2017-08-23T16:28:48+08:00">2017-08-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/08/23/crawler-weibo/" class="post-meta-item leancloud_visitors" data-flag-title="爬取 微博" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  电脑版：<a href="http://weibo.com" target="_blank" rel="noopener">http://weibo.com</a><br>  手机版wap版: <a href="https://weibo.cn/" target="_blank" rel="noopener">https://weibo.cn/</a><br>  手机app版：<a href="https://m.weibo.cn/" target="_blank" rel="noopener">https://m.weibo.cn/</a></p>
-<p>  我采用的是爬取手机wap版，weibo.cn</p>
-<p>  最重要的是这四个参数：_T_WM、SUB、SUHB、SCF</p>
-<p>  爬取微博主要思路是登录后获取cookie，cookie可以一直用</p>
-<p>  一个账号1分钟爬取次数不要太快，尽量小于10次。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/08/23/crawler-weibo/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/08/15/redis-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/15/redis-notes/" class="post-title-link" itemprop="url">Redis 使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-08-15 22:06:12" itemprop="dateCreated datePublished" datetime="2017-08-15T22:06:12+08:00">2017-08-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-13 08:20:11" itemprop="dateModified" datetime="2020-06-13T08:20:11+08:00">2020-06-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/08/15/redis-notes/" class="post-meta-item leancloud_visitors" data-flag-title="Redis 使用" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-4.0.2.tar.gz</span><br><span class="line">tar xzf redis-4.0.2.tar.gz</span><br><span class="line"><span class="built_in">cd</span> redis-4.0.2</span><br><span class="line">sudo make <span class="built_in">test</span> </span><br><span class="line">suto make install</span><br></pre></td></tr></table></figure>
-<p>  Redis对于Linux是官方支持的,普通安装、使用按照官方指导，5分钟以内就能搞定。详情请参考：<a href="http://redis.io/download" target="_blank" rel="noopener">Redis官网下载链接</a>   <a href="http://redis.io/download" target="_blank" rel="noopener">http://redis.io/download</a>  </p>
-<p>  但有时候又想在windows下使用redis,可以从redis下载页面看到如下提示(在页面中搜索 “windows”)：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Win64   Unofficial  The Redis project does not directly support Windows,   </span><br><span class="line">however the Microsoft Open Tech group develops and maintains   </span><br><span class="line">an Windows port targeting Win64.</span><br></pre></td></tr></table></figure>
-<p>  大意就是 Redis官方是不支持windows的，只是 Microsoft Open Tech group 在 GitHub上开发了一个Win64的版本,项目地址是：<a href="https://github.com/MSOpenTech/redis" target="_blank" rel="noopener">项目地址</a><br>  打开以后，可以直接使用浏览器下载，或者Git克隆。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/08/15/redis-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1217,20 +1266,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

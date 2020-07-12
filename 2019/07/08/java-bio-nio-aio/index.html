@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="转自 漫画：一文学会面试中常问的 IO 问题！   什么是BIO、NIO和AIO？三者有什么区别？具体如何使用?   输入/输出是信息处理系统（例如计算机）与外部世界（可能是人类或另一信息处理系统）之间的通信。   输入是系统接收的信号或数据，输出则是从其发送的信号或数据。   在Java中，提供了一些列API，可以供开发者来读写外部数据或文件。我们称这些API为Java IO。   IO是J">
+  <meta name="description" content="转自 漫画：一文学会面试中常问的 IO 问题！   什么是BIO、NIO和AIO？三者有什么区别？具体如何使用?   IO是Java中比较重要，且比较难的知识点，主要是因为随着Java的发展，目前有三种IO共存。分别是 BIO、NIO 和 AIO。">
 <meta name="keywords" content="java,io">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java BIO NIO AIO">
 <meta property="og:url" content="http://weikeqin.com/2019/07/08/java-bio-nio-aio/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="转自 漫画：一文学会面试中常问的 IO 问题！   什么是BIO、NIO和AIO？三者有什么区别？具体如何使用?   输入/输出是信息处理系统（例如计算机）与外部世界（可能是人类或另一信息处理系统）之间的通信。   输入是系统接收的信号或数据，输出则是从其发送的信号或数据。   在Java中，提供了一些列API，可以供开发者来读写外部数据或文件。我们称这些API为Java IO。   IO是J">
+<meta property="og:description" content="转自 漫画：一文学会面试中常问的 IO 问题！   什么是BIO、NIO和AIO？三者有什么区别？具体如何使用?   IO是Java中比较重要，且比较难的知识点，主要是因为随着Java的发展，目前有三种IO共存。分别是 BIO、NIO 和 AIO。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-21T01:31:24.638Z">
+<meta property="og:updated_time" content="2020-06-22T10:42:31.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java BIO NIO AIO">
-<meta name="twitter:description" content="转自 漫画：一文学会面试中常问的 IO 问题！   什么是BIO、NIO和AIO？三者有什么区别？具体如何使用?   输入/输出是信息处理系统（例如计算机）与外部世界（可能是人类或另一信息处理系统）之间的通信。   输入是系统接收的信号或数据，输出则是从其发送的信号或数据。   在Java中，提供了一些列API，可以供开发者来读写外部数据或文件。我们称这些API为Java IO。   IO是J">
+<meta name="twitter:description" content="转自 漫画：一文学会面试中常问的 IO 问题！   什么是BIO、NIO和AIO？三者有什么区别？具体如何使用?   IO是Java中比较重要，且比较难的知识点，主要是因为随着Java的发展，目前有三种IO共存。分别是 BIO、NIO 和 AIO。">
 
 <link rel="canonical" href="http://weikeqin.com/2019/07/08/java-bio-nio-aio/">
 
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-21 09:31:24" itemprop="dateModified" datetime="2019-08-21T09:31:24+08:00">2019-08-21</time>
+                <time title="修改时间：2020-06-22 18:42:31" itemprop="dateModified" datetime="2020-06-22T18:42:31+08:00">2020-06-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,32 +282,46 @@
       
         <p>  转自 <a href="https://mp.weixin.qq.com/s/Gq8ABlEVolLW3wJ7vsSSFw" target="_blank" rel="noopener">漫画：一文学会面试中常问的 IO 问题！</a></p>
 <p>  什么是BIO、NIO和AIO？三者有什么区别？具体如何使用?</p>
-<p>  输入/输出是信息处理系统（例如计算机）与外部世界（可能是人类或另一信息处理系统）之间的通信。</p>
-<p>  输入是系统接收的信号或数据，输出则是从其发送的信号或数据。</p>
-<p>  在Java中，提供了一些列API，可以供开发者来读写外部数据或文件。我们称这些API为Java IO。</p>
-<p>  IO是Java中比较重要，且比较难的知识点，主要是因为随着Java的发展，目前有三种IO共存。分别是BIO、NIO和AIO。</p>
+<p>  IO是Java中比较重要，且比较难的知识点，主要是因为随着Java的发展，目前有三种IO共存。分别是 BIO、NIO 和 AIO。</p>
 <a id="more"></a>  
 <h1 id="Java-BIO"><a href="#Java-BIO" class="headerlink" title="Java BIO"></a>Java BIO</h1><p>  BIO 全称Block-IO 是一种同步且阻塞的通信模式。是一个比较传统的通信方式，模式简单，使用方便。但并发处理能力低，通信耗时，依赖网速。</p>
+<p><strong>多次内存复制</strong></p>
+<blockquote>
+<p> 在传统 I/O 中，我们可以通过 InputStream 从源数据中读取数据流输入到缓冲区里，通过 OutputStream 将数据输出到外部设备（包括磁盘、网络）。你可以先看下输入操作在操作系统中的具体流程。</p>
+<p> JVM 会发出 read() 系统调用，并通过 read 系统调用向内核发起读请求；<br> 内核向硬件发送读指令，并等待读就绪；<br> 内核把将要读取的数据复制到指向的内核缓存中；<br> 操作系统内核将数据复制到用户空间缓冲区，然后 read 系统调用返回。</p>
+<p> 在这个过程中，数据先从外部设备复制到内核空间，再从内核空间复制到用户空间，这就发生了两次内存复制操作。这种操作会导致不必要的数据拷贝和上下文切换，从而降低 I/O 的性能。</p>
+</blockquote>
+<p><strong>阻塞</strong><br>在传统 I/O 中，InputStream 的 read() 是一个 while 循环操作，它会一直等待数据读取，直到数据就绪才会返回。这就意味着如果没有数据就绪，这个读取操作将会一直被挂起，用户线程将会处于阻塞状态。在少量连接请求的情况下，使用这种方式没有问题，响应速度也很高。但在发生大量连接请求时，就需要创建大量监听线程，这时如果线程没有数据就绪就会被挂起，然后进入阻塞状态。一旦发生线程阻塞，这些线程将会不断地抢夺 CPU 资源，从而导致大量的 CPU 上下文切换，增加系统的性能开销。</p>
 <h1 id="Java-NIO"><a href="#Java-NIO" class="headerlink" title="Java NIO"></a>Java NIO</h1><p>  Java NIO，全称 Non-Block IO ，是Java SE 1.4版以后，针对网络传输效能优化的新功能。是一种非阻塞同步的通信模式。</p>
 <p>  NIO 与原来的 I/O 有同样的作用和目的, 他们之间最重要的区别是数据打包和传输的方式。原来的 I/O 以流的方式处理数据，而 NIO 以块的方式处理数据。</p>
 <p>  面向流的 I/O 系统一次一个字节地处理数据。一个输入流产生一个字节的数据，一个输出流消费一个字节的数据。</p>
 <p>  面向块的 I/O 系统以块的形式处理数据。每一个操作都在一步中产生或者消费一个数据块。按块处理数据比按(流式的)字节处理数据要快得多。但是面向块的 I/O 缺少一些面向流的 I/O 所具有的优雅性和简单性。</p>
+<p><strong>使用缓冲区优化读写流操作</strong><br>在传统 I/O 中，提供了基于流的 I/O 实现，即 InputStream 和 OutputStream，这种基于流的实现以字节为单位处理数据。<br>NIO 与传统 I/O 不同，它是基于块（Block）的，它以块为基本单位处理数据。在 NIO 中，最为重要的两个组件是缓冲区（Buffer）和通道（Channel）。Buffer 是一块连续的内存块，是 NIO 读写数据的中转地。Channel 表示缓冲数据的源头或者目的地，它用于读取缓冲或者写入数据，是访问缓冲的接口。</p>
+<p><strong>使用 DirectBuffer 减少内存复制</strong><br>NIO 的 Buffer 除了做了缓冲块优化之外，还提供了一个可以直接访问物理内存的类 DirectBuffer。普通的 Buffer 分配的是 JVM 堆内存，而 DirectBuffer 是直接分配物理内存 (非堆内存)。</p>
+<p>  数据要输出到外部设备，必须先从用户空间复制到内核空间，再复制到输出设备，而在 Java 中，在用户空间中又存在一个拷贝，那就是从 Java 堆内存中拷贝到临时的直接内存中，通过临时的直接内存拷贝到内存空间中去。此时的直接内存和堆内存都是属于用户空间。</p>
+<p>  DirectBuffer 则是直接将步骤简化为数据直接保存到非堆内存，从而减少了一次数据拷贝。<br>  DirectBuffer 是通过 unsafe.allocateMemory(size) 方法分配内存，也就是基于本地类 Unsafe 类调用 native 方法进行内存分配的。而在 NIO 中，还存在另外一个 Buffer 类：MappedByteBuffer，跟 DirectBuffer 不同的是，MappedByteBuffer 是通过本地类调用 mmap 进行文件内存映射的，map() 系统调用方法会直接将文件从硬盘拷贝到用户空间，只进行一次数据拷贝，从而减少了传统的 read() 方法从硬盘拷贝到内核空间这一步。</p>
+<p><strong>避免阻塞，优化 I/O 操作</strong></p>
+<p>  NIO 发布后，通道和多路复用器这两个基本组件实现了 NIO 的非阻塞</p>
+<p>  Selector 是 Java NIO 编程的基础。用于检查一个或多个 NIO Channel 的状态是否处于可读、可写。Selector 是基于事件驱动实现的，我们可以在 Selector 中注册 accpet、read 监听事件，Selector 会不断轮询注册在其上的 Channel，如果某个 Channel 上面发生监听事件，这个 Channel 就处于就绪状态，然后进行 I/O 操作。一个线程使用一个 Selector，通过轮询的方式，可以监听多个 Channel 上的事件。我们可以在注册 Channel 时设置该通道为非阻塞，当 Channel 上没有 I/O 操作时，该线程就不会一直等待了，而是会不断轮询所有 Channel，从而避免发生阻塞。目前操作系统的 I/O 多路复用机制都使用了 epoll，相比传统的 select 机制，epoll 没有最大连接句柄 1024 的限制。所以 Selector 在理论上可以轮询成千上万的客户端。</p>
+<p> 在 Java 的 NIO 编程中，则是使用到了 Direct Buffer 来实现内存的零拷贝。Java 直接在 JVM 内存空间之外开辟了一个物理内存空间，这样内核和用户进程都能共享一份缓存数据。</p>
+<p>NIO 在用户层也做了优化升级。NIO 是基于事件驱动模型来实现的 I/O 操作。Reactor 模型是同步 I/O 事件处理的一种常见模型，其核心思想是将 I/O 事件注册到多路复用器上，一旦有 I/O 事件触发，多路复用器就会将事件分发到事件处理器中，执行就绪的 I/O 事件操作。该模型有以下三个主要组件：事件接收器 Acceptor：主要负责接收请求连接；事件分离器 Reactor：接收请求后，会将建立的连接注册到分离器中，依赖于循环监听多路复用器 Selector，一旦监听到事件，就会将事件 dispatch 到事件处理器；事件处理器 Handlers：事件处理器主要是完成相关的事件处理，比如读写 I/O 操作。</p>
 <h1 id="Java-AIO"><a href="#Java-AIO" class="headerlink" title="Java AIO"></a>Java AIO</h1><p>  Java AIO，全称 Asynchronous IO，是异步非阻塞的IO。是一种非阻塞异步的通信模式。</p>
+<p>  AIO 实现了真正意义上的异步 I/O，它是直接将 I/O 操作交给操作系统进行异步处理。</p>
 <p>  在NIO的基础上引入了新的异步通道的概念，并提供了异步文件通道和异步套接字通道的实现。</p>
 <h1 id="三种IO的区别"><a href="#三种IO的区别" class="headerlink" title="三种IO的区别"></a>三种IO的区别</h1><p>  首先，我们站在宏观的角度，重新画一下重点：</p>
 <p>  BIO （Blocking I/O）：同步阻塞I/O模式。</p>
 <p>  NIO （New I/O）：同步非阻塞模式。</p>
 <p>  AIO （Asynchronous I/O）：异步非阻塞I/O模型。</p>
-<p>  那么，同步阻塞、同步非阻塞、异步非阻塞都是怎么回事呢？关于这部分内容也可以查看《漫话：如何给女朋友解释什么是IO中的阻塞、非阻塞、同步、异步？》。</p>
+<p>  那么，同步阻塞、同步非阻塞、异步非阻塞都是怎么回事呢？</p>
 <p>  同步阻塞模式：这种模式下，我们的工作模式是先来到厨房，开始烧水，并坐在水壶面前一直等着水烧开。</p>
 <p>  同步非阻塞模式：这种模式下，我们的工作模式是先来到厨房，开始烧水，但是我们不一直坐在水壶前面等，而是回到客厅看电视，然后每隔几分钟到厨房看一下水有没有烧开。</p>
 <p>  异步非阻塞I/O模型：这种模式下，我们的工作模式是先来到厨房，开始烧水，我们不一一直坐在水壶前面等，也不隔一段时间去看一下，而是在客厅看电视，水壶上面有个开关，水烧开之后他会通知我。</p>
 <p>  阻塞VS非阻塞：人是否坐在水壶前面一直等。</p>
 <p>  同步VS异步：水壶是不是在水烧开之后主动通知人。</p>
-<h1 id="试用场景"><a href="#试用场景" class="headerlink" title="试用场景"></a>试用场景</h1><p>  BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前的唯一选择，但程序直观简单易理解。</p>
+<h1 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h1><p>  BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高，并发局限于应用中，JDK1.4以前的唯一选择，但程序直观简单易理解。</p>
 <p>  NIO方式适用于连接数目多且连接比较短（轻操作）的架构，比如聊天服务器，并发局限于应用中，编程比较复杂，JDK1.4开始支持。</p>
 <p>  AIO方式适用于连接数目多且连接比较长（重操作）的架构，比如相册服务器，充分调用OS参与并发操作，编程比较复杂，JDK7开始支持。  </p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://mp.weixin.qq.com/s/Gq8ABlEVolLW3wJ7vsSSFw" target="_blank" rel="noopener">漫画：一文学会面试中常问的 IO 问题！</a><br>[2] <a href="https://mp.weixin.qq.com/s/YIcXaH7AWLJbPjnTUwnlyQ" target="_blank" rel="noopener">10个最高频的Java NIO面试题剖析！</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://mp.weixin.qq.com/s/Gq8ABlEVolLW3wJ7vsSSFw" target="_blank" rel="noopener">漫画：一文学会面试中常问的 IO 问题！</a><br>[2] <a href="https://mp.weixin.qq.com/s/YIcXaH7AWLJbPjnTUwnlyQ" target="_blank" rel="noopener">10个最高频的Java NIO面试题剖析！</a><br>[3] <a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/BIO-NIO-AIO.md" target="_blank" rel="noopener">JavaGuide/blob/master/docs/java/BIO-NIO-AIO.md</a><br>[4] <a href="https://zhuanlan.zhihu.com/p/23488863" target="_blank" rel="noopener">Java NIO浅析</a></p>
 
     </div>
 
@@ -392,7 +406,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-BIO"><span class="nav-number">1.</span> <span class="nav-text">Java BIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-NIO"><span class="nav-number">2.</span> <span class="nav-text">Java NIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-AIO"><span class="nav-number">3.</span> <span class="nav-text">Java AIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三种IO的区别"><span class="nav-number">4.</span> <span class="nav-text">三种IO的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#试用场景"><span class="nav-number">5.</span> <span class="nav-text">试用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-BIO"><span class="nav-number">1.</span> <span class="nav-text">Java BIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-NIO"><span class="nav-number">2.</span> <span class="nav-text">Java NIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-AIO"><span class="nav-number">3.</span> <span class="nav-text">Java AIO</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三种IO的区别"><span class="nav-number">4.</span> <span class="nav-text">三种IO的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用场景"><span class="nav-number">5.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -406,20 +420,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

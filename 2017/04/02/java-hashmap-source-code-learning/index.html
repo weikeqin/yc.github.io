@@ -29,7 +29,7 @@
 <meta property="og:description" content="小组开小讲堂，在小讲堂上听了HashMap这部分内容，决定看源码再巩固一下。顺便分享给大家。  我参考的是的是JDK 1.8 HashMap的源码   在这之前，先问大家几个问题  new一个HashMap的默认长度是多少 默认加载因子 HashMap的底层存储 为什么HashMap的大小必须是2的幂次方 key的Hash方法 hashCode碰撞时怎么处理 扩容时怎么处理 HashMap的最">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://weikeqin.com/blog/img/java/collection/hashmap/hashMapDataStructure.png">
-<meta property="og:updated_time" content="2019-11-04T06:36:52.360Z">
+<meta property="og:updated_time" content="2020-06-17T09:33:06.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 集合 HashMap 源码 学习 (JDK-1.8)">
 <meta name="twitter:description" content="小组开小讲堂，在小讲堂上听了HashMap这部分内容，决定看源码再巩固一下。顺便分享给大家。  我参考的是的是JDK 1.8 HashMap的源码   在这之前，先问大家几个问题  new一个HashMap的默认长度是多少 默认加载因子 HashMap的底层存储 为什么HashMap的大小必须是2的幂次方 key的Hash方法 hashCode碰撞时怎么处理 扩容时怎么处理 HashMap的最">
@@ -245,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+                <time title="修改时间：2020-06-17 17:33:06" itemprop="dateModified" datetime="2020-06-17T17:33:06+08:00">2020-06-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -295,7 +295,111 @@
 <li>HashMap的最大长度</li>
 </ol>
 <a id="more"></a>
-<p>  首先看一下HashMap的常量和方法。</p>
+<p>数组：采用一段连续的存储单元来存储数据。对于指定下标的查找，时间复杂度为 O(1)，但在数组中间以及头部插入数据时，需要复制移动后面的元素。</p>
+<p>链表：一种在物理存储单元上非连续、非顺序的存储结构，数据元素的逻辑顺序是通过链表中的指针链接次序实现的。链表由一系列结点（链表中每一个元素）组成，结点可以在运行时动态生成。每个结点都包含“存储数据单元的数据域”和“存储下一个结点地址的指针域”这两个部分。由于链表不用必须按顺序存储，所以链表在插入的时候可以达到 O(1) 的复杂度，但查找一个结点或者访问特定编号的结点需要 O(n) 的时间。</p>
+<p>哈希表：根据关键码值（Key value）直接进行访问的数据结构。通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。这个映射函数叫做哈希函数，存放记录的数组就叫做哈希表。</p>
+<p>树：由 n（n≥1）个有限结点组成的一个具有层次关系的集合，就像是一棵倒挂的树。</p>
+<p>哈希表将键的 Hash 值映射到内存地址，即根据键获取对应的值，并将其存储到内存地址。也就是说 HashMap 是根据键的 Hash 值来决定对应值的存储位置。通过这种索引方式，HashMap 获取数据的速度会非常快。</p>
+<p>哈希表是怎么解决的呢？方式有很多，比如，开放定址法、再哈希函数法和链地址法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Computes key.hashCode() and spreads (XORs) higher bits of hash</span></span><br><span class="line"><span class="comment"> * to lower.  Because the table uses power-of-two masking, sets of</span></span><br><span class="line"><span class="comment"> * hashes that vary only in bits above the current mask will</span></span><br><span class="line"><span class="comment"> * always collide. (Among known examples are sets of Float keys</span></span><br><span class="line"><span class="comment"> * holding consecutive whole numbers in small tables.)  So we</span></span><br><span class="line"><span class="comment"> * apply a transform that spreads the impact of higher bits</span></span><br><span class="line"><span class="comment"> * downward. There is a tradeoff between speed, utility, and</span></span><br><span class="line"><span class="comment"> * quality of bit-spreading. Because many common sets of hashes</span></span><br><span class="line"><span class="comment"> * are already reasonably distributed (so don't benefit from</span></span><br><span class="line"><span class="comment"> * spreading), and because we use trees to handle large sets of</span></span><br><span class="line"><span class="comment"> * collisions in bins, we just XOR some shifted bits in the</span></span><br><span class="line"><span class="comment"> * cheapest possible way to reduce systematic lossage, as well as</span></span><br><span class="line"><span class="comment"> * to incorporate impact of the highest bits that would otherwise</span></span><br><span class="line"><span class="comment"> * never be used in index calculations because of table bounds.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hash</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i = (n - <span class="number">1</span>) &amp; hash</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>(n - 1) &amp; hash</code> 是怎么设计的，这里的 n 代表哈希表的长度，哈希表习惯将长度设置为 2 的 n 次方，这样恰好可以保证 (n - 1) &amp; hash 的计算得到的索引值总是位于 table 数组的索引之内。<br>因为数组是0bash的 长度为16，实际使用的是 0-15，这样4位就够用了 </p>
+</blockquote>
+<p>例如：hash=15，n=16 时，结果为 15；hash=17，n=16 时，结果为 1。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">二进制</th>
+<th style="text-align:left">十进制</th>
+<th style="text-align:left">十六进制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0000 0000</td>
+<td style="text-align:left">0</td>
+<td style="text-align:left">00</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 0001</td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">01</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 0010</td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">02</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 0011</td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">03</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 0100</td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">04</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 0101</td>
+<td style="text-align:left">5</td>
+<td style="text-align:left">05</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 0110</td>
+<td style="text-align:left">6</td>
+<td style="text-align:left">06</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 0111</td>
+<td style="text-align:left">7</td>
+<td style="text-align:left">07</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 1000</td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">08</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 1001</td>
+<td style="text-align:left">9</td>
+<td style="text-align:left">09</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 1010</td>
+<td style="text-align:left">10</td>
+<td style="text-align:left">0A</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 1011</td>
+<td style="text-align:left">11</td>
+<td style="text-align:left">0B</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 1100</td>
+<td style="text-align:left">12</td>
+<td style="text-align:left">0C</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 1101</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">0D</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 1110</td>
+<td style="text-align:left">14</td>
+<td style="text-align:left">0E</td>
+</tr>
+<tr>
+<td style="text-align:left">0000 1111</td>
+<td style="text-align:left">15</td>
+<td style="text-align:left">0F</td>
+</tr>
+</tbody>
+</table>
+<p>| 0001 0000     | 16     |    10     |</p>
+<p>  当 HashMap 中只存在数组，而数组中没有 Node 链表时，是 HashMap 查询数据性能最好的时候。一旦发生大量的哈希冲突，就会产生 Node 链表，这个时候每次查询元素都可能遍历 Node 链表，从而降低查询数据的性能。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 默认加载因子0.75</span></span><br><span class="line"><span class="comment"> * The load factor used when none specified in constructor. </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 默认容量 16</span></span><br><span class="line"><span class="comment"> * The default initial capacity - MUST be a power of two.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 默认构造方法</span></span><br><span class="line"><span class="comment"> * Constructs an empty &lt;tt&gt;HashMap&lt;/tt&gt; with the default initial capacity</span></span><br><span class="line"><span class="comment"> * (16) and the default load factor (0.75).</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.loadFactor = DEFAULT_LOAD_FACTOR; <span class="comment">// all other fields defaulted</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constructs an empty &lt;tt&gt;HashMap&lt;/tt&gt; with the specified initial</span></span><br><span class="line"><span class="comment"> * capacity and the default load factor (0.75).</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>  initialCapacity the initial capacity.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalArgumentException if the initial capacity is negative.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>(initialCapacity, DEFAULT_LOAD_FACTOR);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Constructs an empty &lt;tt&gt;HashMap&lt;/tt&gt; with the specified initial</span></span><br><span class="line"><span class="comment"> * capacity and load factor.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>  initialCapacity the initial capacity</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span>  loadFactor      the load factor</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IllegalArgumentException if the initial capacity is negative</span></span><br><span class="line"><span class="comment"> *         or the load factor is nonpositive</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">HashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity, <span class="keyword">float</span> loadFactor)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal initial capacity: "</span> +</span><br><span class="line">										   initialCapacity);</span><br><span class="line">	<span class="keyword">if</span> (initialCapacity &gt; MAXIMUM_CAPACITY)</span><br><span class="line">		initialCapacity = MAXIMUM_CAPACITY;</span><br><span class="line">	<span class="keyword">if</span> (loadFactor &lt;= <span class="number">0</span> || Float.isNaN(loadFactor))</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Illegal load factor: "</span> +</span><br><span class="line">										   loadFactor);</span><br><span class="line">	<span class="keyword">this</span>.loadFactor = loadFactor;</span><br><span class="line">	<span class="keyword">this</span>.threshold = tableSizeFor(initialCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认的初始容量是16 - 2的幂。</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 最大容量，必须是2的幂且小于2的30次方，传入容量过大将被这个值替换</span></span><br><span class="line"><span class="comment">// 1 &lt;&lt; 30，也就是2的30次方  </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span><br></pre></td></tr></table></figure>
 <p>  一个静态内部类Node<br>  static class Node&lt;K,V&gt; implements Map.Entry&lt;K,V&gt;</p>
@@ -322,10 +426,11 @@
 <p>  // Returns true if this map contains a mapping for the specified key.<br>  public boolean containsKey(Object key)</p>
 <p>  // Associates the specified value with the specified key in this map.<br>  // If the map previously contained a mapping for the key, the old<br>  // value is replaced.<br>  public V put(K key, V value)</p>
 <p>  // Implements Map.put and related methods<br>  final V putVal(int hash, K key, V value, boolean onlyIfAbsent, boolean evict)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Basic hash bin node, used for most entries.  (See below for</span></span><br><span class="line"><span class="comment"> * TreeNode subclass, and in LinkedHashMap for its Entry subclass.)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> hash;</span><br><span class="line">    <span class="keyword">final</span> K key;</span><br><span class="line">    V value;</span><br><span class="line">    Node&lt;K,V&gt; next;</span><br><span class="line"></span><br><span class="line">    Node(<span class="keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;</span><br><span class="line">        <span class="keyword">this</span>.hash = hash;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">        <span class="keyword">this</span>.next = next;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> K <span class="title">getKey</span><span class="params">()</span>        </span>&#123; <span class="keyword">return</span> key; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">getValue</span><span class="params">()</span>      </span>&#123; <span class="keyword">return</span> value; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> key + <span class="string">"="</span> + value; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.hashCode(key) ^ Objects.hashCode(value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">setValue</span><span class="params">(V newValue)</span> </span>&#123;</span><br><span class="line">        V oldValue = value;</span><br><span class="line">        value = newValue;</span><br><span class="line">        <span class="keyword">return</span> oldValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">this</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span> (o <span class="keyword">instanceof</span> Map.Entry) &#123;</span><br><span class="line">            Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;</span><br><span class="line">            <span class="keyword">if</span> (Objects.equals(key, e.getKey()) &amp;&amp;</span><br><span class="line">                Objects.equals(value, e.getValue()))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>  Hashmap继承于AbstractMap，实现了Map、Cloneable、java.io.Serializable接口。<br>  它的key、value都可以为null，映射不是有序的。 　　 　　<br>  Hashmap不是同步的，如果想要线程安全的HashMap，可以通过Collections类的静态方法synchronizedMap获得线程安全的HashMap。<br><code>Map map = Collections.synchronizedMap(new HashMap());</code></p>
 <p>HashMap 中两个影响其性能的重要参数：“初始容量” 和 “加载因子”。<br>容量： 是哈希表中桶的数量，初始容量 只是哈希表在创建时的容量<br>加载因子： 是哈希表在其容量自动增加之前可以达到多满的一种尺度（默认0.75）。　<br>当哈希表中的条目数超出了加载因子与当前容量的乘积时，则要对该哈希表进行 rehash 操作（扩容，即重建内部数据结构，桶数Ｘ２）。<br>加载因子越大,填满的元素越多,好处是,空间利用率高了,但:冲突的机会加大了.反之,加载因子越小,填满的元素越少,好处是:冲突的机会减小了,但:空间浪费多了.</p>
 <h2 id="HashMap数据结构"><a href="#HashMap数据结构" class="headerlink" title="HashMap数据结构"></a>HashMap数据结构</h2><p><img src="/blog/img/java/collection/hashmap/hashMapDataStructure.png" alt="HashMap数据结构"><br>  Hashmap本质是数组加链表。<br>  通过key的hashCode来计算hash值的，只要hashCode相同，计算出来的hash值就一样，然后再计算出数组下标，<br>  如果多个key对应到同一个下标，就用链表串起来，新插入的在前面。</p>
-<h1 id="长度必须是2的幂次方"><a href="#长度必须是2的幂次方" class="headerlink" title="长度必须是2的幂次方"></a>长度必须是2的幂次方</h1><p>这里的h是”int hash = hash(key.hashCode());”, 也就是根据key的hashCode再次进行一次hash操作计算出来的 .<br>length是Entry数组的长度 .<br>一般我们利用hash码, 计算出在一个数组的索引, 常用方式是”h % length”, 也就是求余的方式 .<br>可能是这种方式效率不高, SUN大师们发现, “当容量一定，是2^n时，h &amp; (length - 1) == h % length” . 按位运算特别快 .<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/** </span><br><span class="line"> * Returns index for hash code h. </span><br><span class="line"> */  </span><br><span class="line">static int indexFor(int h, int length) &#123;  </span><br><span class="line">    return h &amp; (length-1);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="长度必须是2的幂次方"><a href="#长度必须是2的幂次方" class="headerlink" title="长度必须是2的幂次方"></a>长度必须是2的幂次方</h1><p>这里的h是”int hash = hash(key.hashCode());”, 也就是根据key的hashCode再次进行一次hash操作计算出来的 .<br>length是Entry数组的长度 .<br>一般我们利用hash码, 计算出在一个数组的索引, 常用方式是”h % length”, 也就是求余的方式 .<br>可能是这种方式效率不高, SUN大师们发现, “当容量一定，是2^n时，h &amp; (length - 1) == h % length” . 按位运算特别快 .<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * Returns index for hash code h. </span></span><br><span class="line"><span class="comment"> */</span>  </span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">indexFor</span><span class="params">(<span class="keyword">int</span> h, <span class="keyword">int</span> length)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> h &amp; (length-<span class="number">1</span>);  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>对于length = 16, 对应二进制”1 0000”, length-1=”0 1111”<br>假设此时h = 17 .<br>(1) 使用”h % length”, 也就是”17 % 16”, 结果是1 .<br>(2) 使用”h &amp; (length - 1)”, 也就是 “1 0001 &amp; 0 1111”, 结果也是1 .<br>我们会发现, 因为”0 1111”低位都是”1”, 进行”&amp;”操作, 就能成功保留”1 0001”对应的低位, 将高位的都丢弃, 低位是多少, 最后结果就是多少 .<br>刚好低位的范围是”0~15”, 刚好是长度为length=16的所有索引 .</p>
 <h1 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h1><p>Map m = Collections.synchronizeMap(hashMap);</p>
 <p>ConcurrentHashMap</p>
@@ -432,20 +537,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -210,6 +210,580 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/05/14/javac-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/14/javac-notes/" class="post-title-link" itemprop="url">jdk javac 使用笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-14 10:27:20" itemprop="dateCreated datePublished" datetime="2020-05-14T10:27:20+08:00">2020-05-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-17 23:31:53" itemprop="dateModified" datetime="2020-05-17T23:31:53+08:00">2020-05-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/14/javac-notes/" class="post-meta-item leancloud_visitors" data-flag-title="jdk javac 使用笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> 最近有一个需求，需要测试一下新数据库(mysql优化版)某个表的写入速度和查询速度，需要从我们的测试环境数据库查数据，插入到新的测试环境的新数据库。<br> 本地连不上测试的数据库<br> 有很多应用服务器，但是所有的服务器不能连外网，只能访问公司内网。<br> 测试环境的应用可以连测试的数据库<br> 想写个python脚本，但是服务器上python是2.7的，而且很多包没有。<br> 想了想，应用服务器部署了java程序，java的包都有，想写一个java脚本来测试。(没错是java脚本)</p>
+</blockquote>
+<blockquote>
+<p> 测试环境数据库     db_test_old  192.168.1.10<br> 新测试环境新数据库  db_test_new  192.168.2.11<br> 测试环境应用       test-java    192.168.3.12</p>
+</blockquote>
+<blockquote>
+<p> 在idea里写完脚本，运行没问题，然后在 terminal 运行，被啪啪的打脸</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/14/javac-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/05/13/guava-cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/13/guava-cache/" class="post-title-link" itemprop="url">guava缓存</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-13 09:19:36" itemprop="dateCreated datePublished" datetime="2020-05-13T09:19:36+08:00">2020-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-06 18:54:35" itemprop="dateModified" datetime="2020-06-06T18:54:35+08:00">2020-06-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cache/" itemprop="url" rel="index"><span itemprop="name">cache</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/13/guava-cache/" class="post-meta-item leancloud_visitors" data-flag-title="guava缓存" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> google guava-cache</p>
+</blockquote>
+<blockquote>
+<p> redis做缓存很快，但是还有网络IO，在并发量大要求耗时低的情况下还是不满足需求，所以想试试本地缓存。</p>
+<p> 发现guava缓存不错，想试试 </p>
+<p> 在本地demo测试的时候发现更新缓存时有毛刺出现</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/13/guava-cache/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/04/18/vim-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/18/vim-notes/" class="post-title-link" itemprop="url">vim笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-18 14:49:16" itemprop="dateCreated datePublished" datetime="2020-04-18T14:49:16+08:00">2020-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-05 23:32:36" itemprop="dateModified" datetime="2020-06-05T23:32:36+08:00">2020-06-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/04/18/vim-notes/" class="post-meta-item leancloud_visitors" data-flag-title="vim笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> vim有三种模式，一般模式、编辑模式、命令模式。<br> 一般模式下只能 查看文件。  (输入 <code>ESC</code> 可以进入一般模式。)<br> 编辑模式下可以对文件进行 新增、修改、删除。  (输入 <code>i</code> 可以进入编辑模式。进入后左下角可以看到 <code>INSERT</code> 标识)<br> 命令模式下可以对文件进行 保存、退出 等操作。  (输入 <code>ESC</code> + <code>:</code> 可以进入命令模式。)</p>
+</blockquote>
+<blockquote>
+<p> 输入<code>ESC</code>+<code>:</code>进入命令模式后，输入<code>q!</code>可以退出文件并且不保存修改。<br> 输入<code>ESC</code>+<code>:</code>进入命令模式后，输入<code>qw</code>可以退出文件并且保存修改。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/18/vim-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/04/18/vs-code-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/18/vs-code-notes/" class="post-title-link" itemprop="url">vs-code-notes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-18 14:49:06" itemprop="dateCreated datePublished" datetime="2020-04-18T14:49:06+08:00">2020-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-10 15:21:36" itemprop="dateModified" datetime="2020-07-10T15:21:36+08:00">2020-07-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/04/18/vs-code-notes/" class="post-meta-item leancloud_visitors" data-flag-title="vs-code-notes" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-vs-code-设置语言"><a href="#1-vs-code-设置语言" class="headerlink" title="(1) vs-code 设置语言"></a>(1) vs-code 设置语言</h1><p>  打开命令面板 ，输入 <code>configure display language</code>，设置语言为 <code>zh-cn</code> </p>
+<p>  备注：打开命令面板快捷键  mac <code>Shift + Command + P</code>    Windows <code>Ctrl + Shift + p</code></p>
+<h1 id="2-vs-code-设置背景豆沙绿"><a href="#2-vs-code-设置背景豆沙绿" class="headerlink" title="(2) vs-code 设置背景豆沙绿"></a>(2) vs-code 设置背景豆沙绿</h1><p>  修改配置文件 <code>~/Library/Application Support/Code/User/settings.json</code><br>  把  <code>&quot;editor.background&quot;</code> 设置成 <code>&quot;#C7EDCC&quot;</code>，具体如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"workbench.colorTheme"</span>: <span class="string">"Default Light+"</span>,</span><br><span class="line">    <span class="attr">"workbench.colorCustomizations"</span>: &#123;</span><br><span class="line">        <span class="attr">"editor.background"</span>: <span class="string">"#C7EDCC"</span></span><br><span class="line">        //设置用户选中代码段的颜色 </span><br><span class="line">        //<span class="string">"editor.selectionBackground"</span>: <span class="string">"#2f00ff"</span>,</span><br><span class="line">        //搜索匹配的背景色</span><br><span class="line">        //"editor.findMatchBackground": "#ff0000",</span><br><span class="line">        //"editor.findMatchHighlightBackground": "#ff00ff",</span><br><span class="line">        //"editor.findRangeHighlightBackground": "#ff9900"</span><br><span class="line">    </span><br><span class="line">    &#125;,</span><br><span class="line">    "editor.fontSize": 16,</span><br><span class="line">    "window.openFoldersInNewWindow": "off",</span><br><span class="line">    "window.openWithoutArgumentsInNewWindow": "on",</span><br><span class="line">    "editor.largeFileOptimizations": false,</span><br><span class="line">    "editor.suggestSelection": "first",</span><br><span class="line">    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",</span><br><span class="line">    "java.configuration.checkProjectSettingsExclusions": false,</span><br><span class="line">    "extensions.autoUpdate": false,</span><br><span class="line">    "window.zoomLevel": 0,</span><br><span class="line">    "update.mode": "none"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/04/18/vs-code-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/04/06/cache-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/06/cache-notes/" class="post-title-link" itemprop="url">cache笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-06 09:22:49" itemprop="dateCreated datePublished" datetime="2020-04-06T09:22:49+08:00">2020-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-05 23:44:44" itemprop="dateModified" datetime="2020-06-05T23:44:44+08:00">2020-06-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cache/" itemprop="url" rel="index"><span itemprop="name">cache</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/04/06/cache-notes/" class="post-meta-item leancloud_visitors" data-flag-title="cache笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/zeb_perfect/article/details/54135506" target="_blank" rel="noopener">缓存穿透，缓存击穿，缓存雪崩解决方案分析</a><br>[2] <a href="https://blog.csdn.net/xlgen157387/article/details/79530877" target="_blank" rel="noopener">缓存雪崩、缓存穿透、缓存预热、缓存更新、缓存降级等问题</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/03/28/jvm-performance-tuning-monitoring-tool/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/28/jvm-performance-tuning-monitoring-tool/" class="post-title-link" itemprop="url">JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-28 10:16:25" itemprop="dateCreated datePublished" datetime="2020-03-28T10:16:25+08:00">2020-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-30 23:37:10" itemprop="dateModified" datetime="2020-03-30T23:37:10+08:00">2020-03-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/03/28/jvm-performance-tuning-monitoring-tool/" class="post-meta-item leancloud_visitors" data-flag-title="JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> 最近测试环境总是莫名的出问题，然后部署服务的容器里除了服务打印的日志，没有其它信息，想看看是什么原因导致服务很卡，是不是有哪块代码占用内存高。<br> 代码执行缓慢、OutOfMemoryError，内存不足、内存泄露、线程死锁、锁争用（Lock Contention）、Java进程消耗CPU过高 都可以使用JDK的命令行工具排查。</p>
+</blockquote>
+<p><br></p>
+<h1 id="1-JDK的命令行工具"><a href="#1-JDK的命令行工具" class="headerlink" title="(1) JDK的命令行工具"></a>(1) JDK的命令行工具</h1><blockquote>
+<p> jps、jstat、jinfo、jmap、jhat、jstack、hprof<br>jps : 虚拟机进程状况工具<br>jstat : 虚拟机统计信息监视工具<br>jinfo : Java 配置信息工具<br>jmap : Java 内存映像工具<br>jhat : 虚拟机堆转储快照分析工具<br>jstack : Java 堆栈跟踪工具</p>
+</blockquote>
+<blockquote>
+<p> jps将打印所有正在运行的 Java 进程。<br> jstat允许用户查看目标 Java 进程的类加载、即时编译以及垃圾回收相关的信息。它常用于检测垃圾回收问题以及内存泄漏问题。<br> jmap允许用户统计目标 Java 进程的堆中存放的 Java 对象，并将它们导出成二进制文件。<br> jinfo将打印目标 Java 进程的配置参数，并能够改动其中 manageabe 的参数。<br> jstack将打印目标 Java 进程中各个线程的栈轨迹、线程状态、锁状况等信息。它还将自动检测死锁。<br> jcmd则是一把瑞士军刀，可以用来实现前面除了jstat之外所有命令的功能。</p>
+</blockquote>
+<p>Java虚拟机的监控及诊断工具-GUI</p>
+<blockquote>
+<p>JConsole : Java 监视与管理控制台<br>VisualVM : 多合一故障处理工具<br>eclipse MAT<br>JMC<br>JITWatch</p>
+</blockquote>
+<p><br></p>
+<h1 id="2-虚拟机进程状况工具-jps-JVM-Process-Status-Tool"><a href="#2-虚拟机进程状况工具-jps-JVM-Process-Status-Tool" class="headerlink" title="(2) 虚拟机进程状况工具 jps (JVM Process Status Tool)"></a>(2) 虚拟机进程状况工具 jps (JVM Process Status Tool)</h1><blockquote>
+<p> jps主要用来输出JVM中运行的进程状态信息。<br> jps命令使用Java启动器来查找传递给main方法的类名和参数。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -help</span><br><span class="line">usage: jps [-help]</span><br><span class="line">       jps [-q] [-mlvV] [&lt;hostid&gt;]</span><br><span class="line"></span><br><span class="line">Definitions:</span><br><span class="line">    &lt;hostid&gt;:      &lt;hostname&gt;[:&lt;port&gt;]</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="2-1-jps命令"><a href="#2-1-jps命令" class="headerlink" title="(2.1) jps命令"></a>(2.1) jps命令</h2><blockquote>
+<p>jps命令用于输出JVM中运行的进程状态信息。可以获取到进程的pid、全限定名、传入main方法的参数、传入JVM的参数 等。</p>
+</blockquote>
+<blockquote>
+<p>语法格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps [ options ] [ hostid ]</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>  如果不指定hostid就默认为当前主机或服务器。</p>
+<p>  详细信息见 <code>man jps</code></p>
+<h3 id="2-1-1-jps-不加参数"><a href="#2-1-1-jps-不加参数" class="headerlink" title="(2.1.1) jps 不加参数"></a>(2.1.1) jps 不加参数</h3><blockquote>
+<p> 在本地主机上搜索检测到的JVM。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps</span><br><span class="line">14916 Jps</span><br><span class="line">13050 Elasticsearch</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/28/jvm-performance-tuning-monitoring-tool/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/03/20/chrome-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -574,580 +1148,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/05/mysql-explain/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/05/mysql-explain/" class="post-title-link" itemprop="url">mysql explain 详解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-05 10:50:15" itemprop="dateCreated datePublished" datetime="2020-02-05T10:50:15+08:00">2020-02-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-01 10:07:06" itemprop="dateModified" datetime="2020-06-01T10:07:06+08:00">2020-06-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/02/05/mysql-explain/" class="post-meta-item leancloud_visitors" data-flag-title="mysql explain 详解" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> 在使用MySQL时，如果发现查询语句耗时，会进行排查及调优，其中常用的一个方法是用explain查看sql执行计划。</p>
-</blockquote>
-<h1 id="1-explain示例"><a href="#1-explain示例" class="headerlink" title="(1) explain示例"></a>(1) explain示例</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; explain select * from user ;</span><br><span class="line">+<span class="comment">----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+</span></span><br><span class="line">| id | select_type | table | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |</span><br><span class="line">+<span class="comment">----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+</span></span><br><span class="line">|  1 | SIMPLE      | user  | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    5 |   100.00 | NULL  |</span><br><span class="line">+<span class="comment">----+-------------+-------+------------+------+---------------+------+---------+------+------+----------+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.03</span> sec)</span><br></pre></td></tr></table></figure>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  explain</span><br><span class="line">    -&gt;  select count(*)</span><br><span class="line">    -&gt;  from table_c</span><br><span class="line">    -&gt;  where l_id &lt;&gt; ''</span><br><span class="line">    -&gt;  and l_id is not null</span><br><span class="line">    -&gt;  and l_id not in (</span><br><span class="line">    -&gt;    select l_id from table_l</span><br><span class="line">    -&gt;  ) ;</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+</span></span><br><span class="line">| id | select_type        | table         | partitions | type           | possible_keys | key          | key_len | ref  | rows  | filtered | Extra                              |</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+</span></span><br><span class="line">|  1 | PRIMARY            | table_c       | NULL       | range          | idx_l_id      | idx_l_id     | 51      | NULL | 98519 |   100.00 | Using where; Using index           |</span><br><span class="line">|  2 | DEPENDENT SUBQUERY | table_l       | NULL       | index_subquery | idx_l_id      | idx_l_id     | 387     | func |     2 |   100.00 | Using index; Full scan on NULL key |</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.01</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/05/mysql-explain/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/03/java-mermory-model/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/03/java-mermory-model/" class="post-title-link" itemprop="url">Java内存模型</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-03 10:34:22" itemprop="dateCreated datePublished" datetime="2020-02-03T10:34:22+08:00">2020-02-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-02 23:11:11" itemprop="dateModified" datetime="2020-06-02T23:11:11+08:00">2020-06-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/02/03/java-mermory-model/" class="post-meta-item leancloud_visitors" data-flag-title="Java内存模型" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-内存模型"><a href="#1-内存模型" class="headerlink" title="(1) 内存模型"></a>(1) 内存模型</h1><blockquote>
-<p> 在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？</p>
-</blockquote>
-<blockquote>
-<p> 在处理器层面上，内存模型定义了一个充要条件，“让当前的处理器可以看到其他处理器写入到内存的数据”以及“其他处理器可以看到当前处理器写入到内存的数据”。有些处理器有很强的内存模型(strong memory model)，能够让所有的处理器在任何时候任何指定的内存地址上都可以看到完全相同的值。而另外一些处理器则有较弱的内存模型（weaker memory model），在这种处理器中，必须使用内存屏障（一种特殊的指令）来刷新本地处理器缓存并使本地处理器缓存无效，目的是为了让当前处理器能够看到其他处理器的写操作或者让其他处理器能看到当前处理器的写操作。这些内存屏障通常在lock和unlock操作的时候完成。内存屏障在高级语言中对程序员是不可见的。</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/03/java-mermory-model/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/02/java-concurrent-programming/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/02/java-concurrent-programming/" class="post-title-link" itemprop="url">java并发编程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-02 22:07:56" itemprop="dateCreated datePublished" datetime="2020-02-02T22:07:56+08:00">2020-02-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-14 14:39:02" itemprop="dateModified" datetime="2020-06-14T14:39:02+08:00">2020-06-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/02/02/java-concurrent-programming/" class="post-meta-item leancloud_visitors" data-flag-title="java并发编程" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> 为什么要使用并发编程?</p>
-<ol>
-<li>随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。</li>
-<li>很多情况下，服务器的资源使用率并不高，导致资源浪费，比如线上服务器的CPU使用率经常是10%，并发编程可以提高资源使用率。</li>
-</ol>
-</blockquote>
-<blockquote>
-<p> 但是在并发编程里，很多单线程的规则不太适用，就像汽车的用法不适用飞机一样。</p>
-</blockquote>
-<blockquote>
-<p> 在并发编程里，经常遇到很多诡异的bug，这些bug大多可能是逻辑问题或者是对使用的技术不了解导致的。</p>
-</blockquote>
-<h1 id="并发编程的三个核心问题"><a href="#并发编程的三个核心问题" class="headerlink" title="并发编程的三个核心问题"></a>并发编程的三个核心问题</h1><blockquote>
-<p> 并发编程可以总结为三个核心问题：分工、同步、互斥。</p>
-</blockquote>
-<blockquote>
-<p> Java SDK 并发包很大部分内容都是按照这三个维度组织的</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/02/java-concurrent-programming/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/" class="post-title-link" itemprop="url">新冠形病毒疫情传染数据模拟</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-02-02 15:42:33" itemprop="dateCreated datePublished" datetime="2020-02-02T15:42:33+08:00">2020-02-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-17 16:09:43" itemprop="dateModified" datetime="2020-02-17T16:09:43+08:00">2020-02-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/data/" itemprop="url" rel="index"><span itemprop="name">data</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/" class="post-meta-item leancloud_visitors" data-flag-title="新冠形病毒疫情传染数据模拟" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  新冠形病毒(Novel Conronavirus Pneumonia)疫情数据模拟。</p>
-<p>  该模拟参考网上公开数据，模拟(数据可能不准确)只是为了让大家心里有个数，不要出门或尽量少出门。<br>  由于建模使用数据误差较大，结果仅供参考。</p>
-<p>  需要数据 </p>
-<ol>
-<li>全国人口统计数据</li>
-<li>行政区划分数据</li>
-<li>人口流动数据</li>
-<li>全国各小区数据</li>
-<li>高考各大高校录取数据</li>
-<li><p>疫情数据 ( 卫健委公布的各省市确诊人数、 同行数据 )</p>
-<p>使模型更加准确所需数据</p>
-</li>
-<li>通信运营商数据  (从2019.12.01~2020.02.16 用于通过手机定位)<br>中国联通已经开始行动了，发送 cxmyd#身份证后四位 到 10010 可查询近14日内到访的省市信息(驻留超过4小时)，公益服务。</li>
-<li><p>确诊人数经纬度坐标数据  (用于预防)</p>
-<p>使模型更加准确需要优化的点：</p>
-</li>
-<li>数据层面<br>人口数据更详细，具体到 城市具体到街道、小区，城镇具体到 村 甚至 小组。<br>人口流动数据更详细， @通信运营商@中国电信@中国移动@中国联通@今日头条@美团@阿里巴巴@京东</li>
-<li>建模层面<br>数据统计需要耗费大量人力物力，不可能做到100%<br>在当前数据的情况下，需要部分数据缺失，部分数据延迟<br>根据 概率论和数理统计 以及 离散数学 去估计、模拟可能的情况。         </li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/21/elasticsearch-mapping-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/21/elasticsearch-mapping-analysis/" class="post-title-link" itemprop="url">elasticsearch 映射和分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-01-21 10:12:46 / 修改时间：19:23:04" itemprop="dateCreated datePublished" datetime="2020-01-21T10:12:46+08:00">2020-01-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/01/21/elasticsearch-mapping-analysis/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 映射和分析" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  当摆弄索引里面的数据时，我们发现一些奇怪的事情。一些事情看起来被打乱了：在我们的索引中有12条推文，其中只有一条包含日期 2014-09-15 ，但是看一看下面查询命中的 总数 （total）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /_search?q=2014              # 12 results</span><br><span class="line">GET /_search?q=2014-09-15        # 12 results !</span><br><span class="line">GET /_search?q=date:2014-09-15   # 1  result</span><br><span class="line">GET /_search?q=date:2014         # 0  results !</span><br></pre></td></tr></table></figure>
-<p>  为什么在 _all 字段查询日期返回所有推文，而在 date 字段只查询年份却没有返回结果？为什么我们在 _all 字段和 date 字段的查询结果有差别？<br>  因为数据在 _all 字段与 date 字段的索引方式不同。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/01/21/elasticsearch-mapping-analysis/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/20/elasticsearch-search/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/01/20/elasticsearch-search/" class="post-title-link" itemprop="url">elasticsearch-search</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-01-20 18:22:49" itemprop="dateCreated datePublished" datetime="2020-01-20T18:22:49+08:00">2020-01-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-21 11:36:44" itemprop="dateModified" datetime="2020-01-21T11:36:44+08:00">2020-01-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/01/20/elasticsearch-search/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch-search" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p> search 最基本的工具</p>
-<p>  Elasticsearch 不只会<em>存储（stores）</em> 文档，为了能被搜索到也会为文档添加<em>索引（indexes）</em> ，这也是为什么我们使用结构化的 JSON 文档，而不是无结构的二进制数据。</p>
-<p>  文档中的每个字段都将被索引并且可以被查询 。不仅如此，在简单查询时，Elasticsearch 可以使用 所有（all） 这些索引字段，以惊人的速度返回结果。</p>
-<p>搜索（search） 可以做到：<br>    在类似于 gender 或者 age 这样的字段上使用结构化查询，join_date 这样的字段上使用排序，就像SQL的结构化查询一样。<br>    全文检索，找出所有匹配关键字的文档并按照<em>相关性（relevance）</em> 排序后返回结果。<br>    以上二者兼而有之。</p>
-<p>很多搜索都是开箱即用的，为了充分挖掘 Elasticsearch 的潜力，你需要理解以下三个概念：</p>
-<p>映射（Mapping）<br>    描述数据在每个字段内如何存储<br>分析（Analysis）<br>    全文是如何处理使之可以被搜索的<br>领域特定查询语言（Query DSL）<br>    Elasticsearch 中强大灵活的查询语言 </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/01/20/elasticsearch-search/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1217,20 +1217,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

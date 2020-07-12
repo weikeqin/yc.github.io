@@ -210,6 +210,572 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/28/python-download-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/05/28/python-download-install/" class="post-title-link" itemprop="url">python下载安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-05-28 22:46:30" itemprop="dateCreated datePublished" datetime="2017-05-28T22:46:30+08:00">2017-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-19 11:19:16" itemprop="dateModified" datetime="2020-01-19T11:19:16+08:00">2020-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/05/28/python-download-install/" class="post-meta-item leancloud_visitors" data-flag-title="python下载安装" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  <a href="https://www.python.org/downloads/" target="_blank" rel="noopener">https://www.python.org/downloads/</a><br>  <a href="https://www.python.org/downloads/source/" target="_blank" rel="noopener">https://www.python.org/downloads/source/</a></p>
+<p>  python文档  <a href="https://docs.python.org/3/download.html" target="_blank" rel="noopener">https://docs.python.org/3/download.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># Setting PATH for Python 2.7</span><br><span class="line">PATH=&quot;/System/Library/Frameworks/Python.framework/Versions/2.7/bin:$&#123;PATH&#125;&quot;</span><br><span class="line">export PATH</span><br><span class="line"># Setting PATH for Python 3.7</span><br><span class="line">PATH=&quot;/Library/Frameworks/Python.framework/Versions/3.7/bin:$&#123;PATH&#125;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">alias python2=&apos;/System/Library/Frameworks/Python.framework/Versions/2.7/bin/python2.7&apos;</span><br><span class="line">alias python3=&apos;/Library/Frameworks/Python.framework/Versions/3.7/bin/python3.7&apos;</span><br><span class="line">alias python=python3</span><br></pre></td></tr></table></figure>
+<p>pip: command not found<br>运行Python的安装工具安装pip<br> <code>sudo easy_install pip</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install --upgrade pip</span><br><span class="line">pip3 install --upgrade pip</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pip3 install matplotlib -i http://pypi.douban.com/simple --trusted-host pypi.douban.com  </span><br><span class="line">pip3 install numpy -i http://pypi.douban.com/simple --trusted-host pypi.douban.com  </span><br><span class="line">pip3 install pandas -i http://pypi.douban.com/simple --trusted-host pypi.douban.com  </span><br><span class="line">pip3 install seaborn scipy  -i http://pypi.douban.com/simple --trusted-host pypi.douban.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sqlalchemy.exc.ProgrammingError: (pymysql.err.ProgrammingError) (1064, &quot;You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;form car_brand_series&apos; at line 1&quot;)</span><br><span class="line">[SQL:  select * form car_brand_series ]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">WKQ@WKQ-PC MINGW64 ~</span><br><span class="line">$ python -m pip install --upgrade pip</span><br><span class="line">Collecting pip</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/00/b6/9cfa56b4081ad13874b0c6f96af8ce16cfbc1cb06bedf8e9164ce5551ec1/pip-19.3.1-py2.py3-none-any.whl (1.4MB)</span><br><span class="line">    100% |████████████████████████████████| 1.4MB 17kB/s</span><br><span class="line">Installing collected packages: pip</span><br><span class="line">  Found existing installation: pip 9.0.1</span><br><span class="line">    Uninstalling pip-9.0.1:</span><br><span class="line">      Successfully uninstalled pip-9.0.1</span><br><span class="line">Successfully installed pip-19.3.1</span><br><span class="line"></span><br><span class="line">WKQ@WKQ-PC MINGW64 ~</span><br><span class="line">$ python -m pip install --upgrade pip</span><br><span class="line">Requirement already up-to-date: pip in c:\professionalsoftware\python\python35\lib\site-packages (19.3.1)</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/u014259820/article/details/81023224" target="_blank" rel="noopener">Mac下安装配置Python2和Python3并相互切换使用</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/28/python-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/05/28/python-notes/" class="post-title-link" itemprop="url">Python 学习</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-05-28 22:46:30" itemprop="dateCreated datePublished" datetime="2017-05-28T22:46:30+08:00">2017-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/05/28/python-notes/" class="post-meta-item leancloud_visitors" data-flag-title="Python 学习" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  因为在写算法时，很多算法用python实现，为了参考、学习、对比，觉得有必要学一下python，<br>  简单的学一下，能看懂别人的代码就可以(其实是python的库太多了，觉得一定时间里看不完源代码)</p>
+<h1 id="1-简介"><a href="#1-简介" class="headerlink" title="(1)　简介"></a>(1)　简介</h1><p>  Python的哲学就是简单优雅，尽量写容易看明白的代码，尽量写少的代码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/28/python-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/23/securecrt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/05/23/securecrt/" class="post-title-link" itemprop="url">securecrt配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-05-23 22:54:59" itemprop="dateCreated datePublished" datetime="2017-05-23T22:54:59+08:00">2017-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/05/23/securecrt/" class="post-meta-item leancloud_visitors" data-flag-title="securecrt配置" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-修改全局设置"><a href="#1-修改全局设置" class="headerlink" title="(1) 修改全局设置"></a>(1) 修改全局设置</h1><p>  <code>Options</code> –&gt; <code>Global Options</code> –&gt; <code>General</code> –&gt; <code>Default Session</code> –&gt;  <code>Edit Default Settings..</code></p>
+<h2 id="1-1-设置字符编码为UTF-8"><a href="#1-1-设置字符编码为UTF-8" class="headerlink" title="(1.1)  设置字符编码为UTF-8"></a>(1.1)  设置字符编码为UTF-8</h2><p>  <code>Appearance</code>  找到 <code>Character encoding</code> 选项, 设置为 <code>UTF-8</code> 格式。</p>
+<h2 id="1-2-设置字体"><a href="#1-2-设置字体" class="headerlink" title="(1.2) 设置字体"></a>(1.2) 设置字体</h2><p>  <code>Apperance</code> –&gt; <code>Fonts</code> ，设置 <code>Normal font</code> 为 <code>Consolas</code> </p>
+<h2 id="1-3-设置全局缓冲区大小"><a href="#1-3-设置全局缓冲区大小" class="headerlink" title="(1.3) 设置全局缓冲区大小"></a>(1.3) 设置全局缓冲区大小</h2><p>  <code>Terminal</code> –&gt; <code>Emulation</code> –&gt; <code>Scrollback</code> ，<code>Scrollback buffer</code> 默认为500行，可以最大调整到128000行。</p>
+<h2 id="1-4-设置日志"><a href="#1-4-设置日志" class="headerlink" title="(1.4) 设置日志"></a>(1.4) 设置日志</h2><p>  <code>Terminal --&gt; Log File</code> ，<br>  设置 <code>Log file name</code> 为 <code>D:\SoftWare\SecureCRT_x86_7.1.1.264_en\log\ssh_log\%S_%Y_%M_%D.log</code></p>
+<p>  <code>Options</code> 设置 <code>Start log upon connect</code> 和  <code>Append to file</code></p>
+<h2 id="1-5-设置每300秒发个回车不掉线"><a href="#1-5-设置每300秒发个回车不掉线" class="headerlink" title="(1.5) 设置每300秒发个回车不掉线"></a>(1.5) 设置每300秒发个回车不掉线</h2><p>  <code>Terminal</code>  –&gt;  <code>Anti-idle</code>     <code>Send String</code>  <code>\n</code>  <code>every 300 seconds</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/23/securecrt/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/23/java-parser-json/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/05/23/java-parser-json/" class="post-title-link" itemprop="url">java解析json jackson gson fastjson json-lib</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-05-23 22:49:01" itemprop="dateCreated datePublished" datetime="2017-05-23T22:49:01+08:00">2017-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-11 23:00:48" itemprop="dateModified" datetime="2020-06-11T23:00:48+08:00">2020-06-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/05/23/java-parser-json/" class="post-meta-item leancloud_visitors" data-flag-title="java解析json jackson gson fastjson json-lib" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> java解析json 常用的类库有 jackson  gson FastJson  Json-lib</p>
+</blockquote>
+<blockquote>
+<p> 综合来讲 Jackson性能较好</p>
+</blockquote>
+<blockquote>
+<p> Gosn 功能最全</p>
+</blockquote>
+<blockquote>
+<p>fastjson速度较快 但安全漏洞较多</p>
+</blockquote>
+<blockquote>
+<p> json-lib </p>
+</blockquote>
+<h1 id="1-jackson使用"><a href="#1-jackson使用" class="headerlink" title="(1) jackson使用"></a>(1) jackson使用</h1><blockquote>
+<p> jackson</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.11.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.11.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-annotations<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.11.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-1-对象转字符串"><a href="#1-1-对象转字符串" class="headerlink" title="(1.1) 对象转字符串"></a>(1.1) 对象转字符串</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 对象转字符串</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeObjectAsString</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line"></span><br><span class="line">       UserVo user = getUserVo();</span><br><span class="line"></span><br><span class="line">       String json = <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           json = objectMapper.writeValueAsString(user);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (JsonProcessingException e) &#123;</span><br><span class="line">           log.error(<span class="string">""</span>, e);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// &#123;"id":2305843116587876352,"name":"李四","age":20,"birthday":1591402080000,"email":"lisi@gmail.com","address":["北京","天津"],"arr":["A","b"]&#125;</span></span><br><span class="line">       log.info(<span class="string">"json:&#123;&#125;"</span>, json);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> UserVo <span class="title">getUserVo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    UserVo user = <span class="keyword">new</span> UserVo();</span><br><span class="line">    Long x = <span class="number">100L</span> + Integer.MAX_VALUE + <span class="number">1</span> &lt;&lt; <span class="number">30</span>;</span><br><span class="line">    log.info(<span class="string">"id:&#123;&#125;"</span>, x);</span><br><span class="line">    user.setId(x);</span><br><span class="line">    user.setName(<span class="string">"李四"</span>);</span><br><span class="line">    user.setEmail(<span class="string">"lisi@gmail.com"</span>);</span><br><span class="line">    user.setAge(<span class="number">20</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        SimpleDateFormat dateformat = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">        Date date = dateformat.parse(<span class="string">"2020-06-06 08:08:00"</span>);</span><br><span class="line">        user.setBirthday(date);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ParseException e) &#123;</span><br><span class="line">        log.error(<span class="string">""</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">    List&lt;String&gt; list = Arrays.asList(<span class="string">"北京"</span>, <span class="string">"天津"</span>);</span><br><span class="line">    user.setAddress(list);</span><br><span class="line">    String[] arr = &#123;<span class="string">"A"</span>, <span class="string">"b"</span>&#125;;</span><br><span class="line">    user.setArr(arr);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserVo</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line">    <span class="keyword">private</span> Date birthday;</span><br><span class="line">    <span class="keyword">private</span> String email;</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; address;</span><br><span class="line">    <span class="keyword">private</span> String[] arr;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 省略 getter setter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-2-字符串转对象"><a href="#1-2-字符串转对象" class="headerlink" title="(1.2) 字符串转对象"></a>(1.2) 字符串转对象</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 字符串转对象</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@Test</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readStringAsObject</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       String json = <span class="string">"&#123;\"id\":2305843116587876352,\"name\":\"李四\",\"age\":20,\"birthday\":1591402080000,\"email\":\"lisi@gmail.com\",\"address\":[\"北京\",\"天津\"],\"arr\":[\"A\",\"b\"]&#125;\n"</span>;</span><br><span class="line"></span><br><span class="line">	ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line"></span><br><span class="line">	UserVo userVo = <span class="keyword">null</span>;</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           userVo = objectMapper.readValue(json, UserVo.class);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (JsonProcessingException e) &#123;</span><br><span class="line">           log.error(<span class="string">""</span>, e);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">           log.error(<span class="string">""</span>, e);</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">   	log.info(<span class="string">"&#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125; &#123;&#125; "</span>, userVo.getId(), userVo.getAddress(), userVo.getAge(), userVo.getArr(), userVo.getBirthday(), userVo.getEmail(), userVo.getName());</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-集合转字符串"><a href="#1-3-集合转字符串" class="headerlink" title="(1.3) 集合转字符串"></a>(1.3) 集合转字符串</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 集合转字符串</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="meta">@Test</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">writeListAsString</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      List&lt;UserVo&gt; list = getUserList();</span><br><span class="line"></span><br><span class="line">      String json = <span class="keyword">null</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          json = objectMapper.writeValueAsString(list);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (JsonProcessingException e) &#123;</span><br><span class="line">          log.error(<span class="string">""</span>, e);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// [&#123;"id":1,"name":"李四","age":null,"birthday":null,"email":null,"address":["北京","天津"],"arr":["A","b"]&#125;,&#123;"id":2,"name":"张三","age":null,"birthday":null,"email":null,"address":["河北","山东"],"arr":["C","中文"]&#125;]</span></span><br><span class="line">      log.info(<span class="string">"json:&#123;&#125;"</span>, json);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> List&lt;UserVo&gt; <span class="title">getUserList</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">       List&lt;UserVo&gt; list = <span class="keyword">new</span> ArrayList(<span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">       UserVo user = <span class="keyword">new</span> UserVo();</span><br><span class="line">       user.setId(<span class="number">1L</span>);</span><br><span class="line">       user.setName(<span class="string">"李四"</span>);</span><br><span class="line">       List&lt;String&gt; addrs = Arrays.asList(<span class="string">"北京"</span>, <span class="string">"天津"</span>);</span><br><span class="line">       user.setAddress(addrs);</span><br><span class="line">       String[] arr = &#123;<span class="string">"A"</span>, <span class="string">"b"</span>&#125;;</span><br><span class="line">       user.setArr(arr);</span><br><span class="line"></span><br><span class="line">       UserVo user2 = <span class="keyword">new</span> UserVo();</span><br><span class="line">       user2.setId(<span class="number">2L</span>);</span><br><span class="line">       user2.setName(<span class="string">"张三"</span>);</span><br><span class="line">       List&lt;String&gt; addrs2 = Arrays.asList(<span class="string">"河北"</span>, <span class="string">"山东"</span>);</span><br><span class="line">       user2.setAddress(addrs2);</span><br><span class="line">       String[] arr2 = &#123;<span class="string">"C"</span>, <span class="string">"中文"</span>&#125;;</span><br><span class="line">       user2.setArr(arr2);</span><br><span class="line"></span><br><span class="line">       list.add(user);</span><br><span class="line">       list.add(user2);</span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> list;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-4-字符串转集合"><a href="#2-4-字符串转集合" class="headerlink" title="(2.4) 字符串转集合"></a>(2.4) 字符串转集合</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 字符串转集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readStringAsList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String json = <span class="string">"[&#123;\"id\":1,\"name\":\"李四\",\"age\":null,\"birthday\":null,\"email\":null,\"address\":[\"北京\",\"天津\"],\"arr\":[\"A\",\"b\"]&#125;,&#123;\"id\":2,\"name\":\"张三\",\"age\":null,\"birthday\":null,\"email\":null,\"address\":[\"河北\",\"山东\"],\"arr\":[\"C\",\"中文\"]&#125;]"</span>;</span><br><span class="line"></span><br><span class="line">    JavaType javaType = objectMapper.getTypeFactory().constructParametricType(List.class, UserVo.class);</span><br><span class="line">    <span class="comment">//如果是Map类型  mapper.getTypeFactory().constructParametricType(HashMap.class, String.class, Bean.class);</span></span><br><span class="line">    List&lt;UserVo&gt; list = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        list = objectMapper.readValue(json, javaType);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (JsonProcessingException e) &#123;</span><br><span class="line">        log.error(<span class="string">""</span>, e);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        log.error(<span class="string">""</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (UserVo userVo : list) &#123;</span><br><span class="line">    	log.info(<span class="string">"&#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125; &#123;&#125; "</span>, userVo.getId(), userVo.getAddress(), userVo.getAge(), userVo.getArr(), userVo.getBirthday(), userVo.getEmail(), userVo.getName());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 字符串转集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">readStringAsList</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String json = <span class="string">"[&#123;\"id\":1,\"name\":\"李四\",\"age\":null,\"birthday\":null,\"email\":null,\"address\":[\"北京\",\"天津\"],\"arr\":[\"A\",\"b\"]&#125;,&#123;\"id\":2,\"name\":\"张三\",\"age\":null,\"birthday\":null,\"email\":null,\"address\":[\"河北\",\"山东\"],\"arr\":[\"C\",\"中文\"]&#125;]"</span>;</span><br><span class="line"></span><br><span class="line">    JavaType javaType = objectMapper.getTypeFactory().constructParametricType(List.class, UserVo.class);</span><br><span class="line">    <span class="comment">//如果是Map类型  mapper.getTypeFactory().constructParametricType(HashMap.class, String.class, Bean.class);</span></span><br><span class="line">    List&lt;UserVo&gt; list = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        list = objectMapper.readValue(json, javaType);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (JsonProcessingException e) &#123;</span><br><span class="line">        log.error(<span class="string">""</span>, e);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        log.error(<span class="string">""</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (UserVo userVo : list) &#123;</span><br><span class="line">    	log.info(<span class="string">"&#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125;  &#123;&#125; &#123;&#125; "</span>, userVo.getId(), userVo.getAddress(), userVo.getAge(), userVo.getArr(), userVo.getBirthday(), userVo.getEmail(), userVo.getName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2-gson"><a href="#2-gson" class="headerlink" title="(2) gson"></a>(2) gson</h1><h1 id="3-fastjson"><a href="#3-fastjson" class="headerlink" title="(3) fastjson"></a>(3) fastjson</h1><h2 id="使用-fastjson-时遇到的问题"><a href="#使用-fastjson-时遇到的问题" class="headerlink" title="使用 fastjson 时遇到的问题"></a>使用 fastjson 时遇到的问题</h2><h3 id="java-lang-VerifyError"><a href="#java-lang-VerifyError" class="headerlink" title="java.lang.VerifyError"></a>java.lang.VerifyError</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.lang.VerifyError: (class: com/alibaba/fastjson/parser/deserializer/FastjsonASMDeserializer_3_ErpOrderResVo, method: deserialze signature: (Lcom/alibaba/fastjson/parser/DefaultJSONParser;Ljava/lang/reflect/Type;Ljava/lang/Object;I)Ljava/lang/Object;) Accessing value from uninitialized register 85</span><br><span class="line">	at java.lang.Class.getDeclaredConstructors0(Native Method)</span><br></pre></td></tr></table></figure>
+<h3 id="fastjson-32个字段时反序列化报错的问题"><a href="#fastjson-32个字段时反序列化报错的问题" class="headerlink" title="fastjson 32个字段时反序列化报错的问题"></a>fastjson 32个字段时反序列化报错的问题</h3><p>  1.2.28  32整数倍个字段 OOM bug<br>  32个字段时反序列化报错</p>
+<h3 id="3-老办法"><a href="#3-老办法" class="headerlink" title="(3) 老办法"></a>(3) 老办法</h3><p>  以下是老方法/笨办法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONArray;</span><br><span class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSONObject;</span><br><span class="line"><span class="keyword">import</span> com.xxxx.file.FileUtil;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017-09-21 21:48</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsonTest</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(JsonTest.class);</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	    String str = <span class="keyword">null</span>;</span><br><span class="line">        String filePath = <span class="string">"doc/html/xiecheng/crawler_flights_bj-yc-2017-09-23_result.json"</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            str = FileUtil.readFile2String(filePath);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            logger.error(<span class="string">""</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        JSONObject json = JSONObject.parseObject(str);</span><br><span class="line">        JSONArray fisArray = json.getJSONArray(<span class="string">"fis"</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> size = fisArray.size();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)&#123;</span><br><span class="line">            JSONObject oneFlight = (JSONObject) fisArray.get(i);</span><br><span class="line">            logger.info(i +<span class="string">": &#123;&#125;"</span>, oneFlight);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> str</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> List&lt;Map&lt;String, String&gt;&gt; parserJson(String str) &#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (StringUtil.isEmpty(str)) &#123;</span><br><span class="line">			logger.error(<span class="string">"json为空"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		JSONObject json = JSONObject.parseObject(str);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 航空公司</span></span><br><span class="line">		JSONObject als = (JSONObject) json.get(<span class="string">"als"</span>);</span><br><span class="line">		logger.info(<span class="string">"符合要求的航空公司：&#123;&#125;"</span>, als);</span><br><span class="line">		Set&lt;Map.Entry&lt;String, Object&gt;&gt; set = als.entrySet();</span><br><span class="line">		logger.info(<span class="string">"set：&#123;&#125;"</span>, set);</span><br><span class="line"></span><br><span class="line">		JSONObject apb = (JSONObject) json.get(<span class="string">"apb"</span>);</span><br><span class="line">		logger.info(<span class="string">"符合要求的机场：&#123;&#125;"</span>, apb);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 中转组合，暂时不考虑，业务上也暂时不需要，稍微有点复杂，时间允许可以解析</span></span><br><span class="line">		<span class="comment">// json.get("tf");</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 直航</span></span><br><span class="line">		JSONArray fisArray = json.getJSONArray(<span class="string">"fis"</span>);</span><br><span class="line">		<span class="keyword">if</span> (fisArray == <span class="keyword">null</span> || fisArray.isEmpty()) &#123;</span><br><span class="line">			logger.error(<span class="string">"fisArray结果为空"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> size = fisArray.size();</span><br><span class="line">		<span class="keyword">if</span> (size == <span class="number">0</span>) &#123;</span><br><span class="line">			logger.error(<span class="string">"fisArray 里元素个数为0"</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		List&lt;Map&lt;String, String&gt;&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(size);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line"></span><br><span class="line">			Map&lt;String, String&gt; dataMap = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line">			<span class="comment">//</span></span><br><span class="line">			JSONObject oneFlight = (JSONObject) fisArray.get(i);</span><br><span class="line">			logger.debug(i + <span class="string">": &#123;&#125;"</span>, oneFlight);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 到达城市代码</span></span><br><span class="line">			String acc = (String) oneFlight.get(<span class="string">"acc"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"acc"</span>, acc);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 目的地</span></span><br><span class="line">			String acn = (String) oneFlight.get(<span class="string">"acn"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"acn"</span>, acn);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 航空公司</span></span><br><span class="line">			String alc = (String) oneFlight.get(<span class="string">"alc"</span>);</span><br><span class="line">			String flightCompany = <span class="keyword">null</span>;</span><br><span class="line">			<span class="keyword">if</span> (als.containsKey(alc)) &#123;</span><br><span class="line">				flightCompany = als.getString(alc);</span><br><span class="line">			&#125;</span><br><span class="line">			dataMap.put(<span class="string">"alc"</span>, flightCompany);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 到达机场</span></span><br><span class="line">			String apbn = (String) oneFlight.get(<span class="string">"apbn"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"apbn"</span>, apbn);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 到达时间</span></span><br><span class="line">			String at = (String) oneFlight.get(<span class="string">"at"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"at"</span>, at);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 到达城市代码</span></span><br><span class="line">			String dcc = (String) oneFlight.get(<span class="string">"dcc"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"dcc"</span>, dcc);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 出发地</span></span><br><span class="line">			String dcn = (String) oneFlight.get(<span class="string">"dcn"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"dcn"</span>, dcn);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 出发机场</span></span><br><span class="line">			String dpbn = (String) oneFlight.get(<span class="string">"dpbn"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"dpbn"</span>, dpbn);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 航站楼</span></span><br><span class="line">			String dsmsn = (String) oneFlight.get(<span class="string">"dsmsn"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"dsmsn"</span>, dsmsn);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 出发时间</span></span><br><span class="line">			String dt = (String) oneFlight.get(<span class="string">"dt"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"dt"</span>, dt);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 航班号</span></span><br><span class="line">			String fn = (String) oneFlight.get(<span class="string">"fn"</span>);</span><br><span class="line">			dataMap.put(<span class="string">"fn"</span>, fn);</span><br><span class="line"></span><br><span class="line">			<span class="comment">// 实际票价</span></span><br><span class="line">			String lp = oneFlight.get(<span class="string">"lp"</span>).toString();</span><br><span class="line">			dataMap.put(<span class="string">"lp"</span>, lp);</span><br><span class="line"></span><br><span class="line">			JSONObject confort = oneFlight.getJSONObject(<span class="string">"confort"</span>);</span><br><span class="line">			String historyPunctualityArr = (String) confort.get(<span class="string">"HistoryPunctualityArr"</span>);</span><br><span class="line">			<span class="keyword">if</span> (StringUtil.isNotEmpty(historyPunctualityArr)) &#123;</span><br><span class="line">				dataMap.put(<span class="string">"historyPunctualityArr"</span>, historyPunctualityArr.replace(<span class="string">"%"</span>, <span class="string">""</span>));</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			logger.info(<span class="string">"本条航班数据：&#123;&#125;"</span>, dataMap);</span><br><span class="line"></span><br><span class="line">			list.add(dataMap);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> list;</span><br><span class="line"></span><br><span class="line">	&#125; <span class="comment">// end method</span></span><br><span class="line">	</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://www.xncoding.com/2018/01/09/java/jsons.html" target="_blank" rel="noopener">Java几种常用JSON库性能比较</a><br>[2] <a href="https://github.com/FasterXML/jackson-docs" target="_blank" rel="noopener">jackson-docs</a><br>[3] <a href="https://www.baeldung.com/jackson-object-mapper-tutorial" target="_blank" rel="noopener">jackson-object-mapper-tutorial</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/22/neo4j-admin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/05/22/neo4j-admin/" class="post-title-link" itemprop="url">neo4j-admin 使用 笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-05-22 16:32:48" itemprop="dateCreated datePublished" datetime="2017-05-22T16:32:48+08:00">2017-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/05/22/neo4j-admin/" class="post-meta-item leancloud_visitors" data-flag-title="neo4j-admin 使用 笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  neo4j-admin使用笔记<br>  建议还是先用 <code>neo4j-import</code>，比<code>neo4j-admin</code> 好用多了</p>
+<p>  <code>neo4j-admin import</code> 虽然在以后的版本里会把 <code>neo4j-import</code> 替掉，但是我感觉<code>neo4j-import</code>好用，比<code>neo4j-admin import</code>多一些参数</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/22/neo4j-admin/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/04/jdk-install-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/05/04/jdk-install-config/" class="post-title-link" itemprop="url">JDK 安装 配置</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-05-04 23:18:40" itemprop="dateCreated datePublished" datetime="2017-05-04T23:18:40+08:00">2017-05-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-19 13:12:52" itemprop="dateModified" datetime="2020-04-19T13:12:52+08:00">2020-04-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/05/04/jdk-install-config/" class="post-meta-item leancloud_visitors" data-flag-title="JDK 安装 配置" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>JDK安装步骤<br> 1.检查是否有JDK，如果有，可以用，直接完成，如果版本低或者没有，如果有open JDK(系统自带的)，可以把open JDK卸载<br> 2.如果有JSE JDK 低版本，可以忽略低版本，也可以删除低版本，安装新版本的JDK，配置/etc/profile文件就行<br> 3.安装JDK，并配置/etc/profile文件就行  Windows系统可以通过环境变量</p>
+</blockquote>
+<h1 id="1-卸载JDK-可以省略该步骤"><a href="#1-卸载JDK-可以省略该步骤" class="headerlink" title="(1)　卸载JDK(可以省略该步骤)"></a>(1)　卸载JDK(可以省略该步骤)</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rpm -qa | grep jdk   查看已安装的JDK</span><br><span class="line">rpm -qa | grep gcj</span><br><span class="line">yum -y remove java-1.7.0-openjdk-headless.x86_64  </span><br><span class="line">rpm -e –nodeps java-1.4.2-gcj-compat-1.4.2.0-40jpp.115</span><br></pre></td></tr></table></figure>
+<h1 id="2-下载JDK"><a href="#2-下载JDK" class="headerlink" title="(2)　下载JDK"></a>(2)　下载JDK</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JDK 8u151</span><br><span class="line">wget --no-check-certificate -c --header &quot;Cookie: oraclelicense=accept-securebackup-cookie&quot; http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.tar.gz</span><br><span class="line"></span><br><span class="line">JDK 8u172</span><br><span class="line">wget --no-check-certificate -c --header &quot;Cookie: oraclelicense=accept-securebackup-cookie&quot; http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/jdk-8u172-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>  国内华为镜像 <a href="https://repo.huaweicloud.com/java/jdk/" target="_blank" rel="noopener">https://repo.huaweicloud.com/java/jdk/</a> </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/05/04/jdk-install-config/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/04/neo4j-index/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -571,558 +1137,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/simhash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/05/01/simhash/" class="post-title-link" itemprop="url">SimHash 算法 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-05-01 17:49:14" itemprop="dateCreated datePublished" datetime="2017-05-01T17:49:14+08:00">2017-05-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-28 11:26:29" itemprop="dateModified" datetime="2020-05-28T11:26:29+08:00">2020-05-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/05/01/simhash/" class="post-meta-item leancloud_visitors" data-flag-title="SimHash 算法 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>根据《数学之美》里的介绍，相似哈希(SimHash)是<a href="https://dl.acm.org/author_page.cfm?id=81100202109&amp;coll=DL&amp;dl=ACM&amp;trk=0" target="_blank" rel="noopener">Moses S. Charikar</a> 在2002年提出的 <a href="https://dl.acm.org/citation.cfm?id=509965" target="_blank" rel="noopener">《Similarity estimation techniques from rounding algorithms》</a>但真正得到重视是当Google在网页爬虫中使用它，并把它发表在WWW会议上以后。</p>
-<p>  simhash是google用来处理海量文本去重的算法。 google出品，你懂的。<br>  simhash最牛逼的一点就是将一个文档，最后转换成一个64位的字节，暂且称之为特征字，<br>  然后判断重复只需要判断他们的特征字的距离是不是&lt;n（根据经验这个n一般取值为3），就可以判断两个文档是否相似。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/05/01/simhash/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/hash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/05/01/hash/" class="post-title-link" itemprop="url">hash</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-05-01 14:56:58" itemprop="dateCreated datePublished" datetime="2017-05-01T14:56:58+08:00">2017-05-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/05/01/hash/" class="post-meta-item leancloud_visitors" data-flag-title="hash" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Hash （哈希，或者散列）函数在计算机领域，尤其是数据快速查找领域，加密领域用的极广。</p>
-<p>其作用是将一个大的数据集映射到一个小的数据集上面（这些小的数据集叫做哈希值，或者散列值）。</p>
-<p>  一个应用是Hash table（散列表，也叫哈希表），是根据哈希值 (Key value) 而直接进行访问的数据结构。<br>  也就是说，它通过把哈希值映射到表中一个位置来访问记录，以加快查找的速度。下面是一个典型的 hash 函数 / 表示意图：</p>
-<p><img src="/img/algorithm/hash/hash.jpg" alt="hash"></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/05/01/hash/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/massive-data-processing-interview-questions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/05/01/massive-data-processing-interview-questions/" class="post-title-link" itemprop="url">海量数据处理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-05-01 14:43:58" itemprop="dateCreated datePublished" datetime="2017-05-01T14:43:58+08:00">2017-05-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-19 09:06:29" itemprop="dateModified" datetime="2019-08-19T09:06:29+08:00">2019-08-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/data/" itemprop="url" rel="index"><span itemprop="name">data</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/05/01/massive-data-processing-interview-questions/" class="post-meta-item leancloud_visitors" data-flag-title="海量数据处理" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  有1000亿条记录，每条记录由url,ip,时间组成，设计一个系统能够快速查询以下内容<br>  1.给定url和时间段（精确到分钟）统计url的访问次数<br>  2.给定ip和时间段（精确到分钟）统计ip的访问次数</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://blog.csdn.net/v_july_v/article/details/6685962" target="_blank" rel="noopener">海量数据处理面试题集锦</a><br>[2] <a href="https://blog.csdn.net/v_JULY_v/article/details/7382693" target="_blank" rel="noopener">教你如何迅速秒杀掉：99%的海量数据处理面试题</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/bitmap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/05/01/bitmap/" class="post-title-link" itemprop="url">位图</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-05-01 10:15:52" itemprop="dateCreated datePublished" datetime="2017-05-01T10:15:52+08:00">2017-05-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-11 00:13:55" itemprop="dateModified" datetime="2020-05-11T00:13:55+08:00">2020-05-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/05/01/bitmap/" class="post-meta-item leancloud_visitors" data-flag-title="位图" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> 在遇到有关联关系 并且 数据量很大时，会遇到一个很头疼的问题，就是要处理的数据量太大，效率很低。<br> 比如用户画像系统、每天的活跃用户、商品适配、人际关系 等。</p>
-</blockquote>
-<blockquote>
-<p> 以用户画像系统为例，如果用户数 &lt; 500万 并且 标签数 也不多，可以用传统的关系型数据库直接查询。<br> 但是当数据数很多 或者 查询比较复杂时，关系型数据会效率会很低。就得想想其它办法。</p>
-</blockquote>
-<blockquote>
-<ol>
-<li>优化算法</li>
-<li>数据压缩</li>
-<li>压缩维度展示(类似数据压缩)</li>
-</ol>
-</blockquote>
-<h1 id="1-优化算法"><a href="#1-优化算法" class="headerlink" title="(1) 优化算法"></a>(1) 优化算法</h1><p>用户画像系统<br>  用户     张三、李四<br>  用户标签  学生、单身、90后、程序员</p>
-<p>统计 标签是90后 程序员 的用户<br>   mysql条件查询   </p>
-<p>统计 标签是90后 或 程序员 的用户个数<br>  mysql 查询 取并集 </p>
-<p>  当 用户数过多 (500万用户) 或 标签过多(10万标签) 时，mysql的效率很低。</p>
-<p>  假设<br>   user_id int类型，占4字节， 1千万用户    也就是 4 <em> 40 000 000 byte = 160M<br>   user_name  varchar(8) 使用utf-8编码 占24字节  也就是 24 </em> 40 000 000 byte = 480M</p>
-<p>   tag_id int类型，占4字节，10万标签   也就是 4 * 100000 byte = 400 000 = 400K</p>
-<p>   用户 和 标签 是多对多关系，假设有一张 用户标签表， 有1千万行 10万列， 每一行需要  (user_id + 100 000 tag_id ) <em> 4 byte </em> 10 000 000 ≈ 4000G</p>
-<p>  得换一种办法。</p>
-<p>bitmap<br>  一个标签对应多个用户<br>  标签id化，用户id化 (倒排索引)</p>
-<p>  每个标签 一个bitmap ，这个bitmap存储了用户信息，用户是500万，实际存储需要 2^23 bit = 2^23 / 8 byte ≈ 1MB<br>  有 10万标签 100 000 * 1MB = 100 GB</p>
-<p>  这个算的是所有的用户和标签，实际上可以只处理需要的。可以过滤掉很多用户和标签。<br>  用户数过滤一部分，其实 一个bitmap 实际存储会变成 2^22 bit = 2^22 / 8 byte  ≈ 0.5MB<br>  只处理常用的标签，实际常用的大概1000，1000 * 0.5MB = 5G</p>
-<p>  根据标签查对应用户，拿到结果后 并集 交集 差集 </p>
-<p>统计 标签是90后 程序员 的用户<br>  根据标签查对应用户，拿到结果后 交集</p>
-<p>统计 标签是90后 或 程序员 的用户个数<br>  根据标签查对应用户，拿到结果后 并集</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/05/01/bitmap/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/05/01/bloom-filter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/05/01/bloom-filter/" class="post-title-link" itemprop="url">布隆过滤器</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-05-01 08:13:02" itemprop="dateCreated datePublished" datetime="2017-05-01T08:13:02+08:00">2017-05-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/05/01/bloom-filter/" class="post-meta-item leancloud_visitors" data-flag-title="布隆过滤器" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  Bloom Filter是由Bloom在1970年提出的一种多哈希函数映射的快速查找算法。通常应用在一些需要快速判断某个元素是否属于集合，但是并不严格要求100%正确的场合。例如 网页URL的去重，垃圾邮件的判别，集合重复元素的判别，查询加速（比如基于key-value的存储系统）等。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/05/01/bloom-filter/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/04/28/cmder-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/04/28/cmder-notes/" class="post-title-link" itemprop="url">Cmder 使用 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-04-28 11:21:30" itemprop="dateCreated datePublished" datetime="2017-04-28T11:21:30+08:00">2017-04-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/04/28/cmder-notes/" class="post-meta-item leancloud_visitors" data-flag-title="Cmder 使用 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  俗话说，工欲善其事必先利其器。<br>  平常在使用Windows自带的cmd复制粘贴太麻烦，而且cmd在中国用的是gbk编码，有的时候想用UTF-8编码，感觉cmd不太好用，就想找一个替代品，看了powershell，git bash(mingw64) cmder,最后觉得cmder好用。<br>  Cmder1.3.2版本中，可以使用cmd，bash，git-bash。感觉特别方便。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/04/28/cmder-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1192,20 +1206,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

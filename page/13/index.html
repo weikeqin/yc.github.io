@@ -210,6 +210,564 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/10/12/web-crawler-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/10/12/web-crawler-notes/" class="post-title-link" itemprop="url">爬虫 笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-10-12 17:27:07" itemprop="dateCreated datePublished" datetime="2017-10-12T17:27:07+08:00">2017-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/10/12/web-crawler-notes/" class="post-meta-item leancloud_visitors" data-flag-title="爬虫 笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>爬虫(Spider)，反爬虫(Anti-Spider)，反反爬虫(Anti-Anti-Spider)，这之间的斗争恢宏壮阔…</p>
+<p>Day 1 小莫想要某站上所有的电影，写了标准的爬虫(基于HttpClient库)，不断地遍历某站的电影列表页面，根据 Html 分析电影名字存进自己的数据库。这个站点的运维小黎发现某个时间段请求量陡增，分析日志发现都是 IP(1.1.1.1)这个用户，并且 useragent 还是 JavaClient1.6 ，基于这两点判断非人类后直接在Nginx 服务器上封杀。</p>
+<p>Day 2 小莫电影只爬了一半，于是也针对性的变换了下策略：1. useragent 模仿百度(“Baiduspider…”)，2. IP每爬半个小时就换一个IP代理。小黎也发现了对应的变化，于是在 Nginx 上设置了一个频率限制，每分钟超过120次请求的再屏蔽IP。 同时考虑到百度家的爬虫有可能会被误伤，想想市场部门每月几十万的投放，于是写了个脚本，通过 hostname 检查下这个 ip 是不是真的百度家的，对这些 ip 设置一个白名单。</p>
+<p>Day 3 小莫发现了新的限制后，想着我也不急着要这些数据，留给服务器慢慢爬吧，于是修改了代码，随机1-3秒爬一次，爬10次休息10秒，每天只在8-12，18-20点爬，隔几天还休息一下。小黎看着新的日志头都大了，再设定规则不小心会误伤真实用户，于是准备换了一个思路，当3个小时的总请求超过50次的时候弹出一个验证码弹框，没有准确正确输入的话就把 IP 记录进黑名单。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/10/12/web-crawler-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/09/21/crawler-xiecheng/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/21/crawler-xiecheng/" class="post-title-link" itemprop="url">爬取 携程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-09-21 18:01:18" itemprop="dateCreated datePublished" datetime="2017-09-21T18:01:18+08:00">2017-09-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/09/21/crawler-xiecheng/" class="post-meta-item leancloud_visitors" data-flag-title="爬取 携程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>主页面url<br><code>http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22</code></p>
+<p>获取数据url<br><code>http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c802fde883e64a3c8fba0e99e45d023c&amp;rk=2.7090996922689414192821&amp;CK=1D7795E4EB96B7578AA673D6EF346C33&amp;r=0.2337708871934405872019</code></p>
+<p>首次搜索<br>    <a href="http://flights.ctrip.com/domestic/Search/FirstRoute/?ddate1=2017-09-22&amp;ddate2=2017-09-22&amp;dcity1=BJS&amp;acity1=KMG" target="_blank" rel="noopener">http://flights.ctrip.com/domestic/Search/FirstRoute/?ddate1=2017-09-22&amp;ddate2=2017-09-22&amp;dcity1=BJS&amp;acity1=KMG</a><br>    <a href="http://flights.ctrip.com/domestic/booking/BJS-KMG---D-adu-1/?dayoffset=1&amp;ddate1=2017-09-22&amp;ddate2=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/domestic/booking/BJS-KMG---D-adu-1/?dayoffset=1&amp;ddate1=2017-09-22&amp;ddate2=2017-09-22</a><br>重新搜索<br>    <a href="http://flights.ctrip.com/booking/bjs-kmg---d-adu-1/?ddate1=2017-09-22&amp;ddate2=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/booking/bjs-kmg---d-adu-1/?ddate1=2017-09-22&amp;ddate2=2017-09-22</a>    往返<br>    <a href="http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22" target="_blank" rel="noopener">http://flights.ctrip.com/booking/BJS-KMG-day-1.html?DDate1=2017-09-22</a>    单程</p>
+<p> 往返<br>    <code>var url = &quot;//flights.ctrip.com/domesticsearch/search/SearchRoundRecommend?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=3c10647ccad04412a33567f25335875a&amp;CK=97017DBB47A37AFE6BE4D99105F78AFE&quot;;</code><br> 单程<br>    <code>var url = &quot;//flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=66c9c383c12f4dc685a9ad3e5834a7c4&amp;CK=D6BF57FFFC0A4E89AF51CF7186A1944E&quot;;</code></p>
+<p>根据直接获取json的url拿到数据解析后就能获得航班信息，这个url里有4个参数，需要从搜索主页的页面里获取<br>单程和往返的原理一样，就是往返多了一个返回日期，其他都一样</p>
+<p> LogToken不变 r不变  CK有变化 rk用Math.random</p>
+<p>  LogToken<br>  rk<br>  CK<br>  r  在主页面的第34行</p>
+<p>  LogToken和CK根据主页面24行的url可以得到，r值在主页面34行可以得到</p>
+<p> 获取的json数据的url，爬取数据用的url<br>  单程<br>     <a href="http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c96a69a7ca9142be9f0e3192f44f9f07&amp;rk=1.445840834132689163412&amp;CK=6A53EEBD27EBBE6785AF7951EC03EB1E&amp;r=0.3795051054613884121115" target="_blank" rel="noopener">http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=S&amp;DDate1=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=c96a69a7ca9142be9f0e3192f44f9f07&amp;rk=1.445840834132689163412&amp;CK=6A53EEBD27EBBE6785AF7951EC03EB1E&amp;r=0.3795051054613884121115</a><br>  往返<br>      <a href="http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=584465ec999045db9a546e1ce6a04a3f&amp;rk=4.057381591787214165342&amp;CK=D76BF5FFFC0A4E89AF51CF7186A1944E&amp;r=0.543402675163338674414" target="_blank" rel="noopener">http://flights.ctrip.com/domesticsearch/search/SearchFirstRouteFlights?DCity1=BJS&amp;ACity1=KMG&amp;SearchType=D&amp;DDate1=2017-09-22&amp;ACity2=BJS&amp;DDate2=2017-09-22&amp;IsNearAirportRecommond=0&amp;LogToken=584465ec999045db9a546e1ce6a04a3f&amp;rk=4.057381591787214165342&amp;CK=D76BF5FFFC0A4E89AF51CF7186A1944E&amp;r=0.543402675163338674414</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/21/crawler-xiecheng/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/09/02/jvm-monitoring/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/02/jvm-monitoring/" class="post-title-link" itemprop="url">JVM 监控</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-09-02 07:26:06" itemprop="dateCreated datePublished" datetime="2017-09-02T07:26:06+08:00">2017-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-13 08:51:43" itemprop="dateModified" datetime="2020-06-13T08:51:43+08:00">2020-06-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/09/02/jvm-monitoring/" class="post-meta-item leancloud_visitors" data-flag-title="JVM 监控" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  昨天天发现Tomcat占用2G物理内存，11G虚拟内存，感觉就起了一个web项目，而且是在内网，没几个人用呀。内存占用怎么这么高。</p>
+<p>  Tomcat使用的大多是默认配置。就改了个conf/context.xml server.xml</p>
+<p>  遇到问题了，先想想怎么解决，暂时能想到的是用分析工具分析一下了。我用的是jdk1.8.0_111， ${JAVA_HOME}/bin目录里有两个工具jmc.exe　jvisualvm.exe<br>这两个工具就是今天的主角了。用来监控JVM的。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/09/02/jvm-monitoring/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/08/29/string-stringbuilder-stringbuffer-compare/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/29/string-stringbuilder-stringbuffer-compare/" class="post-title-link" itemprop="url">String StringBuilder StringBuffer 对比</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-29 21:48:20" itemprop="dateCreated datePublished" datetime="2017-08-29T21:48:20+08:00">2017-08-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/08/29/string-stringbuilder-stringbuffer-compare/" class="post-meta-item leancloud_visitors" data-flag-title="String StringBuilder StringBuffer 对比" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>　　我们都知道在一个循环内拼接字符串不能直接用+，而是要用StringBuilder或者StringBuffer代替。<br>　　但是在循环内拼接字符串影响会有多大呢，会对程序产生多大影响呢，是0.1s还是1s，还是… ，用数据来说话。</p>
+<p>　　还有一个问题就是，循环内每次要输出一句话，用String+还是用StringBuilder好呢。<br>　　顺便也测一下。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/08/29/string-stringbuilder-stringbuffer-compare/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/08/23/crawler-weibo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/23/crawler-weibo/" class="post-title-link" itemprop="url">爬取 微博</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-23 16:28:48" itemprop="dateCreated datePublished" datetime="2017-08-23T16:28:48+08:00">2017-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/08/23/crawler-weibo/" class="post-meta-item leancloud_visitors" data-flag-title="爬取 微博" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  电脑版：<a href="http://weibo.com" target="_blank" rel="noopener">http://weibo.com</a><br>  手机版wap版: <a href="https://weibo.cn/" target="_blank" rel="noopener">https://weibo.cn/</a><br>  手机app版：<a href="https://m.weibo.cn/" target="_blank" rel="noopener">https://m.weibo.cn/</a></p>
+<p>  我采用的是爬取手机wap版，weibo.cn</p>
+<p>  最重要的是这四个参数：_T_WM、SUB、SUHB、SCF</p>
+<p>  爬取微博主要思路是登录后获取cookie，cookie可以一直用</p>
+<p>  一个账号1分钟爬取次数不要太快，尽量小于10次。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/08/23/crawler-weibo/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/08/15/redis-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/08/15/redis-notes/" class="post-title-link" itemprop="url">Redis 使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-08-15 22:06:12" itemprop="dateCreated datePublished" datetime="2017-08-15T22:06:12+08:00">2017-08-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-30 16:08:34" itemprop="dateModified" datetime="2020-06-30T16:08:34+08:00">2020-06-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/08/15/redis-notes/" class="post-meta-item leancloud_visitors" data-flag-title="Redis 使用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-下载安装"><a href="#1-下载安装" class="headerlink" title="(1) 下载安装"></a>(1) 下载安装</h1><h2 id="1-1-Linux-Unix"><a href="#1-1-Linux-Unix" class="headerlink" title="(1.1) Linux/Unix"></a>(1.1) Linux/Unix</h2><blockquote>
+<p> Redis对于Linux是官方支持的,普通安装、使用按照官方指导，5分钟以内就能搞定。详情请参考：<a href="http://redis.io/download" target="_blank" rel="noopener">Redis官网下载链接</a>   <a href="http://redis.io/download" target="_blank" rel="noopener">http://redis.io/download</a>  </p>
+<p><strong>下载安装</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://download.redis.io/releases/redis-6.0.5.tar.gz</span><br><span class="line">tar xzf redis-6.0.5.tar.gz</span><br><span class="line">cd redis-6.0.5</span><br><span class="line">sudo make</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p><strong>启动Redis Server</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./src/redis-server redis.conf</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p><strong> 启动Redis Client </strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ZBMAC-C02PGMT0F:redis-6.0.5 weikeqin1$ ./src/redis-cli</span><br><span class="line">127.0.0.1:6379&gt;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="1-2-Windows"><a href="#1-2-Windows" class="headerlink" title="(1.2) Windows"></a>(1.2) Windows</h2><blockquote>
+<p> Redis官方是不支持windows的，只是 Microsoft Open Tech group 在 GitHub上开发了一个Win64的版本,项目地址是：<a href="https://github.com/MSOpenTech/redis" target="_blank" rel="noopener">项目地址</a><br>  打开以后，可以直接使用浏览器下载，或者Git克隆。<br> <a href="https://github.com/MicrosoftArchive/redis/releases" target="_blank" rel="noopener">https://github.com/MicrosoftArchive/redis/releases</a><br> 在 Release 页面中，可以找到 msi 安装文件以及 .zip 文件<br> 下载解压，在解压后的bin目录下有以下这些文件：</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/08/15/redis-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/08/05/crawler-tianyancha/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -564,557 +1122,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/07/15/mysql-sqlserver-translate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/07/15/mysql-sqlserver-translate/" class="post-title-link" itemprop="url">MySQL与SQLServer相互转换</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-07-15 15:52:01" itemprop="dateCreated datePublished" datetime="2017-07-15T15:52:01+08:00">2017-07-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/07/15/mysql-sqlserver-translate/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL与SQLServer相互转换" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  环境：<br>  Windows XP sp2<br>  MS SQL Server 2OOO sp1<br>  MySql 5.0.41</p>
-<h1 id="1：MSSQLServer数据库导入到MySql数据库"><a href="#1：MSSQLServer数据库导入到MySql数据库" class="headerlink" title="1：MSSQLServer数据库导入到MySql数据库"></a>1：MSSQLServer数据库导入到MySql数据库</h1><p>步骤：</p>
-<p>1.安装mysql数据库的ODBC驱动，mysql-connector-odbc-3.51.23-win32.msi，下载并安装。</p>
-<p>2.在Mysql中创建数据库实例。</p>
-<p>3.打开控制面板 –&gt; 管理工具 –&gt; 数据源ODBC，在用户DSN中添加一个MySQL ODBC 3.51数据源。</p>
-<p>4.在登录login选项卡中输入数据源名称Data Source Name，此处输入MysqlDNS（也可以自己随便命名，<br>  只要在后面导入数据的时候选择正确的数据源名字就行），然后输入服务器Server，用户User，密码Password，<br>  输入正确后选择要导入的数据库，Database选择你需要导入的数据库。<br>  在连接选项connect options中根据需要设置MySql使用的端口port和字符集Character Set。</p>
-<p>  注：字符集一定要和Mysql服务器相对应，如果Mysql使用了gbk字符集，则一定要设置字符集为gbk，<br>      否则导入到Sql Server可能会出现问号乱码。</p>
-<p>5.打开sql server企业管理器，选择该数据库，单击右键选择所有任务 –&gt; 导出数据。</p>
-<p>6.‘选择数据源’为默认，‘选择目的’为刚刚安装的mySQL数据源，用户/系统DSN为MysqlDNS。<br>  在‘指定表复制或查询’中选择‘从源数据库复制表和视图’，在‘选择源表和视图’里，选择需要导入的表，<br>  即可将数据从MSSQLServer数据库导入到MySql数据库中。</p>
-<h1 id="2：MySql数据库导入到MSSQL数据库中"><a href="#2：MySql数据库导入到MSSQL数据库中" class="headerlink" title="2：MySql数据库导入到MSSQL数据库中"></a>2：MySql数据库导入到MSSQL数据库中</h1><p>1.安装mysql数据库的ODBC驱动，mysql-connector-odbc-3.51.19-win32.msi</p>
-<p>2.打开控制面板\管理工具\数据源ODBC，在用户DSN中添加一个MySQL ODBC 3.51数据源。</p>
-<p>3.在登录login选项卡中输入数据源名称Data Source Name，此处输入MysqlDNS;然后输入服务器，<br>  用户User，密码Password，输入正确后选择要导入的数据库。<br>  在连接选项connect options中根据需要设置MySql使用的端口port和字符集Character Set。</p>
-<p>  注：字符集一定要和Mysql服务器相对应，如果Mysql使用了gbk字符集，则一定要设置字符集为gbk，<br>      否则导入到Sql 可能会出现问号乱码。</p>
-<p>4.打开sql server企业管理器，新建一数据库MySql。选择该数据库，单击右键选择所有任务\导入数据。</p>
-<p>5.选择数据源为其它(ODBC数据源)，用户/系统DSN为MysqlDNS。其余根据向导进行，<br>  即可将数据从MySql数据库导入到MSSQL数据库中</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="http://www.cnblogs.com/losesea/archive/2012/11/08/2760536.html" target="_blank" rel="noopener">Mysql和SqlServer互相转换</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/07/13/buy-tickets-on-12306/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/07/13/buy-tickets-on-12306/" class="post-title-link" itemprop="url">12306 买 卧铺 下铺票</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-07-13 10:25:29" itemprop="dateCreated datePublished" datetime="2017-07-13T10:25:29+08:00">2017-07-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-06 08:00:02" itemprop="dateModified" datetime="2020-06-06T08:00:02+08:00">2020-06-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/daily/" itemprop="url" rel="index"><span itemprop="name">daily</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/07/13/buy-tickets-on-12306/" class="post-meta-item leancloud_visitors" data-flag-title="12306 买 卧铺 下铺票" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  在12306上买票时推荐使用电信、联通的网，其他运营商的网质量不太好。可能会影响抢票结果。<br>  有的时候甚至查不到票。我用的是方正的网，发现手机上可以查到票，电脑上查不到票。<br>  结果用手机开热点(电信网)，电脑连上以后很快就查出票了。</p>
-<p>  在12306买票</p>
-<ol>
-<li>首先要登录</li>
-<li>在<a href="https://kyfw.12306.cn/otn/leftTicket/init" target="_blank" rel="noopener">车票预订</a>页面输入出发站、目的地、出发日，<br>然后点击查询，选择合适的车次，然后点击预订。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/07/13/buy-tickets-on-12306/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/06/22/tomcat-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/06/22/tomcat-notes/" class="post-title-link" itemprop="url">Tomcat 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-06-22 16:51:08" itemprop="dateCreated datePublished" datetime="2017-06-22T16:51:08+08:00">2017-06-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/06/22/tomcat-notes/" class="post-meta-item leancloud_visitors" data-flag-title="Tomcat 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  使用Tomcat时遇到的一些问题，记的一些笔记</p>
-<h1 id="Tomcat配置"><a href="#Tomcat配置" class="headerlink" title="Tomcat配置"></a>Tomcat配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 并发配置 --&gt;</span><br><span class="line">&lt;Connector executor=&quot;tomcatThreadPool&quot; port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">		    URIEncoding=&quot;UTF-8&quot; </span><br><span class="line">			maxThreads=&quot;30000&quot;</span><br><span class="line">            minSpareThreads=&quot;512&quot;</span><br><span class="line">            maxSpareThreads=&quot;2048&quot;</span><br><span class="line">		    connectionTimeout=&quot;20000&quot;</span><br><span class="line">			keepAliveTimeout=&quot;15000&quot;</span><br><span class="line">            maxKeepAliveRequests=&quot;1&quot;</span><br><span class="line">		    redirectPort=&quot;8443&quot; </span><br><span class="line">			enableLookups=&quot;false&quot; acceptCount=&quot;35000&quot; disableUploadTimeout=&quot;true&quot; /&gt;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/06/22/tomcat-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/06/21/mysql-error-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/06/21/mysql-error-notes/" class="post-title-link" itemprop="url">MySQL 错误 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-06-21 10:28:30" itemprop="dateCreated datePublished" datetime="2017-06-21T10:28:30+08:00">2017-06-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-23 10:57:21" itemprop="dateModified" datetime="2020-04-23T10:57:21+08:00">2020-04-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/06/21/mysql-error-notes/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL 错误 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-bash-mysql-command-not-found"><a href="#1-bash-mysql-command-not-found" class="headerlink" title="(1)　-bash: mysql: command not found"></a>(1)　-bash: mysql: command not found</h1><p>原因:这是由于系统默认会查找/usr/bin下的命令，如果这个命令不在这个目录下，当然会找不到命令，我们需要做的就是映射一个链接到/usr/bin目录下，相当于建立一个链接文件。<br><code>[root@localhost bin]# ln -s /usr/local/mysql/bin/mysql  /usr/bin</code></p>
-<h1 id="2-cannot-connect-to-local-MySQL-Server-through-socket-‘-var-lib-mysql-mysql-sock’"><a href="#2-cannot-connect-to-local-MySQL-Server-through-socket-‘-var-lib-mysql-mysql-sock’" class="headerlink" title="(2)　cannot connect to local MySQL Server through socket ‘/var/lib/mysql/mysql.sock’"></a>(2)　cannot connect to local MySQL Server through socket ‘/var/lib/mysql/mysql.sock’</h1><p>配置 /etc/my.cnf<br><code>sock = /var/lib/mysql/mysql.sock</code></p>
-<h1 id="3-can’t-connect-to-local-mysql-server-through-socket-‘-tmp-mysql-sock’"><a href="#3-can’t-connect-to-local-mysql-server-through-socket-‘-tmp-mysql-sock’" class="headerlink" title="(3)　can’t connect to local mysql server through socket ‘/tmp/mysql.sock’"></a>(3)　can’t connect to local mysql server through socket ‘/tmp/mysql.sock’</h1><p>客户端连接时会默认去找/tmp路径下的mysql.sock 所以 我们这里的第二个方案是 看能不呢把 mysql.sock复制到  /tmp路径下 </p>
-<p><code>ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock</code></p>
-<p><a href="https://blog.csdn.net/zzq900503/article/details/14163341" target="_blank" rel="noopener">error</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/06/21/mysql-error-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/06/21/word2vec/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/06/21/word2vec/" class="post-title-link" itemprop="url">word2vec</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-06-21 10:19:44" itemprop="dateCreated datePublished" datetime="2017-06-21T10:19:44+08:00">2017-06-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-06 08:38:48" itemprop="dateModified" datetime="2020-06-06T08:38:48+08:00">2020-06-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/06/21/word2vec/" class="post-meta-item leancloud_visitors" data-flag-title="word2vec" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  word2vec的使用和学习…</p>
-<h1 id="word2vec使用"><a href="#word2vec使用" class="headerlink" title="word2vec使用"></a>word2vec使用</h1><p>  先跑起来，跑出一个结果，然后再详细了解。<br>  word2vec有多个版本，我是用NLPchina的这个版本</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/06/21/word2vec/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/06/14/linux-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/06/14/linux-notes/" class="post-title-link" itemprop="url">linux 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-06-14 11:32:56" itemprop="dateCreated datePublished" datetime="2017-06-14T11:32:56+08:00">2017-06-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-18 16:47:04" itemprop="dateModified" datetime="2020-05-18T16:47:04+08:00">2020-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/06/14/linux-notes/" class="post-meta-item leancloud_visitors" data-flag-title="linux 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-新linux机器配置"><a href="#1-新linux机器配置" class="headerlink" title="(1) 新linux机器配置"></a>(1) 新linux机器配置</h1><p>  en_US.UTF-8  zh_CN.UTF-8  都是 UTF-8编码<br>  en_US.UTF-8：你说英语，你在美国，字符集是utf-8<br>  zh_CN.UTF-8：你说中文，你在中国，字符集是utf-8 </p>
-<p>  建议设置成 en_US.UTF-8，因为命令行的结果是英文，不用担心乱码。</p>
-<h2 id="1-1-配置编码"><a href="#1-1-配置编码" class="headerlink" title="(1.1) 配置编码"></a>(1.1) 配置编码</h2><p>  配置文件一般在 <code>/etc/sysconfig/i18n</code>  <code>/etc/locale.conf</code></p>
-<h3 id="1-1-1-查看当前区域编码配置-localectl-status"><a href="#1-1-1-查看当前区域编码配置-localectl-status" class="headerlink" title="(1.1.1) 查看当前区域编码配置 localectl status"></a>(1.1.1) 查看当前区域编码配置 <code>localectl status</code></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ localectl status</span><br><span class="line">   System Locale: LANG=en_US.utf8</span><br><span class="line">       VC Keymap: us</span><br><span class="line">      X11 Layout: us</span><br></pre></td></tr></table></figure>
-<h3 id="1-1-2-查看系统默认的语言设置-locale"><a href="#1-1-2-查看系统默认的语言设置-locale" class="headerlink" title="(1.1.2) 查看系统默认的语言设置 locale"></a>(1.1.2) 查看系统默认的语言设置 locale</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ locale</span><br><span class="line">locale: Cannot <span class="built_in">set</span> LC_CTYPE to default locale: No such file or directory</span><br><span class="line">locale: Cannot <span class="built_in">set</span> LC_ALL to default locale: No such file or directory</span><br><span class="line">LANG=en_US.utf8</span><br><span class="line">LC_CTYPE=UTF-8</span><br><span class="line">LC_NUMERIC=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_TIME=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_COLLATE=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_MONETARY=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_MESSAGES=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_PAPER=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_NAME=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_ADDRESS=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_TELEPHONE=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_MEASUREMENT=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_IDENTIFICATION=<span class="string">"en_US.utf8"</span></span><br><span class="line">LC_ALL=</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/06/14/linux-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1184,20 +1191,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

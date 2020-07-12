@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="(1)　-bash: mysql: command not found原因:这是由于系统默认会查找/usr/bin下的命令，如果这个命令不在这个目录下，当然会找不到命令，我们需要做的就是映射一个链接到/usr/bin目录下，相当于建立一个链接文件。[root@localhost bin]# ln -s /usr/local/mysql/bin/mysql  /usr/bin (2)　cannot">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-23T02:57:21.085Z">
+<meta property="og:updated_time" content="2020-07-05T14:51:33.459Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL 错误 笔记">
 <meta name="twitter:description" content="(1)　-bash: mysql: command not found原因:这是由于系统默认会查找/usr/bin下的命令，如果这个命令不在这个目录下，当然会找不到命令，我们需要做的就是映射一个链接到/usr/bin目录下，相当于建立一个链接文件。[root@localhost bin]# ln -s /usr/local/mysql/bin/mysql  /usr/bin (2)　cannot">
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-23 10:57:21" itemprop="dateModified" datetime="2020-04-23T10:57:21+08:00">2020-04-23</time>
+                <time title="修改时间：2020-07-05 22:51:33" itemprop="dateModified" datetime="2020-07-05T22:51:33+08:00">2020-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -316,7 +316,7 @@
 <h1 id="13-1215-cannot-add-foreign-key-constraint"><a href="#13-1215-cannot-add-foreign-key-constraint" class="headerlink" title="(13)　1215 cannot add foreign key constraint"></a>(13)　1215 cannot add foreign key constraint</h1><p>可能原因：<br>（1）外键对应的字段数据类型不一致</p>
 <p>（2）设置外键时“删除时”设置为“SET NULL”</p>
 <p>（3）两张表的存储引擎不一致</p>
-<p>解决办法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">show table status from db_name where name=&apos;table_name&apos;;</span><br><span class="line">alter table table_name engine=innodb;</span><br></pre></td></tr></table></figure></p>
+<p>解决办法：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">table</span> <span class="keyword">status</span> <span class="keyword">from</span> db_name <span class="keyword">where</span> <span class="keyword">name</span>=<span class="string">'table_name'</span>;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> table_name <span class="keyword">engine</span>=<span class="keyword">innodb</span>;</span><br></pre></td></tr></table></figure></p>
 <h1 id="14-ERROR-2003-HY000-Can’t-connect-to-MySQL-server-on-‘172-16-1-23’-113"><a href="#14-ERROR-2003-HY000-Can’t-connect-to-MySQL-server-on-‘172-16-1-23’-113" class="headerlink" title="(14)　ERROR 2003 (HY000): Can’t connect to MySQL server on ‘172.16.1.23’ (113)"></a>(14)　ERROR 2003 (HY000): Can’t connect to MySQL server on ‘172.16.1.23’ (113)</h1><p>113是防火墙的原因<br>修改防火墙，允许3306端口访问，或者关闭防火墙<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">service iptables stop  <span class="comment">#关闭防火墙</span></span><br><span class="line"></span><br><span class="line">systemctl stop firewalld   <span class="comment">#关闭防火墙</span></span><br></pre></td></tr></table></figure></p>
 <h1 id="15-java-io-IOException-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x8C-xA3’-for-column-‘page-title’-at-row-892"><a href="#15-java-io-IOException-java-sql-SQLException-Incorrect-string-value-‘-xF0-x9F-x8C-xA3’-for-column-‘page-title’-at-row-892" class="headerlink" title="(15)　java.io.IOException: java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x8C\xA3’ for column ‘page_title’ at row 892"></a>(15)　java.io.IOException: java.sql.SQLException: Incorrect string value: ‘\xF0\x9F\x8C\xA3’ for column ‘page_title’ at row 892</h1><p>  UTF-8编码有可能是两个、三个、四个字节。Emoji表情是4个字节，而Mysql的utf8编码最多3个字节，所以数据插不进去。<br>  解决方案就是：将Mysql的编码从utf8转换成utf8mb4。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">1. 修改my.cnf(windows为my.ini)</span><br><span class="line"></span><br><span class="line">[client] </span><br><span class="line">default-character-set = utf8mb4 </span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8mb4</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">character-set-server = utf8mb4 </span><br><span class="line">#collation-server = utf8mb4_unicode_ci </span><br><span class="line">#character-set-client-handshake = FALSE </span><br><span class="line">#init_connect=&apos;SET NAMES utf8mb4&apos;</span><br><span class="line"></span><br><span class="line">2. 将已经建好的表也转换成utf8mb4</span><br><span class="line"></span><br><span class="line">alter database DATABASE_NAME character set utf8mb4 collate utf8mb4_general_ci;  # 更改数据库编码 utf8mb4_unicode_ci</span><br><span class="line">alter table TABLE_NAME convert to character set utf8mb4 collate utf8mb4_bin;  # 更改表的编码 utf8mb4_unicode_ci</span><br><span class="line">alter table TABLE modify COL varchar(50) CHARACTER SET utf8mb4;  # 更改字段的编码</span><br><span class="line"></span><br><span class="line">修改后重启Mysql</span><br><span class="line"></span><br><span class="line">第三步可以省略</span><br><span class="line">3. 以root身份登录Mysql，修改环境变量，将character_set_client,character_set_connection,character_set_database,character_set_results,character_set_server 都修改成utf8mb4</span><br></pre></td></tr></table></figure>
@@ -451,20 +451,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

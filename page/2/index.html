@@ -210,6 +210,610 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/07/java-concurrent-design-pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/07/java-concurrent-design-pattern/" class="post-title-link" itemprop="url">java并发设计模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-07 17:03:36" itemprop="dateCreated datePublished" datetime="2020-06-07T17:03:36+08:00">2020-06-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-13 11:49:41" itemprop="dateModified" datetime="2020-06-13T11:49:41+08:00">2020-06-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/07/java-concurrent-design-pattern/" class="post-meta-item leancloud_visitors" data-flag-title="java并发设计模式" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> 多线程设计模式是前人解决并发问题的经验总结，当我们试图解决一个并发问题时，首选方案往往是使用匹配的设计模式，这样能避免走弯路。<br> 大家都熟悉设计模式，所以使用设计模式还能提升方案和代码的可理解性。</p>
+</blockquote>
+<blockquote>
+<p>避免共享的设计模式<br><code>Immutability 模式</code>、<code>Copy-on-Write 模式</code> 和 <code>线程本地存储模式</code> 本质上都是为了避免共享，只是实现手段不同而已。</p>
+</blockquote>
+<blockquote>
+<p> 多线程版本IF的设计模式<br> <code>Guarded Suspension 模式</code> 和 <code>Balking 模式</code> 都可以简单地理解为“多线程版本的 if”，但它们的区别在于前者会等待 if 条件变为真，而后者则不需要等待。</p>
+</blockquote>
+<blockquote>
+<p> 三种最简单的分工模式<br> <code>Thread-Per-Message模式</code> 、 <code>Worker Thread 模式</code> 和 <code>生产者-消费者模式</code> 是三种最简单实用的多线程分工方法</p>
+</blockquote>
+<h1 id="1-Immutability-Pattern-不变性模式"><a href="#1-Immutability-Pattern-不变性模式" class="headerlink" title="(1) Immutability Pattern 不变性模式"></a>(1) Immutability Pattern 不变性模式</h1><blockquote>
+<p> 解决并发问题，其实最简单的办法就是让共享变量只有读操作，而没有写操作。</p>
+</blockquote>
+<blockquote>
+<p> 不变性（Immutability）模式。所谓不变性，简单来讲，就是对象一旦被创建之后，状态就不再发生变化。换句话说，就是变量一旦被赋值，就不允许修改了（没有写操作）；没有修改操作，也就是保持了不变性。</p>
+</blockquote>
+<blockquote>
+<p> Java SDK 里很多类都具备不可变性。例如经常用到的 String 和 Long、Integer、Double 等基础类型的包装类都具备不可变性，这些对象的线程安全性都是靠不可变性来保证的。仔细翻看这些类的声明、属性和方法，你会发现它们都严格遵守不可变类的三点要求：类和属性都是 final 的，所有方法均是只读的。</p>
+</blockquote>
+<blockquote>
+<p> Java所有的基础类型的包装类都不适合做锁，因为它们内部用到了享元模式，这会导致看上去私有的锁，其实是共有的。</p>
+</blockquote>
+<blockquote>
+<p> 使用 Immutability 模式的注意事项在使用 Immutability 模式的时候，需要注意以下两点：</p>
+<ol>
+<li>对象的所有属性都是 final 的，并不能保证不可变性；</li>
+<li>不可变对象也需要正确发布。 </li>
+</ol>
+</blockquote>
+<blockquote>
+<p> 在使用 Immutability 模式的时候一定要确认保持不变性的边界在哪里，是否要求属性对象也具备不可变性。<br> Foo对象是不变的，但是Foo对象的属性是可以变化的<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> age=<span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> name=<span class="string">"abc"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> Foo foo;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> a)</span></span>&#123;</span><br><span class="line">    foo.age=a;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/07/java-concurrent-design-pattern/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/06/java-thread/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/06/java-thread/" class="post-title-link" itemprop="url">java-thread</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-06 17:40:31" itemprop="dateCreated datePublished" datetime="2020-06-06T17:40:31+08:00">2020-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-20 17:42:28" itemprop="dateModified" datetime="2020-06-20T17:42:28+08:00">2020-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/06/java-thread/" class="post-meta-item leancloud_visitors" data-flag-title="java-thread" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  在Java中，创建对象，仅仅是在 JVM 的堆里分配一块内存，而创建一个线程，需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源，成本很高，所以线程是一个重量级的对象，应该避免频繁创建和销毁。</p>
+<p>  进程的运行空间一般分为用户态和内核态，用户态空间一般是进程应用运行空间，而内核态空间一般是指应用需要调用系统资源，应用不能再用户态空间直接调用系统资源，需要通过内核态来系统系统资源。</p>
+<p>  内核线程（Kernel-Level Thread, KLT）是由操作系统内核支持的线程，内核通过调度器对线程进行调度，并负责完成线程的切换。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/06/java-thread/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/06/java-doc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/06/java-doc/" class="post-title-link" itemprop="url">jdk-14</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-06 10:19:42" itemprop="dateCreated datePublished" datetime="2020-06-06T10:19:42+08:00">2020-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-21 09:57:29" itemprop="dateModified" datetime="2020-06-21T09:57:29+08:00">2020-06-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/06/java-doc/" class="post-meta-item leancloud_visitors" data-flag-title="jdk-14" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  <a href="https://docs.oracle.com/javase/tutorial/" target="_blank" rel="noopener">https://docs.oracle.com/javase/tutorial/</a><br>  <a href="https://docs.oracle.com/en/java/javase/index.html" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/index.html</a></p>
+<p>  <a href="https://blogs.oracle.com/java-platform-group/" target="_blank" rel="noopener">https://blogs.oracle.com/java-platform-group/</a></p>
+<p>  javase14文档  <a href="https://docs.oracle.com/en/java/javase/14/index.html" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/14/index.html</a><br>  <a href="https://docs.oracle.com/javacomponents/index.html" target="_blank" rel="noopener">https://docs.oracle.com/javacomponents/index.html</a><br>  <a href="https://docs.oracle.com/en/java/javase/index.html" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/index.html</a><br>  <a href="https://docs.oracle.com/en/java/javase/13/" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/13/</a><br>  <a href="https://docs.oracle.com/en/java/javase/12/" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/12/</a><br>  <a href="https://docs.oracle.com/en/java/javase/11/" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/11/</a><br>  <a href="https://docs.oracle.com/javase/10/" target="_blank" rel="noopener">https://docs.oracle.com/javase/10/</a><br>  <a href="https://docs.oracle.com/javase/9/" target="_blank" rel="noopener">https://docs.oracle.com/javase/9/</a><br>  <a href="https://docs.oracle.com/javase/8/" target="_blank" rel="noopener">https://docs.oracle.com/javase/8/</a><br>  <a href="https://docs.oracle.com/javase/7/docs/index.html" target="_blank" rel="noopener">https://docs.oracle.com/javase/7/docs/index.html</a></p>
+<p>  <a href="https://dzone.com/articles/jdk-14-records-text-blocks-and-more" target="_blank" rel="noopener">https://dzone.com/articles/jdk-14-records-text-blocks-and-more</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/06/lock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/06/lock/" class="post-title-link" itemprop="url">lock</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-06 09:48:36" itemprop="dateCreated datePublished" datetime="2020-06-06T09:48:36+08:00">2020-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-20 11:21:17" itemprop="dateModified" datetime="2020-06-20T11:21:17+08:00">2020-06-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/lock/" itemprop="url" rel="index"><span itemprop="name">lock</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/06/lock/" class="post-meta-item leancloud_visitors" data-flag-title="lock" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+<h1 id="Java中的锁"><a href="#Java中的锁" class="headerlink" title="Java中的锁"></a>Java中的锁</h1><h2 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h2><blockquote>
+<p> 偏向锁主要用来优化同一线程多次申请同一个锁的竞争。</p>
+</blockquote>
+<blockquote>
+<p> 在某些情况下，大部分时间是同一个线程竞争锁资源。</p>
+<blockquote>
+<p>例如，在创建一个线程并在线程中执行循环监听的场景下，或单线程操作一个线程安全集合时，同一线程每次都需要获取和释放锁，每次操作都会发生用户态与内核态的切换。<br>偏向锁的作用就是，当一个线程再次访问这个同步代码或方法时，该线程只需去对象头的 Mark Word 中去判断一下是否有偏向锁指向它的 ID，无需再进入 Monitor 去竞争对象了。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>当对象被当做同步锁并有一个线程抢到了锁时，锁标志位还是 01，“是否偏向锁”标志位设置为 1，并且记录抢到锁的线程 ID，表示进入偏向锁状态。一旦出现其它线程竞争锁资源时，偏向锁就会被撤销。偏向锁的撤销需要等待全局安全点，暂停持有该锁的线程，同时检查该线程是否还在执行该方法，如果是，则升级锁，反之则被其它线程抢占。</p>
+</blockquote>
+<h2 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h2><blockquote>
+<p> 轻量级锁适用于线程交替执行同步块的场景，绝大部分的锁在整个同步周期内都不存在长时间的竞争。<br> 轻量级锁还使用了自旋锁来避免线程用户态与内核态的频繁切换，提高了系统性能；</p>
+</blockquote>
+<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h2><blockquote>
+<p> 在锁竞争不激烈且锁占用时间非常短的场景下，自旋锁可以提高系统性能。</p>
+</blockquote>
+<blockquote>
+<p> JDK1.7 开始，自旋锁默认启用，自旋次数由 JVM 设置决定。<br> CAS 重试操作意味着长时间地占用 CPU。</p>
+</blockquote>
+<h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><blockquote>
+<p> 乐观锁，在操作共享资源时，抱着乐观的态度进行，认为可以成功地完成操作。但实际上，当多个线程同时操作一个共享资源时，只有一个线程会成功，那么失败的线程呢？它们不会像悲观锁一样在操作系统中挂起，而仅仅是返回，并且系统允许失败的线程重试，也允许自动放弃退出操作。<br> 乐观锁相比悲观锁来说，不会带来死锁、饥饿等活性故障问题，线程间的相互影响也远远比悲观锁要小。<br> 乐观锁没有因竞争造成的系统开销，所以在性能上也是更胜一筹。</p>
+</blockquote>
+<blockquote>
+<p> CAS 乐观锁在高并发写大于读的场景下，大部分线程的原子操作会失败，失败后的线程将会不断重试 CAS 原子操作，这样就会导致大量线程长时间地占用 CPU 资源，给系统带来很大的性能开销。<br> CAS 乐观锁在平常使用时比较受限，它只能保证单个变量操作的原子性</p>
+</blockquote>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1]<a href="https://time.geekbang.org/column/article/101244" target="_blank" rel="noopener">12 | 多线程之锁优化（上）：深入了解Synchronized同步锁的优化方法</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/06/06/read-write-lock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/06/read-write-lock/" class="post-title-link" itemprop="url">读写锁</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-06 09:44:46 / 修改时间：09:47:36" itemprop="dateCreated datePublished" datetime="2020-06-06T09:44:46+08:00">2020-06-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/lock/" itemprop="url" rel="index"><span itemprop="name">lock</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/06/06/read-write-lock/" class="post-meta-item leancloud_visitors" data-flag-title="读写锁" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> 读写锁，是一个广为使用的通用技术，无论是操作系统、数据库、编程语言、应用 等都有用到 </p>
+</blockquote>
+<blockquote>
+<p> 所有的读写锁都遵守以下三条基本原则：</p>
+<ol>
+<li>允许多个线程同时读共享变量；</li>
+<li>只允许一个线程写共享变量；</li>
+<li>如果一个写线程正在执行写操作，此时禁止读线程读共享变量。</li>
+</ol>
+</blockquote>
+<blockquote>
+<p> 读写锁与互斥锁的一个重要区别就是读写锁允许多个线程同时读共享变量，而互斥锁是不允许的，这是读写锁在读多写少场景下性能优于互斥锁的关键。但读写锁的写操作是互斥的，当一个线程在写共享变量的时候，是不允许其他线程执行写操作和读操作。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/05/28/redis-high-performance-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/28/redis-high-performance-analysis/" class="post-title-link" itemprop="url">redis高性能分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-28 13:09:58" itemprop="dateCreated datePublished" datetime="2020-05-28T13:09:58+08:00">2020-05-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-05 23:55:15" itemprop="dateModified" datetime="2020-07-05T23:55:15+08:00">2020-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/05/28/redis-high-performance-analysis/" class="post-meta-item leancloud_visitors" data-flag-title="redis高性能分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> redis高性能分析</p>
+</blockquote>
+<h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p>  redis为了达到高性能，对数据类型做了调整，更好的适用于高并发</p>
+<blockquote>
+<p> redis的源码相关文件如下：<br> t_hash.c, t_list.c, t_set.c, t_string.c, t_zset.c and t_stream.c contains the implementation of the Redis data types. They implement both an API to access a given data type, and the client commands implementations for these data types.</p>
+<p> sds.c is the Redis string library, check <a href="http://github.com/antirez/sds" target="_blank" rel="noopener">http://github.com/antirez/sds</a> for more information.</p>
+<p> dict.c is an implementation of a non-blocking hash table which rehashes incrementally.</p>
+</blockquote>
+<h2 id="SDS"><a href="#SDS" class="headerlink" title="SDS"></a>SDS</h2><p>  SDS使用C语言编写。C语言的字符串是用一个以<code>\0</code>结尾的char[]表示。<br>  但是为什么不直接使用C语言字符串。<br>  C语言字符串的缺点：</p>
+<ol>
+<li>获取字符串长度每次需要遍历char[]数组，时间复杂度O(n)</li>
+<li>修改字符串忘记分配内存容易造成缓冲区溢出 (buffer overflow) 。</li>
+<li><p>修改字符串需要重新分配内存，设计系统调用。</p>
+<p>SDS优点</p>
+</li>
+<li>获取字符串长度时间复杂度O(1) 。</li>
+<li>通过封装，避免了直接操作C语言字符串忘记分配内存导致的内存泄露。</li>
+<li><p>减少修改字符串时内存分配次数。</p>
+<p>空间预分配  惰性空间释放</p>
+<p>二进制安全<br>SDS的buf保存的是二进制数组</p>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> len;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">free</span>;</span><br><span class="line">    <span class="keyword">char</span> buf[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>  redis里的key是保存了字符串的SDS<br>  redis里的value</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/28/redis-high-performance-analysis/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/05/26/redis-high-performance-practice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -593,580 +1197,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/05/14/javac-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/14/javac-notes/" class="post-title-link" itemprop="url">jdk javac 使用笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-14 10:27:20" itemprop="dateCreated datePublished" datetime="2020-05-14T10:27:20+08:00">2020-05-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-17 23:31:53" itemprop="dateModified" datetime="2020-05-17T23:31:53+08:00">2020-05-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/05/14/javac-notes/" class="post-meta-item leancloud_visitors" data-flag-title="jdk javac 使用笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> 最近有一个需求，需要测试一下新数据库(mysql优化版)某个表的写入速度和查询速度，需要从我们的测试环境数据库查数据，插入到新的测试环境的新数据库。<br> 本地连不上测试的数据库<br> 有很多应用服务器，但是所有的服务器不能连外网，只能访问公司内网。<br> 测试环境的应用可以连测试的数据库<br> 想写个python脚本，但是服务器上python是2.7的，而且很多包没有。<br> 想了想，应用服务器部署了java程序，java的包都有，想写一个java脚本来测试。(没错是java脚本)</p>
-</blockquote>
-<blockquote>
-<p> 测试环境数据库     db_test_old  192.168.1.10<br> 新测试环境新数据库  db_test_new  192.168.2.11<br> 测试环境应用       test-java    192.168.3.12</p>
-</blockquote>
-<blockquote>
-<p> 在idea里写完脚本，运行没问题，然后在 terminal 运行，被啪啪的打脸</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/14/javac-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/05/13/guava-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/13/guava-cache/" class="post-title-link" itemprop="url">guava缓存</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-13 09:19:36" itemprop="dateCreated datePublished" datetime="2020-05-13T09:19:36+08:00">2020-05-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-06 18:54:35" itemprop="dateModified" datetime="2020-06-06T18:54:35+08:00">2020-06-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cache/" itemprop="url" rel="index"><span itemprop="name">cache</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/05/13/guava-cache/" class="post-meta-item leancloud_visitors" data-flag-title="guava缓存" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> google guava-cache</p>
-</blockquote>
-<blockquote>
-<p> redis做缓存很快，但是还有网络IO，在并发量大要求耗时低的情况下还是不满足需求，所以想试试本地缓存。</p>
-<p> 发现guava缓存不错，想试试 </p>
-<p> 在本地demo测试的时候发现更新缓存时有毛刺出现</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/13/guava-cache/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/04/18/vim-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/18/vim-notes/" class="post-title-link" itemprop="url">vim笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-18 14:49:16" itemprop="dateCreated datePublished" datetime="2020-04-18T14:49:16+08:00">2020-04-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-05 23:32:36" itemprop="dateModified" datetime="2020-06-05T23:32:36+08:00">2020-06-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/04/18/vim-notes/" class="post-meta-item leancloud_visitors" data-flag-title="vim笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> vim有三种模式，一般模式、编辑模式、命令模式。<br> 一般模式下只能 查看文件。  (输入 <code>ESC</code> 可以进入一般模式。)<br> 编辑模式下可以对文件进行 新增、修改、删除。  (输入 <code>i</code> 可以进入编辑模式。进入后左下角可以看到 <code>INSERT</code> 标识)<br> 命令模式下可以对文件进行 保存、退出 等操作。  (输入 <code>ESC</code> + <code>:</code> 可以进入命令模式。)</p>
-</blockquote>
-<blockquote>
-<p> 输入<code>ESC</code>+<code>:</code>进入命令模式后，输入<code>q!</code>可以退出文件并且不保存修改。<br> 输入<code>ESC</code>+<code>:</code>进入命令模式后，输入<code>qw</code>可以退出文件并且保存修改。</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/18/vim-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/04/18/vs-code-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/18/vs-code-notes/" class="post-title-link" itemprop="url">vs-code-notes</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-18 14:49:06" itemprop="dateCreated datePublished" datetime="2020-04-18T14:49:06+08:00">2020-04-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-29 14:14:59" itemprop="dateModified" datetime="2020-05-29T14:14:59+08:00">2020-05-29</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tools/" itemprop="url" rel="index"><span itemprop="name">tools</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/04/18/vs-code-notes/" class="post-meta-item leancloud_visitors" data-flag-title="vs-code-notes" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-vs-code-设置语言"><a href="#1-vs-code-设置语言" class="headerlink" title="(1) vs-code 设置语言"></a>(1) vs-code 设置语言</h1><p>  打开命令面板 ，输入 <code>configure display language</code>，设置语言为 <code>zh-cn</code> </p>
-<p>  备注：打开命令面板快捷键  mac <code>Shift + Command + P</code>    Windows <code>Ctrl + Shift + p</code></p>
-<h1 id="2-vs-code-设置背景豆沙绿"><a href="#2-vs-code-设置背景豆沙绿" class="headerlink" title="(2) vs-code 设置背景豆沙绿"></a>(2) vs-code 设置背景豆沙绿</h1><p>  修改配置文件 <code>~/Library/Application Support/Code/User/settings.json</code><br>  把  <code>&quot;editor.background&quot;</code> 设置成 <code>&quot;#C7EDCC&quot;</code>，具体如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"workbench.colorTheme"</span>: <span class="string">"Default Light+"</span>,</span><br><span class="line">    <span class="attr">"workbench.colorCustomizations"</span>: &#123;</span><br><span class="line">        <span class="attr">"editor.background"</span>: <span class="string">"#C7EDCC"</span></span><br><span class="line">        //设置用户选中代码段的颜色 </span><br><span class="line">        //<span class="string">"editor.selectionBackground"</span>: <span class="string">"#2f00ff"</span>,</span><br><span class="line">        //搜索匹配的背景色</span><br><span class="line">        //"editor.findMatchBackground": "#ff0000",</span><br><span class="line">        //"editor.findMatchHighlightBackground": "#ff00ff",</span><br><span class="line">        //"editor.findRangeHighlightBackground": "#ff9900"</span><br><span class="line">    </span><br><span class="line">    &#125;,</span><br><span class="line">    "editor.fontSize": 16,</span><br><span class="line">    "window.openFoldersInNewWindow": "off",</span><br><span class="line">    "window.openWithoutArgumentsInNewWindow": "on",</span><br><span class="line">    "editor.largeFileOptimizations": false,</span><br><span class="line">    "editor.suggestSelection": "first",</span><br><span class="line">    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",</span><br><span class="line">    "java.configuration.checkProjectSettingsExclusions": false,</span><br><span class="line">    "extensions.autoUpdate": false,</span><br><span class="line">    "window.zoomLevel": 0,</span><br><span class="line">    "update.mode": "none"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/18/vs-code-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/04/06/cache-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/06/cache-notes/" class="post-title-link" itemprop="url">cache笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-06 09:22:49" itemprop="dateCreated datePublished" datetime="2020-04-06T09:22:49+08:00">2020-04-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-05 23:44:44" itemprop="dateModified" datetime="2020-06-05T23:44:44+08:00">2020-06-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/cache/" itemprop="url" rel="index"><span itemprop="name">cache</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/04/06/cache-notes/" class="post-meta-item leancloud_visitors" data-flag-title="cache笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/zeb_perfect/article/details/54135506" target="_blank" rel="noopener">缓存穿透，缓存击穿，缓存雪崩解决方案分析</a><br>[2] <a href="https://blog.csdn.net/xlgen157387/article/details/79530877" target="_blank" rel="noopener">缓存雪崩、缓存穿透、缓存预热、缓存更新、缓存降级等问题</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/03/28/jvm-performance-tuning-monitoring-tool/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/28/jvm-performance-tuning-monitoring-tool/" class="post-title-link" itemprop="url">JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-28 10:16:25" itemprop="dateCreated datePublished" datetime="2020-03-28T10:16:25+08:00">2020-03-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-30 23:37:10" itemprop="dateModified" datetime="2020-03-30T23:37:10+08:00">2020-03-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/03/28/jvm-performance-tuning-monitoring-tool/" class="post-meta-item leancloud_visitors" data-flag-title="JVM性能调优监控工具 jps jstat jinfo jmap jhat jstack" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> 最近测试环境总是莫名的出问题，然后部署服务的容器里除了服务打印的日志，没有其它信息，想看看是什么原因导致服务很卡，是不是有哪块代码占用内存高。<br> 代码执行缓慢、OutOfMemoryError，内存不足、内存泄露、线程死锁、锁争用（Lock Contention）、Java进程消耗CPU过高 都可以使用JDK的命令行工具排查。</p>
-</blockquote>
-<p><br></p>
-<h1 id="1-JDK的命令行工具"><a href="#1-JDK的命令行工具" class="headerlink" title="(1) JDK的命令行工具"></a>(1) JDK的命令行工具</h1><blockquote>
-<p> jps、jstat、jinfo、jmap、jhat、jstack、hprof<br>jps : 虚拟机进程状况工具<br>jstat : 虚拟机统计信息监视工具<br>jinfo : Java 配置信息工具<br>jmap : Java 内存映像工具<br>jhat : 虚拟机堆转储快照分析工具<br>jstack : Java 堆栈跟踪工具</p>
-</blockquote>
-<blockquote>
-<p> jps将打印所有正在运行的 Java 进程。<br> jstat允许用户查看目标 Java 进程的类加载、即时编译以及垃圾回收相关的信息。它常用于检测垃圾回收问题以及内存泄漏问题。<br> jmap允许用户统计目标 Java 进程的堆中存放的 Java 对象，并将它们导出成二进制文件。<br> jinfo将打印目标 Java 进程的配置参数，并能够改动其中 manageabe 的参数。<br> jstack将打印目标 Java 进程中各个线程的栈轨迹、线程状态、锁状况等信息。它还将自动检测死锁。<br> jcmd则是一把瑞士军刀，可以用来实现前面除了jstat之外所有命令的功能。</p>
-</blockquote>
-<p>Java虚拟机的监控及诊断工具-GUI</p>
-<blockquote>
-<p>JConsole : Java 监视与管理控制台<br>VisualVM : 多合一故障处理工具<br>eclipse MAT<br>JMC<br>JITWatch</p>
-</blockquote>
-<p><br></p>
-<h1 id="2-虚拟机进程状况工具-jps-JVM-Process-Status-Tool"><a href="#2-虚拟机进程状况工具-jps-JVM-Process-Status-Tool" class="headerlink" title="(2) 虚拟机进程状况工具 jps (JVM Process Status Tool)"></a>(2) 虚拟机进程状况工具 jps (JVM Process Status Tool)</h1><blockquote>
-<p> jps主要用来输出JVM中运行的进程状态信息。<br> jps命令使用Java启动器来查找传递给main方法的类名和参数。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps -help</span><br><span class="line">usage: jps [-help]</span><br><span class="line">       jps [-q] [-mlvV] [&lt;hostid&gt;]</span><br><span class="line"></span><br><span class="line">Definitions:</span><br><span class="line">    &lt;hostid&gt;:      &lt;hostname&gt;[:&lt;port&gt;]</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
-<h2 id="2-1-jps命令"><a href="#2-1-jps命令" class="headerlink" title="(2.1) jps命令"></a>(2.1) jps命令</h2><blockquote>
-<p>jps命令用于输出JVM中运行的进程状态信息。可以获取到进程的pid、全限定名、传入main方法的参数、传入JVM的参数 等。</p>
-</blockquote>
-<blockquote>
-<p>语法格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jps [ options ] [ hostid ]</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>  如果不指定hostid就默认为当前主机或服务器。</p>
-<p>  详细信息见 <code>man jps</code></p>
-<h3 id="2-1-1-jps-不加参数"><a href="#2-1-1-jps-不加参数" class="headerlink" title="(2.1.1) jps 不加参数"></a>(2.1.1) jps 不加参数</h3><blockquote>
-<p> 在本地主机上搜索检测到的JVM。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ jps</span><br><span class="line">14916 Jps</span><br><span class="line">13050 Elasticsearch</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/28/jvm-performance-tuning-monitoring-tool/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1236,20 +1266,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="常用的JVM配置  -Dfile.encoding=UTF-8 文件使用UTF-8编码  -Xms2g 设置初始堆大小为2G  -Xmx2g 设置最大堆大小为1G  -Xmn1g 设置新生代大小为1G   -Xss256k  设置每个线程的堆栈大小，和栈的深度和容器创建的最大线程数有关   -XX:LargePageSizeInBytes=128m  内存页的大小不可设置过大， 会影响Perm的大">
+  <meta name="description" content="12java -XX:+PrintFlagsFinal -version | grep HeapSize  # 查看堆内存配置的默认值jmap -heap pid 常用的JVM配置  -Dfile.encoding=UTF-8 文件使用UTF-8编码  -Xms2g 设置初始堆大小为2G  -Xmx2g 设置最大堆大小为1G  -Xmn1g 设置新生代大小为1G   -Xss256k  设置每个线">
 <meta name="keywords" content="java,jvm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jvm-config">
 <meta property="og:url" content="http://weikeqin.com/2020/06/09/jvm-config/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="常用的JVM配置  -Dfile.encoding=UTF-8 文件使用UTF-8编码  -Xms2g 设置初始堆大小为2G  -Xmx2g 设置最大堆大小为1G  -Xmn1g 设置新生代大小为1G   -Xss256k  设置每个线程的堆栈大小，和栈的深度和容器创建的最大线程数有关   -XX:LargePageSizeInBytes=128m  内存页的大小不可设置过大， 会影响Perm的大">
+<meta property="og:description" content="12java -XX:+PrintFlagsFinal -version | grep HeapSize  # 查看堆内存配置的默认值jmap -heap pid 常用的JVM配置  -Dfile.encoding=UTF-8 文件使用UTF-8编码  -Xms2g 设置初始堆大小为2G  -Xmx2g 设置最大堆大小为1G  -Xmn1g 设置新生代大小为1G   -Xss256k  设置每个线">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-14T15:34:05.858Z">
+<meta property="og:updated_time" content="2020-06-20T15:27:13.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jvm-config">
-<meta name="twitter:description" content="常用的JVM配置  -Dfile.encoding=UTF-8 文件使用UTF-8编码  -Xms2g 设置初始堆大小为2G  -Xmx2g 设置最大堆大小为1G  -Xmn1g 设置新生代大小为1G   -Xss256k  设置每个线程的堆栈大小，和栈的深度和容器创建的最大线程数有关   -XX:LargePageSizeInBytes=128m  内存页的大小不可设置过大， 会影响Perm的大">
+<meta name="twitter:description" content="12java -XX:+PrintFlagsFinal -version | grep HeapSize  # 查看堆内存配置的默认值jmap -heap pid 常用的JVM配置  -Dfile.encoding=UTF-8 文件使用UTF-8编码  -Xms2g 设置初始堆大小为2G  -Xmx2g 设置最大堆大小为1G  -Xmn1g 设置新生代大小为1G   -Xss256k  设置每个线">
 
 <link rel="canonical" href="http://weikeqin.com/2020/06/09/jvm-config/">
 
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-14 23:34:05" itemprop="dateModified" datetime="2020-06-14T23:34:05+08:00">2020-06-14</time>
+                <time title="修改时间：2020-06-20 23:27:13" itemprop="dateModified" datetime="2020-06-20T23:27:13+08:00">2020-06-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,24 +280,105 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="常用的JVM配置"><a href="#常用的JVM配置" class="headerlink" title="常用的JVM配置"></a>常用的JVM配置</h1><p>  <code>-Dfile.encoding=UTF-8</code> 文件使用UTF-8编码<br>  <code>-Xms2g</code> 设置初始堆大小为2G<br>  <code>-Xmx2g</code> 设置最大堆大小为1G<br>  <code>-Xmn1g</code> 设置新生代大小为1G</p>
+        <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -XX:+PrintFlagsFinal -version | grep HeapSize  <span class="comment"># 查看堆内存配置的默认值</span></span><br><span class="line">jmap -heap pid</span><br></pre></td></tr></table></figure>
+<h1 id="常用的JVM配置"><a href="#常用的JVM配置" class="headerlink" title="常用的JVM配置"></a>常用的JVM配置</h1><p>  <code>-Dfile.encoding=UTF-8</code> 文件使用UTF-8编码<br>  <code>-Xms2g</code> 设置初始堆大小为2G<br>  <code>-Xmx2g</code> 设置最大堆大小为1G<br>  <code>-Xmn1g</code> 设置新生代大小为1G</p>
 <p>  <code>-Xss256k</code>  设置每个线程的堆栈大小，和栈的深度和容器创建的最大线程数有关</p>
 <p>  <code>-XX:LargePageSizeInBytes=128m</code>  内存页的大小不可设置过大， 会影响Perm的大小<br>  <code>-XX:MaxDirectMemorySize=536870912</code> </p>
 <p>  <code>-XX:+UseFastAccessorMethods</code>  原始类型的快速优化</p>
-<h1 id="垃圾回收统计信息"><a href="#垃圾回收统计信息" class="headerlink" title="垃圾回收统计信息"></a>垃圾回收统计信息</h1><p>  <code>-XX:+PrintGC</code>  用于垃圾收集时的信息打印<br>  <code>-XX:+PrintGCDetails</code>  打印GC详细信息<br>  <code>-XX:+PrintGCTimeStamps</code><br>  <code>-XX:+DisableExplicitGC</code>  禁止代码中显示调用GC<br>  <code>-Xloggc:filename</code></p>
-<h1 id="异常日志"><a href="#异常日志" class="headerlink" title="异常日志"></a>异常日志</h1><p>  <code>-XX:+HeapDumpOnOutOfMemoryError</code> OOM后保存堆栈信息<br>  <code>-XX:-OmitStackTraceInFastThrow</code> 当大量抛出同样的异常的后，后面的异常输出将不打印堆栈<br>  <code>-XX:ErrorFile=logs/hs_err_pid%p.log</code> </p>
-<p>  <code>-XX:+HeapDumpBeforeFullGC</code> FullGC前保存堆栈信息  测试环境使用，线上最好别用，小心磁盘被打满<br>  <code>-XX:+HeapDumpAfterFullGC</code> FullGC后保存堆栈信息  测试环境使用，线上最好别用，小心磁盘被打满</p>
-<h1 id="JIT-config"><a href="#JIT-config" class="headerlink" title="JIT config"></a>JIT config</h1><h2 id="XX-CompileThreshold-128"><a href="#XX-CompileThreshold-128" class="headerlink" title="-XX:CompileThreshold=128"></a>-XX:CompileThreshold=128</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#CompileThreshold must be between 0 and 268435455</span><br><span class="line">-XX:CompileThreshold=128</span><br></pre></td></tr></table></figure>
-<blockquote>
+<p>  <code>-XX:PetenureSizeThreshold=</code> 设置直接被分配到老年代的最大阀值 </p>
+<p>  <code>-XX:+TraceClassLoading</code> 打印类加载信息</p>
+<h1 id="gc日志信息"><a href="#gc日志信息" class="headerlink" title="gc日志信息"></a>gc日志信息</h1><p>  <code>-XX:+PrintGC</code>  用于垃圾收集时的信息打印   -verbosegc (which is equivalent to -XX:+PrintGC) sets the detail level of the log to fine.<br>  <code>-XX:+PrintGCDetails</code>  打印GC详细信息   ets the detail level to finer.<br>  <code>-XX:+PrintGCTimeStamps</code>  输出GC的时间戳（以基准时间的形式 245469.1 ）<br>  <code>-XX:+PrintGCDateStamps</code>  输出GC的时间戳（以日期的形式，如 2013-05-04T21:53:59.234+0800）<br>  <code>-XX:+HeapDumpBeforeFullGC</code> FullGC前保存堆栈信息  测试环境使用，线上最好别用，小心磁盘被打满<br>  <code>-XX:+HeapDumpAfterFullGC</code>  FullGC后保存堆栈信息  测试环境使用，线上最好别用，小心磁盘被打满</p>
+<p>  <code>-XX:+DisableExplicitGC</code>  禁止代码中显示调用GC<br>  <code>-Xloggc:filename</code>  gc日志保存到指定文件 把filename替换成 /home/admin/gc.log</p>
+<p>  <code>-XX:+HeapDumpOnOutOfMemoryError</code> OOM后保存堆栈信息<br>  <code>-XX:-OmitStackTraceInFastThrow</code> 当大量抛出同样的异常的后，后面的异常输出将不打印堆栈<br>  <code>-XX:ErrorFile=logs/hs_err_pid%p.log</code> </p>
+<h1 id="JIT-config"><a href="#JIT-config" class="headerlink" title="JIT config"></a>JIT config</h1><blockquote>
 <p> JVM 的 JIT 机制的存在，如果某个函数被调用多次之后，JVM会尝试将其编译为机器码，从而提高执行速度。</p>
 </blockquote>
-<h2 id="XX-CICompilerCount"><a href="#XX-CICompilerCount" class="headerlink" title="-XX:CICompilerCount"></a>-XX:CICompilerCount</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:CICompilerCount=2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 在 Java8 之前，HotSpot 集成了两个 JIT，用 C1 和 C2 来完成 JVM 中的即时编译。<br> 到了 Java9，AOT 编译器被引入。AOT 是在程序运行前进行的静态编译，这样就可以避免运行时的编译消耗和内存消耗，且 .class 文件通过 AOT 编译器是可以编译成 .so 的二进制文件的。<br> Java10，一个新的 JIT 编译器 Graal 被引入。Graal 是一个以 Java 为主要编程语言、面向 Java bytecode 的编译器。与用 C++ 实现的 C1 和 C2 相比，它的模块化更加明显，也更容易维护。Graal 既可以作为动态编译器，在运行时编译热点方法；也可以作为静态编译器，实现 AOT 编译。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#CompileThreshold must be between 0 and 268435455</span><br><span class="line">-XX:CompileThreshold=128</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 方法调用计数器：用于统计方法被调用的次数<br> 方法调用计数器的默认阈值在 C1 模式下是 1500 次，在 C2 模式在是 10000 次，可通过 -XX:CompileThreshold 来设定；而在分层编译的情况下，-XX:CompileThreshold 指定的阈值将失效，此时将会根据当前待编译的方法数以及编译线程数来动态调整。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:OnStackReplacePercentage=10000</span><br></pre></td></tr></table></figure>
+<p>回边计数器：用于统计一个方法中循环体代码执行的次数，</p>
+<p>在字节码中遇到控制流向后跳转的指令称为“回边”（Back Edge），该值用于计算是否触发 C1 编译的阈值，在不开启分层编译的情况下，C1 默认为 13995，C2 默认为 10700，可通过 -XX: OnStackReplacePercentage=N 来设置；而在分层编译的情况下，-XX: OnStackReplacePercentage 指定的阈值同样会失效，此时将根据当前待编译的方法数以及编译线程数来动态调整。</p>
+<p>在一些循环周期比较长的代码段中，当循环达到回边计数器阈值时，JVM 会认为这段是热点代码，JIT 编译器就会将这段代码编译成机器语言并缓存，在该循环时间段内，会直接将执行代码替换，执行缓存的机器语言。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-XX:CICompilerCount=2</span><br></pre></td></tr></table></figure>
+<p>经常执行的方法，默认情况下，方法体大小小于 325 字节的都会进行内联，我们可以通过 -XX:MaxFreqInlineSize=N 来设置大小值；<br>不是经常执行的方法，默认情况下，方法大小小于 35 字节才会进行内联，我们也可以通过 -XX:MaxInlineSize=N 来重置大小值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintCompilation //在控制台打印编译过程信息</span><br><span class="line">-XX:+UnlockDiagnosticVMOptions //解锁对JVM进行诊断的选项参数。默认是关闭的，开启后支持一些特定参数对JVM进行诊断</span><br><span class="line">-XX:+PrintInlining //将内联方法打印出来</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h1 id="CMS垃圾回收器配置"><a href="#CMS垃圾回收器配置" class="headerlink" title="CMS垃圾回收器配置"></a>CMS垃圾回收器配置</h1><p>  Eden            –|<br>  Survior0 Space  —- Young Generation<br>  Survior1 Space  –|</p>
 <p>  Old Generation<br>  Permanent Generation</p>
 <p>  <code>-XX:+UseConcMarkSweepGC</code>    使用CMS垃圾收集器<br>  <code>-XX:+CMSParallelRemarkEnabled</code>  降低标记停顿<br>  <code>-XX:CMSFullGCsBeforeCompaction=*</code><br>  <code>-XX:+UseCMSCompactAtFullCollection</code>  在FullGC的时候 对年老代的压缩<br>  <code>-XX:CMSInitiatingOccupancyFraction=75</code>  CMS垃圾收集会在老年代被占用75%时被触发<br>  <code>-XX:+UseCMSInitiatingOccupancyOnly</code>  基于运行时收集的数据来启动CMS垃圾收集周期</p>
 <h1 id="G1垃圾收集器配置"><a href="#G1垃圾收集器配置" class="headerlink" title="G1垃圾收集器配置"></a>G1垃圾收集器配置</h1><p>  Ende Space<br>  Survivor Space<br>  Oid Generation</p>
-<p> <code>-XX:+UseG1GC</code>  使用G1垃圾收集器<br> <code>-XX:G1HeapRegionSize=25</code>  设置Region大小  非最终值<br> <code>-XX:InitiatingHeapOccupancyPercent=30</code>  设置触发标记周期的 Java 堆占用率阈值。默认值是45%。这里的java堆占比指的是non_young_capacity_bytes，包括old+humongous<br> <code>-XX:MaxGCPauseMillis</code>   设置G1收集过程目标时间，默认值200ms<br> <code>-XX:G1NewSizePercent</code>       新生代最小值，默认值5%<br> <code>-XX:G1MaxNewSizePercent</code>    新生代最大值，默认值60%<br> <code>-XX:ParallelGCThreads</code>     STW期间，并行GC线程数<br> <code>-XX:ConcGCThreads=n</code>    并发标记阶段，并行执行的线程数</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Option and Default Value</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>-XX:+UseG1GC</code></td>
+<td style="text-align:left">使用G1垃圾收集器</td>
+<td style="text-align:left">Use the Garbage First (G1) Collector</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:MaxGCPauseMillis=200</code></td>
+<td style="text-align:left">设置G1收集过程目标时间，默认值200ms</td>
+<td style="text-align:left">Sets a target for the maximum GC pause time. This is a soft goal, and the JVM will make its best effort to achieve it.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:InitiatingHeapOccupancyPercent=30</code></td>
+<td style="text-align:left">设置触发标记周期的 Java 堆占用率阈值。默认值是45%。这里的java堆占比指的是non_young_capacity_bytes，包括old+humongous</td>
+<td style="text-align:left">Percentage of the (entire) heap occupancy to start a concurrent GC cycle. It is used by GCs that trigger a concurrent GC cycle based on the occupancy of the entire heap, not just one of the generations (e.g., G1). A value of 0 denotes ‘do constant GC cycles’. The default value is 45.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:NewRatio=2</code></td>
+<td style="text-align:left">新生代 老年代 比例</td>
+<td style="text-align:left">Ratio of new/old generation sizes. The default value is 2.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:SurvivorRatio=8</code></td>
+<td style="text-align:left">Eden区 Survivor区 比例</td>
+<td style="text-align:left">Ratio of eden/survivor space size. The default value is 8.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:MaxTenuringThreshold=15</code></td>
+<td style="text-align:left">新生代最大需要经历多少次GC晋升到老年代。</td>
+<td style="text-align:left">Maximum value for tenuring threshold. The default value is 15.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:ParallelGCThreads=2</code></td>
+<td style="text-align:left">设置在垃圾回收器的并行阶段使用的线程数。</td>
+<td style="text-align:left">Sets the number of threads used during parallel phases of the garbage collectors. The default value varies with the platform on which the JVM is running.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:ConcGCThreads=2</code></td>
+<td style="text-align:left">并发垃圾收集器将使用的线程数。</td>
+<td style="text-align:left">Number of threads concurrent garbage collectors will use. The default value varies with the platform on which the JVM is running.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:G1ReservePercent=10</code></td>
+<td style="text-align:left">设置作为空闲空间的预留内存百分比，以降低目标空间溢出的风险</td>
+<td style="text-align:left">Sets the amount of heap that is reserved as a false ceiling to reduce the possibility of promotion failure. The default value is 10.</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>-XX:G1HeapRegionSize=25</code></td>
+<td style="text-align:left">设置Region大小</td>
+<td style="text-align:left">With G1 the Java heap is subdivided into uniformly sized regions. This sets the size of the individual sub-divisions. The default value of this parameter is determined ergonomically based upon heap size. The minimum value is 1Mb and the maximum value is 32Mb.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="G1-Log"><a href="#G1-Log" class="headerlink" title="G1 Log"></a>G1 Log</h2><p>  <code>-verbosegc</code> (which is equivalent to -XX:+PrintGC) sets the detail level of the log to fine.<br>  <code>-XX:+PrintGCDetails</code>  sets the detail level to finer.<br>  <code>-XX:+UnlockExperimentalVMOptions -XX:G1LogLevel=finest</code>  sets the detail level to its finest. Like finer but includes individual worker thread information.<br>  <code>-XX:+PrintGCTimeStamps</code>  Shows the elapsed time since the JVM started.<br>  <code>-XX:+PrintGCDateStamps</code>  Adds a time of day prefix to each entry.</p>
+<h1 id="Lock-config"><a href="#Lock-config" class="headerlink" title="Lock config"></a>Lock config</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-XX:-UseBiasedLocking //关闭偏向锁</span><br><span class="line">-XX:+UseHeavyMonitors  //设置重量级锁</span><br><span class="line">-XX:-UseSpinning //参数关闭自旋锁优化(默认打开) </span><br><span class="line">-XX:PreBlockSpin //参数修改默认的自旋次数。JDK1.7后，去掉此参数，由jvm控制</span><br></pre></td></tr></table></figure>
+<p> <code>-XX:-UseBiasedLocking</code>  关闭偏向锁</p>
+<blockquote>
+<p>在高并发场景下，当大量线程同时竞争同一个锁资源时，偏向锁就会被撤销，发生 stop the word 后， 开启偏向锁会带来更大的性能开销</p>
+</blockquote>
 <h1 id="XX-RestrictContended"><a href="#XX-RestrictContended" class="headerlink" title="-XX:-RestrictContended"></a>-XX:-RestrictContended</h1><blockquote>
 <p> 避免伪共享<br> 多线程并发条件下，volite变量导致CPU缓存里的数据和主内存的数据不一致导致CPU缓存失效。</p>
 </blockquote>
@@ -308,7 +389,13 @@
 </blockquote>
 <p>  由于伪共享问题如此重要，所以 Java 也开始重视它了，比如 Java 8 中，提供了避免伪共享的注解：@sun.misc.Contended，通过这个注解就能轻松避免伪共享（需要设置 JVM 参数 -XX:-RestrictContended）。不过避免伪共享是以牺牲内存为代价的</p>
 <p><a href="https://time.geekbang.org/column/article/98134" target="_blank" rel="noopener">40 | 案例分析（三）：高性能队列Disruptor</a></p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://panlw.github.io/15320998566522.html" target="_blank" rel="noopener">关键系统的JVM参数推荐(2018仲夏版)</a><br>[2] <a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">github.com/alibaba/arthas</a><br>[3] <a href="https://github.com/vipshop/vjtools" target="_blank" rel="noopener">github.com/vipshop/vjtools</a><br>[4] <a href="https://www.rowkey.me/blog/2017/03/23/java-profile-cheatsheet/" target="_blank" rel="noopener">JVM诊断调优CheatSheet</a><br>[5] <a href="https://aboullaite.me/understanding-jit-compiler-just-in-time-compiler/" target="_blank" rel="noopener">understanding-jit-compiler-just-in-time-compiler</a><br>[6] <a href="https://tech.meituan.com/2016/09/23/g1.html" target="_blank" rel="noopener">Java Hotspot G1 GC的一些关键技术</a><br>[7] <a href="https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html" target="_blank" rel="noopener">Getting Started with the G1 Garbage Collector</a><br>[8] <a href="https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html" target="_blank" rel="noopener">java</a><br>[9] <a href="https://stackoverflow.com/questions/51154464/should-heapdumpbeforefullgc-be-used-in-production-environment" target="_blank" rel="noopener">should-heapdumpbeforefullgc-be-used-in-production-environment</a></p>
+<h2 id="逃逸分析"><a href="#逃逸分析" class="headerlink" title="逃逸分析"></a>逃逸分析</h2><p>  逃逸分析（Escape Analysis）是判断一个对象是否被外部方法引用或外部线程访问的分析技术，编译器会根据逃逸分析的结果对代码进行优化。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:+DoEscapeAnalysis //开启逃逸分析（jdk1.8默认开启）</span><br><span class="line">-XX:-DoEscapeAnalysis //关闭逃逸分析</span><br></pre></td></tr></table></figure>
+<h2 id="标量替换"><a href="#标量替换" class="headerlink" title="标量替换"></a>标量替换</h2><p>逃逸分析证明一个对象不会被外部访问，如果这个对象可以被拆分的话，当程序真正执行的时候可能不创建这个对象，而直接创建它的成员变量来代替。将对象拆分后，可以分配对象的成员变量在栈或寄存器上，原本的对象就无需分配内存空间了。这种编译优化就叫做标量替换。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     TestInfo info = <span class="keyword">new</span> TestInfo();</span><br><span class="line">     info.id = <span class="number">1</span>;</span><br><span class="line">     info.count = <span class="number">99</span>;</span><br><span class="line">       ...<span class="comment">//to do something</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     id = <span class="number">1</span>;</span><br><span class="line">     count = <span class="number">99</span>;</span><br><span class="line">     ...<span class="comment">//to do something</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">-XX:+EliminateLocks //开启锁消除（jdk1.8默认开启）</span><br><span class="line">-XX:-EliminateLocks //关闭锁消除</span><br><span class="line"></span><br><span class="line">-XX:+EliminateAllocations //开启标量替换（jdk1.8默认开启）</span><br><span class="line">-XX:-EliminateAllocations //关闭标量替换</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://docs.oracle.com/cd/E19159-01/819-3681/6n5srlhqc/index.html" target="_blank" rel="noopener">Chapter 4 Tuning the Java Runtime System</a><br>[2] <a href="https://panlw.github.io/15320998566522.html" target="_blank" rel="noopener">关键系统的JVM参数推荐(2018仲夏版)</a><br>[3] <a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">github.com/alibaba/arthas</a><br>[4] <a href="https://github.com/vipshop/vjtools" target="_blank" rel="noopener">github.com/vipshop/vjtools</a><br>[5] <a href="https://www.rowkey.me/blog/2017/03/23/java-profile-cheatsheet/" target="_blank" rel="noopener">JVM诊断调优CheatSheet</a><br>[6] <a href="https://aboullaite.me/understanding-jit-compiler-just-in-time-compiler/" target="_blank" rel="noopener">understanding-jit-compiler-just-in-time-compiler</a><br>[7] <a href="https://tech.meituan.com/2016/09/23/g1.html" target="_blank" rel="noopener">Java Hotspot G1 GC的一些关键技术</a><br>[8] <a href="https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html" target="_blank" rel="noopener">Getting Started with the G1 Garbage Collector</a><br>[9] <a href="https://docs.oracle.com/javase/7/docs/technotes/tools/windows/java.html" target="_blank" rel="noopener">java</a><br>[10] <a href="https://stackoverflow.com/questions/51154464/should-heapdumpbeforefullgc-be-used-in-production-environment" target="_blank" rel="noopener">should-heapdumpbeforefullgc-be-used-in-production-environment</a><br>[11] <a href="http://ifeve.com/useful-jvm-flags-part-7-cms-collector/" target="_blank" rel="noopener">JVM实用参数（七）CMS收集器</a><br>[12]<a href="https://time.geekbang.org/column/article/101244" target="_blank" rel="noopener">12 | 多线程之锁优化（上）：深入了解Synchronized同步锁的优化方法</a></p>
 
     </div>
 
@@ -393,7 +480,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用的JVM配置"><span class="nav-number">1.</span> <span class="nav-text">常用的JVM配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收统计信息"><span class="nav-number">2.</span> <span class="nav-text">垃圾回收统计信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常日志"><span class="nav-number">3.</span> <span class="nav-text">异常日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JIT-config"><span class="nav-number">4.</span> <span class="nav-text">JIT config</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#XX-CompileThreshold-128"><span class="nav-number">4.1.</span> <span class="nav-text">-XX:CompileThreshold=128</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XX-CICompilerCount"><span class="nav-number">4.2.</span> <span class="nav-text">-XX:CICompilerCount</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CMS垃圾回收器配置"><span class="nav-number">5.</span> <span class="nav-text">CMS垃圾回收器配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#G1垃圾收集器配置"><span class="nav-number">6.</span> <span class="nav-text">G1垃圾收集器配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XX-RestrictContended"><span class="nav-number">7.</span> <span class="nav-text">-XX:-RestrictContended</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#常用的JVM配置"><span class="nav-number">1.</span> <span class="nav-text">常用的JVM配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gc日志信息"><span class="nav-number">2.</span> <span class="nav-text">gc日志信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JIT-config"><span class="nav-number">3.</span> <span class="nav-text">JIT config</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CMS垃圾回收器配置"><span class="nav-number">4.</span> <span class="nav-text">CMS垃圾回收器配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#G1垃圾收集器配置"><span class="nav-number">5.</span> <span class="nav-text">G1垃圾收集器配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#G1-Log"><span class="nav-number">5.1.</span> <span class="nav-text">G1 Log</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lock-config"><span class="nav-number">6.</span> <span class="nav-text">Lock config</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XX-RestrictContended"><span class="nav-number">7.</span> <span class="nav-text">-XX:-RestrictContended</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逃逸分析"><span class="nav-number">7.1.</span> <span class="nav-text">逃逸分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标量替换"><span class="nav-number">7.2.</span> <span class="nav-text">标量替换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -407,20 +494,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

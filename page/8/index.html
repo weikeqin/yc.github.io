@@ -210,6 +210,556 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/03/17/mysql-architecture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/17/mysql-architecture/" class="post-title-link" itemprop="url">mysql 架构 及 语句执行流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-17 10:44:49" itemprop="dateCreated datePublished" datetime="2019-03-17T10:44:49+08:00">2019-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/03/17/mysql-architecture/" class="post-meta-item leancloud_visitors" data-flag-title="mysql 架构 及 语句执行流程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  转自<br>  <a href="https://time.geekbang.org/column/article/68319" target="_blank" rel="noopener">01 | 基础架构：一条SQL查询语句是如何执行的？ - MySQL实战45讲</a><br>  <a href="https://time.geekbang.org/column/article/68633" target="_blank" rel="noopener">02 | 日志系统：一条SQL更新语句是如何执行的？ - MySQL实战45讲</a></p>
+<p>  问大家一个问题。<code>SELECT * FROM t WHERE id = 1 ;</code> 以及 <code>UPDATE t set c = 2 where id = 1 ;</code> 这两个语句是怎么执行的。</p>
+<p>假设表结构是<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`t`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`c`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure></p>
+<p>  <img src="/img/database/mysql/mysql-architecture.png" alt="MySQL逻辑架构"></p>
+<p>  大体来说，MySQL 可以分为 Server 层和存储引擎层两部分。</p>
+<p>  第一层是连接处理、授权认证、安全等。这是大多数基于网络的客户端/服务器的工具或者服务都有的架构。</p>
+<p>  第二层是 Server 层，包括连接器、查询缓存、分析器、优化器、执行器等，涵盖 MySQL 的大多数核心服务功能，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等。</p>
+<p>  第三层是 存储引擎层，负责数据的存储和提取。每个存储引擎都有它的优势和劣势。服务器通过API与存储引擎层通信。其架构模式是插件式的，支持 InnoDB、MyISAM、Memory 等多个存储引擎。现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始成为了默认存储引擎。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/17/mysql-architecture/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/03/08/mysql-optimization-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/08/mysql-optimization-notes/" class="post-title-link" itemprop="url">MySQL优化点</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-08 16:08:50" itemprop="dateCreated datePublished" datetime="2019-03-08T16:08:50+08:00">2019-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-11 12:05:58" itemprop="dateModified" datetime="2020-02-11T12:05:58+08:00">2020-02-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/03/08/mysql-optimization-notes/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL优化点" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  未完..</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/08/mysql-optimization-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/01/18/elasticsearch-index-management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/18/elasticsearch-index-management/" class="post-title-link" itemprop="url">elasticsearch 索引管理</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-18 23:15:54" itemprop="dateCreated datePublished" datetime="2019-01-18T23:15:54+08:00">2019-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/01/18/elasticsearch-index-management/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 索引管理" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>如果你想禁止自动创建索引，你可以通过在 <code>config/elasticsearch.yml</code> 的每个节点下添加下面的配置：<br> 2.0版本<br> <code>action.auto_create_index: false</code></p>
+<h2 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h2><p>  <code>curl -X PUT &quot;localhost:9200/dev_employee_20181221&quot;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WKQ@WKQ-PC MINGW64 /d/WorkSpaces</span><br><span class="line">$ curl -X PUT &quot;localhost:9200/dev_employee_20181219&quot;</span><br><span class="line">&#123;&quot;acknowledged&quot;:true,&quot;shards_acknowledged&quot;:true,&quot;index&quot;:&quot;dev_employee_20181219&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h2><p>  // 删除一个<br>  <code>curl -X DELETE &quot;localhost:9200/dev_employee_20181221&quot;</code></p>
+<p> // 删除多个<br>  <code>curl -X DELETE &quot;localhost:9200/dev_employee_20181220,dev_employee_20181221&quot;</code><br>  <code>curl -X DELETE &quot;localhost:9200/dev_employee_*&quot;</code></p>
+<p>  // 删除所有<br>  <code>curl -X DELETE &quot;localhost:9200/_all&quot;</code><br>  <code>curl -X DELETE &quot;localhost:9200/*&quot;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WKQ@WKQ-PC MINGW64 /d/WorkSpaces</span><br><span class="line">$ curl -X DELETE &quot;localhost:9200/dev_employee_20181219&quot;</span><br><span class="line">&#123;&quot;acknowledged&quot;:true&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/01/18/elasticsearch-index-management/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/01/18/elasticsearch-scroll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/01/18/elasticsearch-scroll/" class="post-title-link" itemprop="url">elasticsearch 游标 使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-18 22:38:37" itemprop="dateCreated datePublished" datetime="2019-01-18T22:38:37+08:00">2019-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-08 15:48:49" itemprop="dateModified" datetime="2020-06-08T15:48:49+08:00">2020-06-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/01/18/elasticsearch-scroll/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 游标 使用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  碰到一个比较头疼的问题，MySQL数据丢失。<br>  有两个办法，一个办法是让DBA找半年前的数据。另一个办法是保存了MySQL数据的ES里找。<br>  由于数据量过万，而且ES设置了一次查询数据量最大10000，想想用 scroll 取数据会比较好。</p>
+<h1 id="1-ElasticSearch-2-x"><a href="#1-ElasticSearch-2-x" class="headerlink" title="(1) ElasticSearch 2.x"></a>(1) ElasticSearch 2.x</h1><h2 id="1-1-查询索引有多少数据"><a href="#1-1-查询索引有多少数据" class="headerlink" title="(1.1) 查询索引有多少数据"></a>(1.1) 查询索引有多少数据</h2><p>  <code>localhost:9200/_nodes/stats/indices/search?pretty</code></p>
+<h2 id="1-2-查看索引信息"><a href="#1-2-查看索引信息" class="headerlink" title="(1.2) 查看索引信息"></a>(1.2) 查看索引信息</h2><p>  <code>curl -XGET &#39;http://127.0.0.1:9400/dev_index1_20190118/docs/_search?pretty&#39;</code></p>
+<h2 id="1-3-使用游标"><a href="#1-3-使用游标" class="headerlink" title="(1.3) 使用游标"></a>(1.3) 使用游标</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -XGET &apos;http://127.0.0.1:9400/dev_index1_20190118/docs/_search?scroll=10m&apos; -d &apos; </span><br><span class="line">&#123; </span><br><span class="line">    &quot;query&quot;: &#123; &quot;match_all&quot;: &#123;&#125;&#125;,</span><br><span class="line">    &quot;sort&quot; : [&quot;_doc&quot;], </span><br><span class="line">    &quot;size&quot;:  10000</span><br><span class="line">&#125;&apos;  &gt;&gt; es_scroll_data_20190118_1w.txt</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/01/18/elasticsearch-scroll/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/11/16/java-sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/11/16/java-sort/" class="post-title-link" itemprop="url">java-sort</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-11-16 21:38:52" itemprop="dateCreated datePublished" datetime="2018-11-16T21:38:52+08:00">2018-11-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/11/16/java-sort/" class="post-meta-item leancloud_visitors" data-flag-title="java-sort" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  遇到一个排序需求，按照数字、字母、汉字的顺序排序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https://mvnrepository.com/artifact/com.ibm.icu/icu4j --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.ibm.icu&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;icu4j&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;4.8&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Collections.sort(datas, <span class="keyword">new</span> Comparator&lt;TestVo&gt;() &#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(TestVo o1, TestVo o2)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// </span></span><br><span class="line">		<span class="keyword">if</span> (o1.getField1() == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (o2.getField1() == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (!o1.getField1().equals(o2.getField1())) &#123;</span><br><span class="line">			<span class="keyword">return</span> com.ibm.icu.text.Collator.getInstance(com.ibm.icu.util.ULocale.SIMPLIFIED_CHINESE).compare(o1.getField1(), o2.getField1());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// </span></span><br><span class="line">		<span class="keyword">if</span> (o1.getField2() == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (o2.getField2() == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!o1.getField2().equals(o2.getField2())) &#123;</span><br><span class="line">			<span class="keyword">return</span> com.ibm.icu.text.Collator.getInstance(com.ibm.icu.util.ULocale.SIMPLIFIED_CHINESE).compare(o1.getField2(), o2.getField2());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// </span></span><br><span class="line">		<span class="keyword">if</span> (o1.getField3() == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (o2.getField3() == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!o1.getField3().equals(o2.getField3())) &#123;</span><br><span class="line">			<span class="keyword">return</span> com.ibm.icu.text.Collator.getInstance(com.ibm.icu.util.ULocale.SIMPLIFIED_CHINESE).compare(o1.getField3(), o2.getField3());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// </span></span><br><span class="line">		<span class="keyword">if</span> (o1.geField4() == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (o2.geField4() == <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!o1.geField4().equals(o2.geField4())) &#123;</span><br><span class="line">			<span class="keyword">return</span> com.ibm.icu.text.Collator.getInstance(com.ibm.icu.util.ULocale.SIMPLIFIED_CHINESE).compare(o2.geField4(), o1.geField4());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/11/16/java-sort/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/09/30/orientdb-etl-rdbms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/09/30/orientdb-etl-rdbms/" class="post-title-link" itemprop="url">OrientDB 官方 etl 工具 导入 rdbms</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-09-30 22:20:34" itemprop="dateCreated datePublished" datetime="2018-09-30T22:20:34+08:00">2018-09-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-19 11:19:16" itemprop="dateModified" datetime="2020-01-19T11:19:16+08:00">2020-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/orientdb/" itemprop="url" rel="index"><span itemprop="name">orientdb</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/09/30/orientdb-etl-rdbms/" class="post-meta-item leancloud_visitors" data-flag-title="OrientDB 官方 etl 工具 导入 rdbms" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  这儿使用 用户 - 群组 举例。(可以认为是QQ用户和QQ群的关系)<br>  一个用户有多个群组，一个群组有多个用户，用户和群组是多对多关系。<br><!--  
+  假如一个QQ用户想找对象，目标在在QQ好友的好友的好友的范围内。也就是关系在3度及以内。这个时候用rdbms就比较吃力，图数据库可以很方便的解决这个问题。
+--></p>
+<p>  这儿使用OrientDb官方自带的etl rdbms导入数据。<br>  吐槽：OrientDb ETL 工具 对多对多的关系支持不好，还需要自己写代码处理。(总感觉OrientDb是程序员思维的产品，功能可以用)<br>  Neo4j支持的就特别好，一个语句就解决了，瞬间感觉Neo4j好灵活。</p>
+<h1 id="1-准备环境"><a href="#1-准备环境" class="headerlink" title="1. 准备环境"></a>1. 准备环境</h1><p>  下载MySQL的jar包放到OrientDb的lib目录下。<br>  启动OrientDb<br>  准备MySQL数据</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/09/30/orientdb-etl-rdbms/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/09/30/orientdb-etl-csv/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -332,7 +882,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-14 15:02:59" itemprop="dateModified" datetime="2020-06-14T15:02:59+08:00">2020-06-14</time>
+                <time title="修改时间：2020-06-21 16:42:33" itemprop="dateModified" datetime="2020-06-21T16:42:33+08:00">2020-06-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -663,598 +1213,6 @@ GCT: 从启动到采样时GC所用的总时间 (s).
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/12/jvm-memory-area/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/08/12/jvm-memory-area/" class="post-title-link" itemprop="url">JVM内存区域</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-08-12 10:48:21" itemprop="dateCreated datePublished" datetime="2018-08-12T10:48:21+08:00">2018-08-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-01 01:34:06" itemprop="dateModified" datetime="2020-04-01T01:34:06+08:00">2020-04-01</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/08/12/jvm-memory-area/" class="post-meta-item leancloud_visitors" data-flag-title="JVM内存区域" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> JVM的内存划分中，有部分区域是线程私有的，有部分是属于整个JVM进程；有些区域会抛出OOM异常，有些则不会，了解JVM的内存区域划分以及特征，是定位线上内存问题的基础。那么JVM内存区域是怎么划分的呢？</p>
-</blockquote>
-<p>  <img src="/img/java/JVM/Memory/java-process-memory-use.png" alt="运行中的Java进程内存占用情况"></p>
-<p>  <img src="/img/java/JVM/Memory/Java-Runtime-data-area-jdk7.jpg" alt=" Java虚拟机运行时数据区 - 大小和实际内存大小有差距"><br>  Java虚拟机运行时数据区 (仅参考模型)</p>
-<p>  <img src="/img/java/JVM/Memory/Java-Runtime-data-area-jdk7.png" alt=" Java虚拟机运行时数据区-大概比例 "><br>  Java虚拟机运行时数据区-大概比例</p>
-<blockquote>
-<p>   Java虚拟机在执行Java程序的过程中会把它管理的内存划分为若干个不同的数据区域，这些区域都有各自的用途，以及创建和销毁的时间，有的随着虚拟机进程启动而存在，有的区域则依赖于用户线程的启动和结束而建立和销毁。</p>
-</blockquote>
-<blockquote>
-<p> 根据《Java 虚拟机规范》的规定，Java 虚拟机所管理的内存一共分为 Program Counter Register（程序计数器）、VM Stack（虚拟机栈）、Native Method Stack（本地方法栈）、Heap（堆）、Method Area（方法区）五个区域。</p>
-</blockquote>
-<h1 id="1-Java内存区域"><a href="#1-Java内存区域" class="headerlink" title="1.　Java内存区域"></a>1.　Java内存区域</h1><h2 id="1-1-程序计数器-Program-Counter-Register"><a href="#1-1-程序计数器-Program-Counter-Register" class="headerlink" title="1.1　程序计数器(Program Counter Register)"></a>1.1　程序计数器(Program Counter Register)</h2><p>  首先是<code>程序计数器</code>(Program Counter Register)，简称PC，在JVM规范中，每个线程都有自己的程序计数器。<br>  这是一块比较小的内存空间，存储当前线程正在执行的Java方法的JVM指令(或操作码)地址，即字节码的行号。如果当前方法是 native 方法，那么程序计数器的值为 undefined。<br><!--
-  JVM 用 `程序计数器` 来跟踪指令执行的位置，`程序计数器` 实际上是指向方法区(Method Area)的一个内存地址。
-  所有的 CPU 都有一个 `程序计数器`，典型状态下，每执行一条指令 `程序计数器` 都会自增，因此 `程序计数器` 存储了指向下一条要被执行的指令地址。
---><br>  该内存区域是唯一一个在Java虚拟机规范中没有规定任何OOM情况的内存区域。</p>
-<h2 id="1-2-Java虚拟机栈-Java-Virtal-Machine-Stack"><a href="#1-2-Java虚拟机栈-Java-Virtal-Machine-Stack" class="headerlink" title="1.2　Java虚拟机栈(Java Virtal Machine Stack)"></a>1.2　Java虚拟机栈(Java Virtal Machine Stack)</h2><p>  第二，Java虚拟机栈(Java Virtal Machine Stack)，同样也是属于线程私有区域，该区域存储着局部变量表，编译时期可知的各种基本类型数据、对象引用、方法出口等信息。<br>  java栈总是和线程关联在一起，每当创建一个线程时，JVM就会为这个线程创建一个对应的java栈。</p>
-<!--
- 局部变量表存放了编译期可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用和returnAddress类型（指向了一条字节码指令的地址）。
-  其中64位长度的long和double类型的数据会占用2个局部变量空间（slot），其余的数据类型占1个。
-
-  局部变量表所需的内存空间在编译期间分配完成，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。
-
--->
-<p>  在这个java栈中又会包含多个栈帧，每运行一个方法就创建一个栈帧，用于存储局部变量表、操作栈、方法返回值等。每一个方法从调用直至执行完成的过程，就对应一个栈帧在java栈中入栈到出栈的过程。<br>  每次方法调用时，一个新的栈帧创建并压栈到栈顶。当方法正常返回或抛出未捕获的异常时，栈帧就会出栈。除了栈帧的压栈和出栈，栈不能被直接操作。所以可以在堆上分配栈帧，并且不需要连续内存。</p>
-<p>  栈可以是动态分配也可以固定大小。<br>  如果线程请求一个超过允许范围的空间，就会抛出一个StackOverflowError。<br>  如果线程需要一个新的栈帧，但是没有足够的内存可以分配，就会抛出一个 OutOfMemoryError。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/08/12/jvm-memory-area/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/11/orientdb-download-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/08/11/orientdb-download-install/" class="post-title-link" itemprop="url">OrientDB 下载 安装</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-08-11 12:57:24" itemprop="dateCreated datePublished" datetime="2018-08-11T12:57:24+08:00">2018-08-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/orientdb/" itemprop="url" rel="index"><span itemprop="name">orientdb</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/08/11/orientdb-download-install/" class="post-meta-item leancloud_visitors" data-flag-title="OrientDB 下载 安装" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ol>
-<li>下载解压orientdb压缩包</li>
-<li>通过 server.sh 或者 server.bat 启动orieintdb</li>
-<li>访问 <a href="http://localhost:2480" target="_blank" rel="noopener">http://localhost:2480</a> 查看orientdb</li>
-</ol>
-<h1 id="1-下载解压"><a href="#1-下载解压" class="headerlink" title="1　下载解压"></a>1　下载解压</h1><p>  orientdb 所有版本<br>      <a href="https://orientdb.com/releases/" target="_blank" rel="noopener">https://orientdb.com/releases/</a><br>      <a href="https://orientdb.com/downloads/" target="_blank" rel="noopener">https://orientdb.com/downloads/</a><br>      <a href="https://orientdb.com/download-2/" target="_blank" rel="noopener">https://orientdb.com/download-2/</a><br>      <a href="https://orientdb.org/download" target="_blank" rel="noopener">https://orientdb.org/download</a> </p>
-<p>  orientdb-3.0.8.zip   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.zip" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.zip</a><br>  orientdb-3.0.8.tar.gz   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.tar.gz" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.tar.gz</a><br>  agent-3.0.8.jar   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/agent-3.0.8.jar" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/agent-3.0.8.jar</a>  </p>
-<!--
-  https://s3.us-east-2.amazonaws.com/orientdb3/releases/3.0.20/orientdb-3.0.20.zip
-  https://s3.us-east-2.amazonaws.com/orientdb3/releases/3.0.20/orientdb-3.0.20.tar.gz
--->
-<p>  无论是zip包还是tar.gz包，解压完进入bin目录，执行 <code>./server.sh</code> (linux) 或 <code>server.bat</code>(windows) 即可运行OrientDB数据库。<br>  第一次使用需要设置密码，设置完密码启动后在浏览器输入 <a href="http://127.0.0.1:2480" target="_blank" rel="noopener">http://127.0.0.1:2480</a> 访问 图形化界面。  </p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/08/11/orientdb-download-install/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/03/elasticsearch-cluster/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/08/03/elasticsearch-cluster/" class="post-title-link" itemprop="url">elasticsearch 集群</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-08-03 17:32:09" itemprop="dateCreated datePublished" datetime="2018-08-03T17:32:09+08:00">2018-08-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-21 10:57:23" itemprop="dateModified" datetime="2020-01-21T10:57:23+08:00">2020-01-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/08/03/elasticsearch-cluster/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 集群" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p> 集群内的原理 </p>
-<p>  介绍 cluster 、 node 、 shard 等常用术语，Elastisearch 的扩容机制， 以及如何处理硬件故障的内容。</p>
-<p>  ElasticSearch 的主旨是随时可用和按需扩容。 而扩容可以通过购买性能更强大（ 垂直扩容 ，或 纵向扩容 ） 或者数量更多的服务器（ 水平扩容 ，或 横向扩容 ）来实现。</p>
-<p>  虽然 Elasticsearch 可以获益于更强大的硬件设备，但是垂直扩容是有极限的。 真正的扩容能力是来自于水平扩容–为集群添加更多的节点，并且将负载压力和稳定性分散到这些节点中。</p>
-<h1 id="1-空集群"><a href="#1-空集群" class="headerlink" title="(1) 空集群"></a>(1) 空集群</h1><p>  一个运行中的 Elasticsearch 实例称为一个 节点，而集群是由一个或者多个拥有相同 cluster.name 配置的节点组成， 它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。</p>
-<h1 id="2-集群健康"><a href="#2-集群健康" class="headerlink" title="(2) 集群健康"></a>(2) 集群健康</h1><p>  查看集群健康状态</p>
-<p>  <code>http://localhost:9200/_cluster/health?pretty</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X GET &quot;localhost:9200/_cluster/health?pretty&quot;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;cluster_name&quot; : &quot;my-application&quot;,</span><br><span class="line">  &quot;status&quot; : &quot;yellow&quot;,</span><br><span class="line">  &quot;timed_out&quot; : false,</span><br><span class="line">  &quot;number_of_nodes&quot; : 1,</span><br><span class="line">  &quot;number_of_data_nodes&quot; : 1,</span><br><span class="line">  &quot;active_primary_shards&quot; : 5,</span><br><span class="line">  &quot;active_shards&quot; : 5,</span><br><span class="line">  &quot;relocating_shards&quot; : 0,</span><br><span class="line">  &quot;initializing_shards&quot; : 0,</span><br><span class="line">  &quot;unassigned_shards&quot; : 5,</span><br><span class="line">  &quot;delayed_unassigned_shards&quot; : 0,</span><br><span class="line">  &quot;number_of_pending_tasks&quot; : 0,</span><br><span class="line">  &quot;number_of_in_flight_fetch&quot; : 0,</span><br><span class="line">  &quot;task_max_waiting_in_queue_millis&quot; : 0,</span><br><span class="line">  &quot;active_shards_percent_as_number&quot; : 50.0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>status 字段指示着当前集群在总体上是否工作正常。它的三种颜色含义如下：<br>  green  所有的主分片和副本分片都正常运行。<br>  yellow 所有的主分片都正常运行，但不是所有的副本分片都正常运行。<br>  red    有主分片没能正常运行。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/08/03/elasticsearch-cluster/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/03/neo4j-practice/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/08/03/neo4j-practice/" class="post-title-link" itemprop="url">neo4j</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-08-03 17:32:09" itemprop="dateCreated datePublished" datetime="2018-08-03T17:32:09+08:00">2018-08-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-19 11:19:16" itemprop="dateModified" datetime="2020-01-19T11:19:16+08:00">2020-01-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/08/03/neo4j-practice/" class="post-meta-item leancloud_visitors" data-flag-title="neo4j" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="查看正在执行的cypher语句"><a href="#查看正在执行的cypher语句" class="headerlink" title="查看正在执行的cypher语句"></a>查看正在执行的cypher语句</h1><p>1、查看自己当前正在运行的所有查询。语法为： <code>CALL dbms.listQueries()</code></p>
-<ol start="2">
-<li>找到正在运行的语句的id</li>
-<li>调用 <code>CALL dbms.killQueries([‘query-1’,‘query-2’])</code> 根据id杀掉 语句执行的进程</li>
-</ol>
-<h1 id="Neo4j备份"><a href="#Neo4j备份" class="headerlink" title="Neo4j备份"></a>Neo4j备份</h1><p>  Neo4j备份的内容是某一时刻的完整数据库</p>
-<p>  <code>CALL apoc.export.csv.all(&#39;/data/neo4j/export/graph_all.csv&#39;, null);</code>  全量export</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/08/03/neo4j-practice/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/07/13/java-basic-interview-questions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/07/13/java-basic-interview-questions/" class="post-title-link" itemprop="url">Java 基础 面试题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-07-13 23:20:22" itemprop="dateCreated datePublished" datetime="2018-07-13T23:20:22+08:00">2018-07-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/07/13/java-basic-interview-questions/" class="post-meta-item leancloud_visitors" data-flag-title="Java 基础 面试题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  转自 <a href="https://blog.csdn.net/sufu1065/article/details/88051083" target="_blank" rel="noopener">Java 最常见的 200+ 面试题：面试必备</a></p>
-<p>一、Java 基础</p>
-<p>1.JDK 和 JRE 有什么区别？</p>
-<p>2.== 和 equals 的区别是什么？</p>
-<p>3.两个对象的 hashCode()相同，则 equals()也一定为 true，对吗？</p>
-<p>4.final 在 java 中有什么作用？</p>
-<p>5.java 中的 Math.round(-1.5) 等于多少？</p>
-<p>6.String 属于基础的数据类型吗？</p>
-<p>7.java 中操作字符串都有哪些类？它们之间有什么区别？</p>
-<p>8.String str=”i”与 String str=new String(“i”)一样吗？</p>
-<p>9.如何将字符串反转？</p>
-<p>10.String 类的常用方法都有那些？</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/07/13/java-basic-interview-questions/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/07/12/universal-curd-interface/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/07/12/universal-curd-interface/" class="post-title-link" itemprop="url">万能 CURD 接口</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-07-12 15:59:24" itemprop="dateCreated datePublished" datetime="2018-07-12T15:59:24+08:00">2018-07-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/07/12/universal-curd-interface/" class="post-meta-item leancloud_visitors" data-flag-title="万能 CURD 接口" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  在实际的使用时，经常遇到这么一个问题，我要从某种数据库中查询出数据，但是不告诉你字段/属性。<br>  乍一看，这个怎么可能，不告诉我字段/属性，要把数据查出来，后来在github上看见一段代码，读了这段代码后恍然大悟。还是 too young to simple</p>
-<p>  原理是通过JDBC的getMetaData()方法来获取表结构，里面用到了反射 (进行了处理，高并发下还是不建议使用)<br>  比较重要的一点是查询的时候数据库有数据字典，可以根据数据字典获取所有字段/属性</p>
-<p>  实测，MySQL 可用<br>  代码如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通用接口&lt;br&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> weikeqin.cn@gmail.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017-07-11 15:12</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Executor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询接口</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sql    查询语句</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> params 占位符对应的参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> conn   连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Iterator&lt;LinkedHashMap&lt;String, Object&gt;&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    Iterator&lt;Map&lt;String, Object&gt;&gt; query(String sql, Map&lt;Integer, Object&gt; params, Connection conn) <span class="keyword">throws</span> SQLException;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * (单条)增删改接口</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sql    增删改语句</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> params 占位符对应的参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> conn   连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 操作的条数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operat</span><span class="params">(String sql, Map&lt;Integer, Object&gt; params, Connection conn)</span> <span class="keyword">throws</span> SQLException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批量操作&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 大于等于0是成功处理的</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sql  增删改语句</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list 占位符对应的参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> conn 连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> : weikeqin.cn@gmail.com</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@date</span> : 2017-09-08 14:47:15</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span>[] betchOperat(String sql, List&lt;Map&lt;Integer, Object&gt;&gt; list, Connection conn) <span class="keyword">throws</span> SQLException;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/07/12/universal-curd-interface/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1324,20 +1282,20 @@ GCT: 从启动到采样时GC所用的总时间 (s).
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

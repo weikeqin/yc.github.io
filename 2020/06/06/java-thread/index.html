@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="在Java中，创建对象，仅仅是在 JVM 的堆里分配一块内存，而创建一个线程，需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源，成本很高，所以线程是一个重量级的对象，应该避免频繁创建和销毁。">
+  <meta name="description" content="在Java中，创建对象，仅仅是在 JVM 的堆里分配一块内存，而创建一个线程，需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源，成本很高，所以线程是一个重量级的对象，应该避免频繁创建和销毁。   进程的运行空间一般分为用户态和内核态，用户态空间一般是进程应用运行空间，而内核态空间一般是指应用需要调用系统资源，应用不能再用户态空间直接调用系统资源，需要通过内核态来系统系统资源">
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java-thread">
 <meta property="og:url" content="http://weikeqin.com/2020/06/06/java-thread/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="在Java中，创建对象，仅仅是在 JVM 的堆里分配一块内存，而创建一个线程，需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源，成本很高，所以线程是一个重量级的对象，应该避免频繁创建和销毁。">
+<meta property="og:description" content="在Java中，创建对象，仅仅是在 JVM 的堆里分配一块内存，而创建一个线程，需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源，成本很高，所以线程是一个重量级的对象，应该避免频繁创建和销毁。   进程的运行空间一般分为用户态和内核态，用户态空间一般是进程应用运行空间，而内核态空间一般是指应用需要调用系统资源，应用不能再用户态空间直接调用系统资源，需要通过内核态来系统系统资源">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-13T11:23:20.755Z">
+<meta property="og:updated_time" content="2020-06-20T09:42:28.471Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java-thread">
-<meta name="twitter:description" content="在Java中，创建对象，仅仅是在 JVM 的堆里分配一块内存，而创建一个线程，需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源，成本很高，所以线程是一个重量级的对象，应该避免频繁创建和销毁。">
+<meta name="twitter:description" content="在Java中，创建对象，仅仅是在 JVM 的堆里分配一块内存，而创建一个线程，需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源，成本很高，所以线程是一个重量级的对象，应该避免频繁创建和销毁。   进程的运行空间一般分为用户态和内核态，用户态空间一般是进程应用运行空间，而内核态空间一般是指应用需要调用系统资源，应用不能再用户态空间直接调用系统资源，需要通过内核态来系统系统资源">
 
 <link rel="canonical" href="http://weikeqin.com/2020/06/06/java-thread/">
 
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-13 19:23:20" itemprop="dateModified" datetime="2020-06-13T19:23:20+08:00">2020-06-13</time>
+                <time title="修改时间：2020-06-20 17:42:28" itemprop="dateModified" datetime="2020-06-20T17:42:28+08:00">2020-06-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,11 +281,31 @@
 
       
         <p>  在Java中，创建对象，仅仅是在 JVM 的堆里分配一块内存，而创建一个线程，需要调用操作系统内核的 API，然后操作系统要为线程分配一系列的资源，成本很高，所以线程是一个重量级的对象，应该避免频繁创建和销毁。</p>
+<p>  进程的运行空间一般分为用户态和内核态，用户态空间一般是进程应用运行空间，而内核态空间一般是指应用需要调用系统资源，应用不能再用户态空间直接调用系统资源，需要通过内核态来系统系统资源。</p>
+<p>  内核线程（Kernel-Level Thread, KLT）是由操作系统内核支持的线程，内核通过调度器对线程进行调度，并负责完成线程的切换。</p>
 <a id="more"></a>
-<p> Java 语言里，Java 线程是和操作系统线程一一对应的，这种做法本质上是将 Java 线程的调度权完全委托给操作系统，而操作系统在这方面非常成熟，所以这种做法的好处是稳定、可靠，但是也继承了操作系统线程的缺点：创建成本高。为了解决这个缺点，Java 并发包里提供了线程池等工具类。</p>
-<p> 轻量级线程。这个方案在 Java 领域知名度并不高，但是在其他编程语言里却叫得很响，例如 Go 语言、Lua 语言里的协程，本质上就是一种轻量级的线程。轻量级的线程，创建的成本很低，基本上和创建一个普通对象的成本相似；并且创建的速度和内存占用相比操作系统线程至少有一个数量级的提升，</p>
+<h1 id="操作系统线程生命周期"><a href="#操作系统线程生命周期" class="headerlink" title="操作系统线程生命周期"></a>操作系统线程生命周期</h1><h1 id="Java线程生命周期"><a href="#Java线程生命周期" class="headerlink" title="Java线程生命周期"></a>Java线程生命周期</h1><h1 id="线程实现模型"><a href="#线程实现模型" class="headerlink" title="线程实现模型"></a>线程实现模型</h1><p>  实现线程主要有三种方式：轻量级进程和内核线程一对一相互映射实现的 1:1 线程模型、用户线程和内核线程实现的 N:1 线程模型以及用户线程和轻量级进程混合实现的 N:M 线程模型。</p>
+<h1 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h1><p>  cs（上下文切换每秒次数）指标已经接近了 60w ，平时的话最高 5w。再通过日志分析，我发现了大量带有 wait() 的 Exception，由此初步怀疑是大量线程处理不及时导致的，进一步锁定问题是连接池大小设置不合理。<br>  在并发程序中，并不是启动更多的线程就能让程序最大限度地并发执行。线程数量设置太小，会导致程序不能充分地利用系统资源；线程数量设置太大，又可能带来资源的过度竞争，导致上下文切换带来额外的系统开销。</p>
+<p>  其实在单个处理器的时期，操作系统就能处理多线程并发任务。处理器给每个线程分配 CPU 时间片（Time Slice），线程在分配获得的时间片内执行任务。CPU 时间片是 CPU 分配给每个线程执行的时间段，一般为几十毫秒。在这么短的时间内线程互相切换，我们根本感觉不到，所以看上去就好像是同时进行的一样。</p>
+<p>  时间片决定了一个线程可以连续占用处理器运行的时长。当一个线程的时间片用完了，或者因自身原因被迫暂停运行了，这个时候，另外一个线程（可以是同一个线程或者其它进程的线程）就会被操作系统选中，来占用处理器。这种一个线程被暂停剥夺使用权，另外一个线程被选中开始或者继续运行的过程就叫做上下文切换（Context Switch）。</p>
+<p>  具体来说，一个线程被剥夺处理器的使用权而被暂停运行，就是“切出”；一个线程被选中占用处理器开始或者继续运行，就是“切入”。在这种切出切入的过程中，操作系统需要保存和恢复相应的进度信息，这个进度信息就是“上下文”了。</p>
+<p>  那上下文都包括哪些内容呢？具体来说，它包括了寄存器的存储内容以及程序计数器存储的指令内容。CPU 寄存器负责存储已经、正在和将要执行的任务，程序计数器负责存储 CPU 正在执行的指令位置以及即将执行的下一条指令的位置。</p>
+<p>  在当前 CPU 数量远远不止一个的情况下，操作系统将 CPU 轮流分配给线程任务，此时的上下文切换就变得更加频繁了，并且存在跨 CPU 上下文切换，比起单核上下文切换，跨核切换更加昂贵。</p>
+<p>自发性上下文切换指线程由 Java 程序调用导致切出，在多线程编程中，执行调用以下方法或关键字，常常就会引发自发性上下文切换。sleep()wait()yield()join()park()synchronizedlock</p>
+<p>  Synchronized 锁的竞争太激烈会导致锁升级为重量级锁，未抢到锁的线程会进入monitor，而monitor依赖于底层操作系统的mutex lock，获取锁时会发生用户态和内核态之间的切换，所以会发生进程间的上下文切换。</p>
+<p>很多 JVM 垃圾回收器（serial 收集器、ParNew 收集器）在回收旧对象时，会产生内存碎片，从而需要进行内存整理，在这个过程中就需要移动存活的对象。而移动内存对象就意味着这些对象所在的内存地址会发生变化，因此在移动对象前需要暂停线程，在移动完成后需要再次唤醒该线程。因此减少 JVM 垃圾回收的频率可以有效地减少上下文切换。</p>
+<h1 id="协程"><a href="#协程" class="headerlink" title="协程"></a>协程</h1><p> Java 语言里，Java 线程是和操作系统线程一一对应的，这种做法本质上是将 Java 线程的调度权完全委托给操作系统，而操作系统在这方面非常成熟，所以这种做法的好处是稳定、可靠，但是也继承了操作系统线程的缺点：创建成本高。为了解决这个缺点，Java 并发包里提供了线程池等工具类。</p>
+<p> 轻量级线程。这个方案在 Java 领域知名度并不高，但是在其他编程语言里却叫得很响，例如 Go 语言、Lua 语言里的协程，本质上就是一种轻量级的线程。轻量级的线程，创建的成本很低，基本上和创建一个普通对象的成本相似；并且创建的速度和内存占用相比操作系统线程至少有一个数量级的提升。</p>
+<p> 相比线程，协程少了由于同步资源竞争带来的 CPU 上下文切换，I/O 密集型的应用比较适合使用，特别是在网络请求中，有较多的时间在等待后端响应，协程可以保证线程不会阻塞在等待网络响应中，充分利用了多核多线程的能力。</p>
+<blockquote>
+<p> 线程是通过共享内存来实现数据共享，而协程是使用了通信的方式来实现了数据共享，主要就是为了避免内存共享数据而带来的线程安全问题。</p>
+</blockquote>
+<blockquote>
 <p> Java 语言目前也已经意识到轻量级线程的重要性了，OpenJDK 有个 Loom 项目，就是要解决 Java 语言的轻量级线程问题，在这个项目中，轻量级线程被叫做 Fiber。</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://time.geekbang.org/column/article/90771" target="_blank" rel="noopener">22 | Executor与线程池：如何创建正确的线程池？</a><br>[2] <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/Thread.html" target="_blank" rel="noopener">java-14-Thread</a><br>[3] <a href="https://blog.csdn.net/qq_27035123/article/details/77651534" target="_blank" rel="noopener">Java线程与内核线程</a><br>[4] <a href="https://www.cnblogs.com/zhangxiaoguang/p/java_os_thread.html" target="_blank" rel="noopener">Java与线程</a><br>[5] <a href="https://zhuanlan.zhihu.com/p/61892830" target="_blank" rel="noopener">深入了解JVM—-线程实现的三种方式</a><br>[6] <a href="https://time.geekbang.org/column/article/95098" target="_blank" rel="noopener">33 | Thread-Per-Message模式：最简单实用的分工方法</a></p>
+</blockquote>
+<p>  <code>Loom</code>项目里<code>Fiber</code>实现了java轻量级线程(用户态)   官网 <a href="https://wiki.openjdk.java.net/display/loom" target="_blank" rel="noopener">https://wiki.openjdk.java.net/display/loom</a> </p>
+<p>  <a href="https://github.com/kilim/kilim" target="_blank" rel="noopener">kilim</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://time.geekbang.org/column/article/90771" target="_blank" rel="noopener">22 | Executor与线程池：如何创建正确的线程池？</a><br>[2] <a href="https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/lang/Thread.html" target="_blank" rel="noopener">java-14-Thread</a><br>[3] <a href="https://blog.csdn.net/qq_27035123/article/details/77651534" target="_blank" rel="noopener">Java线程与内核线程</a><br>[4] <a href="https://www.cnblogs.com/zhangxiaoguang/p/java_os_thread.html" target="_blank" rel="noopener">Java与线程</a><br>[5] <a href="https://zhuanlan.zhihu.com/p/61892830" target="_blank" rel="noopener">深入了解JVM—-线程实现的三种方式</a><br>[6] <a href="https://time.geekbang.org/column/article/95098" target="_blank" rel="noopener">33 | Thread-Per-Message模式：最简单实用的分工方法</a><br>[7] <a href="https://time.geekbang.org/column/article/104521" target="_blank" rel="noopener">19 | 如何用协程来优化多线程业务？</a><br>[8] <a href="https://wiki.openjdk.java.net/display/loom" target="_blank" rel="noopener">loom</a><br>[9] <a href="https://github.com/kilim/kilim" target="_blank" rel="noopener">kilim</a></p>
 
     </div>
 
@@ -304,8 +324,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/06/lock/" rel="prev" title="lock">
-      <i class="fa fa-chevron-left"></i> lock
+    <a href="/2020/06/06/java-doc/" rel="prev" title="jdk-14">
+      <i class="fa fa-chevron-left"></i> jdk-14
     </a></div>
       <div class="post-nav-item">
     <a href="/2020/06/07/java-concurrent-design-pattern/" rel="next" title="java并发设计模式">
@@ -369,7 +389,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统线程生命周期"><span class="nav-number">1.</span> <span class="nav-text">操作系统线程生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java线程生命周期"><span class="nav-number">2.</span> <span class="nav-text">Java线程生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程实现模型"><span class="nav-number">3.</span> <span class="nav-text">线程实现模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上下文切换"><span class="nav-number">4.</span> <span class="nav-text">上下文切换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#协程"><span class="nav-number">5.</span> <span class="nav-text">协程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -383,20 +403,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

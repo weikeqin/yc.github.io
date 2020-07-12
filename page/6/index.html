@@ -210,6 +210,587 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/09/08/java-bytecode-enhancement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/08/java-bytecode-enhancement/" class="post-title-link" itemprop="url">字节码增强技术探索</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-08 22:56:22" itemprop="dateCreated datePublished" datetime="2019-09-08T22:56:22+08:00">2019-09-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-30 09:06:39" itemprop="dateModified" datetime="2020-06-30T09:06:39+08:00">2020-06-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/09/08/java-bytecode-enhancement/" class="post-meta-item leancloud_visitors" data-flag-title="字节码增强技术探索" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  转 <a href="https://tech.meituan.com/2019/09/05/java-bytecode-enhancement.html" target="_blank" rel="noopener">字节码增强技术探索</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$  vi HelloWorld.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javac HelloWorld.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java HelloWorld</span><br><span class="line">Hello, World!</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javap -v HelloWorld.class</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Hello, World!"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>反编译后的内容如下:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">Classfile /home/wkq/workspaces/java_test/HelloWorld.class</span><br><span class="line">  Last modified Jun 21, 2020; size 427 bytes</span><br><span class="line">  MD5 checksum 15d19d1074b862ce9cca6a8a7f6ee8fe</span><br><span class="line">  Compiled from &quot;HelloWorld.java&quot;</span><br><span class="line">public class HelloWorld</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 52</span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #6.#15         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 = Fieldref           #16.#17        // java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">   #3 = String             #18            // Hello, World!</span><br><span class="line">   #4 = Methodref          #19.#20        // java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">   #5 = Class              #21            // HelloWorld</span><br><span class="line">   #6 = Class              #22            // java/lang/Object</span><br><span class="line">   #7 = Utf8               &lt;init&gt;</span><br><span class="line">   #8 = Utf8               ()V</span><br><span class="line">   #9 = Utf8               Code</span><br><span class="line">  #10 = Utf8               LineNumberTable</span><br><span class="line">  #11 = Utf8               main</span><br><span class="line">  #12 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #13 = Utf8               SourceFile</span><br><span class="line">  #14 = Utf8               HelloWorld.java</span><br><span class="line">  #15 = NameAndType        #7:#8          // &quot;&lt;init&gt;&quot;:()V</span><br><span class="line">  #16 = Class              #23            // java/lang/System</span><br><span class="line">  #17 = NameAndType        #24:#25        // out:Ljava/io/PrintStream;</span><br><span class="line">  #18 = Utf8               Hello, World!</span><br><span class="line">  #19 = Class              #26            // java/io/PrintStream</span><br><span class="line">  #20 = NameAndType        #27:#28        // println:(Ljava/lang/String;)V</span><br><span class="line">  #21 = Utf8               HelloWorld</span><br><span class="line">  #22 = Utf8               java/lang/Object</span><br><span class="line">  #23 = Utf8               java/lang/System</span><br><span class="line">  #24 = Utf8               out</span><br><span class="line">  #25 = Utf8               Ljava/io/PrintStream;</span><br><span class="line">  #26 = Utf8               java/io/PrintStream</span><br><span class="line">  #27 = Utf8               println</span><br><span class="line">  #28 = Utf8               (Ljava/lang/String;)V</span><br><span class="line">&#123;</span><br><span class="line">  public HelloWorld();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=1, locals=1, args_size=1</span><br><span class="line">         0: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">         4: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 2: 0</span><br><span class="line"></span><br><span class="line">  public static void main(java.lang.String[]);</span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=2, locals=1, args_size=1</span><br><span class="line">         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">         3: ldc           #3                  // String Hello, World!</span><br><span class="line">         5: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">         8: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 4: 0</span><br><span class="line">        line 5: 8</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: &quot;HelloWorld.java&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos java_test]$  vi CountPlus.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javac CountPlus.java</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ java CountPlus</span><br><span class="line">2</span><br><span class="line">[wkq@VM_77_25_centos java_test]$</span><br><span class="line">[wkq@VM_77_25_centos java_test]$ javap -v CountPlus.class</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountPlus</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x = <span class="number">1</span>;</span><br><span class="line">        x++;</span><br><span class="line">        System.out.println(x);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">Classfile /home/wkq/workspaces/java_test/CountPlus.class</span><br><span class="line">  Last modified Jun 21, 2020; size 401 bytes</span><br><span class="line">  MD5 checksum a5d707b751fcd06e1c14854e84aafe07</span><br><span class="line">  Compiled from &quot;CountPlus.java&quot;</span><br><span class="line">public class CountPlus</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 52</span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #5.#14         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 = Fieldref           #15.#16        // java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">   #3 = Methodref          #17.#18        // java/io/PrintStream.println:(I)V</span><br><span class="line">   #4 = Class              #19            // CountPlus</span><br><span class="line">   #5 = Class              #20            // java/lang/Object</span><br><span class="line">   #6 = Utf8               &lt;init&gt;</span><br><span class="line">   #7 = Utf8               ()V</span><br><span class="line">   #8 = Utf8               Code</span><br><span class="line">   #9 = Utf8               LineNumberTable</span><br><span class="line">  #10 = Utf8               main</span><br><span class="line">  #11 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #12 = Utf8               SourceFile</span><br><span class="line">  #13 = Utf8               CountPlus.java</span><br><span class="line">  #14 = NameAndType        #6:#7          // &quot;&lt;init&gt;&quot;:()V</span><br><span class="line">  #15 = Class              #21            // java/lang/System</span><br><span class="line">  #16 = NameAndType        #22:#23        // out:Ljava/io/PrintStream;</span><br><span class="line">  #17 = Class              #24            // java/io/PrintStream</span><br><span class="line">  #18 = NameAndType        #25:#26        // println:(I)V</span><br><span class="line">  #19 = Utf8               CountPlus</span><br><span class="line">  #20 = Utf8               java/lang/Object</span><br><span class="line">  #21 = Utf8               java/lang/System</span><br><span class="line">  #22 = Utf8               out</span><br><span class="line">  #23 = Utf8               Ljava/io/PrintStream;</span><br><span class="line">  #24 = Utf8               java/io/PrintStream</span><br><span class="line">  #25 = Utf8               println</span><br><span class="line">  #26 = Utf8               (I)V</span><br><span class="line">&#123;</span><br><span class="line">  public CountPlus();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=1, locals=1, args_size=1</span><br><span class="line">         0: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">         4: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 1: 0</span><br><span class="line"></span><br><span class="line">  public static void main(java.lang.String[]);</span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=2, locals=2, args_size=1</span><br><span class="line">         0: iconst_1</span><br><span class="line">         1: istore_1</span><br><span class="line">         2: iinc          1, 1</span><br><span class="line">         5: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">         8: iload_1</span><br><span class="line">         9: invokevirtual #3                  // Method java/io/PrintStream.println:(I)V</span><br><span class="line">        12: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 3: 0</span><br><span class="line">        line 4: 2</span><br><span class="line">        line 5: 5</span><br><span class="line">        line 6: 12</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: &quot;CountPlus.java&quot;</span><br></pre></td></tr></table></figure>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://tech.meituan.com/2019/09/05/java-bytecode-enhancement.html" target="_blank" rel="noopener">字节码增强技术探索</a><br><a href="https://cyw3.github.io/YalesonChan/2016/Java-Byte-Code.html" target="_blank" rel="noopener">https://cyw3.github.io/YalesonChan/2016/Java-Byte-Code.html</a><br><a href="https://juejin.im/post/5aca2c366fb9a028c97a5609" target="_blank" rel="noopener">https://juejin.im/post/5aca2c366fb9a028c97a5609</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/09/08/redis-solve-what-problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/08/redis-solve-what-problem/" class="post-title-link" itemprop="url">Redis的各项功能解决了哪些问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-08 16:00:03" itemprop="dateCreated datePublished" datetime="2019-09-08T16:00:03+08:00">2019-09-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-05 23:45:02" itemprop="dateModified" datetime="2020-07-05T23:45:02+08:00">2020-07-05</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/09/08/redis-solve-what-problem/" class="post-meta-item leancloud_visitors" data-flag-title="Redis的各项功能解决了哪些问题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  <strong>Redis的各项功能解决了哪些问题？</strong></p>
+<blockquote>
+<p> 先看一下Redis是一个什么东西。官方简介解释到：Redis是一个基于BSD开源的项目，是一个把结构化的数据放在内存中的一个存储系统，你可以把它作为数据库，缓存和消息中间件来使用。同时支持strings，lists，hashes，sets，sorted sets，bitmaps，hyperloglogs和geospatial indexes等数据类型。它还内建了复制，lua脚本，LRU，事务等功能，通过redis sentinel实现高可用，通过redis cluster实现了自动分片。以及事务，发布/订阅，自动故障转移等等。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/08/redis-solve-what-problem/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/09/05/mysql-lock-table-solution/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/05/mysql-lock-table-solution/" class="post-title-link" itemprop="url">MySQL 锁表后快速解决方法 及 锁表原因</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-09-05 22:14:48" itemprop="dateCreated datePublished" datetime="2019-09-05T22:14:48+08:00">2019-09-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-19 09:37:39" itemprop="dateModified" datetime="2020-05-19T09:37:39+08:00">2020-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/09/05/mysql-lock-table-solution/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL 锁表后快速解决方法 及 锁表原因" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  前几天同事在晚上上线的时候执行sql语句造成锁表，想总结一下以避免后续发生。</p>
+<h1 id="1-遇到锁表快速解决办法"><a href="#1-遇到锁表快速解决办法" class="headerlink" title="(1)  遇到锁表快速解决办法"></a>(1)  遇到锁表快速解决办法</h1><p>　　依次执行1-6步，运行第6步生成的语句即可。</p>
+<p>　　如果特别着急，运行 1  2  6 步 以及第6步生成的kill语句 即可。  </p>
+<p>  1.　<strong> 第1步　查看表是否在使用。</strong></p>
+<blockquote>
+<p> <code>show open tables where in_use &gt; 0 ;</code><br>如果查询结果为空。则证明表没有在使用。结束。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  show open tables where in_use &gt; 0 ;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p> 如果查询结果不为空，继续后续的步骤。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  show open tables where in_use &gt; 0 ;</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">| Database | Table | In_use | Name_locked |</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">| test     | t     |      1 |           0 |</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>2.　<strong> 第2步　查看数据库当前的进程，看一下有无正在执行的慢SQL记录线程。  </strong></p>
+<blockquote>
+<p> <code>show  processlist;</code><br> show processlist 是显示用户正在运行的线程，需要注意的是，除了 root 用户能看到所有正在运行的线程外，其他用户都只能看到自己正在运行的线程，看不到其它用户正在运行的线程。<br> SHOW PROCESSLIST shows which threads are running. If you have the PROCESS privilege, you can see all threads. Otherwise, you can see only your own threads (that is, threads associated with the MySQL account that you are using). If you do not use the FULL keyword, only the first 100 characters of each statement are shown in the Info field.</p>
+</blockquote>
+<p>3.　<strong> 第3步　当前运行的所有事务  </strong></p>
+<blockquote>
+<p><code>SELECT * FROM information_schema.INNODB_TRX;</code></p>
+</blockquote>
+<p>4.　<strong> 第4步　当前出现的锁  </strong></p>
+<blockquote>
+<p><code>SELECT * FROM information_schema.INNODB_LOCKs;</code></p>
+</blockquote>
+<p>5.　<strong> 第5步　锁等待的对应关系 </strong></p>
+<blockquote>
+<p><code>SELECT * FROM information_schema.INNODB_LOCK_waits;</code><br> 看事务表INNODB_TRX，里面是否有正在锁定的事务线程，看看ID是否在show processlist里面的sleep线程中，如果是，就证明这个sleep的线程事务一直没有commit或者rollback而是卡住了，我们需要手动kill掉。<br> 搜索的结果是在事务表发现了很多任务，这时候最好都kill掉。</p>
+</blockquote>
+<p>6.　<strong> 第6步　批量删除事务表中的事务 </strong></p>
+<blockquote>
+<p> 这里用的方法是：通过information_schema.processlist表中的连接信息生成需要处理掉的MySQL连接的语句临时文件，然后执行临时文件中生成的指令。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">concat</span>(<span class="string">'KILL '</span>,<span class="keyword">id</span>,<span class="string">';'</span>) </span><br><span class="line"><span class="keyword">FROM</span> information_schema.processlist p </span><br><span class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span>  information_schema.INNODB_TRX x </span><br><span class="line"><span class="keyword">ON</span> p.id=x.trx_mysql_thread_id </span><br><span class="line"><span class="keyword">WHERE</span> db=<span class="string">'test'</span>;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p> 记得修改对应的数据库名。</p>
+</blockquote>
+<blockquote>
+<p> 这个语句执行后结果如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  SELECT concat('KILL ',id,';')  FROM information_schema.processlist p  INNER JOIN  information_schema.INNODB_TRX x  ON p.id=x.trx_mysql_thread_id  WHERE db='test';</span><br><span class="line">+<span class="comment">------------------------+</span></span><br><span class="line">| concat('<span class="keyword">KILL</span> <span class="string">',id,'</span>;') |</span><br><span class="line">+<span class="comment">------------------------+</span></span><br><span class="line">| <span class="keyword">KILL</span> <span class="number">42</span>;               |</span><br><span class="line">| <span class="keyword">KILL</span> <span class="number">40</span>;               |</span><br><span class="line">+<span class="comment">------------------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p> 执行结果里的两个kill语句即可解决锁表。</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/05/mysql-lock-table-solution/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/18/java-core-technology-36-lectures/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/18/java-core-technology-36-lectures/" class="post-title-link" itemprop="url">Java核心技术36讲 杨晓峰</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-18 12:31:03" itemprop="dateCreated datePublished" datetime="2019-08-18T12:31:03+08:00">2019-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-19 13:25:53" itemprop="dateModified" datetime="2019-10-19T13:25:53+08:00">2019-10-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/08/18/java-core-technology-36-lectures/" class="post-meta-item leancloud_visitors" data-flag-title="Java核心技术36讲 杨晓峰" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  转自 <a href="https://time.geekbang.org/column/article/6478" target="_blank" rel="noopener">Java核心技术36讲 杨晓峰</a></p>
+<h1 id="第1讲-谈谈你对Java平台的理解？"><a href="#第1讲-谈谈你对Java平台的理解？" class="headerlink" title="第1讲 | 谈谈你对Java平台的理解？"></a>第1讲 | 谈谈你对Java平台的理解？</h1><!--2019-08-20学习-->
+<p>模块一 Java基础 (14讲)</p>
+<p><a href="https://time.geekbang.org/column/article/6845" target="_blank" rel="noopener">第1讲 | 谈谈你对Java平台的理解？</a></p>
+<p>  谈谈你对 Java 平台的理解？“Java 是解释执行”，这句话正确吗？</p>
+<p>  Java 本身是一种面向对象的语言，最显著的特性有两个方面，一是所谓的“书写一次，到处运行”（Write once, run anywhere），能够非常容易地获得跨平台能力；另外就是 垃圾收集 （GC, Garbage Collection），Java 通过垃圾收集器（Garbage Collector）回收分配内存，大部分情况下，程序员不需要自己操心内存的分配和回收。  </p>
+<p>  我们日常会接触到 JRE（Java Runtime Environment）或者 JDK（Java Development Kit）。 JRE，也就是 Java 运行环境，包含了 JVM 和 Java 类库，以及一些模块等。而 JDK 可以看作是 JRE 的一个超集，提供了更多工具，比如编译器、各种诊断工具等。</p>
+<p>  对于“Java 是解释执行”这句话，这个说法不太准确。我们开发的 Java 的源代码，首先通过 Javac 编译成为字节码（bytecode），然后，在运行时，通过 Java 虚拟机（JVM）内嵌的解释器将字节码转换成为最终的机器码。但是常见的 JVM，比如我们大多数情况使用的 Oracle JDK 提供的 Hotspot JVM，都提供了 JIT（Just-In-Time）编译器，也就是通常所说的动态编译器，JIT 能够在运行时将热点代码编译成机器码，这种情况下部分热点代码就属于</p>
+<p>  对于 Java 平台的理解，可以从很多方面简明扼要地谈一下，例如：Java 语言特性，包括泛型、Lambda 等语言特性；基础类库，包括集合、IO/NIO、网络、并发、安全等基础类库。对于我们日常工作应用较多的类库，面试前可以系统化总结一下，有助于临场发挥。</p>
+<p>  或者谈谈 JVM 的一些基础概念和机制，比如 Java 的类加载机制，常用版本 JDK（如 JDK 8）内嵌的 Class-Loader，例如 Bootstrap、 Application 和 Extension Class-loader；类加载大致过程：加载、验证、链接、初始化（这里参考了周志明的《深入理解 Java 虚拟机》，非常棒的 JVM 上手书籍）；自定义 Class-Loader 等。还有垃圾收集的基本原理，最常见的垃圾收集器，如 SerialGC、Parallel GC、 CMS、 G1 等，对于适用于什么样的工作负载最好也心里有数。这些都是可以扩展开的领域，我会在后面的专栏对此进行更系统的介绍。</p>
+<p>  当然还有 JDK 包含哪些工具或者 Java 领域内其他工具等，如编译器、运行时环境、安全工具、诊断和监控工具等。这些基本工具是日常工作效率的保证，对于我们工作在其他语言平台上，同样有所帮助，很多都是触类旁通的。</p>
+<p>Java特性:<br>  面向对象（封装，继承，多态）<br>  平台无关性（JVM运行.class文件）<br>  语言（泛型，Lambda）<br>  类库（集合，并发，网络，IO/NIO）<br>  JRE（Java运行环境，JVM，类库）<br>  JDK（Java开发工具，包括JRE，javac，诊断工具）</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/18/java-core-technology-36-lectures/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/18/orientdb-config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/18/orientdb-config/" class="post-title-link" itemprop="url">orientdb-config</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-18 12:21:18" itemprop="dateCreated datePublished" datetime="2019-08-18T12:21:18+08:00">2019-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-19 09:06:29" itemprop="dateModified" datetime="2019-08-19T09:06:29+08:00">2019-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/orientdb/" itemprop="url" rel="index"><span itemprop="name">orientdb</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/08/18/orientdb-config/" class="post-meta-item leancloud_visitors" data-flag-title="orientdb-config" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  orientdb配置</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/18/orientdb-config/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/18/java-jdbc-prepared-statement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/08/18/java-jdbc-prepared-statement/" class="post-title-link" itemprop="url">java-jdbc-prepared-statement</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-18 10:59:41" itemprop="dateCreated datePublished" datetime="2019-08-18T10:59:41+08:00">2019-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-19 09:06:29" itemprop="dateModified" datetime="2019-08-19T09:06:29+08:00">2019-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/08/18/java-jdbc-prepared-statement/" class="post-meta-item leancloud_visitors" data-flag-title="java-jdbc-prepared-statement" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  在写neo4j和orientdb的通用方法时，忽然想到jdbc，然后就想试试mysql neo4j orientdb几个数据库jdbc连接方式里的 prepartdStatement一不一样。</p>
+<p>  问题的来源来自以下代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Map&lt;String, Object&gt;&gt; list = <span class="keyword">new</span> ArrayList();</span><br><span class="line"><span class="keyword">try</span> (PreparedStatement pst = conn.prepareStatement(sql);</span><br><span class="line">     ResultSet rs = pst.executeQuery();) &#123;</span><br><span class="line"></span><br><span class="line">    List&lt;String&gt; fields = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">while</span> (rs.next()) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (fields.isEmpty()) &#123;</span><br><span class="line">            ResultSetMetaData metaData = rs.getMetaData();</span><br><span class="line">            <span class="comment">// 查询出的字段</span></span><br><span class="line">            <span class="keyword">int</span> count = metaData.getColumnCount();</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i++) &#123;</span><br><span class="line">                fields.add(metaData.getColumnName(i));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (String field : fields) &#123;</span><br><span class="line">            map.put(field, rs.getObject(field));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// T r =  JSONObject.parseObject(JSON.toString(map), Object.class);</span></span><br><span class="line">        list.add(map);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/18/java-jdbc-prepared-statement/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/08/18/java-concurrent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -509,7 +1090,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-21 09:31:24" itemprop="dateModified" datetime="2019-08-21T09:31:24+08:00">2019-08-21</time>
+                <time title="修改时间：2020-06-22 18:42:31" itemprop="dateModified" datetime="2020-06-22T18:42:31+08:00">2020-06-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -541,640 +1122,10 @@
       
           <p>  转自 <a href="https://mp.weixin.qq.com/s/Gq8ABlEVolLW3wJ7vsSSFw" target="_blank" rel="noopener">漫画：一文学会面试中常问的 IO 问题！</a></p>
 <p>  什么是BIO、NIO和AIO？三者有什么区别？具体如何使用?</p>
-<p>  输入/输出是信息处理系统（例如计算机）与外部世界（可能是人类或另一信息处理系统）之间的通信。</p>
-<p>  输入是系统接收的信号或数据，输出则是从其发送的信号或数据。</p>
-<p>  在Java中，提供了一些列API，可以供开发者来读写外部数据或文件。我们称这些API为Java IO。</p>
-<p>  IO是Java中比较重要，且比较难的知识点，主要是因为随着Java的发展，目前有三种IO共存。分别是BIO、NIO和AIO。</p>
+<p>  IO是Java中比较重要，且比较难的知识点，主要是因为随着Java的发展，目前有三种IO共存。分别是 BIO、NIO 和 AIO。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/07/08/java-bio-nio-aio/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/03/rest-vs-rpc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/03/rest-vs-rpc/" class="post-title-link" itemprop="url">REST VS RPC</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-03 20:31:58" itemprop="dateCreated datePublished" datetime="2019-07-03T20:31:58+08:00">2019-07-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-03 13:51:29" itemprop="dateModified" datetime="2020-05-03T13:51:29+08:00">2020-05-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/07/03/rest-vs-rpc/" class="post-meta-item leancloud_visitors" data-flag-title="REST VS RPC" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> 小型的项目用什么语言都行，爱用什么用什么。但是，真正的企业级架构就不一样了，其中并不仅仅只是 RESTful API 或 RPC，还有各种配套设施和控制系统，比如：应用网关，服务发现、配置中心、健康检查、服务监控、服务治理（熔断、限流、幂等、重试、隔离、事务补偿）、Tracing监控、SOA/ESB、CQRS、EDA……</p>
-</blockquote>
-<p>  本文不会告诉你必须用什么，但是会告诉你两者的优缺点。</p>
-<p>  rest 以 springcloud为例，rpc以dubbo为例。</p>
-<blockquote>
-<p> 从性能上来讲，在数据量小（单个请求小于20K）并发大的场景下，rpc的性能比restful api的性能要好。<br> 从上手、使用、维护 方面来说，springcloud更容易上手、维护。</p>
-</blockquote>
-<p>各组件配置使用运行流程：<br>  1、请求统一通过API网关（Zuul）来访问内部服务.<br>  2、网关接收到请求后，从注册中心（Eureka）获取可用服务<br>  3、由Ribbon进行均衡负载后，分发到后端具体实例<br>  4、微服务之间通过Feign进行通信处理业务<br>  5、Hystrix负责处理服务超时熔断<br>  6、Turbine监控服务间的调用和熔断相关指标</p>
-<p>  springcloud提供了微服务所需的全套组件，降低了架构和开发成本，解决了微服务的多个痛点问题。具体如下：</p>
-<ol>
-<li>注册中心</li>
-<li>配置中心</li>
-<li>服务间的调用方式</li>
-<li>链路追踪</li>
-<li>服务的限流、降级、熔断</li>
-</ol>
-<p>   如果使用dubbo，配置中心、分布式跟踪这些内容都需要自己去集成，无形中增加了难度。</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/kobejayandy/article/details/52078275" target="_blank" rel="noopener">微服务架构的基础框架选择：Spring Cloud还是Dubbo？</a><br>[2] <a href="https://blog.csdn.net/u010664947/article/details/80007767" target="_blank" rel="noopener">比较spring cloud和dubbo，各自的优缺点是什么</a><br>[3] <a href="http://www.ityouknow.com/springcloud/2017/10/19/micro-service-practice.html" target="_blank" rel="noopener">中小型互联网公司微服务实践-经验和教训</a><br>[4] <a href="https://www.zhihu.com/question/269983910" target="_blank" rel="noopener">SpringBoot和SpringCloud为什么会那么火？对开发有哪些帮助？</a><br>[5] <a href="https://blog.csdn.net/u010963948/article/details/78488045" target="_blank" rel="noopener">项目中为什么首先spring cloud，而不是dubbo</a><br>[6] <a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">Microservices-微服务原文</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/07/03/springcloud-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/07/03/springcloud-notes/" class="post-title-link" itemprop="url">springcloud笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-07-03 20:31:58" itemprop="dateCreated datePublished" datetime="2019-07-03T20:31:58+08:00">2019-07-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-03 13:56:52" itemprop="dateModified" datetime="2020-05-03T13:56:52+08:00">2020-05-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/07/03/springcloud-notes/" class="post-meta-item leancloud_visitors" data-flag-title="springcloud笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>各组件配置使用运行流程：<br>  1、请求统一通过API网关（Zuul）来访问内部服务.<br>  2、网关接收到请求后，从注册中心（Eureka）获取可用服务<br>  3、由Ribbon进行均衡负载后，分发到后端具体实例<br>  4、微服务之间通过Feign进行通信处理业务<br>  5、Hystrix负责处理服务超时熔断<br>  6、Turbine监控服务间的调用和熔断相关指标</p>
-<p>  springcloud提供了微服务所需的全套组件，降低了架构和开发成本，解决了微服务的多个痛点问题。具体如下：</p>
-<ol>
-<li>注册中心</li>
-<li>配置中心</li>
-<li>服务间的调用方式</li>
-<li>链路追踪</li>
-<li>服务的限流、降级、熔断</li>
-</ol>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://spring.io/projects/spring-cloud" target="_blank" rel="noopener">spring-cloud</a><br>[2] <a href="https://www.springcloud.cc/" target="_blank" rel="noopener">springcloud中文网</a><br>[3] <a href="http://www.ityouknow.com/springcloud/2017/05/01/simple-springcloud.html" target="_blank" rel="noopener">springcloud(一)：大话Spring Cloud-纯洁的微笑</a><br>[4] <a href="https://blog.csdn.net/forezp/article/details/70148833" target="_blank" rel="noopener">史上最简单的 SpringCloud 教程 | 终章-方志朋</a><br>[5] <a href="http://blog.didispace.com/spring-cloud-learning/" target="_blank" rel="noopener">Spring Cloud 从入门到精通</a><br>[6] <a href="http://springcloud.cn/" target="_blank" rel="noopener">Spring Cloud中国社区</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/06/30/orientdb-sql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/06/30/orientdb-sql/" class="post-title-link" itemprop="url">orientdb 常用语句</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-06-30 21:33:50" itemprop="dateCreated datePublished" datetime="2019-06-30T21:33:50+08:00">2019-06-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-28 10:13:26" itemprop="dateModified" datetime="2019-10-28T10:13:26+08:00">2019-10-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/orientdb/" itemprop="url" rel="index"><span itemprop="name">orientdb</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/06/30/orientdb-sql/" class="post-meta-item leancloud_visitors" data-flag-title="orientdb 常用语句" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  orientdb启动后可以在 <a href="http://localhost:2480" target="_blank" rel="noopener">http://localhost:2480</a> 打开前端管理界面操作，也可以在shell里操作</p>
-<p>  orientdb的很多语句很像mysql和neo4j，学习的时候可以用来对比</p>
-<h1 id="常用语句"><a href="#常用语句" class="headerlink" title="常用语句"></a>常用语句</h1><table>
-<thead>
-<tr>
-<th style="text-align:left"></th>
-<th style="text-align:left">orientdb</th>
-<th style="text-align:left">mysql</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">连接数据库</td>
-<td style="text-align:left">CONNECT remote:127.0.0.1 root root</td>
-<td style="text-align:left">mysql -u root -p root</td>
-</tr>
-<tr>
-<td style="text-align:left">查看所有数据库</td>
-<td style="text-align:left">LIST DATABASES</td>
-<td style="text-align:left">show databases</td>
-</tr>
-<tr>
-<td style="text-align:left">创建数据库</td>
-<td style="text-align:left">CREATE DATABASE remote:127.0.0.1/db_test_wkq root root</td>
-<td style="text-align:left">create database db_test_wkq</td>
-</tr>
-<tr>
-<td style="text-align:left">使用某个数据库</td>
-<td style="text-align:left">CONNECT remote:127.0.0.1/db_test_wkq root root</td>
-<td style="text-align:left">use db_test_wkq</td>
-</tr>
-<tr>
-<td style="text-align:left">查询节点类型(表)个数</td>
-<td style="text-align:left">LIST CLASSES <br>  select expand(classes) from metadata:schema</td>
-<td style="text-align:left">show tables</td>
-</tr>
-<tr>
-<td style="text-align:left">创建某类节点</td>
-<td style="text-align:left">CREATE CLASS TestVertex extends V</td>
-<td style="text-align:left">create table table1</td>
-</tr>
-<tr>
-<td style="text-align:left">查看某个类型的结构</td>
-<td style="text-align:left">INFO CLASS OUser</td>
-<td style="text-align:left">desc table1</td>
-</tr>
-<tr>
-<td style="text-align:left">查看某个类型的数据</td>
-<td style="text-align:left">BROWSE CLASS OUser</td>
-<td style="text-align:left">select <code>*</code> from OUser limit 20</td>
-</tr>
-</tbody>
-</table>
-<pre><code>CREATE DATABASE &lt;database-url&gt; [&lt;user&gt;] [&lt;password&gt;] [&lt;storage-type&gt;] [&lt;db-type&gt;] [&lt;[options]&gt;]
-</code></pre><p>创建数据库 CREATE DATABASE PLOCAL:/usr/local/orientdb/databases/db_test_wkq<br>         CREATE DATABASE remote:127.0.0.1/db_test_wkq root root  plocal  graph</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/06/30/orientdb-sql/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/06/01/jvm-class-loader/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/06/01/jvm-class-loader/" class="post-title-link" itemprop="url">JVM类加载机制</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-06-01 12:52:34" itemprop="dateCreated datePublished" datetime="2019-06-01T12:52:34+08:00">2019-06-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-05 22:34:17" itemprop="dateModified" datetime="2020-06-05T22:34:17+08:00">2020-06-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/06/01/jvm-class-loader/" class="post-meta-item leancloud_visitors" data-flag-title="JVM类加载机制" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> 首先问几个问题<br> JVM类加载机制解决了什么问题？<br> JVM类加载机制的过程？<br> Java的代码如果要加密不让别人获取到有什么办法？<br> Spring是怎么找到加了@Component等注解的类? </p>
-</blockquote>
-<h1 id="1-JVM加载class过程"><a href="#1-JVM加载class过程" class="headerlink" title="(1) JVM加载class过程"></a>(1) JVM加载class过程</h1><blockquote>
-<p> 一个类型从被加载到虚拟机内存中开始，到卸载出内存为止，它的整个生命周期将会经历加载(Loading)、验证(Verification)、准备(Preparation)、解析(Resolution)、初始化(Initialization)、使用(Using)和卸载(Unloading)七个阶段。</p>
-<p> 其中验证、准备、解析三个部分统称为连接(Linking)。</p>
-<p> 加载、验证、准备、初始化和卸载这五个阶段的顺序是确定，而解析阶段则不一定：它在某些情况下可以在初始化阶段之后再开始。</p>
-</blockquote>
-<h2 id="1-1-加载"><a href="#1-1-加载" class="headerlink" title="(1.1) 加载"></a>(1.1) 加载</h2><blockquote>
-<p> 在加载阶段，Java虚拟机需要完成以下三件事情：</p>
-<ol>
-<li>通过一个类的全限定名来获取定义此类的二进制字节流。</li>
-<li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构。</li>
-<li>在内存中生成一个代表这个类的 java.lang.Class 对象，作为方法区这个类的各种数据的访问入口。</li>
-</ol>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/06/01/jvm-class-loader/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/05/13/seckill-system/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/13/seckill-system/" class="post-title-link" itemprop="url">秒杀系统</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-13 19:51:49" itemprop="dateCreated datePublished" datetime="2019-05-13T19:51:49+08:00">2019-05-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-01 12:05:58" itemprop="dateModified" datetime="2020-05-01T12:05:58+08:00">2020-05-01</time>
-              </span>
-
-          
-            <span id="/2019/05/13/seckill-system/" class="post-meta-item leancloud_visitors" data-flag-title="秒杀系统" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="秒杀系统"><a href="#秒杀系统" class="headerlink" title="秒杀系统"></a>秒杀系统</h1><p>  秒杀其实主要解决两个问题，一个是并发读，一个是并发写</p>
-<p>  并发读的核心优化理念是尽量减少用户到服务端来“读”数据，或者让他们读更少的数据；并发写的处理原则也一样，它要求我们在数据库层面独立出来一个库，做特殊的处理。另外，我们还要针对秒杀系统做一些保护，针对意料之外的情况设计兜底方案，以防止最坏的情况发生。</p>
-<p>  所谓“稳”，就是整个系统架构要满足高可用，流量符合预期时肯定要稳定，就是超出预期时也同样不能掉链子，你要保证秒杀活动顺利完成，即秒杀商品顺利地卖出去，这个是最基本的前提。<br>  然后就是“准”，就是秒杀 10 台 iPhone，那就只能成交 10 台，多一台少一台都不行。一旦库存不对，那平台就要承担损失，所以“准”就是要求保证数据的一致性。<br>  最后再看“快”，“快”其实很好理解，它就是说系统的性能要足够高，否则你怎么支撑这么大的流量呢？不光是服务端要做极致的性能优化，而且在整个请求链路上都要做协同的优化，每个地方快一点，整个系统就完美了。</p>
-<p>所以从技术角度上看“稳、准、快”，就对应了我们架构上的高可用、一致性和高性能的要求，我们的专栏也将主要围绕这几个方面来展开，具体如下。<br>  秒杀涉及大量的并发读和并发写，因此支持高并发访问这点非常关键。本专栏将从设计数据的动静分离方案、热点的发现与隔离、请求的削峰与分层过滤、服务端的极致优化这 4 个方面重点介绍。<br>  秒杀中商品减库存的实现方式同样关键。可想而知，有限数量的商品在同一时刻被很多倍的请求同时来减库存，减库存又分为“拍下减库存”“付款减库存”以及预扣等几种，在大并发更新的过程中都要保证数据的准确性，其难度可想而知。因此，我将用一篇文章来专门讲解如何设计秒杀减库存方案。<br>  虽然我介绍了很多极致的优化思路，但现实中总难免出现一些我们考虑不到的情况，所以要保证系统的高可用和正确性，我们还要设计一个 PlanB 来兜底，以便在最坏情况发生时仍然能够从容应对。专栏的最后，我将带你思考可以从哪些环节来设计兜底方案。</p>
-<h1 id="架构原则"><a href="#架构原则" class="headerlink" title="架构原则"></a>架构原则</h1><p>  架构原则：“4 要 1 不要”</p>
-<h2 id="1-数据要尽量少"><a href="#1-数据要尽量少" class="headerlink" title="1. 数据要尽量少"></a>1. 数据要尽量少</h2><p>  为啥“数据要尽量少”呢？<br>  1) 数据在网络上传输需要时间<br>  2) 不管是请求数据还是返回数据都需要服务器做处理<br>  3) 服务器在写网络时通常都要做压缩和字符编码，这些都非常消耗 CPU<br>  所以减少传输的数据量可以显著减少 CPU 的使用。</p>
-<p>  例如，我们可以简化秒杀页面的大小，去掉不必要的页面装修效果，等等。<br>  其次，“数据要尽量少”还要求系统依赖的数据能少就少，包括系统完成某些业务逻辑需要读取和保存的数据，这些数据一般是和后台服务以及数据库打交道的。调用其他服务会涉及数据的序列化和反序列化，而这也是 CPU 的一大杀手，同样也会增加延时。而且，数据库本身也容易成为一个瓶颈，所以和数据库打交道越少越好，数据越简单、越小则越好。</p>
-<h2 id="2-请求数要尽量少"><a href="#2-请求数要尽量少" class="headerlink" title="2. 请求数要尽量少"></a>2. 请求数要尽量少</h2><p>  用户请求的页面返回后，浏览器渲染这个页面还要包含其他的额外请求，比如说，这个页面依赖的 CSS/JavaScript、图片，以及 Ajax 请求等等都定义为“额外请求”，这些额外请求应该尽量少。因为浏览器每发出一个请求都多少会有一些消耗，例如建立连接要做三次握手，有的时候有页面依赖或者连接数限制，一些请求（例如 JavaScript）还需要串行加载等。另外，如果不同请求的域名不一样的话，还涉及这些域名的 DNS 解析，可能会耗时更久。所以你要记住的是，减少请求数可以显著减少以上这些因素导致的资源消耗。</p>
-<p>  例如，减少请求数最常用的一个实践就是合并 CSS 和 JavaScript 文件，把多个 JavaScript 文件合并成一个文件，在 URL 中用逗号隔开（??module-preview/index.xtpl.js,module-jhs/index.xtpl.js,module-focus/index.xtpl.js）。这种方式在服务端仍然是单个文件各自存放，只是服务端会有一个组件解析这个 URL，然后动态把这些文件合并起来一起返回。  </p>
-<h2 id="3-路径要尽量短-调用链"><a href="#3-路径要尽量短-调用链" class="headerlink" title="3. 路径要尽量短(调用链)"></a>3. 路径要尽量短(调用链)</h2><p>  所谓“路径”，就是用户发出请求到返回数据这个过程中，需求经过的中间的节点数。</p>
-<p>  通常，这些节点可以表示为一个系统或者一个新的 Socket 连接（比如代理服务器只是创建一个新的 Socket 连接来转发请求）。每经过一个节点，一般都会产生一个新的 Socket 连接。</p>
-<p>  所以缩短请求路径不仅可以增加可用性，同样可以有效提升性能（减少中间节点可以减少数据的序列化与反序列化），并减少延时（可以减少网络传输耗时）。</p>
-<p>  要缩短访问路径有一种办法，就是多个相互强依赖的应用合并部署在一起，把远程过程调用（RPC）变成 JVM 内部之间的方法调用。在《大型网站技术架构演进与性能优化》一书中，我也有一章介绍了这种技术的详细实现。</p>
-<h2 id="4-依赖要尽量少"><a href="#4-依赖要尽量少" class="headerlink" title="4. 依赖要尽量少"></a>4. 依赖要尽量少</h2><p>  所谓依赖，指的是要完成一次用户请求必须依赖的系统或者服务，这里的依赖指的是强依赖。</p>
-<p>  举个例子，比如说你要展示秒杀页面，而这个页面必须强依赖商品信息、用户信息，还有其他如优惠券、成交列表等这些对秒杀不是非要不可的信息（弱依赖），这些弱依赖在紧急情况下就可以去掉。</p>
-<p>  要减少依赖，我们可以给系统进行分级，比如 0 级系统、1 级系统、2 级系统、3 级系统，0 级系统如果是最重要的系统，那么 0 级系统强依赖的系统也同样是最重要的系统，以此类推。</p>
-<p>  注意，0 级系统要尽量减少对 1 级系统的强依赖，防止重要的系统被不重要的系统拖垮。例如支付系统是 0 级系统，而优惠券是 1 级系统的话，在极端情况下可以把优惠券给降级，防止支付系统被优惠券这个 1 级系统给拖垮。</p>
-<h2 id="5-不要有单点"><a href="#5-不要有单点" class="headerlink" title="5. 不要有单点"></a>5. 不要有单点</h2><p>  系统中的单点可以说是系统架构上的一个大忌，因为单点意味着没有备份，风险不可控，我们设计分布式系统最重要的原则就是“消除单点”。</p>
-<p>  那如何避免单点呢？我认为关键点是避免将服务的状态和机器绑定，即把服务无状态化，这样服务就可以在机器中随意移动。</p>
-<p>  把秒杀系统独立出来单独打造一个系统，这样可以有针对性地做优化，例如这个独立出来的系统就减少了店铺装修的功能，减少了页面的复杂度；<br>  在系统部署上也独立做一个机器集群，这样秒杀的大流量就不会影响到正常的商品购买集群的机器负载；<br>  将热点数据（如库存数据）单独放到一个缓存系统中，以提高“读性能”；<br>  增加秒杀答题，防止有秒杀器抢单。</p>
-<p>  例如秒杀的场景来说，不同QPS量级下瓶颈也会不一样，<br>  10w级别可能瓶颈就在数据读取上，通过增加缓存一般就能解决，<br>  如果要到100w那么，可能服务端的网络可能都是瓶颈，所以要把大部分的静态数据放到cdn上甚至缓存在浏览器里<br>  所以要做架构升级，还是主要要分析在预估的QPS下，整个系统的瓶颈会在什么地方，要针对这起瓶颈来重新设计架构方案</p>
-<p>  详情、购物车、交易、优惠、库存、物流</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[0] <a href="https://time.geekbang.org/column/article/40153" target="_blank" rel="noopener">开篇词 | 秒杀系统架构设计都有哪些关键点？</a><br>[1] <a href="https://time.geekbang.org/column/article/40726" target="_blank" rel="noopener">01 | 设计秒杀系统时应该注意的5个架构原则</a><br>[2] <a href="https://time.geekbang.org/column/article/40727" target="_blank" rel="noopener">02 | 如何才能做好动静分离？有哪些方案可选？</a><br>[3] <a href="https://time.geekbang.org/column/article/40729" target="_blank" rel="noopener">03 | 二八原则：有针对性地处理好系统的“热点数据”</a><br>[4] <a href="https://time.geekbang.org/column/article/40736" target="_blank" rel="noopener">04 | 流量削峰这事应该怎么做？</a><br>[5] <a href="https://time.geekbang.org/column/article/40742" target="_blank" rel="noopener">05 | 影响性能的因素有哪些？又该如何提高系统的性能？</a><br>[6] <a href="https://time.geekbang.org/column/article/40743" target="_blank" rel="noopener">06 | 秒杀系统“减库存”设计的核心逻辑</a><br>[7] <a href="https://time.geekbang.org/column/article/40744" target="_blank" rel="noopener">07 | 准备Plan B：如何设计兜底方案?</a><br>[8] <a href="https://time.geekbang.org/column/article/68247" target="_blank" rel="noopener">08 | 答疑解惑：缓存失效的策略应该怎么定？</a><br>[9] 《大型网站技术架构演进》</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/05/06/mysql-order-by/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/06/mysql-order-by/" class="post-title-link" itemprop="url">MySQL order by 原理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-06 07:00:03" itemprop="dateCreated datePublished" datetime="2019-05-06T07:00:03+08:00">2019-05-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-19 09:06:29" itemprop="dateModified" datetime="2019-08-19T09:06:29+08:00">2019-08-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/05/06/mysql-order-by/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL order by 原理" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  转自 <a href="https://time.geekbang.org/column/article/73479" target="_blank" rel="noopener">16 | “order by”是怎么工作的？</a></p>
-<h1 id="16-“order-by”是怎么工作的？"><a href="#16-“order-by”是怎么工作的？" class="headerlink" title="16 “order by”是怎么工作的？"></a>16 “order by”是怎么工作的？</h1><p>  <code>select city,name,age from t where city=&#39;杭州&#39; order by name limit 1000  ;</code> </p>
-<h2 id="全字段排序"><a href="#全字段排序" class="headerlink" title="全字段排序"></a>全字段排序</h2><p>  以我们前面举例用过的市民表为例，假设你要查询城市是“杭州”的所有人名字，并且按照姓名排序返回前 1000 个人的姓名、年龄。</p>
-<p>  Extra 这个字段中的“Using filesort”表示的就是需要排序，MySQL 会给每个线程分配一块内存用于排序，称为 sort_buffer。</p>
-<p>  通常情况下，这个语句执行流程如下所示 ：</p>
-<p>  1.初始化 sort_buffer，确定放入 name、city、age 这三个字段；</p>
-<p>  2.从索引 city 找到第一个满足 city=’杭州’条件的主键 id，也就是图中的 ID_X；</p>
-<p>  3.到主键 id 索引取出整行，取 name、city、age 三个字段的值，存入 sort_buffer 中；</p>
-<p>  4.从索引 city 取下一个记录的主键 id；</p>
-<p>  5.重复步骤 3、4 直到 city 的值不满足查询条件为止，对应的主键 id 也就是图中的 ID_Y；</p>
-<p>  6.对 sort_buffer 中的数据按照字段 name 做快速排序；</p>
-<p>  7.按照排序结果取前 1000 行返回给客户端。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/05/06/mysql-order-by/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1263,20 +1214,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

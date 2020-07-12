@@ -20,15 +20,18 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="keywords" content="lock">
+  <meta name="description" content="Java中的锁偏向锁  偏向锁主要用来优化同一线程多次申请同一个锁的竞争。    在某些情况下，大部分时间是同一个线程竞争锁资源。  例如，在创建一个线程并在线程中执行循环监听的场景下，或单线程操作一个线程安全集合时，同一线程每次都需要获取和释放锁，每次操作都会发生用户态与内核态的切换。偏向锁的作用就是，当一个线程再次访问这个同步代码或方法时，该线程只需去对象头的 Mark Word 中去判断一">
+<meta name="keywords" content="lock">
 <meta property="og:type" content="article">
 <meta property="og:title" content="lock">
 <meta property="og:url" content="http://weikeqin.com/2020/06/06/lock/index.html">
 <meta property="og:site_name" content="沧海一粟">
+<meta property="og:description" content="Java中的锁偏向锁  偏向锁主要用来优化同一线程多次申请同一个锁的竞争。    在某些情况下，大部分时间是同一个线程竞争锁资源。  例如，在创建一个线程并在线程中执行循环监听的场景下，或单线程操作一个线程安全集合时，同一线程每次都需要获取和释放锁，每次操作都会发生用户态与内核态的切换。偏向锁的作用就是，当一个线程再次访问这个同步代码或方法时，该线程只需去对象头的 Mark Word 中去判断一">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-14T15:35:34.884Z">
+<meta property="og:updated_time" content="2020-06-20T03:21:17.482Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lock">
+<meta name="twitter:description" content="Java中的锁偏向锁  偏向锁主要用来优化同一线程多次申请同一个锁的竞争。    在某些情况下，大部分时间是同一个线程竞争锁资源。  例如，在创建一个线程并在线程中执行循环监听的场景下，或单线程操作一个线程安全集合时，同一线程每次都需要获取和释放锁，每次操作都会发生用户态与内核态的切换。偏向锁的作用就是，当一个线程再次访问这个同步代码或方法时，该线程只需去对象头的 Mark Word 中去判断一">
 
 <link rel="canonical" href="http://weikeqin.com/2020/06/06/lock/">
 
@@ -240,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-14 23:35:34" itemprop="dateModified" datetime="2020-06-14T23:35:34+08:00">2020-06-14</time>
+                <time title="修改时间：2020-06-20 11:21:17" itemprop="dateModified" datetime="2020-06-20T11:21:17+08:00">2020-06-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -278,6 +281,34 @@
 
       
         <a id="more"></a>
+<h1 id="Java中的锁"><a href="#Java中的锁" class="headerlink" title="Java中的锁"></a>Java中的锁</h1><h2 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h2><blockquote>
+<p> 偏向锁主要用来优化同一线程多次申请同一个锁的竞争。</p>
+</blockquote>
+<blockquote>
+<p> 在某些情况下，大部分时间是同一个线程竞争锁资源。</p>
+<blockquote>
+<p>例如，在创建一个线程并在线程中执行循环监听的场景下，或单线程操作一个线程安全集合时，同一线程每次都需要获取和释放锁，每次操作都会发生用户态与内核态的切换。<br>偏向锁的作用就是，当一个线程再次访问这个同步代码或方法时，该线程只需去对象头的 Mark Word 中去判断一下是否有偏向锁指向它的 ID，无需再进入 Monitor 去竞争对象了。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>当对象被当做同步锁并有一个线程抢到了锁时，锁标志位还是 01，“是否偏向锁”标志位设置为 1，并且记录抢到锁的线程 ID，表示进入偏向锁状态。一旦出现其它线程竞争锁资源时，偏向锁就会被撤销。偏向锁的撤销需要等待全局安全点，暂停持有该锁的线程，同时检查该线程是否还在执行该方法，如果是，则升级锁，反之则被其它线程抢占。</p>
+</blockquote>
+<h2 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h2><blockquote>
+<p> 轻量级锁适用于线程交替执行同步块的场景，绝大部分的锁在整个同步周期内都不存在长时间的竞争。<br> 轻量级锁还使用了自旋锁来避免线程用户态与内核态的频繁切换，提高了系统性能；</p>
+</blockquote>
+<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h2><blockquote>
+<p> 在锁竞争不激烈且锁占用时间非常短的场景下，自旋锁可以提高系统性能。</p>
+</blockquote>
+<blockquote>
+<p> JDK1.7 开始，自旋锁默认启用，自旋次数由 JVM 设置决定。<br> CAS 重试操作意味着长时间地占用 CPU。</p>
+</blockquote>
+<h2 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h2><blockquote>
+<p> 乐观锁，在操作共享资源时，抱着乐观的态度进行，认为可以成功地完成操作。但实际上，当多个线程同时操作一个共享资源时，只有一个线程会成功，那么失败的线程呢？它们不会像悲观锁一样在操作系统中挂起，而仅仅是返回，并且系统允许失败的线程重试，也允许自动放弃退出操作。<br> 乐观锁相比悲观锁来说，不会带来死锁、饥饿等活性故障问题，线程间的相互影响也远远比悲观锁要小。<br> 乐观锁没有因竞争造成的系统开销，所以在性能上也是更胜一筹。</p>
+</blockquote>
+<blockquote>
+<p> CAS 乐观锁在高并发写大于读的场景下，大部分线程的原子操作会失败，失败后的线程将会不断重试 CAS 原子操作，这样就会导致大量线程长时间地占用 CPU 资源，给系统带来很大的性能开销。<br> CAS 乐观锁在平常使用时比较受限，它只能保证单个变量操作的原子性</p>
+</blockquote>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1]<a href="https://time.geekbang.org/column/article/101244" target="_blank" rel="noopener">12 | 多线程之锁优化（上）：深入了解Synchronized同步锁的优化方法</a></p>
 
     </div>
 
@@ -300,8 +331,8 @@
       <i class="fa fa-chevron-left"></i> 读写锁
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/06/06/java-thread/" rel="next" title="java-thread">
-      java-thread <i class="fa fa-chevron-right"></i>
+    <a href="/2020/06/06/java-doc/" rel="next" title="jdk-14">
+      jdk-14 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -361,6 +392,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java中的锁"><span class="nav-number">1.</span> <span class="nav-text">Java中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#偏向锁"><span class="nav-number">1.1.</span> <span class="nav-text">偏向锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轻量级锁"><span class="nav-number">1.2.</span> <span class="nav-text">轻量级锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.3.</span> <span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#乐观锁"><span class="nav-number">1.4.</span> <span class="nav-text">乐观锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">2.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -374,20 +406,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

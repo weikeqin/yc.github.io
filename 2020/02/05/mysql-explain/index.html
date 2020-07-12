@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="在使用MySQL时，如果发现查询语句耗时，会进行排查及调优，其中常用的一个方法是用explain查看sql执行计划。  (1) explain示例1234567mysql&amp;gt; explain select * from user ;+----+-------------+-------+------------+------+---------------+------+---------">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-01T02:07:06.098Z">
+<meta property="og:updated_time" content="2020-07-05T14:47:14.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql explain 详解">
 <meta name="twitter:description" content="在使用MySQL时，如果发现查询语句耗时，会进行排查及调优，其中常用的一个方法是用explain查看sql执行计划。  (1) explain示例1234567mysql&amp;gt; explain select * from user ;+----+-------------+-------+------------+------+---------------+------+---------">
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-01 10:07:06" itemprop="dateModified" datetime="2020-06-01T10:07:06+08:00">2020-06-01</time>
+                <time title="修改时间：2020-07-05 22:47:14" itemprop="dateModified" datetime="2020-07-05T22:47:14+08:00">2020-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,6 +287,47 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  explain</span><br><span class="line">    -&gt;  select count(*)</span><br><span class="line">    -&gt;  from table_c</span><br><span class="line">    -&gt;  where l_id &lt;&gt; ''</span><br><span class="line">    -&gt;  and l_id is not null</span><br><span class="line">    -&gt;  and l_id not in (</span><br><span class="line">    -&gt;    select l_id from table_l</span><br><span class="line">    -&gt;  ) ;</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+</span></span><br><span class="line">| id | select_type        | table         | partitions | type           | possible_keys | key          | key_len | ref  | rows  | filtered | Extra                              |</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+</span></span><br><span class="line">|  1 | PRIMARY            | table_c       | NULL       | range          | idx_l_id      | idx_l_id     | 51      | NULL | 98519 |   100.00 | Using where; Using index           |</span><br><span class="line">|  2 | DEPENDENT SUBQUERY | table_l       | NULL       | index_subquery | idx_l_id      | idx_l_id     | 387     | func |     2 |   100.00 | Using index; Full scan on NULL key |</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.01</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  explain</span><br><span class="line">    -&gt;  select count(*)</span><br><span class="line">    -&gt;  from table_c</span><br><span class="line">    -&gt;  where l_id not in (</span><br><span class="line">    -&gt;    select l_id from table_l</span><br><span class="line">    -&gt;  ) ;</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+--------+----------+------------------------------------+</span></span><br><span class="line">| id | select_type        | table         | partitions | type           | possible_keys | key          | key_len | ref  | rows   | filtered | Extra                              |</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+--------+----------+------------------------------------+</span></span><br><span class="line">|  1 | PRIMARY            | table_c       | NULL       | index          | NULL          | idx_l_id     | 51      | NULL | 197037 |   100.00 | Using where; Using index           |</span><br><span class="line">|  2 | DEPENDENT SUBQUERY | table_l       | NULL       | index_subquery | idx_l_id      | idx_l_id     | 387     | func |      2 |   100.00 | Using index; Full scan on NULL key |</span><br><span class="line">+<span class="comment">----+--------------------+---------------+------------+----------------+---------------+--------------+---------+------+--------+----------+------------------------------------+</span></span><br><span class="line">2 rows in <span class="keyword">set</span>, <span class="number">1</span> <span class="keyword">warning</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
+<!--
+
+mysql> explain
+    -> select brand_id, brand_name, factory_id, factory_name, series_id, series_name
+    -> from car_brand_series
+    -> where series_id not in (
+    ->   select series_id from car_category where is_deleted = 'N' group by series_id
+    -> )
+    -> order by brand_id asc ;
++----+-------------+------------------+------------+------+---------------+------+---------+------+--------+----------+-----------------------------+
+| id | select_type | table            | partitions | type | possible_keys | key  | key_len | ref  | rows   | filtered | Extra                       |
++----+-------------+------------------+------------+------+---------------+------+---------+------+--------+----------+-----------------------------+
+|  1 | PRIMARY     | car_brand_series | NULL       | ALL  | NULL          | NULL | NULL    | NULL |   2426 |   100.00 | Using where; Using filesort |
+|  2 | SUBQUERY    | car_category     | NULL       | ALL  | NULL          | NULL | NULL    | NULL | 194815 |    10.00 | Using where                 |
++----+-------------+------------------+------------+------+---------------+------+---------+------+--------+----------+-----------------------------+
+2 rows in set, 1 warning (0.08 sec)
+
+mysql>
+
+mysql> explain
+    -> select count(*) from car_category
+    -> where ly_id is not null
+    -> and ly_id <> ''
+    -> and ly_id not in (
+    ->   select level_id from car_ly_origin
+    -> )
+    -> and ly_id not in (
+    ->   select ly_id from car_category_c
+    -> ) ;
++----+--------------------+----------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+
+| id | select_type        | table          | partitions | type           | possible_keys | key          | key_len | ref  | rows  | filtered | Extra                              |
++----+--------------------+----------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+
+|  1 | PRIMARY            | car_category   | NULL       | range          | idx_ly_id     | idx_ly_id    | 51      | NULL | 97408 |   100.00 | Using where; Using index           |
+|  3 | SUBQUERY           | car_category_c | NULL       | index          | idx_ly_id     | idx_ly_id    | 51      | NULL | 47918 |   100.00 | Using index                        |
+|  2 | DEPENDENT SUBQUERY | car_ly_origin  | NULL       | index_subquery | idx_level_id  | idx_level_id | 387     | func |     2 |   100.00 | Using index; Full scan on NULL key |
++----+--------------------+----------------+------------+----------------+---------------+--------------+---------+------+-------+----------+------------------------------------+
+3 rows in set, 1 warning (0.04 sec)
+
+mysql>
+
+-->
 <h1 id="2-explain参数详解"><a href="#2-explain参数详解" class="headerlink" title="(2) explain参数详解"></a>(2) explain参数详解</h1><table>
 <thead>
 <tr>
@@ -716,20 +757,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

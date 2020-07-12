@@ -210,6 +210,625 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/12/jvm-memory-area/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/08/12/jvm-memory-area/" class="post-title-link" itemprop="url">JVM运行时内存区域</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-12 10:48:21" itemprop="dateCreated datePublished" datetime="2018-08-12T10:48:21+08:00">2018-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-01 07:27:43" itemprop="dateModified" datetime="2020-07-01T07:27:43+08:00">2020-07-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/08/12/jvm-memory-area/" class="post-meta-item leancloud_visitors" data-flag-title="JVM运行时内存区域" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> JVM 内置了自动内存分配管理机制。这个机制可以大大降低手动分配回收机制可能带来的内存泄露和内存溢出风险，使 Java 开发人员不需要关注每个对象的内存分配以及回收，从而更专注于业务本身。</p>
+</blockquote>
+<blockquote>
+<p> JVM 自动内存分配管理机制的好处很多，但实则是把双刃剑。这个机制在提升 Java 开发效率的同时，也容易使 Java 开发人员过度依赖于自动化，弱化对内存的管理能力，这样系统就很容易发生 JVM 的堆内存异常，垃圾回收（GC）的方式不合适以及 GC 次数过于频繁等问题，这些都将直接影响到应用服务的性能。</p>
+</blockquote>
+<blockquote>
+<p> JVM的内存划分中，有部分区域是线程私有的，有部分是属于整个JVM进程；有些区域会抛出OOM异常，有些则不会，了解JVM的内存区域划分以及特征，是定位线上内存问题的基础。那么JVM内存区域是怎么划分的呢？</p>
+</blockquote>
+<p>  <img src="/img/java/JVM/Memory/java-process-memory-use.png" alt="运行中的Java进程内存占用情况"></p>
+<p>  <img src="/img/java/JVM/Memory/Java-Runtime-data-area-jdk7.jpg" alt=" Java虚拟机运行时数据区 - 大小和实际内存大小有差距"><br>  Java虚拟机运行时数据区 (仅参考模型)</p>
+<p>  <img src="/img/java/JVM/Memory/Java-Runtime-data-area-jdk7.png" alt=" Java虚拟机运行时数据区-大概比例 "><br>  Java虚拟机运行时数据区-大概比例</p>
+<h1 id="1-Java内存区域"><a href="#1-Java内存区域" class="headerlink" title="1.　Java内存区域"></a>1.　Java内存区域</h1><blockquote>
+<p>   Java虚拟机在执行Java程序的过程中会把它管理的内存划分为若干个不同的数据区域，这些区域都有各自的用途，以及创建和销毁的时间，有的随着虚拟机进程启动而存在，有的区域则依赖于用户线程的启动和结束而建立和销毁。</p>
+</blockquote>
+<blockquote>
+<p> 根据《Java 虚拟机规范》的规定，Java 虚拟机所管理的内存一共分为 Program Counter Register（程序计数器）、VM Stack（虚拟机栈）、Native Method Stack（本地方法栈）、Heap（堆）、Method Area（方法区）五个区域。</p>
+</blockquote>
+<h2 id="1-1-程序计数器-Program-Counter-Register"><a href="#1-1-程序计数器-Program-Counter-Register" class="headerlink" title="1.1　程序计数器(Program Counter Register)"></a>1.1　程序计数器(Program Counter Register)</h2><blockquote>
+<p> <code>程序计数器</code>(Program Counter Register)，简称PC，在JVM规范中，每个线程都有自己的程序计数器。</p>
+</blockquote>
+<blockquote>
+<p> 这是一块比较小的内存空间，存储当前线程正在执行的Java方法的JVM指令(或操作码)地址，即字节码的行号。如果当前方法是 native 方法，那么程序计数器的值为 undefined。</p>
+</blockquote>
+<blockquote>
+<p> 举个例子，下面是一段输出 Hello World 的代码，代码和反编译后的文件如下: </p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Hello, World!"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">Classfile /home/wkq/workspaces/java_test/HelloWorld.class</span><br><span class="line">  Last modified Jun 21, 2020; size 427 bytes</span><br><span class="line">  SHA-256 checksum cc0de3eb12561fe81dfb95961d817665276587839bdf652b6f4070c1b9942f10</span><br><span class="line">  Compiled from &quot;HelloWorld.java&quot;</span><br><span class="line">public class HelloWorld</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 58</span><br><span class="line">  flags: (0x0021) ACC_PUBLIC, ACC_SUPER</span><br><span class="line">  this_class: #21                         // HelloWorld</span><br><span class="line">  super_class: #2                         // java/lang/Object</span><br><span class="line">  interfaces: 0, fields: 0, methods: 2, attributes: 1</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #2.#3          // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 = Class              #4             // java/lang/Object</span><br><span class="line">   #3 = NameAndType        #5:#6          // &quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #4 = Utf8               java/lang/Object</span><br><span class="line">   #5 = Utf8               &lt;init&gt;</span><br><span class="line">   #6 = Utf8               ()V</span><br><span class="line">   #7 = Fieldref           #8.#9          // java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">   #8 = Class              #10            // java/lang/System</span><br><span class="line">   #9 = NameAndType        #11:#12        // out:Ljava/io/PrintStream;</span><br><span class="line">  #10 = Utf8               java/lang/System</span><br><span class="line">  #11 = Utf8               out</span><br><span class="line">  #12 = Utf8               Ljava/io/PrintStream;</span><br><span class="line">  #13 = String             #14            // Hello, World!</span><br><span class="line">  #14 = Utf8               Hello, World!</span><br><span class="line">  #15 = Methodref          #16.#17        // java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">  #16 = Class              #18            // java/io/PrintStream</span><br><span class="line">  #17 = NameAndType        #19:#20        // println:(Ljava/lang/String;)V</span><br><span class="line">  #18 = Utf8               java/io/PrintStream</span><br><span class="line">  #19 = Utf8               println</span><br><span class="line">  #20 = Utf8               (Ljava/lang/String;)V</span><br><span class="line">  #21 = Class              #22            // HelloWorld</span><br><span class="line">  #22 = Utf8               HelloWorld</span><br><span class="line">  #23 = Utf8               Code</span><br><span class="line">  #24 = Utf8               LineNumberTable</span><br><span class="line">  #25 = Utf8               main</span><br><span class="line">  #26 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #27 = Utf8               SourceFile</span><br><span class="line">  #28 = Utf8               HelloWorld.java</span><br><span class="line">&#123;</span><br><span class="line">  public HelloWorld();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: (0x0001) ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=1, locals=1, args_size=1</span><br><span class="line">         0: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">         4: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 1: 0</span><br><span class="line"></span><br><span class="line">  public static void main(java.lang.String[]);</span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: (0x0009) ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=2, locals=1, args_size=1</span><br><span class="line">         0: getstatic     #7                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">         3: ldc           #13                 // String Hello, World!</span><br><span class="line">         5: invokevirtual #15                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">         8: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 3: 0</span><br><span class="line">        line 4: 8</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: &quot;HelloWorld.java&quot;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> LineNumberTable，是指每一个java字节码指令对应java代码文件中的第几行，以方便定位。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line">      LineNumberTable:</span><br><span class="line">        line 3: 0</span><br><span class="line">        line 4: 8</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">&gt;  其中 line 3  line 4 指的的代码中的行号， 0 8 指的是 java字节码的指令 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  该内存区域是唯一一个在Java虚拟机规范中没有规定任何 OutOfMemoryError 情况的内存区域。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 1.2　Java虚拟机栈(Java Virtal Machine Stack)</span><br><span class="line"></span><br><span class="line">  Java虚拟机栈(Java Virtal Machine Stack)，同样也是属于线程私有区域，该区域存储着局部变量表，编译时期可知的各种基本类型数据、对象引用、方法出口等信息。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt;  局部变量表存放了编译期可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用和returnAddress类型（指向了一条字节码指令的地址）。</span><br><span class="line">  其中64位长度的long和double类型的数据会占用2个局部变量空间（slot），其余的数据类型占1个。</span><br><span class="line">  </span><br><span class="line">  局部变量表所需的内存空间在编译期间分配完成，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  在这个java栈中又会包含多个栈帧，每运行一个方法就创建一个栈帧，用于存储局部变量表、操作栈、方法返回值等。每一个方法从调用直至执行完成的过程，就对应一个栈帧在java栈中入栈到出栈的过程。</span><br><span class="line">  每次方法调用时，一个新的栈帧创建并压栈到栈顶。当方法正常返回或抛出未捕获的异常时，栈帧就会出栈。除了栈帧的压栈和出栈，栈不能被直接操作。所以可以在堆上分配栈帧，并且不需要连续内存。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  栈可以是动态分配也可以固定大小。</span><br><span class="line">  如果线程请求一个超过允许范围的空间，就会抛出一个StackOverflowError。</span><br><span class="line">  如果线程需要一个新的栈帧，但是没有足够的内存可以分配，就会抛出一个 OutOfMemoryError。</span><br><span class="line">  </span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">  </span><br><span class="line">## 1.3　本地方法栈(Native Method Stack)</span><br><span class="line"></span><br><span class="line">  第三，本地方法栈(Native Method Stack)与虚拟机栈类似，本地方法栈是在调用本地方法时使用的栈，每个线程都有一个本地方法栈。</span><br><span class="line"></span><br><span class="line">## 1.4　堆(Heap)</span><br><span class="line"></span><br><span class="line">  第四，堆(Heap),几乎所有创建的Java对象实例，都是被直接分配到堆上的。这块是GC的主要区域。 </span><br><span class="line">  堆被所有的线程所共享，在堆上的区域，会被垃圾回收器做进一步划分，例如新生代、老年代的划分。</span><br><span class="line">  Java虚拟机在启动的时候，可以使用 `Xms` `Xmx` 之类的参数指定堆区域的大小。</span><br><span class="line"></span><br><span class="line">## 1.5　方法区(Method Area)</span><br><span class="line"></span><br><span class="line">  第五，方法区(Method Area)。方法区与堆一样，也是所有的线程所共享。</span><br><span class="line">  存储被虚拟机加载的元(Meta)数据，包括类信息、构造函数、常量池、静态变量、即时编译器编译后的代码等数据。</span><br><span class="line">  这里需要注意的是运行时常量池也在方法区中。</span><br><span class="line">  根据Java虚拟机规范的规定，当方法区无法满足内存分配需求时，将抛出OutOfMemoryError异常。由于早期HotSpot JVM的实现，将CG分代收集拓展到了方法区，因此很多人会将方法区称为永久代。Oracle JDK8中已永久代移除永久代，同时增加了元数据区(Metaspace)。</span><br><span class="line"></span><br><span class="line">  虽然JVM规范把方法区描述为堆的一个逻辑部分，但它却有个别名non-heap(非堆)，所以大家不要搞混淆了。方法区还包含一个运行时常量池。</span><br><span class="line"></span><br><span class="line">  运行时常量池(Run-Time Constant Pool)，这是方法区的一部分，受到方法区内存的限制，当常量池无法再申请到内存时，会抛出OutOfMemoryError异常。</span><br><span class="line">  常量池主要存放两大类常量：</span><br><span class="line">    (1)字面量(Literal)，如文本字符串、final常量值</span><br><span class="line">    (2)符号引用，存放了与编译相关的一些常量，因为Java不像C++那样有连接的过程，因此字段方法这些符号引用在运行期就需要进行转换，以便得到真正的内存入口地址。</span><br><span class="line">  </span><br><span class="line">  class文件中的常量池，也称为静态常量池，JVM虚拟机完成类装载操作后，会把静态常量池加载到内存中，存放在运行时常量池。</span><br><span class="line">&lt;!--</span><br><span class="line">  在Class文件中，除了有类的版本、方法、字段、接口等描述信息外，还有一项信息是常量池。每个Class文件的头四个字节称为Magic Number，它的作用是确定这是否是一个可以被虚拟机接受的文件；接着的四个字节存储的是Class文件的版本号。紧挨着版本号之后的，就是常量池入口了。</span><br><span class="line">--&gt;</span><br><span class="line"></span><br><span class="line">## 1.6　直接内存(Direct Memory)</span><br><span class="line"></span><br><span class="line">  第七，直接内存(Direct Memory)，直接内存并不属于Java规范规定的属于Java虚拟机运行时数据区的一部分。</span><br><span class="line">  Java的NIO可以使用Native方法直接在java堆外分配内存，使用DirectByteBuffer对象作为这个堆外内存的引用。</span><br><span class="line"></span><br><span class="line">## 1.7　Java SE 7 规范的典型的 JVM 核心内部组件</span><br><span class="line"></span><br><span class="line">  ![ Java SE 7 规范的典型的 JVM 核心内部组件 ](/img/java/JVM/Memory/JVM_Internal_Architecture_small.png)</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"># 2.　OOM可能发生在哪些区域上？</span><br><span class="line"></span><br><span class="line">| 内存区域	 | 是否线程私有	| 是否可能发生OOM |</span><br><span class="line">| :-----     | :-----       | :-----          |</span><br><span class="line">| 程序计数器 |	是          |	否            |</span><br><span class="line">| 虚拟机栈	 |  是	        |   是            |</span><br><span class="line">| 本地方法栈 |	是	        |   是            |</span><br><span class="line">| 方法区	 |  否	        |   是            |</span><br><span class="line">| 直接内存	 |  否 	        |   是            |</span><br><span class="line">| 堆	     |  否	        |   是            |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  根据javadoc的描述，OOM是指JVM的内存不够用了，同时垃圾收集器也无法提供更多的内存。从描述中可以看出，在JVM抛出OutOfMemoryError之前，垃圾收集器一般会出马先尝试回收内存。</span><br><span class="line">  从上面分析的Java数据区来看，除了程序计数器不会发生OOM外，哪些区域会发生OOM的情况呢？</span><br><span class="line"></span><br><span class="line">## 2.1　堆内存　  </span><br><span class="line">  第一，堆内存。堆内存不足是最常见的发送OOM的原因之一，如果在堆中没有内存完成对象实例的分配，并且堆无法再扩展时，将抛出OutOfMemoryError异常，抛出的错误信息是“java.lang.OutOfMemoryError:Java heap space”。当前主流的JVM可以通过`-Xmx`和`-Xms`来控制堆内存的大小，发生堆上OOM的可能是存在内存泄露，也可能是堆大小分配不合理。</span><br><span class="line"></span><br><span class="line">## 2.2　Java虚拟机栈和本地方法栈</span><br><span class="line">  第二，Java虚拟机栈和本地方法栈，这两个区域的区别不过是虚拟机栈为虚拟机执行Java方法服务，而本地方法栈则为虚拟机使用到的Native方法服务，在内存分配异常上是相同的。在JVM规范中，对Java虚拟机栈规定了两种异常：1.如果线程请求的栈大于所分配的栈大小，则抛出StackOverFlowError错误，比如进行了一个不会停止的递归调用；2. 如果虚拟机栈是可以动态拓展的，拓展时无法申请到足够的内存，则抛出OutOfMemoryError错误。</span><br><span class="line"></span><br><span class="line">## 2.3　直接内存</span><br><span class="line">  第三，直接内存。直接内存虽然不是虚拟机运行时数据区的一部分，但既然是内存，就会受到物理内存的限制。在JDK1.4中引入的NIO使用Native函数库在堆外内存上直接分配内存，但直接内存不足时，也会导致OOM。</span><br><span class="line"></span><br><span class="line">## 2.4　方法区</span><br><span class="line">  第四，方法区。随着Metaspace元数据区的引入，方法区的OOM错误信息也变成了“java.lang.OutOfMemoryError:Metaspace”。对于旧版本的Oracle JDK，由于永久代的大小有限，而JVM对永久代的垃圾回收并不积极，如果往永久代不断写入数据，例如String.Intern()的调用，在永久代占用太多空间导致内存不足，也会出现OOM的问题，对应的错误信息为“java.lang.OutOfMemoryError:PermGen space”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 3.　堆内存结构是怎么样的？</span><br><span class="line"></span><br><span class="line">  站在垃圾收集器的角度来看，可以把内存分为新生代与老年代。内存的分配规则取决于当前使用的是哪种垃圾收集器的组合，以及内存相关的参数配置。</span><br><span class="line">  往大的方向说，对象优先分配在新生代的Eden区域，而大对象直接进入老年代。</span><br><span class="line"></span><br><span class="line">  可以借助一些工具来了解JVM的内存内容，具体到特定的内存区域，应该用什么工具去定位呢？</span><br><span class="line">  图形化工具。图形化工具的优点是直观，连接到Java进程后，可以显示堆内存、堆外内存的使用情况，类似的工具有JConsole,jvisualvm 等。</span><br><span class="line">  命令行工具。这类工具可以在运行时进行查询，包括jstat，jmap等，可以对堆内存、方法区等进行查看。定位线上问题时也多会使用这些工具。jmap也可以生成堆转储文件(Heap Dump)文件，如果是在linux上，可以将堆转储文件拉到本地来，使用Eclipse MAT进行分析，也可以使用jhap进行分析。</span><br><span class="line"></span><br><span class="line">## 3.1　新生代(Young Generation)的Eden区域</span><br><span class="line"></span><br><span class="line">  第一, 新生代的Eden区域，对象优先分配在该区域，同时JVM可以为每个线程分配一个私有的缓存区域，称为TLAB(Thread Local Allocation Buffer)，避免多线程同时分配内存时需要使用加锁等机制而影响分配速度。TLAB在堆上分配，位于Eden中。TLAB的结构如下：</span><br><span class="line">  </span><br><span class="line">```java</span><br><span class="line">// ThreadLocalAllocBuffer: a descriptor for thread-local storage used by</span><br><span class="line">// the threads for allocation.</span><br><span class="line">//            It is thread-private at any time, but maybe multiplexed over</span><br><span class="line">//            time across multiple threads. The park()/unpark() pair is</span><br><span class="line">//            used to make it avaiable for such multiplexing.</span><br><span class="line">class ThreadLocalAllocBuffer: public CHeapObj&lt;mtThread&gt; &#123;</span><br><span class="line">  friend class VMStructs;</span><br><span class="line">private:</span><br><span class="line">  HeapWord* _start;                              // address of TLAB</span><br><span class="line">  HeapWord* _top;                                // address after last allocation</span><br><span class="line">  HeapWord* _pf_top;                             // allocation prefetch watermark</span><br><span class="line">  HeapWord* _end;                                // allocation end (excluding alignment_reserve)</span><br><span class="line">  size_t    _desired_size;                       // desired size   (including alignment_reserve)</span><br><span class="line">  size_t    _refill_waste_limit;                 // hold onto tlab if free() is larger than this</span><br></pre></td></tr></table></figure>
+<p>  从本质上来说，TLAB的管理是依靠三个指针：start、end、top。start与end标记了Eden中被该TLAB管理的区域，该区域不会被其他线程分配内存所使用，top是分配指针，开始时指向start的位置，随着内存分配的进行，慢慢向end靠近，当撞上end时触发TLAB refill。<br>  因此内存中Eden的结构大体为：<br>  <img src="/img/java/JVM/Memory/young-generation-eden.png" alt=" Eden结构 "></p>
+<h2 id="3-2-新生代-Young-Generation-的Survivor区域"><a href="#3-2-新生代-Young-Generation-的Survivor区域" class="headerlink" title="3.2　新生代(Young Generation)的Survivor区域"></a>3.2　新生代(Young Generation)的Survivor区域</h2><p>  第二、新生代的Survivor区域。当Eden区域内存不足时会触发Minor GC，也称为新生代GC，在Minor GC存活下来的对象，会被复制到Survivor区域中。<br>  Survivor区的作用在于避免过早触发Full GC。如果没有Survivor，Eden区每进行一次Minor GC都把对象直接送到老年代，老年代很快便会内存不足引发Full GC。<br>  新生代中有两个Survivor区，两个Survivor的作用在于提高性能，避免内存碎片的出现。在任何时候，总有一个Survivor是empty的，在发生Minor GC时，会将Eden及另一个的Survivor的存活对象拷贝到该empty Survivor中，从而避免内存碎片的产生。<br>  新生代的内存结构大体为：<br>  <img src="/img/java/JVM/Memory/young-generation.png" alt=" 新生代的内存结构 "></p>
+<h2 id="3-3-老年代-Old-Generation"><a href="#3-3-老年代-Old-Generation" class="headerlink" title="3.3　老年代 (Old Generation)"></a>3.3　老年代 (Old Generation)</h2><p>  第三、老年代。老年代放置长生命周期的对象，通常是从Survivor区域拷贝过来的对象，不过当对象过大的时候，无法在新生代中用连续内存的存放，那么这个大对象就会被直接分配在老年代上。一般来说，普通的对象都是分配在TLAB上，较大的对象，直接分配在Eden区上的其他内存区域，而过大的对象，直接分配在老年代上。</p>
+<h2 id="3-4-永久代"><a href="#3-4-永久代" class="headerlink" title="3.4　永久代"></a>3.4　永久代</h2><p>  第四、永久代。如前面所说，在早起的Hotspot JVM中有老年代的概念，老年代用于存储Java类的元数据、常量池、Intern字符串等。<br>  在JDK8之后，就将老年代移除，而引入元数据区的概念。</p>
+<h2 id="3-5-Vritual空间"><a href="#3-5-Vritual空间" class="headerlink" title="3.5　Vritual空间"></a>3.5　Vritual空间</h2><p>  第五、Vritual空间。前面说过，可以使用Xms与Xmx来指定堆的最小与最大空间。如果Xms小于Xmx，堆的大小不会直接扩展到上限，而是留着一部分等待内存需求不断增长时，再分配给新生代。Vritual空间便是这部分保留的内存区域。</p>
+<h2 id="3-6-总结"><a href="#3-6-总结" class="headerlink" title="3.6　总结"></a>3.6　总结</h2><p>  综上所述，可以画出Java堆内的内存结构大体为：<br>  <img src="/img/java/JVM/Memory/java-heap-memory-model.png" alt=" Java堆内的内存结构 "></p>
+<h2 id="4-常用配置"><a href="#4-常用配置" class="headerlink" title="4.　常用配置"></a>4.　常用配置</h2><p><code>-Xms1024m</code> 设置初始的最小堆大小1024m</p>
+<p><code>-Xmx4096m</code> 设置最大的堆大小为4096m</p>
+<p><code>-Xmn1536m</code> 设置新生代大小为1536m。<br>　　持久代一般固定大小为64m，所以增大新生代后，将会减小年老代大小。<br>　　此值对系统性能影响较大，Sun官方推荐配置为整个堆的3/8。</p>
+<p><code>-Xss128k</code> 设置每个线程的堆栈大小。<br>　　JDK5.0以后每个线程堆栈大小为1M，以前每个线程堆栈大小为256K。更具应用的线程所需内存大小进行调整。<br>　　在相同物理内存下，减小这个值能生成更多的线程。但是操作系统对一个进程内的线程数还是有限制的，不能无限生成，经验值在3000~5000左右。</p>
+<p><code>-XX:NewSize=1024</code> 设置 新生代 Yong Generation的初始值大小</p>
+<p><code>-XX:MaxNewSize=1024m</code>  设置 新生代 Yong Generation的最大值大小</p>
+<p><code>-XX:NewRatio=4</code> 设置新生代(包括Eden和两个Survivor区)与年老代的比值(除去持久代)。默认为2，设置为4，则新生代与年老代所占比值为1：4，新生代占整个堆栈的1/5<br>    老年代过大的时候，Full GC的时间会很长；老年代过小，则很容易触发Full GC，Full GC频率过高，这就是这个参数会造成的影响。</p>
+<p><code>-XX:SurvivorRatio=4</code> 设置新生代中Eden区与Survivor区的大小比值。<br>　　设置为4，则两个Survivor区与一个Eden区的比值为2:4，一个Survivor区占整个新生代的1/6</p>
+<p><code>-XX:MaxPermSize=16m</code> 设置持久代大小为16m。</p>
+<p><code>-XX:MaxTenuringThreshold=0</code> 设置垃圾最大年龄。<br>　　如果设置为0的话，则新生代对象不经过Survivor区，直接进入年老代。对于年老代比较多的应用，可以提高效率。如果将此值设置为一个较大值，则新生代对象会在Survivor区进行多次复制，这样可以增加对象再新生代的存活时间，增加在新生代即被回收的概论。</p>
+<h2 id="4-1-JVM设置Young-Gen参数优先级"><a href="#4-1-JVM设置Young-Gen参数优先级" class="headerlink" title="4.1　JVM设置Young Gen参数优先级"></a>4.1　JVM设置Young Gen参数优先级</h2><p>  JVM设置Young Gen参数优先级<br>  (1) 最高优先级：  -XX:NewSize=1024m和-XX:MaxNewSize=1024m<br>  (2) 次高优先级：  -Xmn1024m  (默认等效效果是：-XX:NewSize==-XX:MaxNewSize==1024m)<br>  (3) 最低优先级：-XX:NewRatio=2 </p>
+<h1 id="5-常见配置汇总"><a href="#5-常见配置汇总" class="headerlink" title="5.　常见配置汇总"></a>5.　常见配置汇总</h1><h2 id="5-1-堆设置"><a href="#5-1-堆设置" class="headerlink" title="5.1　堆设置"></a>5.1　堆设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-Xms:初始堆大小</span><br><span class="line">-Xmx:最大堆大小</span><br><span class="line">-XX:NewSize=n:设置年轻代大小</span><br><span class="line">-XX:NewRatio=n:设置年轻代和年老代的比值。如:为3，表示年轻代与年老代比值为1：3，年轻代占整个年轻代年老代和的1/4</span><br><span class="line">-XX:SurvivorRatio=n:年轻代中Eden区与两个Survivor区的比值。注意Survivor区有两个。如：3，表示Eden：Survivor=3：2，一个Survivor区占整个年轻代的1/5</span><br><span class="line">-XX:MaxPermSize=n:设置持久代大小</span><br></pre></td></tr></table></figure>
+<h2 id="5-2-收集器设置"><a href="#5-2-收集器设置" class="headerlink" title="5.2　收集器设置"></a>5.2　收集器设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseSerialGC:设置串行收集器</span><br><span class="line">-XX:+UseParallelGC:设置并行收集器</span><br><span class="line">-XX:+UseParalledlOldGC:设置并行年老代收集器</span><br><span class="line">-XX:+UseConcMarkSweepGC:设置并发收集器</span><br></pre></td></tr></table></figure>
+<h2 id="5-3-垃圾回收统计信息"><a href="#5-3-垃圾回收统计信息" class="headerlink" title="5.3　垃圾回收统计信息"></a>5.3　垃圾回收统计信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintGC</span><br><span class="line">-XX:+PrintGCDetails</span><br><span class="line">-XX:+PrintGCTimeStamps</span><br><span class="line">-Xloggc:filename</span><br></pre></td></tr></table></figure>
+<h2 id="5-4-并行收集器设置"><a href="#5-4-并行收集器设置" class="headerlink" title="5.4　并行收集器设置"></a>5.4　并行收集器设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-XX:ParallelGCThreads=n:设置并行收集器收集时使用的CPU数。并行收集线程数。</span><br><span class="line">-XX:MaxGCPauseMillis=n:设置并行收集最大暂停时间</span><br><span class="line">-XX:GCTimeRatio=n:设置垃圾回收时间占程序运行时间的百分比。公式为1/(1+n)</span><br></pre></td></tr></table></figure>
+<h2 id="5-5-并发收集器设置"><a href="#5-5-并发收集器设置" class="headerlink" title="5.5　并发收集器设置"></a>5.5　并发收集器设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:+CMSIncrementalMode:设置为增量模式。适用于单CPU情况。</span><br><span class="line">-XX:ParallelGCThreads=n:设置并发收集器年轻代收集方式为并行收集时，使用的CPU数。并行收集线程数</span><br></pre></td></tr></table></figure>
+<h1 id="6-调优总结"><a href="#6-调优总结" class="headerlink" title="6.　调优总结"></a>6.　调优总结</h1><h2 id="6-1-年轻代大小选择"><a href="#6-1-年轻代大小选择" class="headerlink" title="6.1　年轻代大小选择"></a>6.1　年轻代大小选择</h2><p>　响应时间优先的应用：尽可能设大，直到接近系统的最低响应时间限制(根据实际情况选择)。在此种情况下，年轻代收集发生的频率也是最小的。同时，减少到达年老代的对象。<br>  吞吐量优先的应用：尽可能的设置大，可能到达Gbit的程度。因为对响应时间没有要求，垃圾收集可以并行进行，一般适合8CPU以上的应用。</p>
+<h2 id="6-2-年老代大小选择"><a href="#6-2-年老代大小选择" class="headerlink" title="6.2　年老代大小选择"></a>6.2　年老代大小选择</h2><p>  响应时间优先的应用：年老代使用并发收集器，所以其大小需要小心设置，一般要考虑并发会话率和会话持续时间等一些参数。如果堆设置小了，可以会造成内存碎片、高回收频率以及应用暂停而使用传统的标记清除方式；如果堆大了，则需要较长的收集时间。最优化的方案，一般需要参考以下数据获得：<br>  并发垃圾收集信息<br>  持久代并发收集次数<br>  传统GC信息<br>  花在年轻代和年老代回收上的时间比例<br>  减少年轻代和年老代花费的时间，一般会提高应用的效率</p>
+<p>  吞吐量优先的应用：一般吞吐量优先的应用都有一个很大的年轻代和一个较小的年老代。原因是，这样可以尽可能回收掉大部分短期对象，减少中期的对象，而年老代尽存放长期存活对象。</p>
+<h2 id="6-3-较小堆引起的碎片问题"><a href="#6-3-较小堆引起的碎片问题" class="headerlink" title="6.3　较小堆引起的碎片问题"></a>6.3　较小堆引起的碎片问题</h2><p>  因为年老代的并发收集器使用标记、清除算法，所以不会对堆进行压缩。当收集器回收时，他会把相邻的空间进行合并，这样可以分配给较大的对象。但是，当堆空间较小时，运行一段时间以后，就会出现“碎片”，如果并发收集器找不到足够的空间，那么并发收集器将会停止，然后使用传统的标记、清除方式进行回收。如果出现“碎片”，可能需要进行如下配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseCMSCompactAtFullCollection：使用并发收集器时，开启对年老代的压缩。</span><br><span class="line">-XX:CMSFullGCsBeforeCompaction=0：上面配置开启的情况下，这里设置多少次Full GC后，对年老代进行压缩</span><br></pre></td></tr></table></figure></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html" target="_blank" rel="noopener">Chapter 2. The Structure of the Java Virtual Machine</a><br>[2] <a href="http://www.cnblogs.com/QG-whz/p/9636366.html" target="_blank" rel="noopener">关于JVM内存的N个问题</a><br>[3] <a href="http://www.importnew.com/17770.html" target="_blank" rel="noopener">JVM内幕：Java虚拟机详解</a><br>[4] <a href="https://blog.csdn.net/tonytfjing/article/details/44278233" target="_blank" rel="noopener">JVM结构、GC工作机制详解</a><br>[5] <a href="https://www.cnblogs.com/smyhvae/p/4810168.html" target="_blank" rel="noopener">Java虚拟机详解—-JVM常见问题总结</a><br>[6] <a href="http://www.51gjie.com/java/549.html" target="_blank" rel="noopener">Java中JVM原理详解</a><br>[7] <a href="https://segmentfault.com/a/1190000002579346" target="_blank" rel="noopener">JVM 的 工作原理，层次结构 以及 GC工作原理</a><br>[8] <a href="https://blog.csdn.net/huachao1001/article/details/51533132" target="_blank" rel="noopener">JVM理解其实并不难！</a><br>[9] <a href="https://blog.csdn.net/suifeng3051/article/details/52611310" target="_blank" rel="noopener">全面理解Java内存模型</a><br>[10] <a href="https://blog.csdn.net/javazejian/article/details/72772461" target="_blank" rel="noopener">全面理解Java内存模型(JMM)及volatile关键字</a><br>[11] <a href="https://www.jianshu.com/p/1579aafac60b" target="_blank" rel="noopener">JVM内存模型</a><br>[12] <a href="http://unixboy.iteye.com/blog/174173" target="_blank" rel="noopener">JVMM调优总结 -Xms -Xmx -Xmn -Xss</a><br>[13] <a href="http://eyesmore.iteye.com/blog/1530996" target="_blank" rel="noopener"> JVM设置Young Gen大小 </a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/11/orientdb-download-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/08/11/orientdb-download-install/" class="post-title-link" itemprop="url">OrientDB 下载 安装</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-11 12:57:24" itemprop="dateCreated datePublished" datetime="2018-08-11T12:57:24+08:00">2018-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/orientdb/" itemprop="url" rel="index"><span itemprop="name">orientdb</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/08/11/orientdb-download-install/" class="post-meta-item leancloud_visitors" data-flag-title="OrientDB 下载 安装" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li>下载解压orientdb压缩包</li>
+<li>通过 server.sh 或者 server.bat 启动orieintdb</li>
+<li>访问 <a href="http://localhost:2480" target="_blank" rel="noopener">http://localhost:2480</a> 查看orientdb</li>
+</ol>
+<h1 id="1-下载解压"><a href="#1-下载解压" class="headerlink" title="1　下载解压"></a>1　下载解压</h1><p>  orientdb 所有版本<br>      <a href="https://orientdb.com/releases/" target="_blank" rel="noopener">https://orientdb.com/releases/</a><br>      <a href="https://orientdb.com/downloads/" target="_blank" rel="noopener">https://orientdb.com/downloads/</a><br>      <a href="https://orientdb.com/download-2/" target="_blank" rel="noopener">https://orientdb.com/download-2/</a><br>      <a href="https://orientdb.org/download" target="_blank" rel="noopener">https://orientdb.org/download</a> </p>
+<p>  orientdb-3.0.8.zip   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.zip" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.zip</a><br>  orientdb-3.0.8.tar.gz   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.tar.gz" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/orientdb-3.0.8.tar.gz</a><br>  agent-3.0.8.jar   <a href="https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/agent-3.0.8.jar" target="_blank" rel="noopener">https://orientdb3.s3.us-east-2.amazonaws.com/releases/3.0.8/agent-3.0.8.jar</a>  </p>
+<!--
+  https://s3.us-east-2.amazonaws.com/orientdb3/releases/3.0.20/orientdb-3.0.20.zip
+  https://s3.us-east-2.amazonaws.com/orientdb3/releases/3.0.20/orientdb-3.0.20.tar.gz
+-->
+<p>  无论是zip包还是tar.gz包，解压完进入bin目录，执行 <code>./server.sh</code> (linux) 或 <code>server.bat</code>(windows) 即可运行OrientDB数据库。<br>  第一次使用需要设置密码，设置完密码启动后在浏览器输入 <a href="http://127.0.0.1:2480" target="_blank" rel="noopener">http://127.0.0.1:2480</a> 访问 图形化界面。  </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/11/orientdb-download-install/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/03/elasticsearch-cluster/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/08/03/elasticsearch-cluster/" class="post-title-link" itemprop="url">elasticsearch 集群</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-03 17:32:09" itemprop="dateCreated datePublished" datetime="2018-08-03T17:32:09+08:00">2018-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-21 10:57:23" itemprop="dateModified" datetime="2020-01-21T10:57:23+08:00">2020-01-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/08/03/elasticsearch-cluster/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 集群" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p> 集群内的原理 </p>
+<p>  介绍 cluster 、 node 、 shard 等常用术语，Elastisearch 的扩容机制， 以及如何处理硬件故障的内容。</p>
+<p>  ElasticSearch 的主旨是随时可用和按需扩容。 而扩容可以通过购买性能更强大（ 垂直扩容 ，或 纵向扩容 ） 或者数量更多的服务器（ 水平扩容 ，或 横向扩容 ）来实现。</p>
+<p>  虽然 Elasticsearch 可以获益于更强大的硬件设备，但是垂直扩容是有极限的。 真正的扩容能力是来自于水平扩容–为集群添加更多的节点，并且将负载压力和稳定性分散到这些节点中。</p>
+<h1 id="1-空集群"><a href="#1-空集群" class="headerlink" title="(1) 空集群"></a>(1) 空集群</h1><p>  一个运行中的 Elasticsearch 实例称为一个 节点，而集群是由一个或者多个拥有相同 cluster.name 配置的节点组成， 它们共同承担数据和负载的压力。当有节点加入集群中或者从集群中移除节点时，集群将会重新平均分布所有的数据。</p>
+<h1 id="2-集群健康"><a href="#2-集群健康" class="headerlink" title="(2) 集群健康"></a>(2) 集群健康</h1><p>  查看集群健康状态</p>
+<p>  <code>http://localhost:9200/_cluster/health?pretty</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X GET &quot;localhost:9200/_cluster/health?pretty&quot;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;cluster_name&quot; : &quot;my-application&quot;,</span><br><span class="line">  &quot;status&quot; : &quot;yellow&quot;,</span><br><span class="line">  &quot;timed_out&quot; : false,</span><br><span class="line">  &quot;number_of_nodes&quot; : 1,</span><br><span class="line">  &quot;number_of_data_nodes&quot; : 1,</span><br><span class="line">  &quot;active_primary_shards&quot; : 5,</span><br><span class="line">  &quot;active_shards&quot; : 5,</span><br><span class="line">  &quot;relocating_shards&quot; : 0,</span><br><span class="line">  &quot;initializing_shards&quot; : 0,</span><br><span class="line">  &quot;unassigned_shards&quot; : 5,</span><br><span class="line">  &quot;delayed_unassigned_shards&quot; : 0,</span><br><span class="line">  &quot;number_of_pending_tasks&quot; : 0,</span><br><span class="line">  &quot;number_of_in_flight_fetch&quot; : 0,</span><br><span class="line">  &quot;task_max_waiting_in_queue_millis&quot; : 0,</span><br><span class="line">  &quot;active_shards_percent_as_number&quot; : 50.0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>status 字段指示着当前集群在总体上是否工作正常。它的三种颜色含义如下：<br>  green  所有的主分片和副本分片都正常运行。<br>  yellow 所有的主分片都正常运行，但不是所有的副本分片都正常运行。<br>  red    有主分片没能正常运行。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/03/elasticsearch-cluster/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/03/neo4j-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/08/03/neo4j-practice/" class="post-title-link" itemprop="url">neo4j</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-08-03 17:32:09" itemprop="dateCreated datePublished" datetime="2018-08-03T17:32:09+08:00">2018-08-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-19 11:19:16" itemprop="dateModified" datetime="2020-01-19T11:19:16+08:00">2020-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/08/03/neo4j-practice/" class="post-meta-item leancloud_visitors" data-flag-title="neo4j" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="查看正在执行的cypher语句"><a href="#查看正在执行的cypher语句" class="headerlink" title="查看正在执行的cypher语句"></a>查看正在执行的cypher语句</h1><p>1、查看自己当前正在运行的所有查询。语法为： <code>CALL dbms.listQueries()</code></p>
+<ol start="2">
+<li>找到正在运行的语句的id</li>
+<li>调用 <code>CALL dbms.killQueries([‘query-1’,‘query-2’])</code> 根据id杀掉 语句执行的进程</li>
+</ol>
+<h1 id="Neo4j备份"><a href="#Neo4j备份" class="headerlink" title="Neo4j备份"></a>Neo4j备份</h1><p>  Neo4j备份的内容是某一时刻的完整数据库</p>
+<p>  <code>CALL apoc.export.csv.all(&#39;/data/neo4j/export/graph_all.csv&#39;, null);</code>  全量export</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/03/neo4j-practice/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/07/13/java-basic-interview-questions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/07/13/java-basic-interview-questions/" class="post-title-link" itemprop="url">Java 基础 面试题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-07-13 23:20:22" itemprop="dateCreated datePublished" datetime="2018-07-13T23:20:22+08:00">2018-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/07/13/java-basic-interview-questions/" class="post-meta-item leancloud_visitors" data-flag-title="Java 基础 面试题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  转自 <a href="https://blog.csdn.net/sufu1065/article/details/88051083" target="_blank" rel="noopener">Java 最常见的 200+ 面试题：面试必备</a></p>
+<p>一、Java 基础</p>
+<p>1.JDK 和 JRE 有什么区别？</p>
+<p>2.== 和 equals 的区别是什么？</p>
+<p>3.两个对象的 hashCode()相同，则 equals()也一定为 true，对吗？</p>
+<p>4.final 在 java 中有什么作用？</p>
+<p>5.java 中的 Math.round(-1.5) 等于多少？</p>
+<p>6.String 属于基础的数据类型吗？</p>
+<p>7.java 中操作字符串都有哪些类？它们之间有什么区别？</p>
+<p>8.String str=”i”与 String str=new String(“i”)一样吗？</p>
+<p>9.如何将字符串反转？</p>
+<p>10.String 类的常用方法都有那些？</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/13/java-basic-interview-questions/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/07/12/universal-curd-interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/07/12/universal-curd-interface/" class="post-title-link" itemprop="url">万能 CURD 接口</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-07-12 15:59:24" itemprop="dateCreated datePublished" datetime="2018-07-12T15:59:24+08:00">2018-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/07/12/universal-curd-interface/" class="post-meta-item leancloud_visitors" data-flag-title="万能 CURD 接口" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  在实际的使用时，经常遇到这么一个问题，我要从某种数据库中查询出数据，但是不告诉你字段/属性。<br>  乍一看，这个怎么可能，不告诉我字段/属性，要把数据查出来，后来在github上看见一段代码，读了这段代码后恍然大悟。还是 too young to simple</p>
+<p>  原理是通过JDBC的getMetaData()方法来获取表结构，里面用到了反射 (进行了处理，高并发下还是不建议使用)<br>  比较重要的一点是查询的时候数据库有数据字典，可以根据数据字典获取所有字段/属性</p>
+<p>  实测，MySQL 可用<br>  代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.Connection;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通用接口&lt;br&gt;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> weikeqin.cn@gmail.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@version</span> V1.0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2017-07-11 15:12</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Executor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询接口</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sql    查询语句</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> params 占位符对应的参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> conn   连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Iterator&lt;LinkedHashMap&lt;String, Object&gt;&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    Iterator&lt;Map&lt;String, Object&gt;&gt; query(String sql, Map&lt;Integer, Object&gt; params, Connection conn) <span class="keyword">throws</span> SQLException;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * (单条)增删改接口</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sql    增删改语句</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> params 占位符对应的参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> conn   连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 操作的条数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">operat</span><span class="params">(String sql, Map&lt;Integer, Object&gt; params, Connection conn)</span> <span class="keyword">throws</span> SQLException</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 批量操作&lt;br&gt;</span></span><br><span class="line"><span class="comment">     * 大于等于0是成功处理的</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sql  增删改语句</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> list 占位符对应的参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> conn 连接</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> SQLException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@author</span> : weikeqin.cn@gmail.com</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@date</span> : 2017-09-08 14:47:15</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">int</span>[] betchOperat(String sql, List&lt;Map&lt;Integer, Object&gt;&gt; list, Connection conn) <span class="keyword">throws</span> SQLException;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/12/universal-curd-interface/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/07/08/software-engineer-knowledge/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -524,7 +1143,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-30 22:36:00" itemprop="dateModified" datetime="2020-05-30T22:36:00+08:00">2020-05-30</time>
+                <time title="修改时间：2020-06-19 11:53:43" itemprop="dateModified" datetime="2020-06-19T11:53:43+08:00">2020-06-19</time>
               </span>
 
           
@@ -571,523 +1190,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/16/springboot-error-note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/16/springboot-error-note/" class="post-title-link" itemprop="url">springboot error</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-05-16 10:28:03" itemprop="dateCreated datePublished" datetime="2018-05-16T10:28:03+08:00">2018-05-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-06 08:33:25" itemprop="dateModified" datetime="2020-06-06T08:33:25+08:00">2020-06-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/05/16/springboot-error-note/" class="post-meta-item leancloud_visitors" data-flag-title="springboot error" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-maven-plugins-maven-compiler-plugin-3-8-0-compile-failed-missing-org-objectweb-asm-ClassVisitor"><a href="#1-maven-plugins-maven-compiler-plugin-3-8-0-compile-failed-missing-org-objectweb-asm-ClassVisitor" class="headerlink" title="(1)  maven.plugins:maven-compiler-plugin:3.8.0:compile failed   missing: org/objectweb/asm/ClassVisitor"></a>(1)  maven.plugins:maven-compiler-plugin:3.8.0:compile failed   missing: org/objectweb/asm/ClassVisitor</h1><p>  在使用 springboot 2.1.3 后，开始出现这个问题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project model: Execution default-compile of goal org.apache.</span><br><span class="line">maven.plugins:maven-compiler-plugin:3.8.0:compile failed: Unable to load the mojo &apos;compile&apos; in the plugin &apos;org.apache.maven.plugins:maven-compiler-plugin:3.8.0&apos;. A required class is</span><br><span class="line">missing: org/objectweb/asm/ClassVisitor</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @  ---</span><br><span class="line">[WARNING] Error injecting: org.apache.maven.plugin.compiler.CompilerMojo</span><br><span class="line">com.google.inject.ProvisionException: Unable to provision, see the following errors:</span><br><span class="line"></span><br><span class="line">1) Error injecting constructor, java.lang.NoClassDefFoundError: org/objectweb/asm/ClassVisitor</span><br><span class="line">  at org.codehaus.plexus.languages.java.jpms.LocationManager.&lt;init&gt;(Unknown Source)</span><br></pre></td></tr></table></figure>
-<p>  maven-compiler-plugin 版本问题，指定版本</p>
-<p>  方法一，在pluginManagement指定</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.7.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>  方法二，在每个模块里手动指定<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">classifier</span>&gt;</span>exec<span class="tag">&lt;/<span class="name">classifier</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/16/springboot-error-note/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/10/elasticsearch-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/10/elasticsearch-notes/" class="post-title-link" itemprop="url">ElasticSearch 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-05-10 14:37:45" itemprop="dateCreated datePublished" datetime="2018-05-10T14:37:45+08:00">2018-05-10</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-30 22:39:18" itemprop="dateModified" datetime="2020-05-30T22:39:18+08:00">2020-05-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/05/10/elasticsearch-notes/" class="post-meta-item leancloud_visitors" data-flag-title="ElasticSearch 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> Elasticsearch 是一个分布式的开源搜索和分析引擎，适用于所有类型的数据，包括文本、数字、地理空间、结构化和非结构化数据。<br> Elasticsearch 是一个实时的分布式搜索分析引擎，它被用作全文检索、结构化搜索、分析以及这三个功能的组合。</p>
-</blockquote>
-<blockquote>
-<p> Elasticsearch 的用途是什么？<br> Elasticsearch 在速度和可扩展性方面都表现出色，而且还能够索引多种类型的内容，这意味着其可用于多种用例：<br> 应用程序搜索<br> 网站搜索<br> 企业搜索<br> 日志处理和分析<br> 基础设施指标和容器监测<br> 应用程序性能监测<br> 地理空间数据分析和可视化<br> 安全分析<br> 业务分析</p>
-</blockquote>
-<h1 id="基础入门"><a href="#基础入门" class="headerlink" title="基础入门"></a>基础入门</h1><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><p>  ElasticSearch下载完解压就可以使用，很方便。</p>
-<h3 id="官网下载地址"><a href="#官网下载地址" class="headerlink" title="官网下载地址"></a>官网下载地址</h3><p>  <a href="https://www.elastic.co/downloads/" target="_blank" rel="noopener">https://www.elastic.co/downloads/</a><br>  <a href="https://www.elastic.co/downloads/elasticsearch" target="_blank" rel="noopener">https://www.elastic.co/downloads/elasticsearch</a><br>  <a href="https://www.elastic.co/cn/downloads/elasticsearch" target="_blank" rel="noopener">https://www.elastic.co/cn/downloads/elasticsearch</a></p>
-<p>  <a href="https://www.elastic.co/downloads/past-releases/elasticsearch-5-6-3" target="_blank" rel="noopener">https://www.elastic.co/downloads/past-releases/elasticsearch-5-6-3</a><br>  <a href="https://www.elastic.co/downloads/past-releases/elasticsearch-6-6-2" target="_blank" rel="noopener">https://www.elastic.co/downloads/past-releases/elasticsearch-6-6-2</a><br>  <a href="https://www.elastic.co/downloads/past-releases#elasticsearch" target="_blank" rel="noopener">https://www.elastic.co/downloads/past-releases#elasticsearch</a></p>
-<p>  <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-linux-x86_64.tar.gz" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-linux-x86_64.tar.gz</a></p>
-<p>  <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-darwin-x86_64.tar.gz" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-darwin-x86_64.tar.gz</a></p>
-<p>  <a href="https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-windows-x86_64.zip" target="_blank" rel="noopener">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.5.1-windows-x86_64.zip</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/05/10/elasticsearch-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/distributed-question/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/20/distributed-question/" class="post-title-link" itemprop="url">分布式 常见面试题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-04-20 09:33:23" itemprop="dateCreated datePublished" datetime="2018-04-20T09:33:23+08:00">2018-04-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-19 09:06:29" itemprop="dateModified" datetime="2019-08-19T09:06:29+08:00">2019-08-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/distributed/" itemprop="url" rel="index"><span itemprop="name">distributed</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/04/20/distributed-question/" class="post-meta-item leancloud_visitors" data-flag-title="分布式 常见面试题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>什么是CAP定理？<br>说说CAP理论和BASE理论？<br>什么是最终一致性？最终一致性实现方式？<br>什么是一致性Hash？<br>讲讲分布式事务？<br>如何实现分布式锁？<br>如何实现分布式 Session?<br>如何保证消息的一致性?<br>负载均衡的理解？<br>正向代理和反向代理？<br>CDN实现原理？<br>怎么提升系统的QPS和吞吐？<br>Dubbo的底层实现原理和机制？<br>描述一个服务从发布到被消费的详细过程？<br>分布式系统怎么做服务治理？<br>消息中间件如何解决消息丢失问题？<br>Dubbo的服务请求失败怎么处理？<br>对分布式事务的理解？<br>如何实现负载均衡,有哪些算法可以实现?<br>Zookeeper的用途,选举的原理是什么?<br>讲讲数据的垂直拆分水平拆分？<br>zookeeper原理和适用场景？<br>zookeeper watch机制？<br>redis/zk节点宕机如何处理？<br>分布式集群下如何做到唯一序列号？<br>用过哪些MQ,怎么用的,和其他mq比较有什么优缺点,MQ的连接是线程安全的吗？<br>MQ系统的数据如何保证不丢失？<br>列举出能想到的数据库分库分表策略？</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/network-question/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/20/network-question/" class="post-title-link" itemprop="url">网络编程 常见面试题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-04-20 09:32:29" itemprop="dateCreated datePublished" datetime="2018-04-20T09:32:29+08:00">2018-04-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-19 09:06:29" itemprop="dateModified" datetime="2019-08-19T09:06:29+08:00">2019-08-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/network/" itemprop="url" rel="index"><span itemprop="name">network</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/04/20/network-question/" class="post-meta-item leancloud_visitors" data-flag-title="网络编程 常见面试题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>TCP建立连接和断开连接的过程？<br>HTTP协议的交互流程，HTTP和HTTPS的差异，SSL的交互流程？<br>TCP的滑动窗口协议有什么用？<br>HTTP协议都有哪些方法？<br>Socket交互的基本流程？<br>讲讲tcp协议（建连过程，慢启动，滑动窗口，七层模型）？<br>webservice协议（wsdl/soap格式，与restt办议的区别）？<br>说说Netty线程模型，什么是零拷贝？<br>TCP三次握手、四次挥手？<br>DNS解析过程？<br>TCP如何保证数据的可靠传输的？</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/redis-question/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/20/redis-question/" class="post-title-link" itemprop="url">redis 常见面试题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-04-20 09:32:09" itemprop="dateCreated datePublished" datetime="2018-04-20T09:32:09+08:00">2018-04-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-17 21:57:26" itemprop="dateModified" datetime="2019-12-17T21:57:26+08:00">2019-12-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/04/20/redis-question/" class="post-meta-item leancloud_visitors" data-flag-title="redis 常见面试题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>redis数据结构有哪些？<br>Redis缓存穿透，缓存雪崩？<br>如何使用Redis来实现分布式锁？<br>Redis的并发竞争问题如何解决？<br>Redis持久化的几种方式，优缺点是什么，怎么实现的？<br>Redis的缓存失效策略？<br>Redis集群，高可用，原理？<br>Redis缓存分片？<br>Redis的数据淘汰策略？<br>redis队列应用场景？<br>分布式使用场景（储存session）？</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/mysql-question/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/20/mysql-question/" class="post-title-link" itemprop="url">mysql 常见面试题</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-04-20 09:32:00" itemprop="dateCreated datePublished" datetime="2018-04-20T09:32:00+08:00">2018-04-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-08-19 09:06:29" itemprop="dateModified" datetime="2019-08-19T09:06:29+08:00">2019-08-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/04/20/mysql-question/" class="post-meta-item leancloud_visitors" data-flag-title="mysql 常见面试题" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>MySQL 有哪些存储引擎啊？都有什么区别？<br>Float、Decimal 存储金额的区别？<br>Datetime、Timestamp 存储时间的区别？<br>Char、Varchar、Varbinary 存储字符的区别？<br>对比一下B+树索引和 Hash索引？<br>MySQL索引类型有？<br>如何管理 MySQL索引？<br>对Explain参数及重要参数的理解？<br>索引利弊是什么及索引分类？<br>聚簇索引和非聚簇索引的区别？<br>B+tree 如何进行优化？索引遵循哪些原则？<br>索引与锁有什么关系？<br>还有什么其他的索引类型，各自索引有哪些优缺点？<br>谈谈对Innodb事务的理解？<br>说说数据库事务特点及潜在问题？<br>什么是MySQL隔离级别？<br>有多少种事务失效的场景，如何解决？<br>一致性非锁定读和一致性锁定读是什么？<br>Innodb如何解决幻读？<br>讲讲Innodb行锁？<br>死锁及监控是什么？<br>自增长与锁 ，锁的算法，锁问题，锁升级是什么？<br>乐观锁的线程如何做失败补偿？<br>高并发场景（领红包）如何防止死锁，保证数据一致性？<br>谈谈MySQL的锁并发？<br>查询优化的基本思路是什么？<br>说说MySQL读写分离、分库分表？<br>表结构对性能有什么影响?<br>浅谈索引优化？<br>说说Sql优化的几点原则？<br>MySQL表设计及规范？<br>说说MySQL几种存储引擎应用场景？<br>MySQL常用优化方式有哪些？<br>MySQL常用监控？<br>MySQL瓶颈分析？</p>
-
       
     </div>
 
@@ -1171,20 +1273,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

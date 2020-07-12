@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"weikeqin.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"4MYO215Y0R","apiKey":"63ec2e526818df599ef4caa3c72f3459","indexName":"weikeqin","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="(1) 内存模型  在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？    在处理器层面上，内存模型定义了一个充要条件，“让当前的">
-<meta name="keywords" content="java,concurrent">
+  <meta name="description" content="(1) 内存模型  在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？    在处理器层面上，内存模型定义了一个充要条件，”让当前的">
+<meta name="keywords" content="java,concurrent,model,jvm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java内存模型">
 <meta property="og:url" content="http://weikeqin.com/2020/02/03/java-mermory-model/index.html">
 <meta property="og:site_name" content="沧海一粟">
-<meta property="og:description" content="(1) 内存模型  在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？    在处理器层面上，内存模型定义了一个充要条件，“让当前的">
+<meta property="og:description" content="(1) 内存模型  在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？    在处理器层面上，内存模型定义了一个充要条件，”让当前的">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-02T15:11:11.470Z">
+<meta property="og:updated_time" content="2020-06-15T02:20:44.447Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java内存模型">
-<meta name="twitter:description" content="(1) 内存模型  在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？    在处理器层面上，内存模型定义了一个充要条件，“让当前的">
+<meta name="twitter:description" content="(1) 内存模型  在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？    在处理器层面上，内存模型定义了一个充要条件，”让当前的">
 
 <link rel="canonical" href="http://weikeqin.com/2020/02/03/java-mermory-model/">
 
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-02 23:11:11" itemprop="dateModified" datetime="2020-06-02T23:11:11+08:00">2020-06-02</time>
+                <time title="修改时间：2020-06-15 10:20:44" itemprop="dateModified" datetime="2020-06-15T10:20:44+08:00">2020-06-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -284,11 +284,34 @@
 <p> 在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？</p>
 </blockquote>
 <blockquote>
-<p> 在处理器层面上，内存模型定义了一个充要条件，“让当前的处理器可以看到其他处理器写入到内存的数据”以及“其他处理器可以看到当前处理器写入到内存的数据”。有些处理器有很强的内存模型(strong memory model)，能够让所有的处理器在任何时候任何指定的内存地址上都可以看到完全相同的值。而另外一些处理器则有较弱的内存模型（weaker memory model），在这种处理器中，必须使用内存屏障（一种特殊的指令）来刷新本地处理器缓存并使本地处理器缓存无效，目的是为了让当前处理器能够看到其他处理器的写操作或者让其他处理器能看到当前处理器的写操作。这些内存屏障通常在lock和unlock操作的时候完成。内存屏障在高级语言中对程序员是不可见的。</p>
+<p> 在处理器层面上，内存模型定义了一个充要条件，”让当前的处理器可以看到其他处理器写入到内存的数据”以及”其他处理器可以看到当前处理器写入到内存的数据”。有些处理器有很强的内存模型(strong memory model)，能够让所有的处理器在任何时候任何指定的内存地址上都可以看到完全相同的值。而另外一些处理器则有较弱的内存模型（weaker memory model），在这种处理器中，必须使用内存屏障（一种特殊的指令）来刷新本地处理器缓存并使本地处理器缓存无效，目的是为了让当前处理器能够看到其他处理器的写操作或者让其他处理器能看到当前处理器的写操作。这些内存屏障通常在lock和unlock操作的时候完成。内存屏障在高级语言中对程序员是不可见的。</p>
+</blockquote>
+<p>由于减少了对内存屏障的需求，有时为强内存模型编写程序可能会更容易。但是，即使在某些最强大的内存模型上，也经常需要使用内存屏障。它们的放置经常违反直觉。处理器设计的最新趋势鼓励使用较弱的内存模型，因为它们对缓存一致性的放松使得跨多个处理器的可伸缩性和内存量更大。</p>
+<blockquote>
+<p> 在强内存模型下，有时候编写程序可能会更容易，因为减少了对内存屏障的依赖。但是即使在一些最强的内存模型下，内存屏障仍然是必须的。设置内存屏障往往与我们的直觉并不一致。近来处理器设计的趋势更倾向于弱的内存模型，因为弱内存模型削弱了缓存一致性，所以在多处理器平台和更大容量的内存下可以实现更好的可伸缩性</p>
+</blockquote>
+<blockquote>
+<p> “一个线程的写操作对其他线程可见”这个问题是因为编译器对代码进行重排序导致的。例如，只要代码移动不会改变程序的语义，当编译器认为程序中移动一个写操作到后面会更有效的时候，编译器就会对代码进行移动。如果编译器推迟执行一个操作，其他线程可能在这个操作执行完之前都不会看到该操作的结果，这反映了缓存的影响。</p>
+</blockquote>
+<p>此外，写入内存的操作能够被移动到程序里更前的时候。在这种情况下，其他的线程在程序中可能看到一个比它实际发生更早的写操作。所有的这些灵活性的设计是为了通过给编译器，运行时或硬件灵活性使其能在最佳顺序的情况下来执行操作。在内存模型的限定之内，我们能够获取到更高的性能。</p>
+<blockquote>
+<p> In multiprocessor systems, processors generally have one or more layers of memory cache, which improves performance both by speeding access to data (because the data is closer to the processor) and reducing traffic on the shared memory bus (because many memory operations can be satisfied by local caches.) Memory caches can improve performance tremendously, but they present a host of new challenges. What, for example, happens when two processors examine the same memory location at the same time? Under what conditions will they see the same value?</p>
+</blockquote>
+<blockquote>
+<p> At the processor level, a memory model defines necessary and sufficient conditions for knowing that writes to memory by other processors are visible to the current processor, and writes by the current processor are visible to other processors. Some processors exhibit a strong memory model, where all processors see exactly the same value for any given memory location at all times. Other processors exhibit a weaker memory model, where special instructions, called memory barriers, are required to flush or invalidate the local processor cache in order to see writes made by other processors or make writes by this processor visible to others. These memory barriers are usually performed when lock and unlock actions are taken; they are invisible to programmers in a high level language.</p>
+</blockquote>
+<blockquote>
+<p> It can sometimes be easier to write programs for strong memory models, because of the reduced need for memory barriers. However, even on some of the strongest memory models, memory barriers are often necessary; quite frequently their placement is counterintuitive. Recent trends in processor design have encouraged weaker memory models, because the relaxations they make for cache consistency allow for greater scalability across multiple processors and larger amounts of memory.</p>
+</blockquote>
+<blockquote>
+<p> The issue of when a write becomes visible to another thread is compounded by the compiler’s reordering of code. For example, the compiler might decide that it is more efficient to move a write operation later in the program; as long as this code motion does not change the program’s semantics, it is free to do so.  If a compiler defers an operation, another thread will not see it until it is performed; this mirrors the effect of caching.</p>
+</blockquote>
+<blockquote>
+<p> Moreover, writes to memory can be moved earlier in a program; in this case, other threads might see a write before it actually “occurs” in the program.  All of this flexibility is by design – by giving the compiler, runtime, or hardware the flexibility to execute operations in the optimal order, within the bounds of the memory model, we can achieve higher performance.</p>
 </blockquote>
 <a id="more"></a>
 <h1 id="2-Java内存模型"><a href="#2-Java内存模型" class="headerlink" title="(2) Java内存模型"></a>(2) Java内存模型</h1><h2 id="2-1-什么是Java内存模型"><a href="#2-1-什么是Java内存模型" class="headerlink" title="(2.1) 什么是Java内存模型"></a>(2.1) 什么是Java内存模型</h2><blockquote>
-<p> 本质上可以理解为 Java 内存模型规范了 JVM 如何提供按需禁用缓存和编译优化的方法。具体来说，这些方法包括 volatile、synchronized 和 final 三个关键字，以及六项 Happens-Before 规则。</p>
+<p> 本质上可以理解为 Java 内存模型规范了 JVM 如何提供按需禁用缓存和编译优化的方法。<br> 具体来说，这些方法包括 volatile、synchronized 和 final 三个关键字，以及六项 Happens-Before 规则。</p>
 </blockquote>
 <h2 id="2-2-Java内存模型解决了什么问题"><a href="#2-2-Java内存模型解决了什么问题" class="headerlink" title="(2.2) Java内存模型解决了什么问题"></a>(2.2) Java内存模型解决了什么问题</h2><blockquote>
 <p> Java内存模型解决了Java并发编程里的<code>可见性</code>和<code>有序性</code>问题</p>
@@ -337,7 +360,7 @@
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Thread B = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">  <span class="comment">// 此处对共享变量var修改</span></span><br><span class="line">  var = <span class="number">66</span>;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 例如此处对共享变量修改，</span></span><br><span class="line"><span class="comment">// 则这个修改结果对线程B可见</span></span><br><span class="line"><span class="comment">// 主线程启动子线程</span></span><br><span class="line">B.start();</span><br><span class="line">B.join()</span><br><span class="line"><span class="comment">// 子线程所有对共享变量的修改</span></span><br><span class="line"><span class="comment">// 在主线程调用B.join()之后皆可见</span></span><br><span class="line"><span class="comment">// 此例中，var==66</span></span><br></pre></td></tr></table></figure>
 <p>再送一个<br>  对象终结规则：一个对象的初始化完成(构造函数执行结束)先行发生于它的finalize()方法的开始。</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] 《深入理解Java虚拟机》 周志明<br>[2] <a href="https://time.geekbang.org/column/article/84017" target="_blank" rel="noopener">02 | Java内存模型：看Java如何解决可见性和有序性问题</a><br>[3] <a href="http://ifeve.com/jmm-faq/" target="_blank" rel="noopener">Java内存模型FAQ</a><br>[4] <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/jsr-133-faq.html" target="_blank" rel="noopener">jsr-133-faq.html</a><br>[5] <a href="https://www.cs.umd.edu/~pugh/java/memoryModel/jsr133.pdf" target="_blank" rel="noopener">jsr133.pdf</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] 《深入理解Java虚拟机》 周志明<br>[2] <a href="https://time.geekbang.org/column/article/84017" target="_blank" rel="noopener">02 | Java内存模型：看Java如何解决可见性和有序性问题</a><br>[3] <a href="http://ifeve.com/jmm-faq/" target="_blank" rel="noopener">Java内存模型FAQ</a><br>[4] <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/jsr-133-faq.html" target="_blank" rel="noopener">JSR 133 (Java Memory Model) FAQ</a><br>[5] <a href="https://www.cs.umd.edu/~pugh/java/memoryModel/jsr133.pdf" target="_blank" rel="noopener">jsr133.pdf</a></p>
 
     </div>
 
@@ -349,6 +372,8 @@
           <div class="post-tags">
               <a href="/tags/java/" rel="tag"># java</a>
               <a href="/tags/concurrent/" rel="tag"># concurrent</a>
+              <a href="/tags/model/" rel="tag"># model</a>
+              <a href="/tags/jvm/" rel="tag"># jvm</a>
           </div>
 
         
@@ -436,20 +461,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">181</span>
+          <span class="site-state-item-count">187</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">100</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
