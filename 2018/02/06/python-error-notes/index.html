@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="(1)　command ‘C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\x86_amd64\cl.exe’ failed with exit status 4  把cl.exe所在目录添加到环境变量里    C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin 安">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-16T02:17:14.973Z">
+<meta property="og:updated_time" content="2020-08-05T11:46:04.687Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python-error-notes">
 <meta name="twitter:description" content="(1)　command ‘C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\x86_amd64\cl.exe’ failed with exit status 4  把cl.exe所在目录添加到环境变量里    C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin 安">
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-16 10:17:14" itemprop="dateModified" datetime="2020-03-16T10:17:14+08:00">2020-03-16</time>
+                <time title="修改时间：2020-08-05 19:46:04" itemprop="dateModified" datetime="2020-08-05T19:46:04+08:00">2020-08-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -317,6 +317,14 @@
 <blockquote>
 <p> 解决办法<br>  <code>pip install --upgrade urllib3</code><br>  <code>pip install --upgrade requests</code></p>
 </blockquote>
+<h1 id="8-TypeError-bad-operand-type-for-unary-‘str’"><a href="#8-TypeError-bad-operand-type-for-unary-‘str’" class="headerlink" title="(8) TypeError: bad operand type for unary +: ‘str’"></a>(8) TypeError: bad operand type for unary +: ‘str’</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: bad operand type for unary +: &apos;str&apos;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>没有把一元运算符做字符串，加个括号解决 </li>
+<li>拼接字符串的时候多<code>,</code>导致语义发生变化   <code>sql = (&quot; insert into t1 (brand_id, brand_name) values ( &quot; + str(brand_id) + &quot;, &#39; &quot; + brand_name, +&quot;&#39;,  &#39;M&#39;) ; \r\n&quot;)</code> brand_name后多了一个<code>,</code></li>
+<li>换行时拼接错误导致，如下，<code>+ \</code> 应该把 <code>+</code>  去掉</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">moto_sql = ( &quot; insert into t ( brand_id, brand_name) values ( &quot;  + \</span><br><span class="line">           + str(brand_id) + &quot;, &apos;&quot; + brand_name +&quot;&apos; ; &quot;</span><br></pre></td></tr></table></figure>
+<p>  python这个太头疼了</p>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://stackoverflow.com/questions/41724445/python-pip-on-windows-command-cl-exe-failed" target="_blank" rel="noopener">python-pip-on-windows-command-cl-exe-failed</a><br>[2] <a href="https://wiki.python.org/moin/WindowsCompilers" target="_blank" rel="noopener">WindowsCompilers</a><br>[3] <a href="https://stackoverflow.com/questions/21343774/importerror-no-module-named-win32api" target="_blank" rel="noopener">importerror-no-module-named-win32api</a><br>[4] <a href="https://blog.csdn.net/blueheart20/article/details/69704518" target="_blank" rel="noopener">Python解析json之ValueError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)</a><br>[5] <a href="https://blog.csdn.net/weixin_41917563/article/details/79972848" target="_blank" rel="noopener">requests请求出现RequestsDependencyWarning异常</a></p>
 
     </div>
@@ -401,7 +409,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-command-‘C-Program-Files-x86-Microsoft-Visual-Studio-14-0-VC-BIN-x86-amd64-cl-exe’-failed-with-exit-status-4"><span class="nav-number">1.</span> <span class="nav-text">(1)　command ‘C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\x86_amd64\cl.exe’ failed with exit status 4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-UnicodeDecodeError-‘utf-8’-codec-can’t-decode-byte-0xb6-in-position-30-invalid-start-byte"><span class="nav-number">2.</span> <span class="nav-text">(2)　UnicodeDecodeError: ‘utf-8’ codec can’t decode byte 0xb6 in position 30: invalid start byte</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-ModuleNotFoundError-No-module-named-‘win32api’"><span class="nav-number">3.</span> <span class="nav-text">(3)　ModuleNotFoundError: No module named ‘win32api’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-UnicodeEncodeError-‘gbk’-codec-can’t-encode-character-‘-u2022’-in-position-4030-illegal-multibyte-sequence"><span class="nav-number">4.</span> <span class="nav-text">(4) UnicodeEncodeError: ‘gbk’ codec can’t encode character ‘\u2022’ in position 4030: illegal multibyte sequence</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-an-integer-is-required-when-open-’ing-a-file-as-utf-8"><span class="nav-number">5.</span> <span class="nav-text">(5) an integer is required when open()’ing a file as utf-8</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-json-decoder-JSONDecodeError-Expecting-property-name-enclosed-in-double-quotes-line-1-column-2-char-1"><span class="nav-number">6.</span> <span class="nav-text">(6) json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-RequestsDependencyWarning-urllib3-1-24-3-or-chardet-3-0-4-doesn’t-match-a-supported-version"><span class="nav-number">7.</span> <span class="nav-text">(7) RequestsDependencyWarning: urllib3 (1.24.3) or chardet (3.0.4) doesn’t match a supported version!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">8.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-command-‘C-Program-Files-x86-Microsoft-Visual-Studio-14-0-VC-BIN-x86-amd64-cl-exe’-failed-with-exit-status-4"><span class="nav-number">1.</span> <span class="nav-text">(1)　command ‘C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\BIN\x86_amd64\cl.exe’ failed with exit status 4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-UnicodeDecodeError-‘utf-8’-codec-can’t-decode-byte-0xb6-in-position-30-invalid-start-byte"><span class="nav-number">2.</span> <span class="nav-text">(2)　UnicodeDecodeError: ‘utf-8’ codec can’t decode byte 0xb6 in position 30: invalid start byte</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-ModuleNotFoundError-No-module-named-‘win32api’"><span class="nav-number">3.</span> <span class="nav-text">(3)　ModuleNotFoundError: No module named ‘win32api’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-UnicodeEncodeError-‘gbk’-codec-can’t-encode-character-‘-u2022’-in-position-4030-illegal-multibyte-sequence"><span class="nav-number">4.</span> <span class="nav-text">(4) UnicodeEncodeError: ‘gbk’ codec can’t encode character ‘\u2022’ in position 4030: illegal multibyte sequence</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-an-integer-is-required-when-open-’ing-a-file-as-utf-8"><span class="nav-number">5.</span> <span class="nav-text">(5) an integer is required when open()’ing a file as utf-8</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-json-decoder-JSONDecodeError-Expecting-property-name-enclosed-in-double-quotes-line-1-column-2-char-1"><span class="nav-number">6.</span> <span class="nav-text">(6) json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-RequestsDependencyWarning-urllib3-1-24-3-or-chardet-3-0-4-doesn’t-match-a-supported-version"><span class="nav-number">7.</span> <span class="nav-text">(7) RequestsDependencyWarning: urllib3 (1.24.3) or chardet (3.0.4) doesn’t match a supported version!</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-TypeError-bad-operand-type-for-unary-‘str’"><span class="nav-number">8.</span> <span class="nav-text">(8) TypeError: bad operand type for unary +: ‘str’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">9.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -415,20 +423,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

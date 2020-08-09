@@ -210,6 +210,879 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/03/java-mermory-model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/03/java-mermory-model/" class="post-title-link" itemprop="url">Java内存模型</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-03 10:34:22" itemprop="dateCreated datePublished" datetime="2020-02-03T10:34:22+08:00">2020-02-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-27 21:55:19" itemprop="dateModified" datetime="2020-07-27T21:55:19+08:00">2020-07-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/02/03/java-mermory-model/" class="post-meta-item leancloud_visitors" data-flag-title="Java内存模型" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-内存模型"><a href="#1-内存模型" class="headerlink" title="(1) 内存模型"></a>(1) 内存模型</h1><blockquote>
+<p> 在多核系统中，处理器一般有一层或者多层的缓存，这些的缓存通过加速数据访问（因为数据距离处理器更近）和降低共享内存在总线上的通讯（因为本地缓存能够满足许多内存操作）来提高CPU性能。缓存能够大大提升性能，但是它们也带来了许多挑战。例如，当两个CPU同时检查相同的内存地址时会发生什么？在什么样的条件下它们会看到相同的值？</p>
+</blockquote>
+<blockquote>
+<p> 在处理器层面上，内存模型定义了一个充要条件，”让当前的处理器可以看到其他处理器写入到内存的数据”以及”其他处理器可以看到当前处理器写入到内存的数据”。有些处理器有很强的内存模型(strong memory model)，能够让所有的处理器在任何时候任何指定的内存地址上都可以看到完全相同的值。而另外一些处理器则有较弱的内存模型（weaker memory model），在这种处理器中，必须使用内存屏障（一种特殊的指令）来刷新本地处理器缓存并使本地处理器缓存无效，目的是为了让当前处理器能够看到其他处理器的写操作或者让其他处理器能看到当前处理器的写操作。这些内存屏障通常在lock和unlock操作的时候完成。内存屏障在高级语言中对程序员是不可见的。</p>
+</blockquote>
+<p>由于减少了对内存屏障的需求，有时为强内存模型编写程序可能会更容易。但是，即使在某些最强大的内存模型上，也经常需要使用内存屏障。它们的放置经常违反直觉。处理器设计的最新趋势鼓励使用较弱的内存模型，因为它们对缓存一致性的放松使得跨多个处理器的可伸缩性和内存量更大。</p>
+<blockquote>
+<p> 在强内存模型下，有时候编写程序可能会更容易，因为减少了对内存屏障的依赖。但是即使在一些最强的内存模型下，内存屏障仍然是必须的。设置内存屏障往往与我们的直觉并不一致。近来处理器设计的趋势更倾向于弱的内存模型，因为弱内存模型削弱了缓存一致性，所以在多处理器平台和更大容量的内存下可以实现更好的可伸缩性</p>
+</blockquote>
+<blockquote>
+<p> “一个线程的写操作对其他线程可见”这个问题是因为编译器对代码进行重排序导致的。例如，只要代码移动不会改变程序的语义，当编译器认为程序中移动一个写操作到后面会更有效的时候，编译器就会对代码进行移动。如果编译器推迟执行一个操作，其他线程可能在这个操作执行完之前都不会看到该操作的结果，这反映了缓存的影响。</p>
+</blockquote>
+<p>此外，写入内存的操作能够被移动到程序里更前的时候。在这种情况下，其他的线程在程序中可能看到一个比它实际发生更早的写操作。所有的这些灵活性的设计是为了通过给编译器，运行时或硬件灵活性使其能在最佳顺序的情况下来执行操作。在内存模型的限定之内，我们能够获取到更高的性能。</p>
+<blockquote>
+<p> In multiprocessor systems, processors generally have one or more layers of memory cache, which improves performance both by speeding access to data (because the data is closer to the processor) and reducing traffic on the shared memory bus (because many memory operations can be satisfied by local caches.) Memory caches can improve performance tremendously, but they present a host of new challenges. What, for example, happens when two processors examine the same memory location at the same time? Under what conditions will they see the same value?</p>
+</blockquote>
+<blockquote>
+<p> At the processor level, a memory model defines necessary and sufficient conditions for knowing that writes to memory by other processors are visible to the current processor, and writes by the current processor are visible to other processors. Some processors exhibit a strong memory model, where all processors see exactly the same value for any given memory location at all times. Other processors exhibit a weaker memory model, where special instructions, called memory barriers, are required to flush or invalidate the local processor cache in order to see writes made by other processors or make writes by this processor visible to others. These memory barriers are usually performed when lock and unlock actions are taken; they are invisible to programmers in a high level language.</p>
+</blockquote>
+<blockquote>
+<p> It can sometimes be easier to write programs for strong memory models, because of the reduced need for memory barriers. However, even on some of the strongest memory models, memory barriers are often necessary; quite frequently their placement is counterintuitive. Recent trends in processor design have encouraged weaker memory models, because the relaxations they make for cache consistency allow for greater scalability across multiple processors and larger amounts of memory.</p>
+</blockquote>
+<blockquote>
+<p> The issue of when a write becomes visible to another thread is compounded by the compiler’s reordering of code. For example, the compiler might decide that it is more efficient to move a write operation later in the program; as long as this code motion does not change the program’s semantics, it is free to do so.  If a compiler defers an operation, another thread will not see it until it is performed; this mirrors the effect of caching.</p>
+</blockquote>
+<blockquote>
+<p> Moreover, writes to memory can be moved earlier in a program; in this case, other threads might see a write before it actually “occurs” in the program.  All of this flexibility is by design – by giving the compiler, runtime, or hardware the flexibility to execute operations in the optimal order, within the bounds of the memory model, we can achieve higher performance.</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/03/java-mermory-model/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/02/java-concurrent-programming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/02/java-concurrent-programming/" class="post-title-link" itemprop="url">java并发编程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-02 22:07:56" itemprop="dateCreated datePublished" datetime="2020-02-02T22:07:56+08:00">2020-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-01 18:44:31" itemprop="dateModified" datetime="2020-07-01T18:44:31+08:00">2020-07-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/02/02/java-concurrent-programming/" class="post-meta-item leancloud_visitors" data-flag-title="java并发编程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> 为什么要使用并发编程?</p>
+<ol>
+<li>随着硬件的发展，互联网系统并发量轻松过百万，传统的中间件和数据库已经不能满足需求，成为瓶颈所在。</li>
+<li>很多情况下，服务器的资源使用率并不高，导致资源浪费，比如线上服务器的CPU使用率经常是10%，并发编程可以提高资源使用率。</li>
+</ol>
+</blockquote>
+<blockquote>
+<p> 但是在并发编程里，很多单线程的规则不太适用，就像汽车的用法不适用飞机一样。</p>
+</blockquote>
+<blockquote>
+<p> 在并发编程里，经常遇到很多诡异的bug，这些bug大多可能是逻辑问题或者是对使用的技术不了解导致的。</p>
+</blockquote>
+<h1 id="并发编程的三个核心问题"><a href="#并发编程的三个核心问题" class="headerlink" title="并发编程的三个核心问题"></a>并发编程的三个核心问题</h1><blockquote>
+<p> 并发编程可以总结为三个核心问题：分工、同步、互斥。</p>
+</blockquote>
+<blockquote>
+<p> Java SDK 并发包很大部分内容都是按照这三个维度组织的</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/02/java-concurrent-programming/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/" class="post-title-link" itemprop="url">新冠形病毒疫情传染数据模拟</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-02 15:42:33" itemprop="dateCreated datePublished" datetime="2020-02-02T15:42:33+08:00">2020-02-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-17 16:09:43" itemprop="dateModified" datetime="2020-02-17T16:09:43+08:00">2020-02-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/data/" itemprop="url" rel="index"><span itemprop="name">data</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/" class="post-meta-item leancloud_visitors" data-flag-title="新冠形病毒疫情传染数据模拟" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  新冠形病毒(Novel Conronavirus Pneumonia)疫情数据模拟。</p>
+<p>  该模拟参考网上公开数据，模拟(数据可能不准确)只是为了让大家心里有个数，不要出门或尽量少出门。<br>  由于建模使用数据误差较大，结果仅供参考。</p>
+<p>  需要数据 </p>
+<ol>
+<li>全国人口统计数据</li>
+<li>行政区划分数据</li>
+<li>人口流动数据</li>
+<li>全国各小区数据</li>
+<li>高考各大高校录取数据</li>
+<li><p>疫情数据 ( 卫健委公布的各省市确诊人数、 同行数据 )</p>
+<p>使模型更加准确所需数据</p>
+</li>
+<li>通信运营商数据  (从2019.12.01~2020.02.16 用于通过手机定位)<br>中国联通已经开始行动了，发送 cxmyd#身份证后四位 到 10010 可查询近14日内到访的省市信息(驻留超过4小时)，公益服务。</li>
+<li><p>确诊人数经纬度坐标数据  (用于预防)</p>
+<p>使模型更加准确需要优化的点：</p>
+</li>
+<li>数据层面<br>人口数据更详细，具体到 城市具体到街道、小区，城镇具体到 村 甚至 小组。<br>人口流动数据更详细， @通信运营商@中国电信@中国移动@中国联通@今日头条@美团@阿里巴巴@京东</li>
+<li>建模层面<br>数据统计需要耗费大量人力物力，不可能做到100%<br>在当前数据的情况下，需要部分数据缺失，部分数据延迟<br>根据 概率论和数理统计 以及 离散数学 去估计、模拟可能的情况。         </li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/02/02/novel-coronavirus-pneumonia-infection-data-simulation/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/21/elasticsearch-mapping-analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/21/elasticsearch-mapping-analysis/" class="post-title-link" itemprop="url">elasticsearch 映射和分析</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-01-21 10:12:46 / 修改时间：19:23:04" itemprop="dateCreated datePublished" datetime="2020-01-21T10:12:46+08:00">2020-01-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/01/21/elasticsearch-mapping-analysis/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 映射和分析" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  当摆弄索引里面的数据时，我们发现一些奇怪的事情。一些事情看起来被打乱了：在我们的索引中有12条推文，其中只有一条包含日期 2014-09-15 ，但是看一看下面查询命中的 总数 （total）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET /_search?q=2014              # 12 results</span><br><span class="line">GET /_search?q=2014-09-15        # 12 results !</span><br><span class="line">GET /_search?q=date:2014-09-15   # 1  result</span><br><span class="line">GET /_search?q=date:2014         # 0  results !</span><br></pre></td></tr></table></figure>
+<p>  为什么在 _all 字段查询日期返回所有推文，而在 date 字段只查询年份却没有返回结果？为什么我们在 _all 字段和 date 字段的查询结果有差别？<br>  因为数据在 _all 字段与 date 字段的索引方式不同。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/21/elasticsearch-mapping-analysis/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/20/elasticsearch-search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/20/elasticsearch-search/" class="post-title-link" itemprop="url">elasticsearch-search</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-20 18:22:49" itemprop="dateCreated datePublished" datetime="2020-01-20T18:22:49+08:00">2020-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-21 11:36:44" itemprop="dateModified" datetime="2020-01-21T11:36:44+08:00">2020-01-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/01/20/elasticsearch-search/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch-search" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p> search 最基本的工具</p>
+<p>  Elasticsearch 不只会<em>存储（stores）</em> 文档，为了能被搜索到也会为文档添加<em>索引（indexes）</em> ，这也是为什么我们使用结构化的 JSON 文档，而不是无结构的二进制数据。</p>
+<p>  文档中的每个字段都将被索引并且可以被查询 。不仅如此，在简单查询时，Elasticsearch 可以使用 所有（all） 这些索引字段，以惊人的速度返回结果。</p>
+<p>搜索（search） 可以做到：<br>    在类似于 gender 或者 age 这样的字段上使用结构化查询，join_date 这样的字段上使用排序，就像SQL的结构化查询一样。<br>    全文检索，找出所有匹配关键字的文档并按照<em>相关性（relevance）</em> 排序后返回结果。<br>    以上二者兼而有之。</p>
+<p>很多搜索都是开箱即用的，为了充分挖掘 Elasticsearch 的潜力，你需要理解以下三个概念：</p>
+<p>映射（Mapping）<br>    描述数据在每个字段内如何存储<br>分析（Analysis）<br>    全文是如何处理使之可以被搜索的<br>领域特定查询语言（Query DSL）<br>    Elasticsearch 中强大灵活的查询语言 </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/20/elasticsearch-search/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/20/elasticsearch-distributed-docs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/20/elasticsearch-distributed-docs/" class="post-title-link" itemprop="url">elasticsearch 分布式文档存储</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-20 16:41:10" itemprop="dateCreated datePublished" datetime="2020-01-20T16:41:10+08:00">2020-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-21 10:50:21" itemprop="dateModified" datetime="2020-01-21T10:50:21+08:00">2020-01-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/01/20/elasticsearch-distributed-docs/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 分布式文档存储" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  文件是如何分布到集群的，又是如何从集群中获取的。</p>
+<h1 id="1-路由一个文档到一个分片中"><a href="#1-路由一个文档到一个分片中" class="headerlink" title="(1) 路由一个文档到一个分片中"></a>(1) 路由一个文档到一个分片中</h1><p>  当索引一个文档的时候，文档会被存储到一个主分片中。<br>  这个过程是根据下面这个公式决定的：<br>  <code>shard = hash(routing) % number_of_primary_shards</code></p>
+<p>  routing 是一个可变值，默认是文档的 _id ，也可以设置成一个自定义的值。 routing 通过 hash 函数生成一个数字，然后这个数字再除以 number_of_primary_shards （主分片的数量）后得到 余数 。这个分布在 0 到 number_of_primary_shards-1 之间的余数，就是我们所寻求的文档所在分片的位置。</p>
+<p>  这就解释了为什么我们要在创建索引的时候就确定好主分片的数量 并且永远不会改变这个数量：因为如果数量变化了，那么所有之前路由的值都会无效，文档也再也找不到了。</p>
+<p>  所有的文档 API（ get 、 index 、 delete 、 bulk 、 update 以及 mget ）都接受一个叫做 routing 的路由参数 ，通过这个参数我们可以自定义文档到分片的映射。一个自定义的路由参数可以用来确保所有相关的文档——例如所有属于同一个用户的文档——都被存储到同一个分片中。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/20/elasticsearch-distributed-docs/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/20/elasticsearch-data-in-data-out/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/20/elasticsearch-data-in-data-out/" class="post-title-link" itemprop="url">elasticsearch 数据输入和输出</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-20 11:26:55" itemprop="dateCreated datePublished" datetime="2020-01-20T11:26:55+08:00">2020-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-21 10:50:09" itemprop="dateModified" datetime="2020-01-21T10:50:09+08:00">2020-01-21</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/01/20/elasticsearch-data-in-data-out/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 数据输入和输出" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  Elastcisearch 是分布式的 文档 存储。它能存储和检索复杂的数据结构—​序列化成为JSON文档—​以 实时 的方式。 换句话说，一旦一个文档被存储在 Elasticsearch 中，它就是可以被集群中的任意节点检索到。</p>
+<p>  在 Elasticsearch 中， 每个字段的所有数据 都是 默认被索引的 。 即每个字段都有为了快速检索设置的专用倒排索引。而且，不像其他多数的数据库，它能在 同一个查询中 使用所有这些倒排索引，并以惊人的速度返回结果。</p>
+<p>ElasticSearch 和 MySQL 结构对照</p>
+<p>ES              MySQL<br>Node/Cluster    Cluster<br>Index            Database<br>Type            table<br>Document        row (一行)<br>field            field (一列)</p>
+<h1 id="1-什么是文档"><a href="#1-什么是文档" class="headerlink" title="(1) 什么是文档?"></a>(1) 什么是文档?</h1><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>:         <span class="string">"John Smith"</span>,</span><br><span class="line">    <span class="attr">"age"</span>:          <span class="number">42</span>,</span><br><span class="line">    <span class="attr">"confirmed"</span>:    <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"join_date"</span>:    <span class="string">"2014-06-01"</span>,</span><br><span class="line">    <span class="attr">"home"</span>: &#123;</span><br><span class="line">        <span class="attr">"lat"</span>:      <span class="number">51.5</span>,</span><br><span class="line">        <span class="attr">"lon"</span>:      <span class="number">0.1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"accounts"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"facebook"</span>,</span><br><span class="line">            <span class="attr">"id"</span>:   <span class="string">"johnsmith"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"type"</span>: <span class="string">"twitter"</span>,</span><br><span class="line">            <span class="attr">"id"</span>:   <span class="string">"johnsmith"</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  在 Elasticsearch 中，术语 文档 有着特定的含义。它是指最顶层或者根对象, 这个根对象被序列化成 JSON 并存储到 Elasticsearch 中，指定了唯一 ID。</p>
+<p>  字段的名字可以是任何合法的字符串，但 不可以 包含英文句号(.)。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/20/elasticsearch-data-in-data-out/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/19/elasticsearch-restful-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/19/elasticsearch-restful-api/" class="post-title-link" itemprop="url">elasticsearch-restful-api</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-19 16:56:47" itemprop="dateCreated datePublished" datetime="2020-01-19T16:56:47+08:00">2020-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-18 16:43:19" itemprop="dateModified" datetime="2020-04-18T16:43:19+08:00">2020-04-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/01/19/elasticsearch-restful-api/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch-restful-api" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  elasticsearch 的 resuful api 笔记</p>
+<h1 id="1-查看ES及索引信息"><a href="#1-查看ES及索引信息" class="headerlink" title="(1) 查看ES及索引信息"></a>(1) 查看ES及索引信息</h1><h2 id="1-1-查看ES基本信息"><a href="#1-1-查看ES基本信息" class="headerlink" title="(1.1)  查看ES基本信息"></a>(1.1)  查看ES基本信息</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ curl <span class="string">'http://localhost:9200?pretty'</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span> : <span class="string">"elasticsearch_001_data"</span>,</span><br><span class="line">  <span class="string">"cluster_name"</span> : <span class="string">"elasticsearch_test"</span>,</span><br><span class="line">  <span class="string">"cluster_uuid"</span> : <span class="string">"NsxYKhI1Qw63MzaPKl34dA"</span>,</span><br><span class="line">  <span class="string">"version"</span> : &#123;</span><br><span class="line">    <span class="string">"number"</span> : <span class="string">"6.6.2"</span>,</span><br><span class="line">    <span class="string">"build_flavor"</span> : <span class="string">"default"</span>,</span><br><span class="line">    <span class="string">"build_type"</span> : <span class="string">"tar"</span>,</span><br><span class="line">    <span class="string">"build_hash"</span> : <span class="string">"3bd3e59"</span>,</span><br><span class="line">    <span class="string">"build_date"</span> : <span class="string">"2019-03-06T15:16:26.864148Z"</span>,</span><br><span class="line">    <span class="string">"build_snapshot"</span> : <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"lucene_version"</span> : <span class="string">"7.6.0"</span>,</span><br><span class="line">    <span class="string">"minimum_wire_compatibility_version"</span> : <span class="string">"5.6.0"</span>,</span><br><span class="line">    <span class="string">"minimum_index_compatibility_version"</span> : <span class="string">"5.0.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"tagline"</span> : <span class="string">"You Know, for Search"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-2-计算集群中文档的数量"><a href="#1-2-计算集群中文档的数量" class="headerlink" title="(1.2)  计算集群中文档的数量"></a>(1.2)  计算集群中文档的数量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ curl  <span class="string">'http://localhost:9200/_count?pretty'</span> </span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"count"</span> : 3,</span><br><span class="line">  <span class="string">"_shards"</span> : &#123;</span><br><span class="line">    <span class="string">"total"</span> : 5,</span><br><span class="line">    <span class="string">"successful"</span> : 5,</span><br><span class="line">    <span class="string">"skipped"</span> : 0,</span><br><span class="line">    <span class="string">"failed"</span> : 0</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  可以看到返回结果是3</p>
+<h2 id="1-3-查看ES里所有索引"><a href="#1-3-查看ES里所有索引" class="headerlink" title="(1.3)  查看ES里所有索引"></a>(1.3)  查看ES里所有索引</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ curl &apos;localhost:9200/_cat/indices?v&apos;</span><br><span class="line">health status index    uuid                   pri rep docs.count docs.deleted store.size pri.store.size</span><br><span class="line">yellow open   megacorp EUu3nzyRQN2Mp7tRw2u_nQ   5   1          3            0     17.5kb         17.5kb</span><br><span class="line">yellow open   gb       kAXZAJZTRg2X0Wm72-n5qQ   5   1          1            0      5.7kb          5.7kb</span><br><span class="line">yellow open   us       Q6ubyCClQvyMB5iX8f9BZA   5   1          1            0      5.7kb          5.7kb</span><br><span class="line">yellow open   tweet    hNRmZ9RETWWPoUMIK3BivA   5   1         12            0       26kb           26kb</span><br><span class="line">yellow open   website  1Ptx5N-iTR2nDNtVgVMEpw   5   1          5            0     21.2kb         21.2kb</span><br><span class="line">yellow open   blogs    bW_JTJkfS2GVN8FE_gX-Hg   3   2          0            0       783b           783b</span><br><span class="line">yellow open   user     rOprq90rQsuyP0mad7I6iQ   5   1          2            0     10.2kb         10.2kb</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-插入数据"><a href="#1-3-插入数据" class="headerlink" title="(1.3) 插入数据"></a>(1.3) 插入数据</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X PUT <span class="string">"localhost:9200/megacorp/employee/1"</span> -H <span class="string">'Content-Type: application/json'</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&gt; &#123;</span></span><br><span class="line"><span class="string">&gt;     "first_name" : "John",</span></span><br><span class="line"><span class="string">&gt;     "last_name" :  "Smith",</span></span><br><span class="line"><span class="string">&gt;     "age" :        25,</span></span><br><span class="line"><span class="string">&gt;     "about" :      "I love to go rock climbing",</span></span><br><span class="line"><span class="string">&gt;     "interests": [ "sports", "music" ]</span></span><br><span class="line"><span class="string">&gt; &#125;</span></span><br><span class="line"><span class="string">&gt; '</span></span><br><span class="line">&#123;<span class="string">"_index"</span>:<span class="string">"megacorp"</span>,<span class="string">"_type"</span>:<span class="string">"employee"</span>,<span class="string">"_id"</span>:<span class="string">"1"</span>,<span class="string">"_version"</span>:2,<span class="string">"result"</span>:<span class="string">"updated"</span>,<span class="string">"_shards"</span>:&#123;<span class="string">"total"</span>:2,<span class="string">"successful"</span>:1,<span class="string">"failed"</span>:0&#125;,<span class="string">"_seq_no"</span>:1,<span class="string">"_primary_term"</span>:1&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/19/elasticsearch-restful-api/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/12/29/distributed-lock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/29/distributed-lock/" class="post-title-link" itemprop="url">分布式锁</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-29 21:39:47" itemprop="dateCreated datePublished" datetime="2019-12-29T21:39:47+08:00">2019-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-19 11:19:16" itemprop="dateModified" datetime="2020-01-19T11:19:16+08:00">2020-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/distributed/" itemprop="url" rel="index"><span itemprop="name">distributed</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/12/29/distributed-lock/" class="post-meta-item leancloud_visitors" data-flag-title="分布式锁" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  分享下一个基于redis来实现的分布式锁。</p>
+<h1 id="加锁过程分析"><a href="#加锁过程分析" class="headerlink" title="加锁过程分析"></a>加锁过程分析</h1><p> <img src="/img/distributed/distributed-lock-redis-lock.jpg" alt="加锁过程分析"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/12/29/distributed-lock/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/20/mysql-norm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -300,887 +1173,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/18/linux-memory-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/18/linux-memory-notes/" class="post-title-link" itemprop="url">linux-memory-notes</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-18 15:09:02" itemprop="dateCreated datePublished" datetime="2019-11-18T15:09:02+08:00">2019-11-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-23 10:03:00" itemprop="dateModified" datetime="2020-06-23T10:03:00+08:00">2020-06-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/11/18/linux-memory-notes/" class="post-meta-item leancloud_visitors" data-flag-title="linux-memory-notes" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> 用户空间内存，从低到高分别是五种不同的内存段。</p>
-<ol>
-<li>只读段，包括代码和常量等。</li>
-<li>数据段，包括全局变量等。</li>
-<li>堆，包括动态分配的内存，从低地址开始向上增长。</li>
-<li>文件映射段，包括动态库、共享内存等，从高地址开始向下增长。</li>
-<li>栈，包括局部变量和函数调用的上下文等。栈的大小是固定的，一般是 8 MB。<br>在这五个内存段中，堆和文件映射段的内存是动态分配的。</li>
-</ol>
-</blockquote>
-<h1 id="调小数值-linux进程不被杀死"><a href="#调小数值-linux进程不被杀死" class="headerlink" title="调小数值 linux进程不被杀死"></a>调小数值 linux进程不被杀死</h1><p> <code>echo -16 &gt; /proc/$(pidof sshd)/oom_adj</code></p>
-<h1 id="注意不同版本的free输出可能会有所不同"><a href="#注意不同版本的free输出可能会有所不同" class="headerlink" title="注意不同版本的free输出可能会有所不同"></a>注意不同版本的free输出可能会有所不同</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ free</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:        8169348      263524     6875352         668     1030472     7611064</span><br><span class="line">Swap:             0           0           0</span><br><span class="line"></span><br><span class="line">[wkq.stb@s_wkq_b ~]$ free</span><br><span class="line">             total       used       free     shared    buffers     cached</span><br><span class="line">Mem:      16334056   16135076     198980       6948     130160     228828</span><br><span class="line">-/+ buffers/cache:   15776088     557968</span><br><span class="line">Swap:      8388604    1042220    7346384</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p> 第一列，total 是总内存大小；<br> 第二列，used 是已使用内存的大小，包含了共享内存；<br> 第三列，free 是未使用内存的大小；<br> 第四列，shared 是共享内存的大小；<br> 第五列，buff/cache 是缓存和缓冲区的大小；<br> 最后一列，available 是新进程可用内存的大小。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">[wkq.stb@s_wkq_b ~]$ top</span><br><span class="line">top - 14:49:12 up 151 days, 18:14,  2 users,  load average: 0.00, 0.00, 0.00</span><br><span class="line">Tasks: 146 total,   1 running, 145 sleeping,   0 stopped,   0 zombie</span><br><span class="line">Cpu0  :  0.3%us,  0.3%sy,  0.0%ni, 99.3%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st</span><br><span class="line">Cpu1  :  0.0%us,  0.3%sy,  0.0%ni, 99.7%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st</span><br><span class="line">Cpu2  :  0.0%us,  0.0%sy,  0.0%ni,100.0%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st</span><br><span class="line">Cpu3  :  0.0%us,  0.0%sy,  0.0%ni,100.0%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st</span><br><span class="line">Mem:  16334056k total, 16134976k used,   199080k free,   130144k buffers</span><br><span class="line">Swap:  8388604k total,  1042224k used,  7346380k free,   228824k cached</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span><br><span class="line"> 1802 search    20   0 17.9g  14g 5276 S  0.7 92.6 826:18.86 java</span><br><span class="line"> 3914 wkq.stb    20   0 15024 1356 1004 R  0.3  0.0   0:00.02 top</span><br><span class="line">14363 root      20   0  359m  43m 4424 S  0.3  0.3  92:54.64 jdog-monitor.1.</span><br><span class="line">    1 root      20   0 19232  572  392 S  0.0  0.0   0:10.99 init</span><br><span class="line">    2 root      20   0     0    0    0 S  0.0  0.0   0:00.00 kthreadd</span><br><span class="line">    3 root      RT   0     0    0    0 S  0.0  0.0   4:08.02 migration/0</span><br><span class="line">    4 root      20   0     0    0    0 S  0.0  0.0   0:52.91 ksoftirqd/0</span><br><span class="line">    5 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 stopper/0</span><br><span class="line">    6 root      RT   0     0    0    0 S  0.0  0.0   0:12.19 watchdog/0</span><br><span class="line">    7 root      RT   0     0    0    0 S  0.0  0.0   3:15.61 migration/1</span><br><span class="line">    8 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 stopper/1</span><br><span class="line">    9 root      20   0     0    0    0 S  0.0  0.0   0:39.68 ksoftirqd/1</span><br><span class="line">   10 root      RT   0     0    0    0 S  0.0  0.0   0:10.27 watchdog/1</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># 按下M切换到内存排序</span><br><span class="line">[wkq.stb@s_wkq_b ~]$ top</span><br><span class="line">top - 14:49:55 up 151 days, 18:15,  2 users,  load average: 0.00, 0.00, 0.00</span><br><span class="line">Tasks: 146 total,   1 running, 145 sleeping,   0 stopped,   0 zombie</span><br><span class="line">Cpu(s):  0.1%us,  0.2%sy,  0.0%ni, 99.8%id,  0.0%wa,  0.0%hi,  0.0%si,  0.0%st</span><br><span class="line">Mem:  16334056k total, 16134976k used,   199080k free,   130144k buffers</span><br><span class="line">Swap:  8388604k total,  1042224k used,  7346380k free,   228824k cached</span><br><span class="line"></span><br><span class="line">  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND</span><br><span class="line"> 1802 search    20   0 17.9g  14g 5276 S  0.3 92.6 826:19.00 java</span><br><span class="line"> 5945 jd.dev    20   0 7653m 244m 5092 S  0.3  1.5 275:00.32 java</span><br><span class="line"> 1515 root      20   0  825m  81m 4124 S  0.0  0.5 718:10.97 jcloudhids</span><br><span class="line">14363 root      20   0  359m  43m 4424 S  0.3  0.3  92:54.68 jdog-monitor.1.</span><br><span class="line">13321 root      20   0  748m  20m 5996 S  0.0  0.1 128:42.30 jdog-kunlunmirr</span><br><span class="line"> 3757 root      20   0 97.7m 3936 2976 S  0.0  0.0   0:00.00 sshd</span><br><span class="line">30572 root      20   0 97.7m 3932 2976 S  0.0  0.0   0:00.01 sshd</span><br><span class="line"> 1164 root      20   0  249m 3688  568 S  0.0  0.0   0:09.71 rsyslogd</span><br><span class="line">30637 wkq.stb    20   0 59980 3480 2536 S  0.0  0.0   0:05.60 ssh</span><br><span class="line"> 1448 root      20   0  186m 3004  968 S  0.0  0.0   2:19.88 python</span><br><span class="line">30574 wkq.stb    20   0 97.7m 2256 1280 S  0.0  0.0   0:08.71 sshd</span><br><span class="line"> 3759 wkq.stb    20   0 97.7m 2252 1272 S  0.0  0.0   0:00.00 sshd</span><br><span class="line"> 3760 wkq.stb    20   0  105m 1968 1504 S  0.0  0.0   0:00.01 bash</span><br><span class="line">30575 wkq.stb    20   0  105m 1960 1508 S  0.0  0.0   0:00.00 bash</span><br><span class="line"> 1481 root      20   0  175m 1472 1004 S  0.0  0.0  92:43.68 AgentMonitor</span><br><span class="line"> 3958 wkq.stb    20   0 15024 1360 1004 R  0.7  0.0   0:00.06 top</span><br><span class="line">  862 root      20   0 22356  932  644 S  0.0  0.0  24:56.74 qemu-ga</span><br><span class="line"> 1284 nscd      20   0  549m  920  576 S  0.0  0.0  10:17.28 nscd</span><br><span class="line"> 1091 root      20   0  9120  700  552 S  0.0  0.0   0:00.25 dhclient</span><br><span class="line"> 1574 root      20   0  158m  612  476 S  0.0  0.0   1:49.17 jcloudhidsupdat</span><br><span class="line"> 1440 root      20   0  114m  608  388 S  0.0  0.0   0:39.52 crond</span><br><span class="line">    1 root      20   0 19232  572  392 S  0.0  0.0   0:10.99 init</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p> top 输出界面的顶端，也显示了系统整体的内存使用情况，这些数据跟 free 类似。<br> 接着看下面的内容，跟内存相关的几列数据，比如 VIRT、RES、SHR 以及 %MEM 等。这些数据，包含了进程最重要的几个内存使用情况，我们挨个来看。<br> VIRT 是进程虚拟内存的大小，只要是进程申请过的内存，即便还没有真正分配物理内存，也会计算在内。<br> RES 是常驻内存的大小，也就是进程实际使用的物理内存大小，但不包括 Swap 和共享内存。<br> SHR 是共享内存的大小，比如与其他进程共同使用的共享内存、加载的动态链接库以及程序的代码段等。<br> %MEM 是进程使用物理内存占系统总内存的百分比。</p>
-</blockquote>
-<p> <code>/proc/meminfo</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 清理文件页、目录项、Inodes等各种缓存</span></span><br><span class="line">$ <span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每隔1秒输出1组数据</span></span><br><span class="line">$ vmstat 1</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line">r  b   swpd   free   buff  cache   si   so    bi    bo   <span class="keyword">in</span>   cs us sy id wa st</span><br><span class="line">0  0      0 7743608   1112  92168    0    0     0     0   52  152  0  1 100  0  0</span><br><span class="line">0  0      0 7743608   1112  92168    0    0     0     0   36   92  0  0 100  0  0</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[jd.stb@s_legend_b ~]$ vmstat 1</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 0  0 1042220 199476 130192 228868    0    0     0     5    1    0  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 199452 130192 228888    0    0     0     0  370  572  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 199452 130192 228888    0    0     0     0  311  569  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 199452 130192 228888    0    0     0     0  360  591  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 199256 130192 228888    0    0     0     4  658 1096  0  0 99  0  0</span><br><span class="line"> 0  0 1042220 199188 130200 228888    0    0     0   116  388  635  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 199188 130200 228888    0    0     0     0  351  582  0  0 100  0  0</span><br></pre></td></tr></table></figure>
-<p> <code>$ dd if=/dev/urandom of=/tmp/file bs=1M count=500</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">[jd.stb@s_legend_b ~]$ vmstat 1</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 0  0 1042220 196704 130204 229204    0    0     0     5    1    0  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196548 130204 229204    0    0     0    60  385  611  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196604 130204 229204    0    0     0     4  308  559  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196604 130204 229204    0    0     0     0  335  571  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196612 130204 229204    0    0     0     4  315  580  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196612 130204 229204    0    0     0     0  338  573  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196628 130204 229204    0    0     0     0  342  592  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0    40  361  609  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  364  670  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  352  584  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  321  580  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  351  592  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0    72  627 1205  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  504  908  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  563  958  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  492  855  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  684 1392  0  1 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0   100  343  570  0  0 100  0  0</span><br><span class="line"> 0  0 1042220 196636 130204 229204    0    0     0     0  295  560  0  0 100  0  0</span><br><span class="line"> 1  0 1042220 196636 130204 229204    0    0    52     0  566  634  0  4 96  0  0</span><br><span class="line"> 1  0 1042220 193884 130204 231304    0    0     0    52 1304  558  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 190908 130204 234376    0    0     0     0 1324  531  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 187808 130204 237300    0    0     0     0 1278  518  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 185824 130204 239496    0    0     0     0 1368  567  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 182724 130204 242420    0    0     0     8 1322  577  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 180616 130212 244616    0    0     0   116 1558  701  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 177640 130212 247540    0    0     0     4 1355  576  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 174540 130212 250612    0    0     0     8 1425  584  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 172432 130212 252808    0    0     0     0 1298  540  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 169456 130212 255732    0    0     0     0 1338  560  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 167348 130212 257928    0    0     0    56 1348  589  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 164248 130212 260852    0    0     0     4 1388  590  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 160756 130212 263924    0    0     0     0 1662  666  0 27 72  0  1</span><br><span class="line"> 1  0 1042220 158652 130212 266120    0    0     0     0 1345  535  0 25 75  0  0</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 1  0 1042220 155552 130212 269044    0    0     0     0 1288  532  0 25 75  0  0</span><br><span class="line"> 1  0 1042220 153568 130212 271240    0    0     0    32 1421  652  0 26 73  0  1</span><br><span class="line"> 1  0 1045056 168572 125980 263304    0 2836     0  2836 1394  532  0 26 74  0  0</span><br><span class="line"> 1  0 1045056 166588 125980 265200    0    0     0    12 1309  491  0 25 75  0  0</span><br><span class="line"> 1  0 1045056 163496 125980 268272    0    0     0     0 1231  466  0 25 75  0  0</span><br><span class="line"> 1  0 1045056 160520 125980 271196    0    0     0     0 1309  490  0 25 75  0  0</span><br><span class="line"> 1  0 1045056 158412 125980 273392    0    0     0    32 1292  538  0 25 75  0  0</span><br><span class="line"> 1  0 1045056 155436 125980 276316    0    0     0     0 1371  555  0 25 75  0  0</span><br><span class="line"> 1  0 1045056 153212 125980 278512    0    0     0    12 1307  551  0 25 75  0  0</span><br><span class="line"> 1  0 1047004 167100 120572 271568    0 1948     0  1948 1418  574  0 26 74  0  0</span><br><span class="line"> 1  0 1047004 164124 120572 274640    0    0     0     0 1242  489  0 25 75  0  0</span><br><span class="line"> 1  0 1047004 162016 120572 276836    0    0     0    28 1318  524  0 25 75  0  0</span><br><span class="line"> 1  0 1047004 158916 120572 279760    0    0     0     0 1266  486  0 25 75  0  0</span><br><span class="line"> 1  0 1047004 156932 120572 281956    0    0     0     0 1345  598  0 25 74  0  1</span><br><span class="line"> 1  0 1047004 153832 120572 284884    0    0     0     0 1243  476  0 25 75  0  0</span><br><span class="line"> 1  0 1047408 166728 113704 279076    0  404     0   404 1356  506  0 26 74  0  0</span><br><span class="line"> 1  0 1047408 164620 113704 281272    0    0     0    28 1252  498  0 25 75  0  0</span><br><span class="line"> 1  0 1047408 161644 113704 284196    0    0     0     0 1350  584  0 25 75  0  0</span><br><span class="line"> 1  0 1047408 159040 113708 286400    0    0     4 86096 1480  620  0 27 72  0  1</span><br><span class="line"> 1  0 1047408 156064 113708 289324    0    0     0     0 1394  638  0 25 75  0  0</span><br><span class="line"> 1  0 1047408 153956 113708 291520    0    0     0     0 1290  537  0 25 75  0  0</span><br><span class="line"> 1  0 1047720 166960 105696 287132    0  312   128   344 2060  958  1 27 70  0  3</span><br><span class="line"> 1  0 1047720 163984 105696 290056    0    0     0     0 1336  550  0 25 75  0  0</span><br><span class="line"> 1  0 1047720 161876 105696 292252    0    0     0     0 1335  525  0 25 75  0  0</span><br><span class="line"> 1  0 1047720 158776 105696 295176    0    0     0     0 1262  504  0 25 75  0  0</span><br><span class="line"> 1  0 1047720 156792 105696 297372    0    0     0     4 1351  541  0 25 74  0  0</span><br><span class="line"> 1  0 1047720 153692 105696 300224    0    0     0    52 1338  542  0 25 75  0  0</span><br><span class="line"> 1  0 1047792 166340  97976 295228    0   72     0    72 1368  535  0 26 75  0  0</span><br><span class="line"> 1  0 1047792 164240  97976 297424    0    0     0     8 1258  501  0 25 75  0  0</span><br><span class="line"> 0  0 1047792 164256  97976 298300    0    0     0     0  849  548  0 13 87  0  0</span><br><span class="line"> 0  0 1047792 164388  97976 298448    0    0     0     0  266  515  0  0 100  0  0</span><br><span class="line"> 0  0 1047792 164388  97976 298448    0    0     0     0  404  578  0  0 100  0  0</span><br><span class="line"> 0  0 1047792 164332  97980 298452    0    0     0    32  341  599  0  0 100  0  0</span><br></pre></td></tr></table></figure>
-<p>  Buffer 是对磁盘数据的缓存，而 Cache 是文件数据的缓存，它们既会用在读请求中，也会用在写请求中。</p>
-<p>  如何统计出所有进程的物理内存使用量呢？</p>
-<h1 id="哪些区域会内存泄露"><a href="#哪些区域会内存泄露" class="headerlink" title="哪些区域会内存泄露"></a>哪些区域会内存泄露</h1><ol>
-<li><p>栈内存由系统自动分配和管理。一旦程序运行超出了这个局部变量的作用域，栈内存就会被系统自动回收，所以不会产生内存泄漏的问题。</p>
-<p>再比如，很多时候，我们事先并不知道数据大小，所以你就要用到标准库函数malloc()_，_ 在程序中动态分配内存。这时候，系统就会从内存空间的堆中分配内存。</p>
-</li>
-<li><p>堆内存由应用程序自己来分配和管理。除非程序退出，这些堆内存并不会被系统自动释放，而是需要应用程序明确调用库函数free()来释放它们。如果应用程序没有正确释放堆内存，就会造成内存泄漏。这是两个栈和堆的例子，那么，其他内存段是否也会导致内存泄漏呢？</p>
-</li>
-<li><p>只读段，包括程序的代码和常量，由于是只读的，不会再去分配新的内存，所以也不会产生内存泄漏。</p>
-</li>
-<li>数据段，包括全局变量和静态变量，这些变量在定义时就已经确定了大小，所以也不会产生内存泄漏。</li>
-<li><p>最后一个内存映射段，包括动态链接库和共享内存，其中共享内存由程序动态分配和管理。所以，如果程序在分配后忘了回收，就会导致跟堆内存类似的泄漏问题。</p>
-<p>内存泄漏的危害非常大，这些忘记释放的内存，不仅应用程序自己不能访问，系统也不能把它们再次分配给其他应用。内存泄漏不断累积，甚至会耗尽系统内存。</p>
-</li>
-</ol>
-<h2 id="检测内存泄露"><a href="#检测内存泄露" class="headerlink" title="检测内存泄露"></a>检测内存泄露</h2><p>  用 top 或 ps 来观察进程的内存使用情况，然后找出内存使用一直增长的进程，最后再通过 pmap 查看进程的内存分布。</p>
-<p>  memleak 可以跟踪系统或指定进程的内存分配、释放请求，然后定期输出一个未释放内存和相应调用栈的汇总情况（默认 5 秒）。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -a 表示显示每个内存分配请求的大小以及地址</span></span><br><span class="line"><span class="comment"># -p 指定案例应用的PID号</span></span><br><span class="line">$ /usr/share/bcc/tools/memleak -a -p $(pidof app)</span><br><span class="line">WARNING: Couldn<span class="string">'t find .text section in /app</span></span><br><span class="line"><span class="string">WARNING: BCC can'</span>t handle sym look ups <span class="keyword">for</span> /app</span><br><span class="line">    addr = 7f8f704732b0 size = 8192</span><br><span class="line">    addr = 7f8f704772d0 size = 8192</span><br><span class="line">    addr = 7f8f704712a0 size = 8192</span><br><span class="line">    addr = 7f8f704752c0 size = 8192</span><br><span class="line">    32768 bytes <span class="keyword">in</span> 4 allocations from stack</span><br><span class="line">        [unknown] [app]</span><br><span class="line">        [unknown] [app]</span><br><span class="line">        start_thread+0xdb [libpthread-2.27.so]</span><br></pre></td></tr></table></figure>
-<p>  从 memleak 的输出可以看到，案例应用在不停地分配内存，并且这些分配的地址没有被回收。</p>
-<p>  free()调用，释放函数fibonacci()分配的内存，修复了内存泄漏的问题。就这个案例而言，还有没有其他更好的修复方法呢？</p>
-<h1 id="Linux-Swap"><a href="#Linux-Swap" class="headerlink" title="Linux Swap"></a>Linux Swap</h1><p>  Linux 的 Swap 机制。Swap 把这些不常访问的内存先写到磁盘中，然后释放这些内存，给其他更需要的进程使用。再次访问这些内存时，重新从磁盘读入内存就可以了。</p>
-<h2 id="Swap-原理"><a href="#Swap-原理" class="headerlink" title="Swap 原理"></a>Swap 原理</h2><p>  Swap 说白了就是把一块磁盘空间或者一个本地文件（以下讲解以磁盘为例），当成内存来使用。它包括换出和换入两个过程。</p>
-<ol>
-<li>换出，就是把进程暂时不用的内存数据存储到磁盘中，并释放这些数据占用的内存。</li>
-<li><p>换入，则是在进程再次访问这些内存的时候，把它们从磁盘读到内存中来。<br>Swap 其实是把系统的可用内存变大了。这样，即使服务器的内存不足，也可以运行大内存的应用程序。  </p>
-<p>有一个专门的内核线程用来定期回收内存，也就是 kswapd0。<br>为了衡量内存的使用情况，kswapd0 定义了三个内存阈值（watermark，也称为水位），分别是页最小阈值（pages_min）、页低阈值（pages_low）和页高阈值（pages_high）。剩余内存，则使用 pages_free 表示。</p>
-<p>kswapd0 定期扫描内存的使用情况，并根据剩余内存落在这三个阈值的空间位置，进行内存的回收操作。</p>
-</li>
-<li>剩余内存小于页最小阈值，说明进程可用内存都耗尽了，只有内核才可以分配内存。</li>
-<li>剩余内存落在页最小阈值和页低阈值中间，说明内存压力比较大，剩余内存不多了。这时 kswapd0 会执行内存回收，直到剩余内存大于高阈值为止。</li>
-<li>剩余内存落在页低阈值和页高阈值中间，说明内存有一定压力，但还可以满足新内存请求。</li>
-<li>剩余内存大于页高阈值，说明剩余内存比较多，没有内存压力。</li>
-</ol>
-<p> 直接内存访问区（DMA）、普通内存区（NORMAL）、伪内存区（MOVABLE）</p>
-<p>   内存既包括了文件页，又包括了匿名页。<br>   对文件页的回收，当然就是直接回收缓存，或者把脏页写回磁盘后再回收。<br>   而对匿名页的回收，其实就是通过 Swap 机制，把它们写入磁盘后再释放内存。</p>
-<p>   不过，你可能还有一个问题。既然有两种不同的内存回收机制，那么在实际回收内存时，到底该先回收哪一种呢？<br>   其实，Linux 提供了一个  /proc/sys/vm/swappiness 选项，用来调整使用 Swap 的积极程度。<br>   swappiness 的范围是 0-100，数值越大，越积极使用 Swap，也就是更倾向于回收匿名页；数值越小，越消极使用 Swap，也就是更倾向于回收文件页。虽然 swappiness 的范围是 0-100，不过要注意，这并不是内存的百分比，而是调整 Swap 积极程度的权重，即使你把它设置成 0，当剩余内存 + 文件页小于页高阈值时，还是会发生 Swap。</p>
-<p>  在内存资源紧张时，Linux 通过直接内存回收和定期扫描的方式，来释放文件页和匿名页，以便把内存分配给更需要的进程使用。文件页的回收比较容易理解，直接清空，或者把脏数据写回磁盘后再释放。而对匿名页的回收，需要通过 Swap 换出到磁盘中，下次访问时，再从磁盘换入到内存中。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建Swap文件</span></span><br><span class="line">$ fallocate -l 8G /mnt/swapfile</span><br><span class="line"><span class="comment"># 修改权限只有根用户可以访问</span></span><br><span class="line">$ chmod 600 /mnt/swapfile</span><br><span class="line"><span class="comment"># 配置Swap文件</span></span><br><span class="line">$ mkswap /mnt/swapfile</span><br><span class="line"><span class="comment"># 开启Swap</span></span><br><span class="line">$ swapon /mnt/swapfile</span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭 swap</span></span><br><span class="line">$ swapoff -a</span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 关闭 Swap 后再重新打开，也是一种常用的 Swap 空间清理方法</span></span><br><span class="line">$ swapoff -a &amp;&amp; swapon -a</span><br></pre></td></tr></table></figure>
-<p>  查看 swappiness 的配置  <code>cat /proc/sys/vm/swappiness</code></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按VmSwap使用量对进程排序，输出进程名称、进程ID以及SWAP用量</span></span><br><span class="line">$ <span class="keyword">for</span> file <span class="keyword">in</span> /proc/*/status ; <span class="keyword">do</span> awk <span class="string">'/VmSwap|Name|^Pid/&#123;printf $2 " " $3&#125;END&#123; print ""&#125;'</span> <span class="variable">$file</span>; <span class="keyword">done</span> | sort -k 3 -n -r | head</span><br><span class="line">dockerd 2226 10728 kB</span><br><span class="line">docker-containe 2251 8516 kB</span><br><span class="line">snapd 936 4020 kB</span><br><span class="line">networkd-dispat 911 836 kB</span><br><span class="line">polkitd 1004 44 kB</span><br></pre></td></tr></table></figure>
-<p>内存性能指标</p>
-<h1 id="快速定位系统内存问题"><a href="#快速定位系统内存问题" class="headerlink" title="快速定位系统内存问题"></a>快速定位系统内存问题</h1><blockquote>
-<p>为了迅速定位内存问题，我通常会先运行几个覆盖面比较大的性能工具，比如 free、top、vmstat、pidstat 等。具体的分析思路主要有这几步。</p>
-<ol>
-<li>先用 free 和 top，查看系统整体的内存使用情况。</li>
-<li>再用 vmstat 和 pidstat，查看一段时间的趋势，从而判断出内存问题的类型。</li>
-<li>最后进行详细分析，比如内存分配分析、缓存 / 缓冲区分析、具体进程的内存使用分析等。</li>
-</ol>
-</blockquote>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://time.geekbang.org/column/article/161660" target="_blank" rel="noopener">01| 基础篇：Linux内存是怎么工作的？</a><br>[2] <a href="https://time.geekbang.org/column/article/161667" target="_blank" rel="noopener">02 | 基础篇：怎么理解内存中的Buffer和Cache？</a><br>[3] <a href="https://time.geekbang.org/column/article/161674" target="_blank" rel="noopener">03 | 案例篇：如何利用系统缓存优化程序的运行效率？</a><br>[4] <a href="https://time.geekbang.org/column/article/161675" target="_blank" rel="noopener">04 | 案例篇：内存泄漏了，我该如何定位和处理？</a><br>[5] <a href="https://time.geekbang.org/column/article/161676" target="_blank" rel="noopener">05 | 案例篇：为什么系统的Swap变高了（上）</a><br>[6] <a href="https://time.geekbang.org/column/article/161677" target="_blank" rel="noopener">06 | 案例篇：为什么系统的Swap变高了？（下）</a><br>[7] <a href="https://time.geekbang.org/column/article/161681" target="_blank" rel="noopener">07 | 套路篇：如何“快准狠”找到系统内存的问题？</a></p>
-<p><a href="https://mp.weixin.qq.com/s/uUNl4OxJY3rrwLGHO6rW1g" target="_blank" rel="noopener">深度好文：Linux系统内存知识</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/18/gradle-download-install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/18/gradle-download-install/" class="post-title-link" itemprop="url">gradle-download-install</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-18 11:44:54" itemprop="dateCreated datePublished" datetime="2019-11-18T11:44:54+08:00">2019-11-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-17 21:57:26" itemprop="dateModified" datetime="2019-12-17T21:57:26+08:00">2019-12-17</time>
-              </span>
-
-          
-            <span id="/2019/11/18/gradle-download-install/" class="post-meta-item leancloud_visitors" data-flag-title="gradle-download-install" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><code>export PATH=$PATH:/Users/weikeqin1/SoftWare/gradle-6.0/bin</code></p>
-<p><code>%GRADLE_HOME%/bin</code></p>
-<h1 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h1><h2 id="gradle-SSL-peer-shut-down-incorrectly"><a href="#gradle-SSL-peer-shut-down-incorrectly" class="headerlink" title="gradle   SSL peer shut down incorrectly"></a>gradle   SSL peer shut down incorrectly</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Caused by: org.gradle.internal.resource.transport.http.HttpRequestException: Could not GET &apos;https://d29vzk4ow07wi7.cloudfront.net/70915a3f0ef4243d4630ea23219f5445fac82700?response-content-disposition=attachment%3Bfilename%3D%22gradle-core-1.5.0.jar%22&amp;Policy=eyJTdGF0ZW1lbnQiOiBbeyJSZXNvdXJjZSI6Imh0dHAqOi8vZDI5dnprNG93MDd3aTcuY2xvdWRmcm9udC5uZXQvNzA5MTVhM2YwZWY0MjQzZDQ2MzBlYTIzMjE5ZjU0NDVmYWM4MjcwMD9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPWF0dGFjaG1lbnQlM0JmaWxlbmFtZSUzRCUyMmdyYWRsZS1jb3JlLTEuNS4wLmphciUyMiIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTU3NDA0OTI4NH0sIklwQWRkcmVzcyI6eyJBV1M6U291cmNlSXAiOiIwLjAuMC4wLzAifX19XX0_&amp;Signature=PHZOaWL0~35J849nq~FwS02Mi5fX8vhbhJRz5scXG1-19xso8v0xWPj6oyh7Ku9q8~I6ypEAdaI1eNDGQwl2VOcffRUm5fDXlclmdZUB4O~ZgA535OgXD3iv4n0Ht37uIrbsnpPad1WHy7qUFZzlS1BDA9hxDMLnXACL7rNeNiWea-Q8t5hwbCGkKi6ucdOSa8quedY7iH~biP0HxeKcQY242-HFjbByCaa8jZTcghdgIVVBnrIA8almCFttc6hTa1jy2OcTvWzm22Ty~jvfTKeBW9H3ApHty4BRHeyo7oU4YHOJCRMwtMuynQWgGwGH13zRnX~3HHfcka8L1qigEw__&amp;Key-Pair-Id=APKAIFKFWOMXM2UMTSFA&apos;.</span><br><span class="line">	at org.gradle.internal.resource.transport.http.HttpClientHelper.performRequest(HttpClientHelper.java:99)</span><br><span class="line"></span><br><span class="line">Caused by: javax.net.ssl.SSLHandshakeException: Remote host closed connection during handshake</span><br><span class="line">	at sun.security.ssl.SSLSocketImpl.readRecord(SSLSocketImpl.java:994)</span><br><span class="line">	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.createLayeredSocket(SSLConnectionSocketFactory.java:436)</span><br><span class="line"></span><br><span class="line">Caused by: java.io.EOFException: SSL peer shut down incorrectly</span><br><span class="line">	at sun.security.ssl.InputRecord.read(InputRecord.java:505)</span><br></pre></td></tr></table></figure>
-<p>  在 <code>jcenter()</code> 下 添加 <code>maven { url &quot;http://jcenter.bintray.com&quot; }</code> 即可</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/18/gradle-download-install/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/13/elasticsearch-error-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/13/elasticsearch-error-notes/" class="post-title-link" itemprop="url">elasticsearch-error-notes</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-13 14:58:47" itemprop="dateCreated datePublished" datetime="2019-11-13T14:58:47+08:00">2019-11-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-18 07:40:56" itemprop="dateModified" datetime="2020-05-18T07:40:56+08:00">2020-05-18</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/11/13/elasticsearch-error-notes/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch-error-notes" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-index-not-found-exception"><a href="#1-index-not-found-exception" class="headerlink" title="(1)  index_not_found_exception"></a>(1)  index_not_found_exception</h1><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"error"</span>: &#123;</span><br><span class="line">        <span class="attr">"root_cause"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"index_not_found_exception"</span>,</span><br><span class="line">                <span class="attr">"reason"</span>: <span class="string">"no such index"</span>,</span><br><span class="line">                <span class="attr">"resource.type"</span>: <span class="string">"index_or_alias"</span>,</span><br><span class="line">                <span class="attr">"resource.id"</span>: <span class="string">"test_20181204"</span>,</span><br><span class="line">                <span class="attr">"index_uuid"</span>: <span class="string">"_na_"</span>,</span><br><span class="line">                <span class="attr">"index"</span>: <span class="string">"test_20181204"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"index_not_found_exception"</span>,</span><br><span class="line">        <span class="attr">"reason"</span>: <span class="string">"no such index"</span>,</span><br><span class="line">        <span class="attr">"resource.type"</span>: <span class="string">"index_or_alias"</span>,</span><br><span class="line">        <span class="attr">"resource.id"</span>: <span class="string">"test_20181204"</span>,</span><br><span class="line">        <span class="attr">"index_uuid"</span>: <span class="string">"_na_"</span>,</span><br><span class="line">        <span class="attr">"index"</span>: <span class="string">"test_20181204"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"status"</span>: <span class="number">404</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  问题原因： 没有对应索引 </p>
-<p>  可能是没创建，可能是创建了被删除了</p>
-<p>  创建对应的索引即可</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/13/elasticsearch-error-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/06/mysql-sql-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/06/mysql-sql-notes/" class="post-title-link" itemprop="url">MySQL SQL笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-06 17:27:13" itemprop="dateCreated datePublished" datetime="2019-11-06T17:27:13+08:00">2019-11-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-19 11:19:16" itemprop="dateModified" datetime="2020-01-19T11:19:16+08:00">2020-01-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/11/06/mysql-sql-notes/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL SQL笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="查询MySQL版本"><a href="#查询MySQL版本" class="headerlink" title="查询MySQL版本"></a>查询MySQL版本</h1><p> <code>SELECT VERSION();</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT VERSION();</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line">| VERSION()  |</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line">| 5.7.26-log |</span><br><span class="line">+<span class="comment">------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
-<h1 id="查看当前库正在使用的表"><a href="#查看当前库正在使用的表" class="headerlink" title="查看当前库正在使用的表"></a>查看当前库正在使用的表</h1><p>  <code>SHOW OPEN TABLES WHERE in_use &gt; 0 ;</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW OPEN TABLES WHERE in_use &gt; 0 ;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.13</span> sec)</span><br></pre></td></tr></table></figure>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;  SHOW OPEN TABLES WHERE in_use &gt; 0 ;</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">| Database | Table | In_use | Name_locked |</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">| test     | t     |      1 |           0 |</span><br><span class="line">+<span class="comment">----------+-------+--------+-------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
-<h1 id="查看正在运行的线程"><a href="#查看正在运行的线程" class="headerlink" title="查看正在运行的线程"></a>查看正在运行的线程</h1><p> <code>SHOW PROCESSLIST ;</code> </p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SHOW PROCESSLIST ;</span><br><span class="line">+<span class="comment">------+------+-----------------+------------+---------+------+----------+------------------+</span></span><br><span class="line">| Id   | User | Host            | db         | Command | Time | State    | Info             |</span><br><span class="line">+<span class="comment">------+------+-----------------+------------+---------+------+----------+------------------+</span></span><br><span class="line">| 2622 | root | localhost:55861 | dataserver | Sleep   |   38 |          | NULL             |</span><br><span class="line">| 2623 | root | localhost:55862 | NULL       | Sleep   |   59 |          | NULL             |</span><br><span class="line">| 2628 | root | localhost       | NULL       | Query   |    0 | starting | <span class="keyword">SHOW</span> <span class="keyword">PROCESSLIST</span> |</span><br><span class="line">+<span class="comment">------+------+-----------------+------------+---------+------+----------+------------------+</span></span><br><span class="line"><span class="number">3</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/06/mysql-sql-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/04/java-stream/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/04/java-stream/" class="post-title-link" itemprop="url">java-stream</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-04 12:07:31" itemprop="dateCreated datePublished" datetime="2019-11-04T12:07:31+08:00">2019-11-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-05 20:27:59" itemprop="dateModified" datetime="2020-06-05T20:27:59+08:00">2020-06-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/11/04/java-stream/" class="post-meta-item leancloud_visitors" data-flag-title="java-stream" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  Stream 作为 Java 8 的一大亮点，它与 java.io 包里的 InputStream 和 OutputStream 是完全不同的概念。它也不同于 StAX 对 XML 解析的 Stream，也不是 Amazon Kinesis 对大数据实时处理的 Stream。Java 8 中的 Stream 是对集合（Collection）对象功能的增强，它专注于对集合对象进行各种非常便利、高效的聚合操作（aggregate operation），或者大批量数据操作 (bulk data operation)。Stream API 借助于同样新出现的 Lambda 表达式，极大的提高编程效率和程序可读性。同时它提供串行和并行两种模式进行汇聚操作，并发模式能够充分利用多核处理器的优势，使用 fork/join 并行方式来拆分任务和加速处理过程。通常编写并行代码很难而且容易出错, 但使用 Stream API 无需编写一行多线程的代码，就可以很方便地写出高性能的并发程序。所以说，Java 8 中首次出现的 java.util.stream 是一个函数式语言+多核时代综合影响的产物。</p>
-<p>  什么是流<br>Stream 不是集合元素，它不是数据结构并不保存数据，它是有关算法和计算的，它更像一个高级版本的 Iterator。原始版本的 Iterator，用户只能显式地一个一个遍历元素并对其执行某些操作；高级版本的 Stream，用户只要给出需要对其包含的元素执行什么操作，比如 “过滤掉长度大于 10 的字符串”、“获取每个字符串的首字母”等，Stream 会隐式地在内部进行遍历，做出相应的数据转换。</p>
-<p>Stream 就如同一个迭代器（Iterator），单向，不可往复，数据只能遍历一次，遍历过一次后即用尽了，就好比流水从面前流过，一去不复返。</p>
-<p>而和迭代器又不同的是，Stream 可以并行化操作，迭代器只能命令式地、串行化操作。顾名思义，当使用串行方式去遍历时，每个 item 读完后再读下一个 item。而使用并行去遍历时，数据会被分成多个段，其中每一个都在不同的线程中处理，然后将结果一起输出。Stream 的并行操作依赖于 Java7 中引入的 Fork/Join 框架（JSR166y）来拆分任务和加速处理过程。Java 的并行 API 演变历程基本如下：</p>
-<p>1.0-1.4 中的 java.lang.Thread<br>5.0 中的 java.util.concurrent<br>6.0 中的 Phasers 等<br>7.0 中的 Fork/Join 框架<br>8.0 中的 Lambda<br>Stream 的另外一大特点是，数据源本身可以是无限的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/04/java-stream/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/11/04/java-lambda/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/11/04/java-lambda/" class="post-title-link" itemprop="url">java-lambda</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-11-04 12:07:21" itemprop="dateCreated datePublished" datetime="2019-11-04T12:07:21+08:00">2019-11-04</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-05 20:27:35" itemprop="dateModified" datetime="2020-06-05T20:27:35+08:00">2020-06-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/11/04/java-lambda/" class="post-meta-item leancloud_visitors" data-flag-title="java-lambda" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>   Java8 Lambda 表达式产生的背景和用法，以及 Lambda 表达式与匿名类的不同等。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/04/java-lambda/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/10/21/redis-use/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/21/redis-use/" class="post-title-link" itemprop="url">redis</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-10-21 20:39:49" itemprop="dateCreated datePublished" datetime="2019-10-21T20:39:49+08:00">2019-10-21</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-17 21:57:26" itemprop="dateModified" datetime="2019-12-17T21:57:26+08:00">2019-12-17</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/redis/" itemprop="url" rel="index"><span itemprop="name">redis</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/10/21/redis-use/" class="post-meta-item leancloud_visitors" data-flag-title="redis" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><a href="https://www.runoob.com/redis/redis-tutorial.html" target="_blank" rel="noopener">Redis教程-菜鸟教程</a><br><a href="https://www.cnblogs.com/whcwkw1314/p/8922031.html" target="_blank" rel="noopener">java 中 Redis 5大基本类型的用法</a><br><a href="https://mp.weixin.qq.com/s/pHifVqH5vBV-LskK3QMYjg" target="_blank" rel="noopener">后端开发都应该掌握的Redis基础</a><br><a href="https://mp.weixin.qq.com/s/W6QxjnSLv2YJXHmewSZz1A" target="_blank" rel="noopener">想不到！面试官问我：Redis 内存满了怎么办？</a><br><a href="https://mp.weixin.qq.com/s/Yzv88PCDBstFFj0qIzTkJA" target="_blank" rel="noopener">掌握这些 Redis 技巧，百亿数据量不在话下！</a></p>
-<p><a href="https://mp.weixin.qq.com/s/t2M5QrLzZ2ZTPf7SRdy8NQ" target="_blank" rel="noopener">Redis 的各项功能解决了哪些问题</a><br><a href="https://mp.weixin.qq.com/s/bTDcWlCq0U7tW8n78Kw1YQ" target="_blank" rel="noopener">Redis在游戏开发中的几种应用场景</a></p>
-<p><a href="https://mp.weixin.qq.com/s/mApQ9Zumy7H7FTWy9dRung" target="_blank" rel="noopener">一份完整的阿里云 Redis 开发规范</a></p>
-<p><a href="https://mp.weixin.qq.com/s/q0ruZ4cnZmp50lK07ph4Ww" target="_blank" rel="noopener">Redis 数据结构和主要命令</a><br><a href="https://mp.weixin.qq.com/s/HgwmTlmV_d2dOmAl-fYzkQ" target="_blank" rel="noopener">十二张图详解Redis的数据结构和对象系统</a><br><a href="https://mp.weixin.qq.com/s/75uewvZWpSzxRbVvOrcOcg" target="_blank" rel="noopener">Redis 为什么这么快</a><br><a href="https://mp.weixin.qq.com/s/YFQfbuy97Aw6MzzzRK7a3Q" target="_blank" rel="noopener">为什么 Redis 单线程能支撑高并发</a><br><a href="https://mp.weixin.qq.com/s/GaCpNatAII4iBIUlwVdYOA" target="_blank" rel="noopener">Redis为什么这么快？一文深入了解Redis内存模型！</a><br><a href="https://mp.weixin.qq.com/s/7UWLIJDZ5JPP693EdxYboA" target="_blank" rel="noopener">为什么我们做分布式使用Redis</a><br><a href="https://mp.weixin.qq.com/s/fDneukqWu8mbXuybJ7JFgw" target="_blank" rel="noopener">Redis大量数据测试</a></p>
-<p><a href="https://mp.weixin.qq.com/s/66KI8Se0-R9OTqSfISuJLw" target="_blank" rel="noopener">扫盲，为什么分布式一定要有Redis?</a><br><a href="https://mp.weixin.qq.com/s/2aATtFbN7lJ6EnCwRKbpQg" target="_blank" rel="noopener">分布式缓存 Java 框架</a><br><a href="https://mp.weixin.qq.com/s/jV46h2OcaQ0DMytNuyHv-A" target="_blank" rel="noopener">分布式数据缓存中的一致性哈希算法</a></p>
-<p><a href="https://mp.weixin.qq.com/s/qlVZ-_HqZ3DZ7t3J8w72Gw" target="_blank" rel="noopener">高并发编程之高并发场景：秒杀（无锁、排他锁、乐观锁、redis缓存的逐步演变）</a><br><a href="https://www.tuicool.com/wx/32MVJf3?from=timeline" target="_blank" rel="noopener">基于 Redis 的分布式锁到底安全吗</a><br><a href="https://mp.weixin.qq.com/s/JLEzNqQsx-Lec03eAsXFOQ" target="_blank" rel="noopener">Redlock：Redis分布式锁最牛逼的实现</a><br><a href="https://mp.weixin.qq.com/s/cKoF0AZnG65pfnb9OYnybw" target="_blank" rel="noopener">不用找了，基于 Redis 的分布式锁实战来了</a></p>
-<p><a href="https://mp.weixin.qq.com/s?__biz=MzAwNDUxOTQ5MQ==&amp;mid=2247493725&amp;idx=1&amp;sn=0ce5f12188e4268e1f86ed2e0efb2c7f" target="_blank" rel="noopener">Tendis 基于 binlog 的主从同步方案</a></p>
-<p><a href="https://mp.weixin.qq.com/s/g3rLECI5oyWOFEVMlTMfpw" target="_blank" rel="noopener">MongoDB、HBase、Redis 等 NoSQL 优劣势、应用场景 -  芋道源码 </a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/09/09/mysql-index/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/09/mysql-index/" class="post-title-link" itemprop="url">mysql-index</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-09-09 08:01:29" itemprop="dateCreated datePublished" datetime="2019-09-09T08:01:29+08:00">2019-09-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-26 20:08:40" itemprop="dateModified" datetime="2019-11-26T20:08:40+08:00">2019-11-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/09/09/mysql-index/" class="post-meta-item leancloud_visitors" data-flag-title="mysql-index" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>　转自<br>　<a href="https://time.geekbang.org/column/article/69236" target="_blank" rel="noopener">04 | 深入浅出索引（上） MySQL实战45讲</a><br>　<a href="https://time.geekbang.org/column/article/69636" target="_blank" rel="noopener">05 | 深入浅出索引（下） MySQL实战45讲</a></p>
-<h1 id="MySQL-不走索引的情况"><a href="#MySQL-不走索引的情况" class="headerlink" title="MySQL 不走索引的情况"></a>MySQL 不走索引的情况</h1><p> 转自 <a href="https://time.geekbang.org/column/article/74059" target="_blank" rel="noopener">18 | 为什么这些SQL语句逻辑相同，性能却差异巨大？</a></p>
-<h2 id="案例一：条件字段函数操作"><a href="#案例一：条件字段函数操作" class="headerlink" title="案例一：条件字段函数操作"></a>案例一：条件字段函数操作</h2><p>  对索引字段做函数操作，可能会破坏索引值的有序性，因此优化器就决定放弃走树搜索功能。</p>
-<p>  假设你现在维护了一个交易系统，其中交易记录表 tradelog 包含交易流水号（tradeid）、交易员 id（operator）、交易时间（t_modified）等字段。为了便于描述，我们先忽略其他字段。这个表的建表语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE `tradelog` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `tradeid` varchar(32) DEFAULT NULL,</span><br><span class="line">  `operator` int(11) DEFAULT NULL,</span><br><span class="line">  `t_modified` datetime DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `tradeid` (`tradeid`),</span><br><span class="line">  KEY `t_modified` (`t_modified`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</span><br></pre></td></tr></table></figure></p>
-<p>  假设，现在已经记录了从 2016 年初到 2018 年底的所有数据，运营部门有一个需求是，要统计发生在所有年份中 7 月份的交易记录总数。这个逻辑看上去并不复杂，你的 SQL 语句可能会这么写：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/09/09/mysql-index/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/09/09/mysql-transaction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/09/mysql-transaction/" class="post-title-link" itemprop="url">MySQL 事务</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-09-09 07:25:14" itemprop="dateCreated datePublished" datetime="2019-09-09T07:25:14+08:00">2019-09-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/09/09/mysql-transaction/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL 事务" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>　转自<br>　<a href="https://time.geekbang.org/column/article/68963" target="_blank" rel="noopener">03 | 事务隔离：为什么你改了我还看不见？ MySQL实战45讲</a><br>　<a href="https://time.geekbang.org/column/article/75173" target="_blank" rel="noopener">20 | 幻读是什么，幻读有什么问题？MySQL实战45讲 </a></p>
-<p>　提到事务，你肯定不陌生，和数据库打交道的时候，我们总是会用到事务。最经典的例子就是转账，你要给朋友小王转 100 块钱，而此时你的银行卡只有 100 块钱。</p>
-<p>　转账过程具体到程序里会有一系列的操作，比如查询余额、做加减法、更新余额等，这些操作必须保证是一体的，不然等程序查完之后，还没做减法之前，你这 100 块钱，完全可以借着这个时间差再查一次，然后再给另外一个朋友转账，如果银行这么整，不就乱了么？这时就要用到“事务”这个概念了。</p>
-<p>　简单来说，事务就是要保证一组数据库操作，要么全部成功，要么全部失败。在 MySQL 中，事务支持是在引擎层实现的。你现在知道，MySQL 是一个支持多引擎的系统，但并不是所有的引擎都支持事务。比如 MySQL 原生的 MyISAM 引擎就不支持事务，这也是 MyISAM 被 InnoDB 取代的重要原因之一。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/09/09/mysql-transaction/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1246,20 +1242,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">187</span>
+          <span class="site-state-item-count">196</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

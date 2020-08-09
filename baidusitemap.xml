@@ -1,13 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://weikeqin.com/2020/07/18/data-structure-linked-list/</loc>
+    <lastmod>2020-08-09</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/07/18/data-structure-array/</loc>
+    <lastmod>2020-08-09</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/08/02/jvm-gc/</loc>
+    <lastmod>2020-08-09</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/06/09/jvm-config/</loc>
+    <lastmod>2020-08-07</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/07/05/java-virtual-machine-structure/</loc>
+    <lastmod>2020-08-05</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2018/02/06/python-error-notes/</loc>
+    <lastmod>2020-08-05</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2019/06/01/jvm-class-loader/</loc>
+    <lastmod>2020-08-03</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2017/03/25/maven-notes/</loc>
+    <lastmod>2020-07-29</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/02/03/java-mermory-model/</loc>
+    <lastmod>2020-07-27</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2018/09/24/java-problem-locate/</loc>
+    <lastmod>2020-07-27</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/03/28/jvm-performance-tuning-monitoring-tool/</loc>
+    <lastmod>2020-07-26</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/06/21/jvm-notes/</loc>
+    <lastmod>2020-07-26</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2017/09/02/jvm-monitoring/</loc>
+    <lastmod>2020-07-26</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2018/08/12/jvm-memory-area/</loc>
+    <lastmod>2020-07-26</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/05/14/javac-notes/</loc>
+    <lastmod>2020-07-26</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/07/18/data-structure-complexity-analysis/</loc>
+    <lastmod>2020-07-18</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/07/05/java-virtual-machine-opcode-mnemonics-by-opcode/</loc>
+    <lastmod>2020-07-12</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/07/05/java-virtual-machine-instruction-set/</loc>
+    <lastmod>2020-07-12</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/07/05/java-virtual-machine-loads-links-initializes/</loc>
+    <lastmod>2020-07-12</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/07/05/java-virtual-machine-class-file-format/</loc>
+    <lastmod>2020-07-12</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/07/05/java-virtual-machine-compiling/</loc>
+    <lastmod>2020-07-12</lastmod>
+  </url>  <url>
     <loc>http://weikeqin.com/2020/06/21/unique-id/</loc>
     <lastmod>2020-07-12</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2020/06/28/mysql-log/</loc>
-    <lastmod>2020-07-12</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2020/07/05/java-virtual-machine-structure/</loc>
     <lastmod>2020-07-12</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2020/04/18/vs-code-notes/</loc>
@@ -37,17 +97,11 @@
     <loc>http://weikeqin.com/2020/02/02/java-concurrent-programming/</loc>
     <lastmod>2020-07-01</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2018/08/12/jvm-memory-area/</loc>
-    <lastmod>2020-06-30</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2017/08/15/redis-notes/</loc>
     <lastmod>2020-06-30</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2019/09/08/java-bytecode-enhancement/</loc>
     <lastmod>2020-06-30</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2020/06/21/jvm-notes/</loc>
-    <lastmod>2020-06-29</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2019/07/03/rest-vs-rpc/</loc>
     <lastmod>2020-06-24</lastmod>
@@ -61,17 +115,11 @@
     <loc>http://weikeqin.com/2020/06/17/io-model/</loc>
     <lastmod>2020-06-22</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2018/09/24/java-problem-locate/</loc>
-    <lastmod>2020-06-21</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2020/06/06/java-doc/</loc>
     <lastmod>2020-06-21</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/03/16/java/</loc>
     <lastmod>2020-06-21</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2020/06/09/jvm-config/</loc>
-    <lastmod>2020-06-20</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/06/14/linux-notes/</loc>
     <lastmod>2020-06-20</lastmod>
@@ -97,9 +145,6 @@
     <loc>http://weikeqin.com/2017/04/14/neo4j-import-data/</loc>
     <lastmod>2020-06-17</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2020/02/03/java-mermory-model/</loc>
-    <lastmod>2020-06-15</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2020/06/14/java-jmh-notes/</loc>
     <lastmod>2020-06-14</lastmod>
   </url>  <url>
@@ -116,9 +161,6 @@
     <lastmod>2020-06-13</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2020/06/07/java-concurrent-design-pattern/</loc>
-    <lastmod>2020-06-13</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2017/09/02/jvm-monitoring/</loc>
     <lastmod>2020-06-13</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/05/23/java-parser-json/</loc>
@@ -163,9 +205,6 @@
     <loc>http://weikeqin.com/2020/05/16/elasticsearch-setup/</loc>
     <lastmod>2020-06-05</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2019/06/01/jvm-class-loader/</loc>
-    <lastmod>2020-06-05</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2020/03/20/chrome-notes/</loc>
     <lastmod>2020-06-05</lastmod>
   </url>  <url>
@@ -190,16 +229,10 @@
     <loc>http://weikeqin.com/2017/04/22/mysql-foundation/</loc>
     <lastmod>2020-05-21</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2017/03/25/maven-notes/</loc>
-    <lastmod>2020-05-19</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2019/09/05/mysql-lock-table-solution/</loc>
     <lastmod>2020-05-19</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2019/11/13/elasticsearch-error-notes/</loc>
-    <lastmod>2020-05-17</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2020/05/14/javac-notes/</loc>
     <lastmod>2020-05-17</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2020/05/16/elk-notes/</loc>
@@ -226,13 +259,7 @@
     <loc>http://weikeqin.com/2017/03/06/springboot-note/</loc>
     <lastmod>2020-04-09</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2020/03/28/jvm-performance-tuning-monitoring-tool/</loc>
-    <lastmod>2020-03-30</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2018/03/01/python-log/</loc>
-    <lastmod>2020-03-16</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2018/02/06/python-error-notes/</loc>
     <lastmod>2020-03-16</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2018/06/01/sort-algorithm-comparison/</loc>
@@ -328,10 +355,10 @@
     <loc>http://weikeqin.com/2018/07/12/universal-curd-interface/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2017/05/04/text-analysis-application-scenarios/</loc>
+    <loc>http://weikeqin.com/2018/06/04/tf-idf/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2018/06/04/tf-idf/</loc>
+    <loc>http://weikeqin.com/2017/05/04/text-analysis-application-scenarios/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/08/29/string-stringbuilder-stringbuffer-compare/</loc>
@@ -466,10 +493,10 @@
     <loc>http://weikeqin.com/2019/05/06/mysql-slow-reason/</loc>
     <lastmod>2019-08-19</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2018/04/20/mysql-question/</loc>
+    <loc>http://weikeqin.com/2019/05/06/mysql-order-by/</loc>
     <lastmod>2019-08-19</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2019/05/06/mysql-order-by/</loc>
+    <loc>http://weikeqin.com/2018/04/20/mysql-question/</loc>
     <lastmod>2019-08-19</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/05/01/massive-data-processing-interview-questions/</loc>
