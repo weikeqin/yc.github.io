@@ -210,6 +210,196 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/16/canal-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/16/canal-notes/" class="post-title-link" itemprop="url">canal 笔记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-16 10:28:03" itemprop="dateCreated datePublished" datetime="2018-05-16T10:28:03+08:00">2018-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-19 11:53:43" itemprop="dateModified" datetime="2020-06-19T11:53:43+08:00">2020-06-19</time>
+              </span>
+
+          
+            <span id="/2018/05/16/canal-notes/" class="post-meta-item leancloud_visitors" data-flag-title="canal 笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>使用canal前需要准备以下几个内容 </p>
+<ol>
+<li>安装配置MySQL<br> 1.1 安装 mysql，<br> 1.2 配置 mysql binlog使用ROW模式<br> 1.3 在MySQL添加对应的canal用户<br> 1.4 检查canal用户生效</li>
+<li>下载canal并配置<br>2.1 下载canal<br>2.2 配置 canal<br>2.3 启动canal (需要JDK&gt;=1.6.25)</li>
+</ol>
+</blockquote>
+<h1 id="1-配置MySQL"><a href="#1-配置MySQL" class="headerlink" title="(1) 配置MySQL"></a>(1) 配置MySQL</h1><h2 id="1-1-安装MySQL"><a href="#1-1-安装MySQL" class="headerlink" title="(1.1) 安装MySQL"></a>(1.1) 安装MySQL</h2><blockquote>
+<p> 参考 <a href="https://dev.mysql.com/doc/refman/5.7/en/installing.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/installing.html</a> </p>
+</blockquote>
+<h2 id="1-2-修改MySQL配置文件"><a href="#1-2-修改MySQL配置文件" class="headerlink" title="(1.2) 修改MySQL配置文件"></a>(1.2) 修改MySQL配置文件</h2><blockquote>
+<p>canal的原理是基于mysql binlog技术，所以需要开启mysql的binlog写入功能，并且配置binlog模式为row.</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]  </span><br><span class="line"><span class="built_in">log</span>-bin=mysql-bin  <span class="comment"># 开启 binlog</span></span><br><span class="line">binlog-format=ROW  <span class="comment"># 选择 ROW 模式</span></span><br><span class="line">server_id=1        <span class="comment"># 配置 MySQL replaction ，不能和 canal 的 slaveId 重复</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-3-MySQL添加canal用户并授权"><a href="#1-3-MySQL添加canal用户并授权" class="headerlink" title="(1.3) MySQL添加canal用户并授权"></a>(1.3) MySQL添加canal用户并授权</h2><blockquote>
+<p>  canal的原理是模拟自己为mysql slave，所以需要mysql slave的相关权限 </p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> canal <span class="keyword">IDENTIFIED</span> <span class="keyword">BY</span> <span class="string">'canal'</span>;    </span><br><span class="line"></span><br><span class="line"><span class="keyword">GRANT</span> <span class="keyword">SELECT</span>, <span class="keyword">REPLICATION</span> <span class="keyword">SLAVE</span>, <span class="keyword">REPLICATION</span> <span class="keyword">CLIENT</span> <span class="keyword">ON</span> *.* <span class="keyword">TO</span> <span class="string">'canal'</span>@<span class="string">'%'</span>;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">FLUSH</span> <span class="keyword">PRIVILEGES</span>;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/16/canal-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/16/springboot-error-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/16/springboot-error-note/" class="post-title-link" itemprop="url">springboot error</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-05-16 10:28:03" itemprop="dateCreated datePublished" datetime="2018-05-16T10:28:03+08:00">2018-05-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-06 08:33:25" itemprop="dateModified" datetime="2020-06-06T08:33:25+08:00">2020-06-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/05/16/springboot-error-note/" class="post-meta-item leancloud_visitors" data-flag-title="springboot error" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="1-maven-plugins-maven-compiler-plugin-3-8-0-compile-failed-missing-org-objectweb-asm-ClassVisitor"><a href="#1-maven-plugins-maven-compiler-plugin-3-8-0-compile-failed-missing-org-objectweb-asm-ClassVisitor" class="headerlink" title="(1)  maven.plugins:maven-compiler-plugin:3.8.0:compile failed   missing: org/objectweb/asm/ClassVisitor"></a>(1)  maven.plugins:maven-compiler-plugin:3.8.0:compile failed   missing: org/objectweb/asm/ClassVisitor</h1><p>  在使用 springboot 2.1.3 后，开始出现这个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.8.0:compile (default-compile) on project model: Execution default-compile of goal org.apache.</span><br><span class="line">maven.plugins:maven-compiler-plugin:3.8.0:compile failed: Unable to load the mojo &apos;compile&apos; in the plugin &apos;org.apache.maven.plugins:maven-compiler-plugin:3.8.0&apos;. A required class is</span><br><span class="line">missing: org/objectweb/asm/ClassVisitor</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[INFO] --- maven-compiler-plugin:3.8.0:compile (default-compile) @  ---</span><br><span class="line">[WARNING] Error injecting: org.apache.maven.plugin.compiler.CompilerMojo</span><br><span class="line">com.google.inject.ProvisionException: Unable to provision, see the following errors:</span><br><span class="line"></span><br><span class="line">1) Error injecting constructor, java.lang.NoClassDefFoundError: org/objectweb/asm/ClassVisitor</span><br><span class="line">  at org.codehaus.plexus.languages.java.jpms.LocationManager.&lt;init&gt;(Unknown Source)</span><br></pre></td></tr></table></figure>
+<p>  maven-compiler-plugin 版本问题，指定版本</p>
+<p>  方法一，在pluginManagement指定</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.7.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">pluginManagement</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>  方法二，在每个模块里手动指定<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">classifier</span>&gt;</span>exec<span class="tag">&lt;/<span class="name">classifier</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/16/springboot-error-note/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/05/10/elasticsearch-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -895,184 +1085,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/17/neo4j-apoc-use/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/17/neo4j-apoc-use/" class="post-title-link" itemprop="url">Neo4j APOC 使用</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-04-17 12:02:37" itemprop="dateCreated datePublished" datetime="2018-04-17T12:02:37+08:00">2018-04-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-01-19 11:19:16" itemprop="dateModified" datetime="2020-01-19T11:19:16+08:00">2020-01-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/04/17/neo4j-apoc-use/" class="post-meta-item leancloud_visitors" data-flag-title="Neo4j APOC 使用" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="1-下载配置"><a href="#1-下载配置" class="headerlink" title="(1) 下载配置"></a>(1) 下载配置</h1><h2 id="1-1-下载对应版本的apoc-jar包"><a href="#1-1-下载对应版本的apoc-jar包" class="headerlink" title="(1.1) 下载对应版本的apoc jar包"></a>(1.1) 下载对应版本的apoc jar包</h2><ol>
-<li><p>从<a href="https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases" target="_blank" rel="noopener">github apoc各个版本下载地址</a>下载对应版本的apoc jar包，并放到 <code>$NEO4J_HOME/plugs</code> 目录下</p>
-<p><code>wget https://github.com/neo4j-contrib/neo4j-apoc-procedures/releases/download/3.3.0.2/apoc-3.3.0.2-all.jar</code></p>
-</li>
-</ol>
-<h2 id="1-2-配置-neo4j-conf-配置文件"><a href="#1-2-配置-neo4j-conf-配置文件" class="headerlink" title="(1.2) 配置 neo4j.conf 配置文件"></a>(1.2) 配置 neo4j.conf 配置文件</h2><p>在 <code>neo4j.conf</code> 最后一行添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dbms.security.procedures.unrestricted=apoc.*</span><br><span class="line">apoc.import.file.enabled=true</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">neo4j-sh (?)$ return apoc.version();</span><br><span class="line">+----------------+</span><br><span class="line">| apoc.version() |</span><br><span class="line">+----------------+</span><br><span class="line">| &quot;3.3.0.2&quot;      |</span><br><span class="line">+----------------+</span><br><span class="line">1 row</span><br><span class="line">29 ms</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/04/17/neo4j-apoc-use/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/03/02/canvas-fingerprinting/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/03/02/canvas-fingerprinting/" class="post-title-link" itemprop="url">帆布指纹</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-03-02 08:55:15" itemprop="dateCreated datePublished" datetime="2018-03-02T08:55:15+08:00">2018-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/03/02/canvas-fingerprinting/" class="post-meta-item leancloud_visitors" data-flag-title="帆布指纹" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  一般情况下，网站或者广告联盟都会非常想要一种技术方式可以在网络上精确定位到每一个个体，这样可以通过收集这些个体的数据，通过分析后更加精准的去推送广告（精准化营销）或其他有针对性的一些活动。<br>  Cookie技术是非常受欢迎的一种。当用户访问一个网站时，网站可以在用户当前的浏览器Cookie中永久植入一个含有唯一标示符（UUID）的信息，并通过这个信息将用户所有行为（浏览了哪些页面？搜索了哪些关键字？对什么感兴趣？点了哪些按钮？用了哪些功能？看了哪些商品？把哪些放入了购物车等等）关联起来。<br>  但是Cookie可以伪装，在浏览器隐私窗口，不同用户，甚至是爬虫时无法区分。<br>  这个时候，提出一种 “帆布指纹识别”技术 ，这种技术可以避免以上的缺点。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bin2hex</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// From: http://phpjs.org/functions</span></span><br><span class="line">  <span class="comment">// +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)</span></span><br><span class="line">  <span class="comment">// +   bugfixed by: Onno Marsman</span></span><br><span class="line">  <span class="comment">// +   bugfixed by: Linuxworld</span></span><br><span class="line">  <span class="comment">// +   improved by: ntoniazzi (http://phpjs.org/functions/bin2hex:361#comment_177616)</span></span><br><span class="line">  <span class="comment">// *     example 1: bin2hex('Kev');</span></span><br><span class="line">  <span class="comment">// *     returns 1: '4b6576'</span></span><br><span class="line">  <span class="comment">// *     example 2: bin2hex(String.fromCharCode(0x00));</span></span><br><span class="line">  <span class="comment">// *     returns 2: '00'</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> i, l, o = <span class="string">""</span>, n;</span><br><span class="line"></span><br><span class="line">  s += <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>, l = s.length; i &lt; l; i++) &#123;</span><br><span class="line">    n = s.charCodeAt(i).toString(<span class="number">16</span>)</span><br><span class="line">    o += n.length &lt; <span class="number">2</span> ? <span class="string">"0"</span> + n : n;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> o;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> canvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line"><span class="keyword">var</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"><span class="keyword">var</span> txt = <span class="string">'http://security.tencent.com/'</span>;</span><br><span class="line">ctx.textBaseline = <span class="string">"top"</span>;</span><br><span class="line">ctx.font = <span class="string">"14px 'Arial'"</span>;</span><br><span class="line">ctx.textBaseline = <span class="string">"tencent"</span>;</span><br><span class="line">ctx.fillStyle = <span class="string">"#f60"</span>;</span><br><span class="line">ctx.fillRect(<span class="number">125</span>,<span class="number">1</span>,<span class="number">62</span>,<span class="number">20</span>);</span><br><span class="line">ctx.fillStyle = <span class="string">"#069"</span>;</span><br><span class="line">ctx.fillText(txt, <span class="number">2</span>, <span class="number">15</span>);</span><br><span class="line">ctx.fillStyle = <span class="string">"rgba(102, 204, 0, 0.7)"</span>;</span><br><span class="line">ctx.fillText(txt, <span class="number">4</span>, <span class="number">17</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b64 = canvas.toDataURL().replace(<span class="string">"data:image/png;base64,"</span>,<span class="string">""</span>);</span><br><span class="line"><span class="keyword">var</span> bin = atob(b64);</span><br><span class="line"><span class="keyword">var</span> crc = bin2hex(bin.slice(<span class="number">-16</span>,<span class="number">-12</span>));</span><br><span class="line"><span class="built_in">console</span>.log(crc);</span><br></pre></td></tr></table></figure>
-<p>以上代码在chrome浏览器里运行会得到一个结果 <code>3c5c9044</code> ，在火狐会得到 <code>7e7f4d86</code>，在IE会得到 <code>5ec31ae3</code><br>只要用户用同一浏览器，产生的 帆布指纹就不会变。这样就可以达到反爬虫的效果。<br>缺点是 公司批量购买的电脑，批量安装系统，这些电脑的结果可能会一样。</p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://security.tencent.com/index.php/blog/msg/59" target="_blank" rel="noopener">取代cookie的网站追踪技术：”帆布指纹识别”初探</a><br>[2] <a href="http://www.cnblogs.com/xiezhengcai/p/4252008.html" target="_blank" rel="noopener">帆布指纹识别（CANVAS FINGERPRINTING）</a><br>[3] <a href="https://github.com/Valve/fingerprintJS" target="_blank" rel="noopener">fingerprintJS</a><br>[4] <a href="https://panopticlick.eff.org/browser-uniqueness.pdf" target="_blank" rel="noopener">browser-uniqueness.pdf</a><br>[5] <a href="https://segmentfault.com/a/1190000013010835" target="_blank" rel="noopener">Token 认证的来龙去脉</a><br>[6] <a href="https://segmentfault.com/a/1190000014527692" target="_blank" rel="noopener">token认证</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1142,20 +1154,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">198</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

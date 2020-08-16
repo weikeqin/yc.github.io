@@ -210,6 +210,215 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/12/06/crawler-wenshu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/06/crawler-wenshu/" class="post-title-link" itemprop="url">爬取 裁判文书</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-06 15:07:53" itemprop="dateCreated datePublished" datetime="2017-12-06T15:07:53+08:00">2017-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-18 08:32:09" itemprop="dateModified" datetime="2019-08-18T08:32:09+08:00">2019-08-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/12/06/crawler-wenshu/" class="post-meta-item leancloud_visitors" data-flag-title="爬取 裁判文书" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  裁判文书爬取只写了思路，有部分内容没公开。这篇文章只提供思路，不提供实现。仅供参考。</p>
+<p>  如果经济允许，可以直接购买裁判文书网的文书，一年10万元，和爬虫工程师开销和代理费用来说，10万元很划算了。</p>
+<p>  如果做实验使用，可以邮件或者加qq群在群里要，数量在百万以下一般会直接给。也免得增加文书网服务器的压力。</p>
+<p>  文书网已经放弃使用瑞数，现在使用的是免费的sojson加密</p>
+<p>  2019-04-09 文书网停服更新</p>
+<p>  2019-01-31 疯狂封ip</p>
+<p>  2018-08-07 增加7道爬虫防御，增加反爬难度，文书列表页返回的docId加密 </p>
+<p>  2018-01-31 修改获取vl5x的js 还是eval函数，原理没变，换了换字符</p>
+<p>  2017-06-23 更新反爬策略 增加反爬难度 用的瑞数的产品  每一次请求翻页都要过一次验证码，加密一次密钥，带密钥访问下一个页面</p>
+<p>  谨以此文献给在我生命中留下回忆的非结构化团队。谢谢领导给了我充足的时间研究裁判文书网。</p>
+<h1 id="1-2019-06版-爬取裁判文书"><a href="#1-2019-06版-爬取裁判文书" class="headerlink" title="(1) 2019-06版 爬取裁判文书"></a>(1) 2019-06版 爬取裁判文书</h1><p>  首先找获取数据的页面。</p>
+<p>  <img src="/img/crawler/wenshu.court.gov.cn/list-param-20190615.jpg" alt="页面请求参数"></p>
+<p>  <img src="/img/crawler/wenshu.court.gov.cn/list-result-20190615.png" alt="页面返回内容"></p>
+<p>  浏览器 F12 很快就可以找到返回数据的list页面  <a href="http://wenshu.court.gov.cn/List/ListContent" target="_blank" rel="noopener">http://wenshu.court.gov.cn/List/ListContent</a>  ，不过返回的数据是加密的。</p>
+<!--
+_gscu_2116842793=63779915qgb1yu13
+Hm_lvt_d2caefee2de09b8a6ea438d74fd98db2=1563779915,1566086565
+_gscbrs_2116842793=1
+ASP.NET_SessionId=idb3djsyycsgjqh3qczb2lak
+VCode=1f5c5e18-ebbf-484f-b76e-277b2fd7ae39
+vjkl5=bdd0fb393ff1ba20401b4183865cbe2d7e270673
+Hm_lpvt_d2caefee2de09b8a6ea438d74fd98db2=1566088072
+_gscs_2116842793=66086564j3813s19|pv:12
+-->
+<p>  用的是Post请求，请求参数有 Param  Index Page Order Direction vl5x number guid ，cookie里的参数有 _gscu_2116842793  Hm_lvt_d2caefee2de09b8a6ea438d74fd98db2  _gscbrs_2116842793  ASP.NET_SessionId  vjkl5   Hm_lpvt_d2caefee2de09b8a6ea438d74fd98db2  _gscs_2116842793，用于反爬参数的有3个，vl5x、number、guid 。</p>
+<p>  <code>ctrl + F</code> 搜索 guid number vl5x 发现<br>  guid 是通过js生成。<br>  number 第一页默认是 wens 后面的是数字<br>  vl5x 通过混淆加密的js获得。在获取时要另获取vjkl5参数才能计算出vl5x</p>
+<p>  <code>data: { &quot;Param&quot;: listparam, &quot;Index&quot;: index, &quot;Page&quot;: page, &quot;Order&quot;: order, &quot;Direction&quot;: direction, &quot;vl5x&quot;: getKey(), &quot;number&quot;: yzm1, &quot;guid&quot;: guid1 },</code></p>
+<p>  <a href="http://wenshu.court.gov.cn/Assets/js/Lawyee.CPWSW.JsTree.js" target="_blank" rel="noopener">Lawyee.CPWSW.JsTree.js</a><br>  <a href="http://wenshu.court.gov.cn/Assets/js/20180919/Lawyee.CPWSW.List.js" target="_blank" rel="noopener">Lawyee.CPWSW.List.js</a><br>  <a href="http://wenshu.court.gov.cn/Assets/js/20180914/Lawyee.CPWSW.ListExtend.js" target="_blank" rel="noopener">Lawyee.CPWSW.ListExtend.js</a><br>  <a href="http://wenshu.court.gov.cn/Assets/Js/pako.min.js" target="_blank" rel="noopener">pako.min.js</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/06/crawler-wenshu/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/12/03/neo4j-recover-data/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/12/03/neo4j-recover-data/" class="post-title-link" itemprop="url">neo4j 误删 数据 恢复</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-12-03 22:31:49" itemprop="dateCreated datePublished" datetime="2017-12-03T22:31:49+08:00">2017-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/neo4j/" itemprop="url" rel="index"><span itemprop="name">neo4j</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/12/03/neo4j-recover-data/" class="post-meta-item leancloud_visitors" data-flag-title="neo4j 误删 数据 恢复" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>neo4j误删数据恢复</p>
+<p>今天有一个朋友告诉我他误操作，删了几十G的数据，问我有没有什么办法可以恢复数据。<br>说来也巧了，今天我在测试大数据量下load csv的性能，导入三次删除三次，理论上数据库为空，data目录下的文件应该&lt;1MB，但是我一看，800M，肯定有日志呀。<br>正好碰到他问我这个问题，首先告诉他不要慌，有办法，然后google了一下，是neo4j的其中一个作者(Stefan Armbruster，带飞机帽的那个)在stackoverflow回答的，还好，谢天谢地。</p>
+<!--
+不小心写了一句MATCH p=()-[]->() delete p;
+刚才40G，执行这句话15秒，现在看只有14g了
+-->
+<p>用这个恢复数据<br><a href="https://github.com/neo4j/neo4j/blob/3.0/tools/src/main/java/org/neo4j/tools/applytx/DatabaseRebuildTool.java" target="_blank" rel="noopener">https://github.com/neo4j/neo4j/blob/3.0/tools/src/main/java/org/neo4j/tools/applytx/DatabaseRebuildTool.java</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2017/12/03/neo4j-recover-data/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/11/15/java-interview/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1011,189 +1220,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/10/16/druid-db-pool-config-java/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/10/16/druid-db-pool-config-java/" class="post-title-link" itemprop="url">Druid 连接池 配置 (java无框架)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-10-16 09:22:40" itemprop="dateCreated datePublished" datetime="2017-10-16T09:22:40+08:00">2017-10-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/10/16/druid-db-pool-config-java/" class="post-meta-item leancloud_visitors" data-flag-title="Druid 连接池 配置 (java无框架)" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>为什么必须使用数据库连接池:</p>
-<p>1.普通的JDBC数据库连接使用DriverManager来获取，每次向数据库建立连接时都要将Connection加载到内存中，再验证用户名和密码。需要数据库连接的时候，就向数据库要求一个，执行完后就断开连接，这样的方式会消耗大量的资源和时间，数据库的连接资源并没有得到很好的重复利用。若是同时有几百人甚至几千人在线，频繁地进行数据库连接操作，这将会占用很多的系统资源，严重的甚至会造成服务器的奔溃。</p>
-<p>2.使用DriverManager方式获取JDBC数据库连接，每一次数据库连接，操作完会后都要断开，否则，如果程序出现异常而未能关闭，将会导致数据库系统内存泄漏，最终将导致重启数据库。</p>
-<p>3.同时，这种开发不能控制被创建的连接对象数，系统资源会被毫无顾忌地分配出去，若果连接过多，也可能导致内存泄漏，服务器奔溃。</p>
-<p>使用数据库连接池，可以避免以上几种问题。数据库连接池允许应用程序重复使用一个现有的数据库连接，而不是再重新建立一个；释放空闲空闲时间超过最大空闲时间的数据库连接来避免因为没有释放数据库连接而引起的数据库连接漏洞；连接池的数据库连接数受最大连接数和最小连接数控制，因此不会出现连接过多内存泄漏的情况。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/10/16/druid-db-pool-config-java/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/10/12/web-crawler-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/10/12/web-crawler-notes/" class="post-title-link" itemprop="url">爬虫 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-10-12 17:27:07" itemprop="dateCreated datePublished" datetime="2017-10-12T17:27:07+08:00">2017-10-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/10/12/web-crawler-notes/" class="post-meta-item leancloud_visitors" data-flag-title="爬虫 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>爬虫(Spider)，反爬虫(Anti-Spider)，反反爬虫(Anti-Anti-Spider)，这之间的斗争恢宏壮阔…</p>
-<p>Day 1 小莫想要某站上所有的电影，写了标准的爬虫(基于HttpClient库)，不断地遍历某站的电影列表页面，根据 Html 分析电影名字存进自己的数据库。这个站点的运维小黎发现某个时间段请求量陡增，分析日志发现都是 IP(1.1.1.1)这个用户，并且 useragent 还是 JavaClient1.6 ，基于这两点判断非人类后直接在Nginx 服务器上封杀。</p>
-<p>Day 2 小莫电影只爬了一半，于是也针对性的变换了下策略：1. useragent 模仿百度(“Baiduspider…”)，2. IP每爬半个小时就换一个IP代理。小黎也发现了对应的变化，于是在 Nginx 上设置了一个频率限制，每分钟超过120次请求的再屏蔽IP。 同时考虑到百度家的爬虫有可能会被误伤，想想市场部门每月几十万的投放，于是写了个脚本，通过 hostname 检查下这个 ip 是不是真的百度家的，对这些 ip 设置一个白名单。</p>
-<p>Day 3 小莫发现了新的限制后，想着我也不急着要这些数据，留给服务器慢慢爬吧，于是修改了代码，随机1-3秒爬一次，爬10次休息10秒，每天只在8-12，18-20点爬，隔几天还休息一下。小黎看着新的日志头都大了，再设定规则不小心会误伤真实用户，于是准备换了一个思路，当3个小时的总请求超过50次的时候弹出一个验证码弹框，没有准确正确输入的话就把 IP 记录进黑名单。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/10/12/web-crawler-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1263,20 +1289,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">198</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

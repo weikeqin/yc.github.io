@@ -210,6 +210,195 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/03/26/kafka-install-use/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/26/kafka-install-use/" class="post-title-link" itemprop="url">kafka 安装 使用</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-26 23:25:30" itemprop="dateCreated datePublished" datetime="2019-03-26T23:25:30+08:00">2019-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-19 11:35:36" itemprop="dateModified" datetime="2020-01-19T11:35:36+08:00">2020-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mq/" itemprop="url" rel="index"><span itemprop="name">mq</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/03/26/kafka-install-use/" class="post-meta-item leancloud_visitors" data-flag-title="kafka 安装 使用" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  <a href="http://kafka.apache.org/downloads" target="_blank" rel="noopener">http://kafka.apache.org/downloads</a></p>
+<h1 id="1-安装"><a href="#1-安装" class="headerlink" title="(1) 安装"></a>(1) 安装</h1><p>　使用kafka时需要zookeeper，所以需要安装 kafka 和 zookeeper </p>
+<h2 id="1-1-zookeeper安装"><a href="#1-1-zookeeper安装" class="headerlink" title="(1.1) zookeeper安装"></a>(1.1) zookeeper安装</h2><p>　下载　<a href="http://mirrors.cnnic.cn/apache/zookeeper/zookeeper-3.5.5/zookeeper-3.5.5.tar.gz" target="_blank" rel="noopener"> apache-zookeeper-3.5.5-bin.tar.gz </a></p>
+<p>　解压　<code>tar -zxvf apache-zookeeper-3.5.5-bin.tar.gz</code></p>
+<p>　配置　<code>cp -rf conf/zoo_sample.cfg conf/zoo.cfg</code></p>
+<p>　启动　<code>./bin/zkServer.sh start</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ZBMAC-C02PGMT0F:apache-zookeeper-3.5.5-bin weikeqin1$ ./bin/zkServer.sh start</span><br><span class="line">/usr/bin/java</span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /Users/weikeqin1/SoftWare/apache-zookeeper-3.5.5-bin/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... STARTED</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/26/kafka-install-use/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/03/17/mysql-architecture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/17/mysql-architecture/" class="post-title-link" itemprop="url">mysql 架构 及 语句执行流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-17 10:44:49" itemprop="dateCreated datePublished" datetime="2019-03-17T10:44:49+08:00">2019-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/03/17/mysql-architecture/" class="post-meta-item leancloud_visitors" data-flag-title="mysql 架构 及 语句执行流程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  转自<br>  <a href="https://time.geekbang.org/column/article/68319" target="_blank" rel="noopener">01 | 基础架构：一条SQL查询语句是如何执行的？ - MySQL实战45讲</a><br>  <a href="https://time.geekbang.org/column/article/68633" target="_blank" rel="noopener">02 | 日志系统：一条SQL更新语句是如何执行的？ - MySQL实战45讲</a></p>
+<p>  问大家一个问题。<code>SELECT * FROM t WHERE id = 1 ;</code> 以及 <code>UPDATE t set c = 2 where id = 1 ;</code> 这两个语句是怎么执行的。</p>
+<p>假设表结构是<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`t`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`c`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure></p>
+<p>  <img src="/img/database/mysql/mysql-architecture.png" alt="MySQL逻辑架构"></p>
+<p>  大体来说，MySQL 可以分为 Server 层和存储引擎层两部分。</p>
+<p>  第一层是连接处理、授权认证、安全等。这是大多数基于网络的客户端/服务器的工具或者服务都有的架构。</p>
+<p>  第二层是 Server 层，包括连接器、查询缓存、分析器、优化器、执行器等，涵盖 MySQL 的大多数核心服务功能，以及所有的内置函数（如日期、时间、数学和加密函数等），所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图等。</p>
+<p>  第三层是 存储引擎层，负责数据的存储和提取。每个存储引擎都有它的优势和劣势。服务器通过API与存储引擎层通信。其架构模式是插件式的，支持 InnoDB、MyISAM、Memory 等多个存储引擎。现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始成为了默认存储引擎。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/03/17/mysql-architecture/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/03/08/mysql-optimization-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1028,237 +1217,6 @@ GCT: 从启动到采样时GC所用的总时间 (s).
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/13/java-exception-performance/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/08/13/java-exception-performance/" class="post-title-link" itemprop="url">java异常-性能分析</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-08-13 23:20:22" itemprop="dateCreated datePublished" datetime="2018-08-13T23:20:22+08:00">2018-08-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/08/13/java-exception-performance/" class="post-meta-item leancloud_visitors" data-flag-title="java异常-性能分析" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>  遇到一个问题，Java里处理异常会有多慢。然后就自测+Google</p>
-<p>  曾经在给一个业务系统增加限流功能，使用的限流组件在流量超过阈值时，会直接抛异常，异常导致 CPU 占用率飙升。第一次遇到这样的情况，让我们不得不思考，异常怎么会对性能造成这么大的影响？<br>  在消除了这些异常之后，代码运行速度与以前相比大幅提升。这让我们产生一种猜测，就是在代码里面使用异常会带来显著的性能开销。因为异常是错误情况处理的重要组成部分，摒弃是不太可能的,所以我们需要衡量异常处理对于性能影响，我们可以通过一个实验看看异常处理的对于性能的影响。</p>
-<p>  Java在处理异常时会 取操作栈中引用的异常对象<br>  建立一个异常对象，是建立一个普通Object耗时的约20倍（实际上差距会比这个数字更大一些，因为循环也占用了时间，追求精确的读者可以再测一下空循环的耗时然后在对比前减掉这部分），而抛出、接住一个异常对象，所花费时间大约是建立异常对象的4倍。</p>
-<p>下面的数据3个为一组，分别是 <code>异常不作处理花费的时间</code>，<code>异常只抛出花费的时间</code>，<code>异常打印到日志花费的时间</code><br>用时 0.062 s<br>用时 0.094 s<br>用时 0.782 s</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/08/13/java-exception-performance/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/08/12/jvm-memory-area/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/08/12/jvm-memory-area/" class="post-title-link" itemprop="url">JVM运行时内存区域</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-08-12 10:48:21" itemprop="dateCreated datePublished" datetime="2018-08-12T10:48:21+08:00">2018-08-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-26 10:48:31" itemprop="dateModified" datetime="2020-07-26T10:48:31+08:00">2020-07-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/08/12/jvm-memory-area/" class="post-meta-item leancloud_visitors" data-flag-title="JVM运行时内存区域" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> JVM 内置了自动内存分配管理机制。这个机制可以大大降低手动分配回收机制可能带来的内存泄露和内存溢出风险，使 Java 开发人员不需要关注每个对象的内存分配以及回收，从而更专注于业务本身。</p>
-</blockquote>
-<blockquote>
-<p> JVM 自动内存分配管理机制的好处很多，但实则是把双刃剑。这个机制在提升 Java 开发效率的同时，也容易使 Java 开发人员过度依赖于自动化，弱化对内存的管理能力，这样系统就很容易发生 JVM 的堆内存异常，垃圾回收（GC）的方式不合适以及 GC 次数过于频繁等问题，这些都将直接影响到应用服务的性能。</p>
-</blockquote>
-<blockquote>
-<p> JVM的内存划分中，有部分区域是线程私有的，有部分是属于整个JVM进程；有些区域会抛出OOM异常，有些则不会，了解JVM的内存区域划分以及特征，是定位线上内存问题的基础。那么JVM内存区域是怎么划分的呢？</p>
-</blockquote>
-<p>  <img src="/img/java/JVM/Memory/java-process-memory-use.png" alt="运行中的Java进程内存占用情况"></p>
-<p>  <img src="/img/java/JVM/Memory/Java-Runtime-data-area-jdk7.jpg" alt=" Java虚拟机运行时数据区 - 大小和实际内存大小有差距"><br>  Java虚拟机运行时数据区 (仅参考模型)</p>
-<p>  <img src="/img/java/JVM/Memory/Java-Runtime-data-area-jdk7.png" alt=" Java虚拟机运行时数据区-大概比例 "><br>  Java虚拟机运行时数据区-大概比例</p>
-<h1 id="1-Java内存区域"><a href="#1-Java内存区域" class="headerlink" title="1.　Java内存区域"></a>1.　Java内存区域</h1><blockquote>
-<p>   Java虚拟机在执行Java程序的过程中会把它管理的内存划分为若干个不同的数据区域，这些区域都有各自的用途，以及创建和销毁的时间，有的随着虚拟机进程启动而存在，有的区域则依赖于用户线程的启动和结束而建立和销毁。</p>
-</blockquote>
-<blockquote>
-<p> 根据《Java 虚拟机规范》的规定，Java 虚拟机所管理的内存一共分为 Program Counter Register（程序计数器）、VM Stack（虚拟机栈）、Native Method Stack（本地方法栈）、Heap（堆）、Method Area（方法区）五个区域。</p>
-</blockquote>
-<h2 id="1-1-程序计数器-Program-Counter-Register"><a href="#1-1-程序计数器-Program-Counter-Register" class="headerlink" title="1.1　程序计数器(Program Counter Register)"></a>1.1　程序计数器(Program Counter Register)</h2><blockquote>
-<p> <code>程序计数器</code>(Program Counter Register)，简称PC，在JVM规范中，每个线程都有自己的程序计数器。</p>
-</blockquote>
-<blockquote>
-<p> 这是一块比较小的内存空间，存储当前线程正在执行的Java方法的JVM指令(或操作码)地址，即字节码的行号。如果当前方法是 native 方法，那么程序计数器的值为 undefined。</p>
-</blockquote>
-<blockquote>
-<p> 举个例子，下面是一段输出 Hello World 的代码，代码和反编译后的文件如下: </p>
-</blockquote>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"Hello, World!"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">Classfile /home/wkq/workspaces/java_test/HelloWorld.class</span><br><span class="line">  Last modified Jun 21, 2020; size 427 bytes</span><br><span class="line">  SHA-256 checksum cc0de3eb12561fe81dfb95961d817665276587839bdf652b6f4070c1b9942f10</span><br><span class="line">  Compiled from &quot;HelloWorld.java&quot;</span><br><span class="line">public class HelloWorld</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 58</span><br><span class="line">  flags: (0x0021) ACC_PUBLIC, ACC_SUPER</span><br><span class="line">  this_class: #21                         // HelloWorld</span><br><span class="line">  super_class: #2                         // java/lang/Object</span><br><span class="line">  interfaces: 0, fields: 0, methods: 2, attributes: 1</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #2.#3          // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #2 = Class              #4             // java/lang/Object</span><br><span class="line">   #3 = NameAndType        #5:#6          // &quot;&lt;init&gt;&quot;:()V</span><br><span class="line">   #4 = Utf8               java/lang/Object</span><br><span class="line">   #5 = Utf8               &lt;init&gt;</span><br><span class="line">   #6 = Utf8               ()V</span><br><span class="line">   #7 = Fieldref           #8.#9          // java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">   #8 = Class              #10            // java/lang/System</span><br><span class="line">   #9 = NameAndType        #11:#12        // out:Ljava/io/PrintStream;</span><br><span class="line">  #10 = Utf8               java/lang/System</span><br><span class="line">  #11 = Utf8               out</span><br><span class="line">  #12 = Utf8               Ljava/io/PrintStream;</span><br><span class="line">  #13 = String             #14            // Hello, World!</span><br><span class="line">  #14 = Utf8               Hello, World!</span><br><span class="line">  #15 = Methodref          #16.#17        // java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">  #16 = Class              #18            // java/io/PrintStream</span><br><span class="line">  #17 = NameAndType        #19:#20        // println:(Ljava/lang/String;)V</span><br><span class="line">  #18 = Utf8               java/io/PrintStream</span><br><span class="line">  #19 = Utf8               println</span><br><span class="line">  #20 = Utf8               (Ljava/lang/String;)V</span><br><span class="line">  #21 = Class              #22            // HelloWorld</span><br><span class="line">  #22 = Utf8               HelloWorld</span><br><span class="line">  #23 = Utf8               Code</span><br><span class="line">  #24 = Utf8               LineNumberTable</span><br><span class="line">  #25 = Utf8               main</span><br><span class="line">  #26 = Utf8               ([Ljava/lang/String;)V</span><br><span class="line">  #27 = Utf8               SourceFile</span><br><span class="line">  #28 = Utf8               HelloWorld.java</span><br><span class="line">&#123;</span><br><span class="line">  public HelloWorld();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: (0x0001) ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=1, locals=1, args_size=1</span><br><span class="line">         0: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</span><br><span class="line">         4: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 1: 0</span><br><span class="line"></span><br><span class="line">  public static void main(java.lang.String[]);</span><br><span class="line">    descriptor: ([Ljava/lang/String;)V</span><br><span class="line">    flags: (0x0009) ACC_PUBLIC, ACC_STATIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=2, locals=1, args_size=1</span><br><span class="line">         0: getstatic     #7                  // Field java/lang/System.out:Ljava/io/PrintStream;</span><br><span class="line">         3: ldc           #13                 // String Hello, World!</span><br><span class="line">         5: invokevirtual #15                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V</span><br><span class="line">         8: return</span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line 3: 0</span><br><span class="line">        line 4: 8</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: &quot;HelloWorld.java&quot;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p> LineNumberTable，是指每一个java字节码指令对应java代码文件中的第几行，以方便定位。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line">      LineNumberTable:</span><br><span class="line">        line 3: 0</span><br><span class="line">        line 4: 8</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">&gt;  其中 line 3  line 4 指的的代码中的行号， 0 8 指的是 java字节码的指令 </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  该内存区域是唯一一个在Java虚拟机规范中没有规定任何 OutOfMemoryError 情况的内存区域。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 1.2　Java虚拟机栈(Java Virtal Machine Stack)</span><br><span class="line"></span><br><span class="line">  Java虚拟机栈(Java Virtal Machine Stack)，同样也是属于线程私有区域，该区域存储着局部变量表，编译时期可知的各种基本类型数据、对象引用、方法出口等信息。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&gt;  局部变量表存放了编译期可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用和returnAddress类型（指向了一条字节码指令的地址）。</span><br><span class="line">  其中64位长度的long和double类型的数据会占用2个局部变量空间（slot），其余的数据类型占1个。</span><br><span class="line">  </span><br><span class="line">  局部变量表所需的内存空间在编译期间分配完成，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  在这个java栈中又会包含多个栈帧，每运行一个方法就创建一个栈帧，用于存储局部变量表、操作栈、方法返回值等。每一个方法从调用直至执行完成的过程，就对应一个栈帧在java栈中入栈到出栈的过程。</span><br><span class="line">  每次方法调用时，一个新的栈帧创建并压栈到栈顶。当方法正常返回或抛出未捕获的异常时，栈帧就会出栈。除了栈帧的压栈和出栈，栈不能被直接操作。所以可以在堆上分配栈帧，并且不需要连续内存。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  栈可以是动态分配也可以固定大小。</span><br><span class="line">  如果线程请求一个超过允许范围的空间，就会抛出一个StackOverflowError。</span><br><span class="line">  如果线程需要一个新的栈帧，但是没有足够的内存可以分配，就会抛出一个 OutOfMemoryError。</span><br><span class="line">  </span><br><span class="line">&lt;!--more--&gt;</span><br><span class="line">  </span><br><span class="line">## 1.3　本地方法栈(Native Method Stack)</span><br><span class="line"></span><br><span class="line">  第三，本地方法栈(Native Method Stack)与虚拟机栈类似，本地方法栈是在调用本地方法时使用的栈，每个线程都有一个本地方法栈。</span><br><span class="line"></span><br><span class="line">## 1.4　堆(Heap)</span><br><span class="line"></span><br><span class="line">  第四，堆(Heap),几乎所有创建的Java对象实例，都是被直接分配到堆上的。这块是GC的主要区域。 </span><br><span class="line">  堆被所有的线程所共享，在堆上的区域，会被垃圾回收器做进一步划分，例如新生代、老年代的划分。</span><br><span class="line">  Java虚拟机在启动的时候，可以使用 `Xms` `Xmx` 之类的参数指定堆区域的大小。</span><br><span class="line"></span><br><span class="line">## 1.5　方法区(Method Area)</span><br><span class="line"></span><br><span class="line">  第五，方法区(Method Area)。方法区与堆一样，也是所有的线程所共享。</span><br><span class="line">  存储被虚拟机加载的元(Meta)数据，包括类信息、构造函数、常量池、静态变量、即时编译器编译后的代码等数据。</span><br><span class="line">  这里需要注意的是运行时常量池也在方法区中。</span><br><span class="line">  根据Java虚拟机规范的规定，当方法区无法满足内存分配需求时，将抛出OutOfMemoryError异常。由于早期HotSpot JVM的实现，将CG分代收集拓展到了方法区，因此很多人会将方法区称为永久代。Oracle JDK8中已永久代移除永久代，同时增加了元数据区(Metaspace)。</span><br><span class="line"></span><br><span class="line">  虽然JVM规范把方法区描述为堆的一个逻辑部分，但它却有个别名non-heap(非堆)，所以大家不要搞混淆了。方法区还包含一个运行时常量池。</span><br><span class="line"></span><br><span class="line">  运行时常量池(Run-Time Constant Pool)，这是方法区的一部分，受到方法区内存的限制，当常量池无法再申请到内存时，会抛出OutOfMemoryError异常。</span><br><span class="line">  常量池主要存放两大类常量：</span><br><span class="line">    (1)字面量(Literal)，如文本字符串、final常量值</span><br><span class="line">    (2)符号引用，存放了与编译相关的一些常量，因为Java不像C++那样有连接的过程，因此字段方法这些符号引用在运行期就需要进行转换，以便得到真正的内存入口地址。</span><br><span class="line">  </span><br><span class="line">  class文件中的常量池，也称为静态常量池，JVM虚拟机完成类装载操作后，会把静态常量池加载到内存中，存放在运行时常量池。</span><br><span class="line">&lt;!--</span><br><span class="line">  在Class文件中，除了有类的版本、方法、字段、接口等描述信息外，还有一项信息是常量池。每个Class文件的头四个字节称为Magic Number，它的作用是确定这是否是一个可以被虚拟机接受的文件；接着的四个字节存储的是Class文件的版本号。紧挨着版本号之后的，就是常量池入口了。</span><br><span class="line">--&gt;</span><br><span class="line"></span><br><span class="line">## 1.6　直接内存(Direct Memory)</span><br><span class="line"></span><br><span class="line">  第七，直接内存(Direct Memory)，直接内存并不属于Java规范规定的属于Java虚拟机运行时数据区的一部分。</span><br><span class="line">  Java的NIO可以使用Native方法直接在java堆外分配内存，使用DirectByteBuffer对象作为这个堆外内存的引用。</span><br><span class="line"></span><br><span class="line">## 1.7　Java SE 7 规范的典型的 JVM 核心内部组件</span><br><span class="line"></span><br><span class="line">  ![ Java SE 7 规范的典型的 JVM 核心内部组件 ](/img/java/JVM/Memory/JVM_Internal_Architecture_small.png)</span><br><span class="line"></span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"># 2.　OOM可能发生在哪些区域上？</span><br><span class="line"></span><br><span class="line">| 内存区域	 | 是否线程私有	| 是否可能发生OOM |</span><br><span class="line">| :-----     | :-----       | :-----          |</span><br><span class="line">| 程序计数器 |	是          |	否            |</span><br><span class="line">| 虚拟机栈	 |  是	        |   是            |</span><br><span class="line">| 本地方法栈 |	是	        |   是            |</span><br><span class="line">| 方法区	 |  否	        |   是            |</span><br><span class="line">| 直接内存	 |  否 	        |   是            |</span><br><span class="line">| 堆	     |  否	        |   是            |</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  根据javadoc的描述，OOM是指JVM的内存不够用了，同时垃圾收集器也无法提供更多的内存。从描述中可以看出，在JVM抛出OutOfMemoryError之前，垃圾收集器一般会出马先尝试回收内存。</span><br><span class="line">  从上面分析的Java数据区来看，除了程序计数器不会发生OOM外，哪些区域会发生OOM的情况呢？</span><br><span class="line"></span><br><span class="line">## 2.1　堆内存　  </span><br><span class="line">  第一，堆内存。堆内存不足是最常见的发送OOM的原因之一，如果在堆中没有内存完成对象实例的分配，并且堆无法再扩展时，将抛出OutOfMemoryError异常，抛出的错误信息是“java.lang.OutOfMemoryError:Java heap space”。当前主流的JVM可以通过`-Xmx`和`-Xms`来控制堆内存的大小，发生堆上OOM的可能是存在内存泄露，也可能是堆大小分配不合理。</span><br><span class="line"></span><br><span class="line">## 2.2　Java虚拟机栈和本地方法栈</span><br><span class="line">  第二，Java虚拟机栈和本地方法栈，这两个区域的区别不过是虚拟机栈为虚拟机执行Java方法服务，而本地方法栈则为虚拟机使用到的Native方法服务，在内存分配异常上是相同的。在JVM规范中，对Java虚拟机栈规定了两种异常：1.如果线程请求的栈大于所分配的栈大小，则抛出StackOverFlowError错误，比如进行了一个不会停止的递归调用；2. 如果虚拟机栈是可以动态拓展的，拓展时无法申请到足够的内存，则抛出OutOfMemoryError错误。</span><br><span class="line"></span><br><span class="line">## 2.3　直接内存</span><br><span class="line">  第三，直接内存。直接内存虽然不是虚拟机运行时数据区的一部分，但既然是内存，就会受到物理内存的限制。在JDK1.4中引入的NIO使用Native函数库在堆外内存上直接分配内存，但直接内存不足时，也会导致OOM。</span><br><span class="line"></span><br><span class="line">## 2.4　方法区</span><br><span class="line">  第四，方法区。随着Metaspace元数据区的引入，方法区的OOM错误信息也变成了“java.lang.OutOfMemoryError:Metaspace”。对于旧版本的Oracle JDK，由于永久代的大小有限，而JVM对永久代的垃圾回收并不积极，如果往永久代不断写入数据，例如String.Intern()的调用，在永久代占用太多空间导致内存不足，也会出现OOM的问题，对应的错误信息为“java.lang.OutOfMemoryError:PermGen space”</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 3.　堆内存结构是怎么样的？</span><br><span class="line"></span><br><span class="line">  站在垃圾收集器的角度来看，可以把内存分为新生代与老年代。内存的分配规则取决于当前使用的是哪种垃圾收集器的组合，以及内存相关的参数配置。</span><br><span class="line">  往大的方向说，对象优先分配在新生代的Eden区域，而大对象直接进入老年代。</span><br><span class="line"></span><br><span class="line">  可以借助一些工具来了解JVM的内存内容，具体到特定的内存区域，应该用什么工具去定位呢？</span><br><span class="line">  图形化工具。图形化工具的优点是直观，连接到Java进程后，可以显示堆内存、堆外内存的使用情况，类似的工具有JConsole,jvisualvm 等。</span><br><span class="line">  命令行工具。这类工具可以在运行时进行查询，包括jstat，jmap等，可以对堆内存、方法区等进行查看。定位线上问题时也多会使用这些工具。jmap也可以生成堆转储文件(Heap Dump)文件，如果是在linux上，可以将堆转储文件拉到本地来，使用Eclipse MAT进行分析，也可以使用jhap进行分析。</span><br><span class="line"></span><br><span class="line">## 3.1　新生代(Young Generation)的Eden区域</span><br><span class="line"></span><br><span class="line">  第一, 新生代的Eden区域，对象优先分配在该区域，同时JVM可以为每个线程分配一个私有的缓存区域，称为TLAB(Thread Local Allocation Buffer)，避免多线程同时分配内存时需要使用加锁等机制而影响分配速度。TLAB在堆上分配，位于Eden中。TLAB的结构如下：</span><br><span class="line">  </span><br><span class="line">```java</span><br><span class="line">// ThreadLocalAllocBuffer: a descriptor for thread-local storage used by</span><br><span class="line">// the threads for allocation.</span><br><span class="line">//            It is thread-private at any time, but maybe multiplexed over</span><br><span class="line">//            time across multiple threads. The park()/unpark() pair is</span><br><span class="line">//            used to make it avaiable for such multiplexing.</span><br><span class="line">class ThreadLocalAllocBuffer: public CHeapObj&lt;mtThread&gt; &#123;</span><br><span class="line">  friend class VMStructs;</span><br><span class="line">private:</span><br><span class="line">  HeapWord* _start;                              // address of TLAB</span><br><span class="line">  HeapWord* _top;                                // address after last allocation</span><br><span class="line">  HeapWord* _pf_top;                             // allocation prefetch watermark</span><br><span class="line">  HeapWord* _end;                                // allocation end (excluding alignment_reserve)</span><br><span class="line">  size_t    _desired_size;                       // desired size   (including alignment_reserve)</span><br><span class="line">  size_t    _refill_waste_limit;                 // hold onto tlab if free() is larger than this</span><br></pre></td></tr></table></figure>
-<p>  从本质上来说，TLAB的管理是依靠三个指针：start、end、top。start与end标记了Eden中被该TLAB管理的区域，该区域不会被其他线程分配内存所使用，top是分配指针，开始时指向start的位置，随着内存分配的进行，慢慢向end靠近，当撞上end时触发TLAB refill。<br>  因此内存中Eden的结构大体为：<br>  <img src="/img/java/JVM/Memory/young-generation-eden.png" alt=" Eden结构 "></p>
-<h2 id="3-2-新生代-Young-Generation-的Survivor区域"><a href="#3-2-新生代-Young-Generation-的Survivor区域" class="headerlink" title="3.2　新生代(Young Generation)的Survivor区域"></a>3.2　新生代(Young Generation)的Survivor区域</h2><p>  第二、新生代的Survivor区域。当Eden区域内存不足时会触发Minor GC，也称为新生代GC，在Minor GC存活下来的对象，会被复制到Survivor区域中。<br>  Survivor区的作用在于避免过早触发Full GC。如果没有Survivor，Eden区每进行一次Minor GC都把对象直接送到老年代，老年代很快便会内存不足引发Full GC。<br>  新生代中有两个Survivor区，两个Survivor的作用在于提高性能，避免内存碎片的出现。在任何时候，总有一个Survivor是empty的，在发生Minor GC时，会将Eden及另一个的Survivor的存活对象拷贝到该empty Survivor中，从而避免内存碎片的产生。<br>  新生代的内存结构大体为：<br>  <img src="/img/java/JVM/Memory/young-generation.png" alt=" 新生代的内存结构 "></p>
-<h2 id="3-3-老年代-Old-Generation"><a href="#3-3-老年代-Old-Generation" class="headerlink" title="3.3　老年代 (Old Generation)"></a>3.3　老年代 (Old Generation)</h2><p>  第三、老年代。老年代放置长生命周期的对象，通常是从Survivor区域拷贝过来的对象，不过当对象过大的时候，无法在新生代中用连续内存的存放，那么这个大对象就会被直接分配在老年代上。一般来说，普通的对象都是分配在TLAB上，较大的对象，直接分配在Eden区上的其他内存区域，而过大的对象，直接分配在老年代上。</p>
-<h2 id="3-4-永久代"><a href="#3-4-永久代" class="headerlink" title="3.4　永久代"></a>3.4　永久代</h2><p>  第四、永久代。如前面所说，在早起的Hotspot JVM中有老年代的概念，老年代用于存储Java类的元数据、常量池、Intern字符串等。<br>  在JDK8之后，就将老年代移除，而引入元数据区的概念。</p>
-<h2 id="3-5-Vritual空间"><a href="#3-5-Vritual空间" class="headerlink" title="3.5　Vritual空间"></a>3.5　Vritual空间</h2><p>  第五、Vritual空间。前面说过，可以使用Xms与Xmx来指定堆的最小与最大空间。如果Xms小于Xmx，堆的大小不会直接扩展到上限，而是留着一部分等待内存需求不断增长时，再分配给新生代。Vritual空间便是这部分保留的内存区域。</p>
-<h2 id="3-6-总结"><a href="#3-6-总结" class="headerlink" title="3.6　总结"></a>3.6　总结</h2><p>  综上所述，可以画出Java堆内的内存结构大体为：<br>  <img src="/img/java/JVM/Memory/java-heap-memory-model.png" alt=" Java堆内的内存结构 "></p>
-<h2 id="4-常用配置"><a href="#4-常用配置" class="headerlink" title="4.　常用配置"></a>4.　常用配置</h2><p><code>-Xms1024m</code> 设置初始的最小堆大小1024m</p>
-<p><code>-Xmx4096m</code> 设置最大的堆大小为4096m</p>
-<p><code>-Xmn1536m</code> 设置新生代大小为1536m。<br>　　持久代一般固定大小为64m，所以增大新生代后，将会减小年老代大小。<br>　　此值对系统性能影响较大，Sun官方推荐配置为整个堆的3/8。</p>
-<p><code>-Xss128k</code> 设置每个线程的堆栈大小。<br>　　JDK5.0以后每个线程堆栈大小为1M，以前每个线程堆栈大小为256K。更具应用的线程所需内存大小进行调整。<br>　　在相同物理内存下，减小这个值能生成更多的线程。但是操作系统对一个进程内的线程数还是有限制的，不能无限生成，经验值在3000~5000左右。</p>
-<p><code>-XX:NewSize=1024</code> 设置 新生代 Yong Generation的初始值大小</p>
-<p><code>-XX:MaxNewSize=1024m</code>  设置 新生代 Yong Generation的最大值大小</p>
-<p><code>-XX:NewRatio=4</code> 设置新生代(包括Eden和两个Survivor区)与年老代的比值(除去持久代)。默认为2，设置为4，则新生代与年老代所占比值为1：4，新生代占整个堆栈的1/5<br>    老年代过大的时候，Full GC的时间会很长；老年代过小，则很容易触发Full GC，Full GC频率过高，这就是这个参数会造成的影响。</p>
-<p><code>-XX:SurvivorRatio=4</code> 设置新生代中Eden区与Survivor区的大小比值。<br>　　设置为4，则两个Survivor区与一个Eden区的比值为2:4，一个Survivor区占整个新生代的1/6</p>
-<p><code>-XX:MaxPermSize=16m</code> 设置持久代大小为16m。</p>
-<p><code>-XX:MaxTenuringThreshold=0</code> 设置垃圾最大年龄。<br>　　如果设置为0的话，则新生代对象不经过Survivor区，直接进入年老代。对于年老代比较多的应用，可以提高效率。如果将此值设置为一个较大值，则新生代对象会在Survivor区进行多次复制，这样可以增加对象再新生代的存活时间，增加在新生代即被回收的概论。</p>
-<h2 id="4-1-JVM设置Young-Gen参数优先级"><a href="#4-1-JVM设置Young-Gen参数优先级" class="headerlink" title="4.1　JVM设置Young Gen参数优先级"></a>4.1　JVM设置Young Gen参数优先级</h2><p>  JVM设置Young Gen参数优先级<br>  (1) 最高优先级：  -XX:NewSize=1024m和-XX:MaxNewSize=1024m<br>  (2) 次高优先级：  -Xmn1024m  (默认等效效果是：-XX:NewSize==-XX:MaxNewSize==1024m)<br>  (3) 最低优先级：-XX:NewRatio=2 </p>
-<h1 id="5-常见配置汇总"><a href="#5-常见配置汇总" class="headerlink" title="5.　常见配置汇总"></a>5.　常见配置汇总</h1><h2 id="5-1-堆设置"><a href="#5-1-堆设置" class="headerlink" title="5.1　堆设置"></a>5.1　堆设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-Xms:初始堆大小</span><br><span class="line">-Xmx:最大堆大小</span><br><span class="line">-XX:NewSize=n:设置年轻代大小</span><br><span class="line">-XX:NewRatio=n:设置年轻代和年老代的比值。如:为3，表示年轻代与年老代比值为1：3，年轻代占整个年轻代年老代和的1/4</span><br><span class="line">-XX:SurvivorRatio=n:年轻代中Eden区与两个Survivor区的比值。注意Survivor区有两个。如：3，表示Eden：Survivor=3：2，一个Survivor区占整个年轻代的1/5</span><br><span class="line">-XX:MaxPermSize=n:设置持久代大小</span><br></pre></td></tr></table></figure>
-<h2 id="5-2-收集器设置"><a href="#5-2-收集器设置" class="headerlink" title="5.2　收集器设置"></a>5.2　收集器设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseSerialGC:设置串行收集器</span><br><span class="line">-XX:+UseParallelGC:设置并行收集器</span><br><span class="line">-XX:+UseParalledlOldGC:设置并行年老代收集器</span><br><span class="line">-XX:+UseConcMarkSweepGC:设置并发收集器</span><br></pre></td></tr></table></figure>
-<h2 id="5-3-垃圾回收统计信息"><a href="#5-3-垃圾回收统计信息" class="headerlink" title="5.3　垃圾回收统计信息"></a>5.3　垃圾回收统计信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-XX:+PrintGC</span><br><span class="line">-XX:+PrintGCDetails</span><br><span class="line">-XX:+PrintGCTimeStamps</span><br><span class="line">-Xloggc:filename</span><br></pre></td></tr></table></figure>
-<h2 id="5-4-并行收集器设置"><a href="#5-4-并行收集器设置" class="headerlink" title="5.4　并行收集器设置"></a>5.4　并行收集器设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-XX:ParallelGCThreads=n:设置并行收集器收集时使用的CPU数。并行收集线程数。</span><br><span class="line">-XX:MaxGCPauseMillis=n:设置并行收集最大暂停时间</span><br><span class="line">-XX:GCTimeRatio=n:设置垃圾回收时间占程序运行时间的百分比。公式为1/(1+n)</span><br></pre></td></tr></table></figure>
-<h2 id="5-5-并发收集器设置"><a href="#5-5-并发收集器设置" class="headerlink" title="5.5　并发收集器设置"></a>5.5　并发收集器设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:+CMSIncrementalMode:设置为增量模式。适用于单CPU情况。</span><br><span class="line">-XX:ParallelGCThreads=n:设置并发收集器年轻代收集方式为并行收集时，使用的CPU数。并行收集线程数</span><br></pre></td></tr></table></figure>
-<h1 id="6-调优总结"><a href="#6-调优总结" class="headerlink" title="6.　调优总结"></a>6.　调优总结</h1><h2 id="6-1-年轻代大小选择"><a href="#6-1-年轻代大小选择" class="headerlink" title="6.1　年轻代大小选择"></a>6.1　年轻代大小选择</h2><p>　响应时间优先的应用：尽可能设大，直到接近系统的最低响应时间限制(根据实际情况选择)。在此种情况下，年轻代收集发生的频率也是最小的。同时，减少到达年老代的对象。<br>  吞吐量优先的应用：尽可能的设置大，可能到达Gbit的程度。因为对响应时间没有要求，垃圾收集可以并行进行，一般适合8CPU以上的应用。</p>
-<h2 id="6-2-年老代大小选择"><a href="#6-2-年老代大小选择" class="headerlink" title="6.2　年老代大小选择"></a>6.2　年老代大小选择</h2><p>  响应时间优先的应用：年老代使用并发收集器，所以其大小需要小心设置，一般要考虑并发会话率和会话持续时间等一些参数。如果堆设置小了，可以会造成内存碎片、高回收频率以及应用暂停而使用传统的标记清除方式；如果堆大了，则需要较长的收集时间。最优化的方案，一般需要参考以下数据获得：<br>  并发垃圾收集信息<br>  持久代并发收集次数<br>  传统GC信息<br>  花在年轻代和年老代回收上的时间比例<br>  减少年轻代和年老代花费的时间，一般会提高应用的效率</p>
-<p>  吞吐量优先的应用：一般吞吐量优先的应用都有一个很大的年轻代和一个较小的年老代。原因是，这样可以尽可能回收掉大部分短期对象，减少中期的对象，而年老代尽存放长期存活对象。</p>
-<h2 id="6-3-较小堆引起的碎片问题"><a href="#6-3-较小堆引起的碎片问题" class="headerlink" title="6.3　较小堆引起的碎片问题"></a>6.3　较小堆引起的碎片问题</h2><p>  因为年老代的并发收集器使用标记、清除算法，所以不会对堆进行压缩。当收集器回收时，他会把相邻的空间进行合并，这样可以分配给较大的对象。但是，当堆空间较小时，运行一段时间以后，就会出现“碎片”，如果并发收集器找不到足够的空间，那么并发收集器将会停止，然后使用传统的标记、清除方式进行回收。如果出现“碎片”，可能需要进行如下配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-XX:+UseCMSCompactAtFullCollection：使用并发收集器时，开启对年老代的压缩。</span><br><span class="line">-XX:CMSFullGCsBeforeCompaction=0：上面配置开启的情况下，这里设置多少次Full GC后，对年老代进行压缩</span><br></pre></td></tr></table></figure></p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html" target="_blank" rel="noopener">Chapter 2. The Structure of the Java Virtual Machine</a><br>[2] <a href="http://www.cnblogs.com/QG-whz/p/9636366.html" target="_blank" rel="noopener">关于JVM内存的N个问题</a><br>[3] <a href="http://www.importnew.com/17770.html" target="_blank" rel="noopener">JVM内幕：Java虚拟机详解</a><br>[4] <a href="https://blog.csdn.net/tonytfjing/article/details/44278233" target="_blank" rel="noopener">JVM结构、GC工作机制详解</a><br>[5] <a href="https://www.cnblogs.com/smyhvae/p/4810168.html" target="_blank" rel="noopener">Java虚拟机详解—-JVM常见问题总结</a><br>[6] <a href="http://www.51gjie.com/java/549.html" target="_blank" rel="noopener">Java中JVM原理详解</a><br>[7] <a href="https://segmentfault.com/a/1190000002579346" target="_blank" rel="noopener">JVM 的 工作原理，层次结构 以及 GC工作原理</a><br>[8] <a href="https://blog.csdn.net/huachao1001/article/details/51533132" target="_blank" rel="noopener">JVM理解其实并不难！</a><br>[9] <a href="https://blog.csdn.net/suifeng3051/article/details/52611310" target="_blank" rel="noopener">全面理解Java内存模型</a><br>[10] <a href="https://blog.csdn.net/javazejian/article/details/72772461" target="_blank" rel="noopener">全面理解Java内存模型(JMM)及volatile关键字</a><br>[11] <a href="https://www.jianshu.com/p/1579aafac60b" target="_blank" rel="noopener">JVM内存模型</a><br>[12] <a href="http://unixboy.iteye.com/blog/174173" target="_blank" rel="noopener">JVMM调优总结 -Xms -Xmx -Xmn -Xss</a><br>[13] <a href="http://eyesmore.iteye.com/blog/1530996" target="_blank" rel="noopener"> JVM设置Young Gen大小 </a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1328,20 +1286,20 @@ GCT: 从启动到采样时GC所用的总时间 (s).
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">198</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

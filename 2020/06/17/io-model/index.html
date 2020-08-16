@@ -23,14 +23,14 @@
   <meta name="description" content="网络通信中，最底层的就是内核中的网络 I/O 模型了。   随着技术的发展，操作系统内核的网络模型衍生出了五种 I/O 模型，《UNIX 网络编程》一书将这五种 I/O 模型分为 阻塞式 I/O、非阻塞式 I/O、I/O 复用、信号驱动式 I/O 和 异步 I/O。每一种 I/O 模型的出现，都是基于前一种 I/O 模型的优化升级。">
 <meta name="keywords" content="io">
 <meta property="og:type" content="article">
-<meta property="og:title" content="io-model">
+<meta property="og:title" content="IO模型">
 <meta property="og:url" content="http://weikeqin.com/2020/06/17/io-model/index.html">
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="网络通信中，最底层的就是内核中的网络 I/O 模型了。   随着技术的发展，操作系统内核的网络模型衍生出了五种 I/O 模型，《UNIX 网络编程》一书将这五种 I/O 模型分为 阻塞式 I/O、非阻塞式 I/O、I/O 复用、信号驱动式 I/O 和 异步 I/O。每一种 I/O 模型的出现，都是基于前一种 I/O 模型的优化升级。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-22T09:10:58.172Z">
+<meta property="og:updated_time" content="2020-08-12T15:13:08.198Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="io-model">
+<meta name="twitter:title" content="IO模型">
 <meta name="twitter:description" content="网络通信中，最底层的就是内核中的网络 I/O 模型了。   随着技术的发展，操作系统内核的网络模型衍生出了五种 I/O 模型，《UNIX 网络编程》一书将这五种 I/O 模型分为 阻塞式 I/O、非阻塞式 I/O、I/O 复用、信号驱动式 I/O 和 异步 I/O。每一种 I/O 模型的出现，都是基于前一种 I/O 模型的优化升级。">
 
 <link rel="canonical" href="http://weikeqin.com/2020/06/17/io-model/">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>io-model | 沧海一粟</title>
+  <title>IO模型 | 沧海一粟</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113485469-1"></script>
     <script>
@@ -226,7 +226,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          io-model
+          IO模型
         </h1>
 
         <div class="post-meta">
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-22 17:10:58" itemprop="dateModified" datetime="2020-06-22T17:10:58+08:00">2020-06-22</time>
+                <time title="修改时间：2020-08-12 23:13:08" itemprop="dateModified" datetime="2020-08-12T23:13:08+08:00">2020-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +256,7 @@
             </span>
 
           
-            <span id="/2020/06/17/io-model/" class="post-meta-item leancloud_visitors" data-flag-title="io-model" title="阅读次数">
+            <span id="/2020/06/17/io-model/" class="post-meta-item leancloud_visitors" data-flag-title="IO模型" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -285,9 +285,19 @@
 <p> 随着技术的发展，操作系统内核的网络模型衍生出了五种 I/O 模型，《UNIX 网络编程》一书将这五种 I/O 模型分为 <code>阻塞式 I/O</code>、<code>非阻塞式 I/O</code>、<code>I/O 复用</code>、<code>信号驱动式 I/O</code> 和 <code>异步 I/O</code>。每一种 I/O 模型的出现，都是基于前一种 I/O 模型的优化升级。</p>
 </blockquote>
 <a id="more"></a>
-<p>同步：调用端会一直等待服务端响应，直到返回结果。<br>异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机制或者回调函数来通知客户端。<br>阻塞：服务端返回结果之前，客户端线程会被挂起，此时线程不可被CPU调度，线程暂停运行。<br>非阻塞：在服务端返回前，函数不会阻塞调用端线程，而会立刻返回。</p>
-<p><strong>核心态(Kernel model)和用户态(User model)</strong><br>核心态(Kernel model)和用户态(User model)，CPU会在两个model之间切换。</p>
-<p>核心态代码拥有完全的底层资源控制权限，可以执行任何CPU指令，访问任何内存地址，其占有的处理机是不允许被抢占的。内核态的指令包括：启动I/O，内存清零，修改程序状态字，设置时钟，允许/终止中断和停机。内核态的程序崩溃会导致PC停机。<br>用户态是用户程序能够使用的指令，不能直接访问底层硬件和内存地址。用户态运行的程序必须委托系统调用来访问硬件和内存。用户态的指令包括：控制转移，算数运算，取数指令，访管指令（使用户程序从用户态陷入内核态）。</p>
+<blockquote>
+<p> 同步：调用端会一直等待服务端响应，直到返回结果。<br> 异步：调用端发起调用之后不会立刻返回，不会等待服务端响应。服务端通过通知机制或者回调函数来通知客户端。<br> 阻塞：服务端返回结果之前，客户端线程会被挂起，此时线程不可被CPU调度，线程暂停运行。<br>非阻塞：在服务端返回前，函数不会阻塞调用端线程，而会立刻返回。</p>
+</blockquote>
+<p><strong>核心态(Kernel model)和用户态(User model)</strong></p>
+<blockquote>
+<p> 核心态(Kernel model)和用户态(User model)，CPU会在两个model之间切换。</p>
+</blockquote>
+<blockquote>
+<p> 核心态代码拥有完全的底层资源控制权限，可以执行任何CPU指令，访问任何内存地址，其占有的处理机是不允许被抢占的。内核态的指令包括：启动I/O，内存清零，修改程序状态字，设置时钟，允许/终止中断和停机。内核态的程序崩溃会导致PC停机。</p>
+</blockquote>
+<blockquote>
+<p> 用户态是用户程序能够使用的指令，不能直接访问底层硬件和内存地址。用户态运行的程序必须委托系统调用来访问硬件和内存。用户态的指令包括：控制转移，算数运算，取数指令，访管指令（使用户程序从用户态陷入内核态）。</p>
+</blockquote>
 <p><strong>进程切换</strong></p>
 <blockquote>
 <p>为了控制进程的执行，内核必须有能力挂起正在CPU上运行的进程，并恢复以前挂起的某个进程的执行。这种行为被称为进程切换。因此可以说，任何进程都是在操作系统内核的支持下运行的，是与内核紧密相关的。从一个进程的运行转到另一个进程上运行，这个过程中经过下面这些变化：</p>
@@ -310,7 +320,28 @@
 <blockquote>
 <p> FD用于描述指向文件的引用的抽象化概念。文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于UNIX、Linux这样的操作系统。</p>
 </blockquote>
-<h1 id="1-阻塞式-I-O-blocking-IO"><a href="#1-阻塞式-I-O-blocking-IO" class="headerlink" title="(1) 阻塞式 I/O ( blocking IO )"></a>(1) 阻塞式 I/O ( blocking IO )</h1><blockquote>
+<h1 id="IO模型的故事"><a href="#IO模型的故事" class="headerlink" title="IO模型的故事"></a>IO模型的故事</h1><p>  故事情节为：张三去买火车票，三天后买到一张退票。<br>  参演人员（张三，黄牛，售票员，快递员），往返车站耗费1小时。</p>
+<h2 id="1-阻塞I-O模型"><a href="#1-阻塞I-O模型" class="headerlink" title="1.阻塞I/O模型"></a>1.阻塞I/O模型</h2><blockquote>
+<p> 张三去火车站买票，排队三天买到一张退票。<br> 耗费：在车站吃喝拉撒睡 3天，其他事一件没干。<br> 优点: 简单，谁都能排队等<br> 缺点: 耗费时间</p>
+</blockquote>
+<h2 id="2-非阻塞I-O模型"><a href="#2-非阻塞I-O模型" class="headerlink" title="2.非阻塞I/O模型"></a>2.非阻塞I/O模型</h2><blockquote>
+<p> 张三去火车站买票，隔12小时去火车站问有没有退票，三天后买到一张票。<br> 耗费：往返车站6次，路上6小时，其他时间做了好多事。<br> 优点: 不需要一直等，可以省出时间做其它事<br> 缺点: 需要往返多次</p>
+</blockquote>
+<h2 id="3-I-O复用模型"><a href="#3-I-O复用模型" class="headerlink" title="3.I/O复用模型"></a>3.I/O复用模型</h2><h2 id="1-select-poll"><a href="#1-select-poll" class="headerlink" title="(1) select/poll"></a>(1) select/poll</h2><blockquote>
+<p> 张三去火车站买票，委托黄牛，然后每隔6小时电话黄牛询问，黄牛三天内买到票，然后张三去火车站交钱领票。<br> 耗费：往返车站2次，路上2小时，黄牛手续费100元，打电话17次<br> 优点: 不需要自己等，<br> 缺点: 需要看黄牛手上所有票，而且可能从黄牛手上拿错票</p>
+</blockquote>
+<h2 id="2-epoll"><a href="#2-epoll" class="headerlink" title="(2) epoll"></a>(2) epoll</h2><blockquote>
+<p> 张三去火车站买票，委托黄牛，黄牛买到后即通知张三去领，然后张三去火车站交钱领票。<br> 耗费：往返车站2次，路上2小时，黄牛手续费100元，通知一次<br> 优点: 不需要等，不会拿错票<br> 缺点: 需要其它资源(黄牛手续费)，还需要自己去取票</p>
+</blockquote>
+<h2 id="4-信号驱动I-O模型"><a href="#4-信号驱动I-O模型" class="headerlink" title="4. 信号驱动I/O模型"></a>4. 信号驱动I/O模型</h2><blockquote>
+<p> 张三去火车站买票，给售票员留下电话，有票后，售票员电话通知张三，然后张三去火车站交钱领票。<br> 耗费：往返车站2次，路上2小时，通知一次<br> 优点: 不需要黄牛<br> 缺点: 需要其它资源，需要自己去取票</p>
+</blockquote>
+<h2 id="5-异步I-O模型"><a href="#5-异步I-O模型" class="headerlink" title="5.异步I/O模型"></a>5.异步I/O模型</h2><blockquote>
+<p> 张三去火车站买票，给售票员留下电话，有票后，售票员电话通知张三并快递送票上门。<br> 耗费：往返车站1次，路上1小时，通知一次，快递一次<br> 优点: 不需要自己取票<br> 缺点: 需要其它资源 (售票员协助) (快递费)</p>
+</blockquote>
+<p>1同2的区别是：自己轮询<br>2同3的区别是：委托黄牛<br>3同4的区别是：电话代替黄牛<br>4同5的区别是：通知后是自取还是送票上门</p>
+<p><br></p>
+<h1 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h1><h2 id="1-阻塞式-I-O-blocking-IO"><a href="#1-阻塞式-I-O-blocking-IO" class="headerlink" title="(1) 阻塞式 I/O ( blocking IO )"></a>(1) 阻塞式 I/O ( blocking IO )</h2><blockquote>
 <p> 在每一个连接创建时，都需要一个用户线程来处理，并且在 I/O 操作没有就绪或结束时，线程会被挂起，进入阻塞等待状态。<br> 在整个 socket 通信工作流程中，socket 的默认状态是阻塞的。也就是说，当发出一个不能立即完成的套接字调用时，其进程将被阻塞，被系统挂起，进入睡眠状态，一直等待相应的操作响应。<br> 阻塞式 I/O 就成为了导致性能瓶颈的根本原因。</p>
 </blockquote>
 <p><strong>connect 阻塞</strong></p>
@@ -325,27 +356,37 @@
 <blockquote>
 <p> read、write 阻塞 : 当一个 socket 连接创建成功之后，服务端用 fork 函数创建一个子进程， 调用 read 函数等待客户端的数据写入，如果没有数据写入，调用子进程将被挂起，进入阻塞状态。</p>
 </blockquote>
-<h1 id="2-非阻塞式-I-O-non-blocking-IO"><a href="#2-非阻塞式-I-O-non-blocking-IO" class="headerlink" title="(2) 非阻塞式 I/O ( non-blocking IO )"></a>(2) 非阻塞式 I/O ( non-blocking IO )</h1><blockquote>
+<h2 id="2-非阻塞式-I-O-non-blocking-IO"><a href="#2-非阻塞式-I-O-non-blocking-IO" class="headerlink" title="(2) 非阻塞式 I/O ( non-blocking IO )"></a>(2) 非阻塞式 I/O ( non-blocking IO )</h2><blockquote>
 <p> 非阻塞式I/O 解决了阻塞的问题。</p>
 </blockquote>
 <blockquote>
 <p> 内核在没有准备好数据的时候会返回错误码，而调用程序不会休眠，而是不断轮询询问内核数据是否准备好。数据准备好时，函数成功返回。</p>
 </blockquote>
 <p>  使用用户线程轮询查看一个 I/O 操作的状态，在大量请求的情况下，非阻塞式IO的轮询会耗费大量cpu。</p>
-<h1 id="3-I-O-复用"><a href="#3-I-O-复用" class="headerlink" title="(3) I/O 复用"></a>(3) I/O 复用</h1><blockquote>
+<h2 id="3-I-O-复用"><a href="#3-I-O-复用" class="headerlink" title="(3) I/O 复用"></a>(3) I/O 复用</h2><blockquote>
 <p> 类似与非阻塞，只不过轮询不是由用户线程去执行，而是由内核去轮询，内核监听程序监听到数据准备好后，调用内核函数复制数据到用户态。</p>
 </blockquote>
 <blockquote>
 <p> Linux 提供了 I/O 复用函数 select/poll/epoll，进程将一个或多个读操作通过系统调用函数，阻塞在函数操作上。这样，系统内核就可以帮我们侦测多个读操作是否处于就绪状态。</p>
 </blockquote>
 <p>  Linux 提供了 I/O 复用函数 select/poll/epoll，进程将一个或多个读操作通过系统调用函数，阻塞在函数操作上。这样，系统内核就可以帮我们侦测多个读操作是否处于就绪状态。</p>
-<h1 id="4-信号驱动式I-O（-signal-driven-IO-）"><a href="#4-信号驱动式I-O（-signal-driven-IO-）" class="headerlink" title="(4) 信号驱动式I/O（ signal-driven IO ）"></a>(4) 信号驱动式I/O（ signal-driven IO ）</h1><blockquote>
+<blockquote>
+<p> select 会修改传入的参数数组，这个对于一个需要调用很多次的函数，是非常不友好的。<br> select 如果任何一个sock(I/O stream)出现了数据，select 仅仅会返回，但是并不会告诉你是那个sock上有数据，于是你只能自己一个一个的找，10几个sock可能还好，要是几万的sock每次都找一遍，这个无谓的开销就颇有海天盛筵的豪气了。<br> select 只能监视1024个链接，linux 定义在头文件中的，参见FD_SETSIZE。<br> select 不是线程安全的</p>
+</blockquote>
+<blockquote>
+<p>poll 修复了select的很多问题，比如<br> poll 去掉了1024个链接的限制<br> poll 从设计上来说，不再修改传入数组</p>
+</blockquote>
+<blockquote>
+<p>epoll 可以说是I/O 多路复用最新的一个实现，epoll 修复了poll 和select绝大部分问题, 比如：<br> epoll 现在是线程安全的。<br> epoll 现在不仅告诉你sock组里面数据，还会告诉你具体哪个sock有数据，你不用自己去找了。</p>
+</blockquote>
+<p>epoll只有linux支持 </p>
+<h2 id="4-信号驱动式I-O（-signal-driven-IO-）"><a href="#4-信号驱动式I-O（-signal-driven-IO-）" class="headerlink" title="(4) 信号驱动式I/O（ signal-driven IO ）"></a>(4) 信号驱动式I/O（ signal-driven IO ）</h2><blockquote>
 <p> 首先我们允许Socket进行信号驱动IO，并安装一个信号处理函数，进程继续运行并不阻塞。当数据准备好时，进程会收到一个SIGIO信号，可以在信号处理函数中调用I/O操作函数处理数据。</p>
 </blockquote>
-<h1 id="5-异步非阻塞-I-O（-asynchronous-IO-）"><a href="#5-异步非阻塞-I-O（-asynchronous-IO-）" class="headerlink" title="(5) 异步非阻塞 I/O（ asynchronous IO ）"></a>(5) 异步非阻塞 I/O（ asynchronous IO ）</h1><blockquote>
+<h2 id="5-异步非阻塞-I-O（-asynchronous-IO-）"><a href="#5-异步非阻塞-I-O（-asynchronous-IO-）" class="headerlink" title="(5) 异步非阻塞 I/O（ asynchronous IO ）"></a>(5) 异步非阻塞 I/O（ asynchronous IO ）</h2><blockquote>
 <p> 相对于同步IO，异步IO不是顺序执行。用户进程进行aio_read系统调用之后，无论内核数据是否准备好，都会直接返回给用户进程，然后用户态进程可以去做别的事情。等到socket数据准备好了，内核直接复制数据给进程，然后从内核向进程发送通知。IO两个阶段，进程都是非阻塞的。</p>
 </blockquote>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://time.geekbang.org/column/article/100861" target="_blank" rel="noopener">答疑课堂：深入了解NIO的优化实现原理</a><br>[2] <a href="https://www.jianshu.com/p/486b0965c296" target="_blank" rel="noopener">聊聊Linux 五种IO模型</a><br>[3] <a href="https://juejin.im/post/5c725dbe51882575e37ef9ed" target="_blank" rel="noopener">linux五种IO模型</a><br>[4] 《Unix网络编程》</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://time.geekbang.org/column/article/100861" target="_blank" rel="noopener">答疑课堂：深入了解NIO的优化实现原理</a><br>[2] <a href="https://www.jianshu.com/p/486b0965c296" target="_blank" rel="noopener">聊聊Linux 五种IO模型</a><br>[3] <a href="https://juejin.im/post/5c725dbe51882575e37ef9ed" target="_blank" rel="noopener">linux五种IO模型</a><br>[4] 《Unix网络编程》<br>[5] <a href="https://www.zhihu.com/question/32163005" target="_blank" rel="noopener">IO 多路复用是什么意思</a><br>[6] <a href="http://www.xmailserver.org/linux-patches/nio-improve.html" target="_blank" rel="noopener">linux-patches/nio-improve</a></p>
 
     </div>
 
@@ -429,7 +470,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-阻塞式-I-O-blocking-IO"><span class="nav-number">1.</span> <span class="nav-text">(1) 阻塞式 I/O ( blocking IO )</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-非阻塞式-I-O-non-blocking-IO"><span class="nav-number">2.</span> <span class="nav-text">(2) 非阻塞式 I/O ( non-blocking IO )</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-I-O-复用"><span class="nav-number">3.</span> <span class="nav-text">(3) I/O 复用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-信号驱动式I-O（-signal-driven-IO-）"><span class="nav-number">4.</span> <span class="nav-text">(4) 信号驱动式I/O（ signal-driven IO ）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-异步非阻塞-I-O（-asynchronous-IO-）"><span class="nav-number">5.</span> <span class="nav-text">(5) 异步非阻塞 I/O（ asynchronous IO ）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">6.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IO模型的故事"><span class="nav-number">1.</span> <span class="nav-text">IO模型的故事</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-阻塞I-O模型"><span class="nav-number">1.1.</span> <span class="nav-text">1.阻塞I/O模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-非阻塞I-O模型"><span class="nav-number">1.2.</span> <span class="nav-text">2.非阻塞I/O模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-I-O复用模型"><span class="nav-number">1.3.</span> <span class="nav-text">3.I/O复用模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-select-poll"><span class="nav-number">1.4.</span> <span class="nav-text">(1) select/poll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-epoll"><span class="nav-number">1.5.</span> <span class="nav-text">(2) epoll</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-信号驱动I-O模型"><span class="nav-number">1.6.</span> <span class="nav-text">4. 信号驱动I/O模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-异步I-O模型"><span class="nav-number">1.7.</span> <span class="nav-text">5.异步I/O模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IO模型"><span class="nav-number">2.</span> <span class="nav-text">IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-阻塞式-I-O-blocking-IO"><span class="nav-number">2.1.</span> <span class="nav-text">(1) 阻塞式 I/O ( blocking IO )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-非阻塞式-I-O-non-blocking-IO"><span class="nav-number">2.2.</span> <span class="nav-text">(2) 非阻塞式 I/O ( non-blocking IO )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-I-O-复用"><span class="nav-number">2.3.</span> <span class="nav-text">(3) I/O 复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-信号驱动式I-O（-signal-driven-IO-）"><span class="nav-number">2.4.</span> <span class="nav-text">(4) 信号驱动式I/O（ signal-driven IO ）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-异步非阻塞-I-O（-asynchronous-IO-）"><span class="nav-number">2.5.</span> <span class="nav-text">(5) 异步非阻塞 I/O（ asynchronous IO ）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -443,20 +484,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">198</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -210,6 +210,187 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/08/16/nginx-notes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/16/nginx-notes/" class="post-title-link" itemprop="url">nginx-notes</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-16 20:14:46 / 修改时间：23:08:20" itemprop="dateCreated datePublished" datetime="2020-08-16T20:14:46+08:00">2020-08-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/16/nginx-notes/" class="post-meta-item leancloud_visitors" data-flag-title="nginx-notes" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  nginx 可以用于 反向代理、负载均衡、缓存加速、解决跨域 等场景。<br>  详细描述见 官网 <a href="http://nginx.org/en/" target="_blank" rel="noopener">http://nginx.org/en/</a></p>
+<h1 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h1><p>  下载地址  <a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a> </p>
+<blockquote>
+<p>nginx依赖以下模块:<br> gzip模块需要 zlib 库 及其开发环境<br> rewrite模块需要 pcre 库及开发环境<br> ssl 功能需要openssl库及开发环境以及 yum install -y gcc-c++ 环境。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ ./configure</span><br><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ make</span><br><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ make install</span><br></pre></td></tr></table></figure>
+<p><code>./configure</code> 是用来检查安装环境。在configure阶段结束以后，将会出现如下信息：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/16/nginx-notes/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/08/08/jvm-jit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/08/jvm-jit/" class="post-title-link" itemprop="url">JVM Just-In-Time</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-08 22:15:45" itemprop="dateCreated datePublished" datetime="2020-08-08T22:15:45+08:00">2020-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-16 23:03:26" itemprop="dateModified" datetime="2020-08-16T23:03:26+08:00">2020-08-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/08/jvm-jit/" class="post-meta-item leancloud_visitors" data-flag-title="JVM Just-In-Time" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p> 即时编译是一项用来提升应用程序运行效率的技术。通常而言，代码会先被 Java 虚拟机解释执行，之后反复执行的热点代码则会被即时编译成为机器码，直接运行在底层硬件之上。</p>
+</blockquote>
+<p>HotSpot 虚拟机包含多个即时编译器 C1、C2 和 Graal。</p>
+<p>Graal 是一个实验性质的即时编译器，可以通过参数 -XX:+UnlockExperimentalVMOptions -XX:+UseJVMCICompiler 启用，并且替换 C2</p>
+<p>在 Java 7 以前，我们需要根据程序的特性选择对应的即时编译器。<br>对于执行时间较短的，或者对启动性能有要求的程序，我们采用编译效率较快的 C1，对应参数 -client。<br>对于执行时间较长的，或者对峰值性能有要求的程序，我们采用生成代码执行效率较快的 C2，对应参数 -server。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/08/jvm-jit/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/08/02/jvm-gc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -907,195 +1088,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/07/05/java-virtual-machine-compiling/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/05/java-virtual-machine-compiling/" class="post-title-link" itemprop="url">JVM编译</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-05 23:18:30" itemprop="dateCreated datePublished" datetime="2020-07-05T23:18:30+08:00">2020-07-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-12 23:21:30" itemprop="dateModified" datetime="2020-07-12T23:21:30+08:00">2020-07-12</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/07/05/java-virtual-machine-compiling/" class="post-meta-item leancloud_visitors" data-flag-title="JVM编译" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] [Chapter 3. Compiling for the Java Virtual Machine] ( <a href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-3.html" target="_blank" rel="noopener">https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-3.html</a> )<br>[2] [Chapter 3. Compiling for the Java Virtual Machine] ( <a href="https://docs.oracle.com/javase/specs/jvms/se14/html/jvms-3.html" target="_blank" rel="noopener">https://docs.oracle.com/javase/specs/jvms/se14/html/jvms-3.html</a> )</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/07/05/java-virtual-machine-structure/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/05/java-virtual-machine-structure/" class="post-title-link" itemprop="url">Java虚拟机结构</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-07-05 07:43:14" itemprop="dateCreated datePublished" datetime="2020-07-05T07:43:14+08:00">2020-07-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-05 19:58:53" itemprop="dateModified" datetime="2020-08-05T19:58:53+08:00">2020-08-05</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/jvm/" itemprop="url" rel="index"><span itemprop="name">jvm</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/07/05/java-virtual-machine-structure/" class="post-meta-item leancloud_visitors" data-flag-title="Java虚拟机结构" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p> The Structure of the Java Virtual Machine</p>
-<ol>
-<li>The class File Format</li>
-<li>Data Types</li>
-<li>Primitive Types and Values</li>
-<li>Reference Types and Values</li>
-<li>Run-Time Data Areas</li>
-<li>Frames</li>
-<li>Representation of Objects</li>
-<li>Floating-Point Arithmetic</li>
-<li>Special Methods</li>
-<li>Exceptions</li>
-<li>Instruction Set Summary</li>
-<li>Class Libraries</li>
-<li>Public Design, Private Implementation</li>
-</ol>
-</blockquote>
-<p>　　本文档指定了一台抽象机器。它没有描述Java虚拟机的任何特定实现。</p>
-<p>　　要正确实现Java虚拟机，您只需要能够读取类文件格式并正确执行其中指定的操作。不属于Java虚拟机规范的实现细节将不必要地限制实现者的创造力。例如，运行时数据区域的内存布局、使用的垃圾收集算法以及Java虚拟机指令的任何内部优化（例如，将它们转换为机器代码）都由实现者自行决定。</p>
-<p>　　本规范中对Unicode的所有引用都是针对Unicode标准6.0.0版提供的，可从<a href="http://www.unicode.org/。" target="_blank" rel="noopener">http://www.unicode.org/。</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/05/java-virtual-machine-structure/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1165,20 +1157,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">196</span>
+          <span class="site-state-item-count">198</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">65</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
