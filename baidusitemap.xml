@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://weikeqin.com/2020/08/16/nginx-notes/</loc>
-    <lastmod>2020-08-16</lastmod>
+    <loc>http://weikeqin.com/2019/08/12/kafka-notes/</loc>
+    <lastmod>2020-09-18</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2020/08/08/jvm-jit/</loc>
-    <lastmod>2020-08-16</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2020/06/09/jvm-config/</loc>
-    <lastmod>2020-08-16</lastmod>
+    <loc>http://weikeqin.com/2019/09/09/mysql-transaction/</loc>
+    <lastmod>2020-09-18</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2019/09/05/mysql-lock-table-solution/</loc>
+    <lastmod>2020-09-18</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2019/09/09/mysql-index/</loc>
+    <lastmod>2020-09-18</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/06/28/mysql-log/</loc>
+    <lastmod>2020-09-17</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2019/03/17/mysql-architecture/</loc>
+    <lastmod>2020-09-17</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2017/03/05/hello-world/</loc>
+    <lastmod>2020-09-17</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/04/26/jmeter-notes/</loc>
+    <lastmod>2020-09-17</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/08/16/nginx-notes/</loc>
+    <lastmod>2020-09-17</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/06/09/jvm-config/</loc>
+    <lastmod>2020-08-20</lastmod>
+  </url>  <url>
+    <loc>http://weikeqin.com/2020/08/08/jvm-jit/</loc>
     <lastmod>2020-08-16</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2020/06/17/io-model/</loc>
@@ -77,9 +98,6 @@
     <lastmod>2020-07-12</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2020/06/21/unique-id/</loc>
-    <lastmod>2020-07-12</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2020/06/28/mysql-log/</loc>
     <lastmod>2020-07-12</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2020/04/18/vs-code-notes/</loc>
@@ -298,9 +316,6 @@
     <loc>http://weikeqin.com/2020/01/20/elasticsearch-data-in-data-out/</loc>
     <lastmod>2020-01-21</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2019/08/12/kafka-notes/</loc>
-    <lastmod>2020-01-19</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2019/03/26/kafka-install-use/</loc>
     <lastmod>2020-01-19</lastmod>
   </url>  <url>
@@ -343,9 +358,6 @@
     <loc>http://weikeqin.com/2017/11/14/crawler-google-translate/</loc>
     <lastmod>2019-12-09</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2019/09/09/mysql-index/</loc>
-    <lastmod>2019-11-26</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2017/07/19/nlp-notes/</loc>
     <lastmod>2019-11-13</lastmod>
   </url>  <url>
@@ -361,10 +373,10 @@
     <loc>http://weikeqin.com/2018/07/12/universal-curd-interface/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2017/05/04/text-analysis-application-scenarios/</loc>
+    <loc>http://weikeqin.com/2018/06/04/tf-idf/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2018/06/04/tf-idf/</loc>
+    <loc>http://weikeqin.com/2017/05/04/text-analysis-application-scenarios/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/08/29/string-stringbuilder-stringbuffer-compare/</loc>
@@ -388,16 +400,10 @@
     <loc>http://weikeqin.com/2017/10/26/next-theme-config/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
-    <loc>http://weikeqin.com/2019/09/09/mysql-transaction/</loc>
-    <lastmod>2019-11-04</lastmod>
-  </url>  <url>
     <loc>http://weikeqin.com/2017/07/15/mysql-sqlserver-translate/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/05/04/mysql-install-and-config/</loc>
-    <lastmod>2019-11-04</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2019/03/17/mysql-architecture/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/03/22/markdown-notes/</loc>
@@ -437,9 +443,6 @@
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2017/04/27/git-backup-blog-and-theme/</loc>
-    <lastmod>2019-11-04</lastmod>
-  </url>  <url>
-    <loc>http://weikeqin.com/2017/03/05/hello-world/</loc>
     <lastmod>2019-11-04</lastmod>
   </url>  <url>
     <loc>http://weikeqin.com/2018/01/19/httpclient-notes/</loc>

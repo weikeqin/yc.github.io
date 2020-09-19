@@ -210,6 +210,99 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2020/01/19/elasticsearch-restful-api/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/01/19/elasticsearch-restful-api/" class="post-title-link" itemprop="url">elasticsearch-restful-api</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-01-19 16:56:47" itemprop="dateCreated datePublished" datetime="2020-01-19T16:56:47+08:00">2020-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-18 16:43:19" itemprop="dateModified" datetime="2020-04-18T16:43:19+08:00">2020-04-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/01/19/elasticsearch-restful-api/" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch-restful-api" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>  elasticsearch 的 resuful api 笔记</p>
+<h1 id="1-查看ES及索引信息"><a href="#1-查看ES及索引信息" class="headerlink" title="(1) 查看ES及索引信息"></a>(1) 查看ES及索引信息</h1><h2 id="1-1-查看ES基本信息"><a href="#1-1-查看ES基本信息" class="headerlink" title="(1.1)  查看ES基本信息"></a>(1.1)  查看ES基本信息</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ curl <span class="string">'http://localhost:9200?pretty'</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span> : <span class="string">"elasticsearch_001_data"</span>,</span><br><span class="line">  <span class="string">"cluster_name"</span> : <span class="string">"elasticsearch_test"</span>,</span><br><span class="line">  <span class="string">"cluster_uuid"</span> : <span class="string">"NsxYKhI1Qw63MzaPKl34dA"</span>,</span><br><span class="line">  <span class="string">"version"</span> : &#123;</span><br><span class="line">    <span class="string">"number"</span> : <span class="string">"6.6.2"</span>,</span><br><span class="line">    <span class="string">"build_flavor"</span> : <span class="string">"default"</span>,</span><br><span class="line">    <span class="string">"build_type"</span> : <span class="string">"tar"</span>,</span><br><span class="line">    <span class="string">"build_hash"</span> : <span class="string">"3bd3e59"</span>,</span><br><span class="line">    <span class="string">"build_date"</span> : <span class="string">"2019-03-06T15:16:26.864148Z"</span>,</span><br><span class="line">    <span class="string">"build_snapshot"</span> : <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"lucene_version"</span> : <span class="string">"7.6.0"</span>,</span><br><span class="line">    <span class="string">"minimum_wire_compatibility_version"</span> : <span class="string">"5.6.0"</span>,</span><br><span class="line">    <span class="string">"minimum_index_compatibility_version"</span> : <span class="string">"5.0.0"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"tagline"</span> : <span class="string">"You Know, for Search"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="1-2-计算集群中文档的数量"><a href="#1-2-计算集群中文档的数量" class="headerlink" title="(1.2)  计算集群中文档的数量"></a>(1.2)  计算集群中文档的数量</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ curl  <span class="string">'http://localhost:9200/_count?pretty'</span> </span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"count"</span> : 3,</span><br><span class="line">  <span class="string">"_shards"</span> : &#123;</span><br><span class="line">    <span class="string">"total"</span> : 5,</span><br><span class="line">    <span class="string">"successful"</span> : 5,</span><br><span class="line">    <span class="string">"skipped"</span> : 0,</span><br><span class="line">    <span class="string">"failed"</span> : 0</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  可以看到返回结果是3</p>
+<h2 id="1-3-查看ES里所有索引"><a href="#1-3-查看ES里所有索引" class="headerlink" title="(1.3)  查看ES里所有索引"></a>(1.3)  查看ES里所有索引</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[wkq@VM_77_25_centos ~]$ curl &apos;localhost:9200/_cat/indices?v&apos;</span><br><span class="line">health status index    uuid                   pri rep docs.count docs.deleted store.size pri.store.size</span><br><span class="line">yellow open   megacorp EUu3nzyRQN2Mp7tRw2u_nQ   5   1          3            0     17.5kb         17.5kb</span><br><span class="line">yellow open   gb       kAXZAJZTRg2X0Wm72-n5qQ   5   1          1            0      5.7kb          5.7kb</span><br><span class="line">yellow open   us       Q6ubyCClQvyMB5iX8f9BZA   5   1          1            0      5.7kb          5.7kb</span><br><span class="line">yellow open   tweet    hNRmZ9RETWWPoUMIK3BivA   5   1         12            0       26kb           26kb</span><br><span class="line">yellow open   website  1Ptx5N-iTR2nDNtVgVMEpw   5   1          5            0     21.2kb         21.2kb</span><br><span class="line">yellow open   blogs    bW_JTJkfS2GVN8FE_gX-Hg   3   2          0            0       783b           783b</span><br><span class="line">yellow open   user     rOprq90rQsuyP0mad7I6iQ   5   1          2            0     10.2kb         10.2kb</span><br><span class="line">[wkq@VM_77_25_centos ~]$</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-插入数据"><a href="#1-3-插入数据" class="headerlink" title="(1.3) 插入数据"></a>(1.3) 插入数据</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ curl -X PUT <span class="string">"localhost:9200/megacorp/employee/1"</span> -H <span class="string">'Content-Type: application/json'</span> -d<span class="string">'</span></span><br><span class="line"><span class="string">&gt; &#123;</span></span><br><span class="line"><span class="string">&gt;     "first_name" : "John",</span></span><br><span class="line"><span class="string">&gt;     "last_name" :  "Smith",</span></span><br><span class="line"><span class="string">&gt;     "age" :        25,</span></span><br><span class="line"><span class="string">&gt;     "about" :      "I love to go rock climbing",</span></span><br><span class="line"><span class="string">&gt;     "interests": [ "sports", "music" ]</span></span><br><span class="line"><span class="string">&gt; &#125;</span></span><br><span class="line"><span class="string">&gt; '</span></span><br><span class="line">&#123;<span class="string">"_index"</span>:<span class="string">"megacorp"</span>,<span class="string">"_type"</span>:<span class="string">"employee"</span>,<span class="string">"_id"</span>:<span class="string">"1"</span>,<span class="string">"_version"</span>:2,<span class="string">"result"</span>:<span class="string">"updated"</span>,<span class="string">"_shards"</span>:&#123;<span class="string">"total"</span>:2,<span class="string">"successful"</span>:1,<span class="string">"failed"</span>:0&#125;,<span class="string">"_seq_no"</span>:1,<span class="string">"_primary_term"</span>:1&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/01/19/elasticsearch-restful-api/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/12/29/distributed-lock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1083,98 +1176,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2019/09/09/mysql-index/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/09/09/mysql-index/" class="post-title-link" itemprop="url">mysql-index</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-09-09 08:01:29" itemprop="dateCreated datePublished" datetime="2019-09-09T08:01:29+08:00">2019-09-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-26 20:08:40" itemprop="dateModified" datetime="2019-11-26T20:08:40+08:00">2019-11-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/09/09/mysql-index/" class="post-meta-item leancloud_visitors" data-flag-title="mysql-index" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>　转自<br>　<a href="https://time.geekbang.org/column/article/69236" target="_blank" rel="noopener">04 | 深入浅出索引（上） MySQL实战45讲</a><br>　<a href="https://time.geekbang.org/column/article/69636" target="_blank" rel="noopener">05 | 深入浅出索引（下） MySQL实战45讲</a></p>
-<h1 id="MySQL-不走索引的情况"><a href="#MySQL-不走索引的情况" class="headerlink" title="MySQL 不走索引的情况"></a>MySQL 不走索引的情况</h1><p> 转自 <a href="https://time.geekbang.org/column/article/74059" target="_blank" rel="noopener">18 | 为什么这些SQL语句逻辑相同，性能却差异巨大？</a></p>
-<h2 id="案例一：条件字段函数操作"><a href="#案例一：条件字段函数操作" class="headerlink" title="案例一：条件字段函数操作"></a>案例一：条件字段函数操作</h2><p>  对索引字段做函数操作，可能会破坏索引值的有序性，因此优化器就决定放弃走树搜索功能。</p>
-<p>  假设你现在维护了一个交易系统，其中交易记录表 tradelog 包含交易流水号（tradeid）、交易员 id（operator）、交易时间（t_modified）等字段。为了便于描述，我们先忽略其他字段。这个表的建表语句如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; CREATE TABLE `tradelog` (</span><br><span class="line">  `id` int(11) NOT NULL,</span><br><span class="line">  `tradeid` varchar(32) DEFAULT NULL,</span><br><span class="line">  `operator` int(11) DEFAULT NULL,</span><br><span class="line">  `t_modified` datetime DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`),</span><br><span class="line">  KEY `tradeid` (`tradeid`),</span><br><span class="line">  KEY `t_modified` (`t_modified`)</span><br><span class="line">) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</span><br></pre></td></tr></table></figure></p>
-<p>  假设，现在已经记录了从 2016 年初到 2018 年底的所有数据，运营部门有一个需求是，要统计发生在所有年份中 7 月份的交易记录总数。这个逻辑看上去并不复杂，你的 SQL 语句可能会这么写：</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/09/09/mysql-index/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1244,7 +1245,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">198</span>
+          <span class="site-state-item-count">199</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

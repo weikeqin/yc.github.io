@@ -29,9 +29,7 @@
 <meta property="og:description" content="转自  01 | 基础架构：一条SQL查询语句是如何执行的？ - MySQL实战45讲  02 | 日志系统：一条SQL更新语句是如何执行的？ - MySQL实战45讲   问大家一个问题。SELECT * FROM t WHERE id = 1 ; 以及 UPDATE t set c = 2 where id = 1 ; 这两个语句是怎么执行的。 假设表结构是12345CREATE TABL">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://weikeqin.com/img/database/mysql/mysql-architecture.png">
-<meta property="og:image" content="http://weikeqin.com/img/database/mysql/kong-yi-ji.jpg">
-<meta property="og:image" content="http://weikeqin.com/img/database/mysql/mysql-redo-log.png">
-<meta property="og:updated_time" content="2019-11-04T06:36:52.378Z">
+<meta property="og:updated_time" content="2020-09-17T10:06:57.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql 架构 及 语句执行流程">
 <meta name="twitter:description" content="转自  01 | 基础架构：一条SQL查询语句是如何执行的？ - MySQL实战45讲  02 | 日志系统：一条SQL更新语句是如何执行的？ - MySQL实战45讲   问大家一个问题。SELECT * FROM t WHERE id = 1 ; 以及 UPDATE t set c = 2 where id = 1 ; 这两个语句是怎么执行的。 假设表结构是12345CREATE TABL">
@@ -247,7 +245,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-11-04 14:36:52" itemprop="dateModified" datetime="2019-11-04T14:36:52+08:00">2019-11-04</time>
+                <time title="修改时间：2020-09-17 18:06:57" itemprop="dateModified" datetime="2020-09-17T18:06:57+08:00">2020-09-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -346,62 +344,14 @@
 <p>  对于有索引的表，执行的逻辑也差不多。第一次调用的是“取满足条件的第一行”这个接口，之后循环取“满足条件的下一行”这个接口，这些接口都是引擎中已经定义好的。</p>
 <p>  你会在数据库的慢查询日志中看到一个 rows_examined 的字段，表示这个语句执行过程中扫描了多少行。这个值就是在执行器每次调用引擎获取数据行的时候累加的。</p>
 <p>  在有些场景下，执行器调用一次，在引擎内部则扫描了多行，因此 引擎扫描行数跟 rows_examined 并不是完全相同的。 </p>
-<hr>
-<p>  MySQL的架构这儿就完了。下面是两个比较重要的模块。</p>
-<p>  <img src="/img/database/mysql/kong-yi-ji.jpg" alt="孔乙己">  </p>
-<p>  不知道你还记不记得《孔乙己》这篇文章，酒店掌柜有一个粉板，专门用来记录客人的赊账记录。如果赊账的人不多，那么他可以把顾客名和账目写在板上。但如果赊账的人多了，粉板总会有记不下的时候，这个时候掌柜一定还有一个专门记录赊账的账本。</p>
-<p>  如果有人要赊账或者还账的话，掌柜一般有两种做法：</p>
-<ol>
-<li>一种做法是直接把账本翻出来，把这次赊的账加上去或者扣除掉；</li>
-<li>另一种做法是先在粉板上记下这次的账，等打烊以后再把账本翻出来核算。</li>
-</ol>
-<p>　在生意红火柜台很忙时，掌柜一定会选择后者，因为前者操作实在是太麻烦了。首先，你得找到这个人的赊账总额那条记录。你想想，密密麻麻几十页，掌柜要找到那个名字，可能还得带上老花镜慢慢找，找到之后再拿出算盘计算，最后再将结果写回到账本上。<br>　<br>　这整个过程想想都麻烦。相比之下，还是先在粉板上记一下方便。你想想，如果掌柜没有粉板的帮助，每次记账都得翻账本，效率是不是低得让人难以忍受？</p>
-<p>  同样，在 MySQL 里也有这个问题，如果每一次的更新操作都需要写进磁盘，然后磁盘也要找到对应的那条记录，然后再更新，整个过程 IO 成本、查找成本都很高。为了解决这个问题，MySQL 的设计者就用了类似酒店掌柜粉板的思路来提升更新效率。</p>
-<p>　而粉板和账本配合的整个过程，其实就是 MySQL 里经常说到的 WAL 技术，WAL 的全称是 Write-Ahead Logging，它的关键点就是先写日志，再写磁盘，也就是先写粉板，等不忙的时候再写账本。</p>
-<p><br></p>
-<h1 id="6-重要的日志模块：redo-log-（重做日志）"><a href="#6-重要的日志模块：redo-log-（重做日志）" class="headerlink" title="(6) 重要的日志模块：redo log （重做日志）"></a>(6) 重要的日志模块：redo log （重做日志）</h1><p>　具体来说，当有一条记录需要更新的时候，InnoDB 引擎就会先把记录写到 redo log（粉板）里面，并更新内存，这个时候更新就算完成了。同时，InnoDB 引擎会在适当的时候，将这个操作记录更新到磁盘里面，而这个更新往往是在系统比较空闲的时候做，这就像打烊以后掌柜做的事。</p>
-<p>　如果今天赊账的不多，掌柜可以等打烊后再整理。但如果某天赊账的特别多，粉板写满了，又怎么办呢？这个时候掌柜只好放下手中的活儿，把粉板中的一部分赊账记录更新到账本中，然后把这些记录从粉板上擦掉，为记新账腾出空间。</p>
-<p>　与此类似，InnoDB 的 redo log 是固定大小的，比如可以配置为一组 4 个文件，每个文件的大小是 1GB，那么这块“粉板”总共就可以记录 4GB 的操作。从头开始写，写到末尾就又回到开头循环写，如下面这个图所示。</p>
-<p>  <img src="/img/database/mysql/mysql-redo-log.png" alt="redo log 重做日志"></p>
-<p>　write pos 是当前记录的位置，一边写一边后移，写到第 3 号文件末尾后就回到 0 号文件开头。checkpoint 是当前要擦除的位置，也是往后推移并且循环的，擦除记录前要把记录更新到数据文件。</p>
-<p>　write pos 和 checkpoint 之间的是“粉板”上还空着的部分，可以用来记录新的操作。如果 write pos 追上 checkpoint，表示“粉板”满了，这时候不能再执行新的更新，得停下来先擦掉一些记录，把 checkpoint 推进一下。</p>
-<p>　有了 redo log，InnoDB 就可以保证即使数据库发生异常重启，之前提交的记录都不会丢失，这个能力称为 <code>crash-safe</code> </p>
-<p>　要理解 crash-safe 这个概念，可以想想我们前面赊账记录的例子。只要赊账记录记在了粉板上或写在了账本上，之后即使掌柜忘记了，比如突然停业几天，恢复生意后依然可以通过账本和粉板上的数据明确赊账账目。</p>
-<p>　redo log 用于保证 crash-safe 能力。<code>innodb_flush_log_at_trx_commit</code> 这个参数设置成 1 的时候，表示每次事务的 redo log 都直接持久化到磁盘。这个参数建议你设置成 1，这样可以保证 MySQL 异常重启之后数据不丢失。</p>
-<p><br></p>
-<h1 id="7-重要的日志模块：binlog-（归档日志）"><a href="#7-重要的日志模块：binlog-（归档日志）" class="headerlink" title="(7) 重要的日志模块：binlog （归档日志）"></a>(7) 重要的日志模块：binlog （归档日志）</h1><p>　MySQL 整体来看，其实就有两块：一块是 Server 层，它主要做的是 MySQL 功能层面的事情；还有一块是引擎层，负责存储相关的具体事宜。上面我们聊到的粉板 redo log 是 InnoDB 引擎特有的日志，而 Server 层也有自己的日志，称为 binlog（归档日志）。</p>
-<p>　最开始 MySQL 里并没有 InnoDB 引擎。MySQL 自带的引擎是 MyISAM，但是 MyISAM 没有 crash-safe 的能力，binlog 日志只能用于归档。而 InnoDB 是另一个公司以插件形式引入 MySQL 的，既然只依靠 binlog 是没有 crash-safe 能力的，所以 InnoDB 使用另外一套日志系统——也就是 redo log 来实现 crash-safe 能力。</p>
-<p>  这两种日志有以下三点不同。<br>　1. redo log 是 InnoDB 引擎特有的；binlog 是 MySQL 的 Server 层实现的，所有引擎都可以使用。<br>　2. redo log 是物理日志，记录的是“在某个数据页上做了什么修改”；binlog 是逻辑日志，记录的是这个语句的原始逻辑，比如“给 ID=2 这一行的 c 字段加 1 ”。<br>　3. redo log 是循环写的，空间固定会用完；binlog 是可以追加写入的。“追加写”是指 binlog 文件写到一定大小后会切换到下一个，并不会覆盖以前的日志。</p>
-<blockquote>
-<p>　Tips<br>　Redo log不是记录数据页“更新之后的状态”，而是记录这个页 “做了什么改动”。<br>　Binlog有两种模式，statement 格式的话是记sql语句， row格式会记录行的内容，记两条，更新前和更新后都有。<br> redo log 记录 做了什么改动（比如把某个字段从0改成了1）<br> binlog 记录 是怎么修改的（记录sql语句 或者 记录更新前后的行）</p>
-</blockquote>
-<p>　有了对这两个日志的概念性理解，我们再来看执行器和 InnoDB 引擎在执行这个简单的 update 语句时的内部流程。</p>
-<p>　1. 执行器先找引擎取 ID=2 这一行。ID 是主键，引擎直接用树搜索找到这一行。如果 ID=2 这一行所在的数据页本来就在内存中，就直接返回给执行器；否则，需要先从磁盘读入内存，然后再返回。<br>　2. 执行器拿到引擎给的行数据，把这个值加上 1，比如原来是 N，现在就是 N+1，得到新的一行数据，再调用引擎接口写入这行新数据。<br>　3.引擎将这行新数据更新到内存中，同时将这个更新操作记录到 redo log 里面，此时 redo log 处于 prepare 状态。然后告知执行器执行完成了，随时可以提交事务。<br>　4. 执行器生成这个操作的 binlog，并把 binlog 写入磁盘。<br>　5. 执行器调用引擎的提交事务接口，引擎把刚刚写入的 redo log 改成提交（commit）状态，更新完成。
-　</p>
-<h2 id="7-1-两阶段提交"><a href="#7-1-两阶段提交" class="headerlink" title="(7.1) 两阶段提交"></a>(7.1) 两阶段提交</h2><p>　为什么必须有“两阶段提交”呢？这是为了让两份日志之间的逻辑一致。要说明这个问题，我们得从文章开头的那个问题说起：怎样让数据库恢复到半个月内任意一秒的状态？</p>
-<p>　前面我们说过了，binlog 会记录所有的逻辑操作，并且是采用“追加写”的形式。如果你的 DBA 承诺说半个月内可以恢复，那么备份系统中一定会保存最近半个月的所有 binlog，同时系统会定期做整库备份。这里的“定期”取决于系统的重要性，可以是一天一备，也可以是一周一备。</p>
-<p>　当需要恢复到指定的某一秒时，比如某天下午两点发现中午十二点有一次误删表，需要找回数据，那你可以这么做：<br>　1. 首先，找到最近的一次全量备份，如果你运气好，可能就是昨天晚上的一个备份，从这个备份恢复到临时库；<br>　2. 然后，从备份的时间点开始，将备份的 binlog 依次取出来，重放到中午误删表之前的那个时刻。<br>　这样你的临时库就跟误删之前的线上库一样了，然后你可以把表数据从临时库取出来，按需要恢复到线上库去。</p>
-<p>　好了，说完了数据恢复过程，我们回来说说，为什么日志需要“两阶段提交”。这里不妨用反证法来进行解释。</p>
-<p>　由于 redo log 和 binlog 是两个独立的逻辑，如果不用两阶段提交，要么就是先写完 redo log 再写 binlog，或者采用反过来的顺序。我们看看这两种方式会有什么问题。</p>
-<p>　仍然用前面的 update 语句 <code>update T set c=c+1 where ID=2;</code>  来做例子。假设当前 ID=2 的行，字段 c 的值是 0，再假设执行 update 语句过程中在写完第一个日志后，第二个日志还没有写完期间发生了 crash，会出现什么情况呢？</p>
-<blockquote>
-<p>　先写 redo log 后写 binlog。假设在 redo log 写完，binlog 还没有写完的时候，MySQL 进程异常重启。由于我们前面说过的，redo log 写完之后，系统即使崩溃，仍然能够把数据恢复回来，所以恢复后这一行 c 的值是 1。　但是由于 binlog 没写完就 crash 了，这时候 binlog 里面就没有记录这个语句。因此，之后备份日志的时候，存起来的 binlog 里面就没有这条语句。　然后你会发现，如果需要用这个 binlog 来恢复临时库的话，由于这个语句的 binlog 丢失，这个临时库就会少了这一次更新，恢复出来的这一行 c 的值就是 0，与原库的值不同。</p>
-</blockquote>
-<blockquote>
-<p>　先写 binlog 后写 redo log。如果在 binlog 写完之后 crash，由于 redo log 还没写，崩溃恢复以后这个事务无效，所以这一行 c 的值是 0。但是 binlog 里面已经记录了“把 c 从 0 改成 1”这个日志。所以，在之后用 binlog 来恢复的时候就多了一个事务出来，恢复出来的这一行 c 的值就是 1，与原库的值不同。</p>
-</blockquote>
-<p>　可以看到，如果不使用“两阶段提交”，那么数据库的状态就有可能和用它的日志恢复出来的库的状态不一致。</p>
-<p>　不只是误操作后需要用这个过程来恢复数据。当你需要扩容的时候，也就是需要再多搭建一些备库来增加系统的读能力的时候，现在常见的做法也是用全量备份加上应用 binlog 来实现的，这个“不一致”就会导致你的线上出现主从数据库不一致的情况。</p>
-<p>　简单说，redo log 和 binlog 都可以用于表示事务的提交状态，而两阶段提交就是让这两个状态保持逻辑上的一致。</p>
-<p>　<code>sync_binlog</code> 这个参数设置成 1 的时候，表示每次事务的 binlog 都持久化到磁盘。这个参数我也建议你设置成 1，这样可以保证 MySQL 异常重启之后 binlog 不丢失。</p>
-<h1 id="8-执行一条查询语句的流程"><a href="#8-执行一条查询语句的流程" class="headerlink" title="(8) 执行一条查询语句的流程"></a>(8) 执行一条查询语句的流程</h1><ol>
+<h1 id="6-执行一条查询语句的流程"><a href="#6-执行一条查询语句的流程" class="headerlink" title="(6) 执行一条查询语句的流程"></a>(6) 执行一条查询语句的流程</h1><ol>
 <li>连接器 连接数据库。</li>
 <li>查询缓存</li>
 <li>分析器 词法解析 语法解析</li>
 <li>优化器</li>
 <li>执行器</li>
 </ol>
-<h1 id="9-更新一条语句的流程"><a href="#9-更新一条语句的流程" class="headerlink" title="(9) 更新一条语句的流程"></a>(9) 更新一条语句的流程</h1><ol>
+<h1 id="7-更新一条语句的流程"><a href="#7-更新一条语句的流程" class="headerlink" title="(7) 更新一条语句的流程"></a>(7) 更新一条语句的流程</h1><ol>
 <li>连接器 连接数据库。</li>
 <li>清空对应表缓存</li>
 <li>分析器 词法解析 语法解析</li>
@@ -409,21 +359,21 @@
 <li>执行器</li>
 <li>更新  redo log（重做日志）和 binlog（归档日志）。</li>
 </ol>
-<h1 id="10-牛刀小试"><a href="#10-牛刀小试" class="headerlink" title="(10) 牛刀小试"></a>(10) 牛刀小试</h1><h2 id="10-1-面试题"><a href="#10-1-面试题" class="headerlink" title="(10.1) 面试题"></a>(10.1) 面试题</h2><ol>
+<h1 id="8-牛刀小试"><a href="#8-牛刀小试" class="headerlink" title="(8) 牛刀小试"></a>(8) 牛刀小试</h1><h2 id="8-1-面试题"><a href="#8-1-面试题" class="headerlink" title="(8.1) 面试题"></a>(8.1) 面试题</h2><ol>
 <li>MySQL的框架有几个组件, 各是什么作用?</li>
 <li>Server层和存储引擎层各是什么作用?</li>
 <li>you have an error in your SQL syntax 这个保存是在词法分析里还是在语法分析里报错?</li>
 <li>对于表的操作权限验证在哪里进行?</li>
 <li>执行器的执行查询语句的流程是什么样的?</li>
 </ol>
-<h2 id="10-2-如果表-T-中没有字段-k，而你执行了这个语句-select-from-T-where-k-1-那肯定是会报“不存在这个列”的错误：-“Unknown-column-‘k’-in-‘where-clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？"><a href="#10-2-如果表-T-中没有字段-k，而你执行了这个语句-select-from-T-where-k-1-那肯定是会报“不存在这个列”的错误：-“Unknown-column-‘k’-in-‘where-clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？" class="headerlink" title="(10.2) 如果表 T 中没有字段 k，而你执行了这个语句 select * from T where k=1, 那肯定是会报“不存在这个列”的错误： “Unknown column ‘k’ in ‘where clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？"></a>(10.2) 如果表 T 中没有字段 k，而你执行了这个语句 <code>select * from T where k=1</code>, 那肯定是会报“不存在这个列”的错误： “Unknown column ‘k’ in ‘where clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？</h2><p>  答案是 分析器</p>
+<h2 id="8-2-如果表-T-中没有字段-k，而你执行了这个语句-select-from-T-where-k-1-那肯定是会报“不存在这个列”的错误：-“Unknown-column-‘k’-in-‘where-clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？"><a href="#8-2-如果表-T-中没有字段-k，而你执行了这个语句-select-from-T-where-k-1-那肯定是会报“不存在这个列”的错误：-“Unknown-column-‘k’-in-‘where-clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？" class="headerlink" title="(8.2) 如果表 T 中没有字段 k，而你执行了这个语句 select * from T where k=1, 那肯定是会报“不存在这个列”的错误： “Unknown column ‘k’ in ‘where clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？"></a>(8.2) 如果表 T 中没有字段 k，而你执行了这个语句 <code>select * from T where k=1</code>, 那肯定是会报“不存在这个列”的错误： “Unknown column ‘k’ in ‘where clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？</h2><p>  答案是 分析器</p>
 <p>  办法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">安装完MySQL之后,使用Debug模式启动</span><br><span class="line">mysqld --debug --console &amp;后，</span><br><span class="line">mysql&gt; create database wxb;</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; use wxb;</span><br><span class="line">Database changed</span><br><span class="line">mysql&gt; create table t(a int);</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from t where k=1;</span><br><span class="line">ERROR 1054 (42S22): Unknown column &apos;k&apos; in &apos;where clause&apos;</span><br><span class="line"></span><br><span class="line">T@4: | | | | | | | | | error: error: 1054 message: &apos;Unknown column &apos;k&apos; in &apos;where clause&apos;&apos;</span><br><span class="line"></span><br><span class="line">Complete optimizer trace:</span><br><span class="line">答案就很清楚了</span><br></pre></td></tr></table></figure></p>
-<h2 id="10-3-各个模块的功能"><a href="#10-3-各个模块的功能" class="headerlink" title="(10.3) 各个模块的功能"></a>(10.3) 各个模块的功能</h2><p>1，连接<br>  连接管理模块，接收请求；连接进程和用户模块，通过，连接线程和客户端对接<br>2，查询<br>  查询缓存 Query Cache<br>  分析器，内建解析树，对其语法检查，先from，再on，再join，再where……；检查权限，生成新的解析树，语义检查（没有字段k在这里）等<br>  优化器，将前面解析树转换成执行计划，并进行评估最优<br>  执行器，获取锁，打开表，通过meta数据，获取数据<br>3，返回结果<br>  返回给连接进程和用户模块，然后清理，重新等待新的请求。</p>
-<h2 id="10-4-动画描述各个模块的功能"><a href="#10-4-动画描述各个模块的功能" class="headerlink" title="(10.4) 动画描述各个模块的功能"></a>(10.4) 动画描述各个模块的功能</h2><p>连接器：门卫，想进请出示准入凭证（工牌、邀请证明一类）。“你好，你是普通员工，只能进入办公大厅，不能到高管区域”此为权限查询。<br>分析器：“您需要在公司里面找一张头发是黑色的桌子？桌子没有头发啊！臣妾做不到”<br>优化器：“要我在A B两个办公室找张三和李四啊？那我应该先去B办公室找李四，然后请李四帮我去A办公室找张三，因为B办公室比较近且李四知道张三具体工位在哪”<br>执行器：“好了，找人的计划方案定了，开始行动吧，走你！糟糕，刚门卫大哥说了，我没有权限进B办公室”</p>
-<h2 id="10-5-为什么对权限的检查不在优化器之前做？"><a href="#10-5-为什么对权限的检查不在优化器之前做？" class="headerlink" title="(10.5) 为什么对权限的检查不在优化器之前做？"></a>(10.5) 为什么对权限的检查不在优化器之前做？</h2><p>  有些时候，SQL语句要操作的表不只是SQL字面上那些。比如如果有个触发器，得在执行器阶段（过程中）才能确定。优化器阶段前是无能为力的</p>
-<h2 id="10-6-在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？"><a href="#10-6-在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？" class="headerlink" title="(10.6) 在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？"></a>(10.6) 在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？</h2><h2 id="10-7-假如要插入10万条数据，怎么写插入语句比较好"><a href="#10-7-假如要插入10万条数据，怎么写插入语句比较好" class="headerlink" title="(10.7) 假如要插入10万条数据，怎么写插入语句比较好"></a>(10.7) 假如要插入10万条数据，怎么写插入语句比较好</h2><p> 批量插入 <code>insert into t (id, c) values (1,1), (2, 2)</code></p>
-<h2 id="10-7-假如要更新10万条数据，怎么写插入语句比较好"><a href="#10-7-假如要更新10万条数据，怎么写插入语句比较好" class="headerlink" title="(10.7) 假如要更新10万条数据，怎么写插入语句比较好"></a>(10.7) 假如要更新10万条数据，怎么写插入语句比较好</h2><p>  批量更新</p>
-<h2 id="10-8-详细的执行过程"><a href="#10-8-详细的执行过程" class="headerlink" title="(10.8) 详细的执行过程"></a>(10.8) 详细的执行过程</h2><p> 1.　首先客户端通过tcp/ip发送一条sql语句到server层的SQL interface</p>
+<h2 id="8-3-各个模块的功能"><a href="#8-3-各个模块的功能" class="headerlink" title="(8.3) 各个模块的功能"></a>(8.3) 各个模块的功能</h2><p>1，连接<br>  连接管理模块，接收请求；连接进程和用户模块，通过，连接线程和客户端对接<br>2，查询<br>  查询缓存 Query Cache<br>  分析器，内建解析树，对其语法检查，先from，再on，再join，再where……；检查权限，生成新的解析树，语义检查（没有字段k在这里）等<br>  优化器，将前面解析树转换成执行计划，并进行评估最优<br>  执行器，获取锁，打开表，通过meta数据，获取数据<br>3，返回结果<br>  返回给连接进程和用户模块，然后清理，重新等待新的请求。</p>
+<h2 id="8-4-动画描述各个模块的功能"><a href="#8-4-动画描述各个模块的功能" class="headerlink" title="(8.4) 动画描述各个模块的功能"></a>(8.4) 动画描述各个模块的功能</h2><p>连接器：门卫，想进请出示准入凭证（工牌、邀请证明一类）。“你好，你是普通员工，只能进入办公大厅，不能到高管区域”此为权限查询。<br>分析器：“您需要在公司里面找一张头发是黑色的桌子？桌子没有头发啊！臣妾做不到”<br>优化器：“要我在A B两个办公室找张三和李四啊？那我应该先去B办公室找李四，然后请李四帮我去A办公室找张三，因为B办公室比较近且李四知道张三具体工位在哪”<br>执行器：“好了，找人的计划方案定了，开始行动吧，走你！糟糕，刚门卫大哥说了，我没有权限进B办公室”</p>
+<h2 id="8-5-为什么对权限的检查不在优化器之前做？"><a href="#8-5-为什么对权限的检查不在优化器之前做？" class="headerlink" title="(8.5) 为什么对权限的检查不在优化器之前做？"></a>(8.5) 为什么对权限的检查不在优化器之前做？</h2><p>  有些时候，SQL语句要操作的表不只是SQL字面上那些。比如如果有个触发器，得在执行器阶段（过程中）才能确定。优化器阶段前是无能为力的</p>
+<h2 id="8-6-在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？"><a href="#8-6-在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？" class="headerlink" title="(8.6) 在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？"></a>(8.6) 在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？</h2><h2 id="8-7-假如要插入10万条数据，怎么写插入语句比较好"><a href="#8-7-假如要插入10万条数据，怎么写插入语句比较好" class="headerlink" title="(8.7) 假如要插入10万条数据，怎么写插入语句比较好"></a>(8.7) 假如要插入10万条数据，怎么写插入语句比较好</h2><p> 批量插入 <code>insert into t (id, c) values (1,1), (2, 2)</code></p>
+<h2 id="8-8-假如要更新10万条数据，怎么写插入语句比较好"><a href="#8-8-假如要更新10万条数据，怎么写插入语句比较好" class="headerlink" title="(8.8) 假如要更新10万条数据，怎么写插入语句比较好"></a>(8.8) 假如要更新10万条数据，怎么写插入语句比较好</h2><p>  批量更新</p>
+<h2 id="8-9-详细的执行过程"><a href="#8-9-详细的执行过程" class="headerlink" title="(8.9) 详细的执行过程"></a>(8.9) 详细的执行过程</h2><p> 1.　首先客户端通过tcp/ip发送一条sql语句到server层的SQL interface</p>
 <p> 2.　SQL interface接到该请求后，先对该条语句进行解析，验证权限是否匹配</p>
 <p> 3.　验证通过以后，分析器会对该语句分析,是否语法有错误等</p>
 <p> 4.　接下来是优化器器生成相应的执行计划，选择最优的执行计划</p>
@@ -439,24 +389,24 @@
 <p> 14.　prepare阶段,将事务的xid写入，将binlog_cache里的进行flush以及sync操作(大事务的话这步非常耗时)</p>
 <p> 15.　commit阶段，由于之前该事务产生的redo log已经sync到磁盘了。所以这步只是在redo log里标记commit</p>
 <p> 16.　当binlog和redo log都已经落盘以后，如果触发了刷新脏页的操作，先把该脏页复制到doublewrite buffer里，把doublewrite buffer里的刷新到共享表空间，然后才是通过page cleaner线程把脏页写入到磁盘中</p>
-<h2 id="10-9-写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢"><a href="#10-9-写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢" class="headerlink" title="(10.9) 写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢"></a>(10.9) 写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢</h2><p>1.写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢<br>2.数据库只有redo commit 之后才会真正提交到数据库吗</p>
+<h2 id="8-10-写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢"><a href="#8-10-写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢" class="headerlink" title="(8.10) 写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢"></a>(8.10) 写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢</h2><p>1.写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢<br>2.数据库只有redo commit 之后才会真正提交到数据库吗</p>
 <blockquote>
 <ol>
 <li>Redolog是顺序写，并且可以组提交，还有别的一些优化，收益最大是是这两个因素；<br>2.是这样，正常执行是要commit 才算完，但是崩溃恢复过程的话，可以接受“redolog prepare 并且binlog完整” 的情况</li>
 </ol>
 </blockquote>
-<h2 id="10-10-redo-log是为了快速响应SQL充当了粉板"><a href="#10-10-redo-log是为了快速响应SQL充当了粉板" class="headerlink" title="(10.10) redo log是为了快速响应SQL充当了粉板"></a>(10.10) redo log是为了快速响应SQL充当了粉板</h2><p>　1. redo log本身也是文件，记录文件的过程其实也是写磁盘，那和文中提到的离线写磁盘操作有何区别？<br>　2.响应一次SQL我理解是要同时操作两个日志文件？也就是写磁盘两次？</p>
+<h2 id="8-11-redo-log是为了快速响应SQL充当了粉板"><a href="#8-11-redo-log是为了快速响应SQL充当了粉板" class="headerlink" title="(8.11) redo log是为了快速响应SQL充当了粉板"></a>(8.11) redo log是为了快速响应SQL充当了粉板</h2><p>　1. redo log本身也是文件，记录文件的过程其实也是写磁盘，那和文中提到的离线写磁盘操作有何区别？<br>　2.响应一次SQL我理解是要同时操作两个日志文件？也就是写磁盘两次？</p>
 <blockquote>
 <ol>
 <li>写redo log是顺序写，不用去“找位置”，而更新数据需要找位置</li>
 <li>其实是3次（redolog两次 binlog 1次）。不过在并发更新的时候会合并写 </li>
 </ol>
 </blockquote>
-<h2 id="10-11-binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理"><a href="#10-11-binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理" class="headerlink" title="(10.11) binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理"></a>(10.11) binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理</h2><p>  这样理解</p>
+<h2 id="8-12-binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理"><a href="#8-12-binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理" class="headerlink" title="(8.12) binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理"></a>(8.12) binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理</h2><p>  这样理解</p>
 <p>  逻辑日志可以给别的数据库，别的引擎使用，已经大家都讲得通这个“逻辑”；</p>
 <p>  物理日志就只有“我”自己能用，别人没有共享我的“物理格式” </p>
-<h2 id="10-12-redo-log-和-bin-log-是否重复"><a href="#10-12-redo-log-和-bin-log-是否重复" class="headerlink" title="(10.12) redo log 和 bin log 是否重复"></a>(10.12) redo log 和 bin log 是否重复</h2><p> redo 是引擎提供的，binlog 是server 自带的，文中提到前者用在crash的恢复，后者用于库的恢复。两者是否在某种程度上是重复的？如果在都是追加写的情况下，是否两种日志都能用于 crash 与 库 的恢复呢？<br> Crash-safe是崩溃恢复，就是原地满血复活；binlog恢复是制造一个影分身（副本）出来。</p>
-<h2 id="10-11"><a href="#10-11" class="headerlink" title="(10.11)"></a>(10.11)</h2><ol>
+<h2 id="8-13-redo-log-和-bin-log-是否重复"><a href="#8-13-redo-log-和-bin-log-是否重复" class="headerlink" title="(8.13) redo log 和 bin log 是否重复"></a>(8.13) redo log 和 bin log 是否重复</h2><p> redo 是引擎提供的，binlog 是server 自带的，文中提到前者用在crash的恢复，后者用于库的恢复。两者是否在某种程度上是重复的？如果在都是追加写的情况下，是否两种日志都能用于 crash 与 库 的恢复呢？<br> Crash-safe是崩溃恢复，就是原地满血复活；binlog恢复是制造一个影分身（副本）出来。</p>
+<h2 id="8-14"><a href="#8-14" class="headerlink" title="(8.14)"></a>(8.14)</h2><ol>
 <li><p>如果把 <code>innodb_flush_log_at_trx_commit</code> 设置成1每次都写入到磁盘，那不就等于是掌柜的每次记账都记到账本上嘛，那还要小黑板干嘛呢？ </p>
 </li>
 <li><p>binlog是逻辑，redolog是物理，两者都能记录历史，如果发生异常情况binlog就可以恢复数据，为什么说只有redolog才能算是crash-safe了呢。</p>
@@ -464,10 +414,10 @@
 <li><p>Redolog是顺序写，数据文件是随机写。虽然都写盘，顺序写还是快很多的</p>
 </li>
 </ol>
-<h2 id="10-12"><a href="#10-12" class="headerlink" title="(10.12)"></a>(10.12)</h2><p> 1、首先数据库更新操作都是基于内存页，更新的时候不会直接更新磁盘，如果内存有存在就直接更新内存，如果内存没有存在就从磁盘读取到内存，在更新内存，并且写redo log，目的是为了更新效率更快，等空闲时间在将其redo log所做的改变更新到磁盘中，innodb_flush_log_at_trx_commit设置为1时，也可以防止服务出现异常重启，数据不会丢失</p>
+<h2 id="8-15"><a href="#8-15" class="headerlink" title="(8.15)"></a>(8.15)</h2><p> 1、首先数据库更新操作都是基于内存页，更新的时候不会直接更新磁盘，如果内存有存在就直接更新内存，如果内存没有存在就从磁盘读取到内存，在更新内存，并且写redo log，目的是为了更新效率更快，等空闲时间在将其redo log所做的改变更新到磁盘中，innodb_flush_log_at_trx_commit设置为1时，也可以防止服务出现异常重启，数据不会丢失</p>
 <p> 2、redo log两阶段提交，是为了保证redo log和binlog的一致性，如果redo log写入成功处于prepare阶段，写binlog失败，事务回滚，redo log会回滚到操作之前的状态</p>
 <p> 3、redo log也是写磁盘，写redo log是顺序写，update直接更新磁盘，需要找到数据，再对此数据进行更新(随机写)。</p>
-<h2 id="10-13"><a href="#10-13" class="headerlink" title="(10.13)"></a>(10.13)</h2><p>  开启了半同步复制after_sync以后，假设一个事务在已经把binlog sync到磁盘了,在传输binlog到从库上时,主库挂了。如果这时发生了主从切换,从库是没有这个事务的.但是挂掉的主库重新启起来,由于binlog已经fsync到磁盘,虽然引擎层未commit,但是会根据binlog来恢复这个事务.这个时候就是主从不一致了,那么和after_commit那就没区别呀。请问这个事务是恢复还是回滚呢？如果是回滚,内部又是怎么判断的呢？</p>
+<h2 id="8-16"><a href="#8-16" class="headerlink" title="(8.16)"></a>(8.16)</h2><p>  开启了半同步复制after_sync以后，假设一个事务在已经把binlog sync到磁盘了,在传输binlog到从库上时,主库挂了。如果这时发生了主从切换,从库是没有这个事务的.但是挂掉的主库重新启起来,由于binlog已经fsync到磁盘,虽然引擎层未commit,但是会根据binlog来恢复这个事务.这个时候就是主从不一致了,那么和after_commit那就没区别呀。请问这个事务是恢复还是回滚呢？如果是回滚,内部又是怎么判断的呢？</p>
 <blockquote>
 <p>如果你设置来双MM，启动以后binlog还会传到新主库的。<br>但是如果你设置的是单向的，那就会不一致了…</p>
 </blockquote>
@@ -555,7 +505,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-连接器"><span class="nav-number">1.</span> <span class="nav-text">(1)　连接器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-查询缓存"><span class="nav-number">2.</span> <span class="nav-text">(2) 查询缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-分析器"><span class="nav-number">3.</span> <span class="nav-text">(3) 分析器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-优化器"><span class="nav-number">4.</span> <span class="nav-text">(4) 优化器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-执行器"><span class="nav-number">5.</span> <span class="nav-text">(5) 执行器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-重要的日志模块：redo-log-（重做日志）"><span class="nav-number">6.</span> <span class="nav-text">(6) 重要的日志模块：redo log （重做日志）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-重要的日志模块：binlog-（归档日志）"><span class="nav-number">7.</span> <span class="nav-text">(7) 重要的日志模块：binlog （归档日志）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-两阶段提交"><span class="nav-number">7.1.</span> <span class="nav-text">(7.1) 两阶段提交</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-执行一条查询语句的流程"><span class="nav-number">8.</span> <span class="nav-text">(8) 执行一条查询语句的流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-更新一条语句的流程"><span class="nav-number">9.</span> <span class="nav-text">(9) 更新一条语句的流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-牛刀小试"><span class="nav-number">10.</span> <span class="nav-text">(10) 牛刀小试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#10-1-面试题"><span class="nav-number">10.1.</span> <span class="nav-text">(10.1) 面试题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2-如果表-T-中没有字段-k，而你执行了这个语句-select-from-T-where-k-1-那肯定是会报“不存在这个列”的错误：-“Unknown-column-‘k’-in-‘where-clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？"><span class="nav-number">10.2.</span> <span class="nav-text">(10.2) 如果表 T 中没有字段 k，而你执行了这个语句 select * from T where k=1, 那肯定是会报“不存在这个列”的错误： “Unknown column ‘k’ in ‘where clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-3-各个模块的功能"><span class="nav-number">10.3.</span> <span class="nav-text">(10.3) 各个模块的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-4-动画描述各个模块的功能"><span class="nav-number">10.4.</span> <span class="nav-text">(10.4) 动画描述各个模块的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-5-为什么对权限的检查不在优化器之前做？"><span class="nav-number">10.5.</span> <span class="nav-text">(10.5) 为什么对权限的检查不在优化器之前做？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-6-在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？"><span class="nav-number">10.6.</span> <span class="nav-text">(10.6) 在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-7-假如要插入10万条数据，怎么写插入语句比较好"><span class="nav-number">10.7.</span> <span class="nav-text">(10.7) 假如要插入10万条数据，怎么写插入语句比较好</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-7-假如要更新10万条数据，怎么写插入语句比较好"><span class="nav-number">10.8.</span> <span class="nav-text">(10.7) 假如要更新10万条数据，怎么写插入语句比较好</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-8-详细的执行过程"><span class="nav-number">10.9.</span> <span class="nav-text">(10.8) 详细的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-9-写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢"><span class="nav-number">10.10.</span> <span class="nav-text">(10.9) 写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-10-redo-log是为了快速响应SQL充当了粉板"><span class="nav-number">10.11.</span> <span class="nav-text">(10.10) redo log是为了快速响应SQL充当了粉板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-11-binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理"><span class="nav-number">10.12.</span> <span class="nav-text">(10.11) binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-12-redo-log-和-bin-log-是否重复"><span class="nav-number">10.13.</span> <span class="nav-text">(10.12) redo log 和 bin log 是否重复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-11"><span class="nav-number">10.14.</span> <span class="nav-text">(10.11)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-12"><span class="nav-number">10.15.</span> <span class="nav-text">(10.12)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-13"><span class="nav-number">10.16.</span> <span class="nav-text">(10.13)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">11.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-连接器"><span class="nav-number">1.</span> <span class="nav-text">(1)　连接器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-查询缓存"><span class="nav-number">2.</span> <span class="nav-text">(2) 查询缓存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-分析器"><span class="nav-number">3.</span> <span class="nav-text">(3) 分析器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-优化器"><span class="nav-number">4.</span> <span class="nav-text">(4) 优化器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-执行器"><span class="nav-number">5.</span> <span class="nav-text">(5) 执行器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-执行一条查询语句的流程"><span class="nav-number">6.</span> <span class="nav-text">(6) 执行一条查询语句的流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-更新一条语句的流程"><span class="nav-number">7.</span> <span class="nav-text">(7) 更新一条语句的流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-牛刀小试"><span class="nav-number">8.</span> <span class="nav-text">(8) 牛刀小试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1-面试题"><span class="nav-number">8.1.</span> <span class="nav-text">(8.1) 面试题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-2-如果表-T-中没有字段-k，而你执行了这个语句-select-from-T-where-k-1-那肯定是会报“不存在这个列”的错误：-“Unknown-column-‘k’-in-‘where-clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？"><span class="nav-number">8.2.</span> <span class="nav-text">(8.2) 如果表 T 中没有字段 k，而你执行了这个语句 select * from T where k=1, 那肯定是会报“不存在这个列”的错误： “Unknown column ‘k’ in ‘where clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-3-各个模块的功能"><span class="nav-number">8.3.</span> <span class="nav-text">(8.3) 各个模块的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-4-动画描述各个模块的功能"><span class="nav-number">8.4.</span> <span class="nav-text">(8.4) 动画描述各个模块的功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-5-为什么对权限的检查不在优化器之前做？"><span class="nav-number">8.5.</span> <span class="nav-text">(8.5) 为什么对权限的检查不在优化器之前做？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-6-在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？"><span class="nav-number">8.6.</span> <span class="nav-text">(8.6) 在什么场景下，一天一备会比一周一备更有优势呢？或者说，它影响了这个数据库系统的哪个指标？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-7-假如要插入10万条数据，怎么写插入语句比较好"><span class="nav-number">8.7.</span> <span class="nav-text">(8.7) 假如要插入10万条数据，怎么写插入语句比较好</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-8-假如要更新10万条数据，怎么写插入语句比较好"><span class="nav-number">8.8.</span> <span class="nav-text">(8.8) 假如要更新10万条数据，怎么写插入语句比较好</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-9-详细的执行过程"><span class="nav-number">8.9.</span> <span class="nav-text">(8.9) 详细的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-10-写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢"><span class="nav-number">8.10.</span> <span class="nav-text">(8.10) 写redo日志也是写io（我理解也是外部存储）。同样耗费性能。怎么能做到优化呢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-11-redo-log是为了快速响应SQL充当了粉板"><span class="nav-number">8.11.</span> <span class="nav-text">(8.11) redo log是为了快速响应SQL充当了粉板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-12-binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理"><span class="nav-number">8.12.</span> <span class="nav-text">(8.12) binlog为什么说是逻辑日志呢？它里面有内容也会存储成物理文件，怎么说是逻辑而不是物理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-13-redo-log-和-bin-log-是否重复"><span class="nav-number">8.13.</span> <span class="nav-text">(8.13) redo log 和 bin log 是否重复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-14"><span class="nav-number">8.14.</span> <span class="nav-text">(8.14)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-15"><span class="nav-number">8.15.</span> <span class="nav-text">(8.15)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-16"><span class="nav-number">8.16.</span> <span class="nav-text">(8.16)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">9.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -569,7 +519,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">198</span>
+          <span class="site-state-item-count">199</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

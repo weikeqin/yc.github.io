@@ -1,0 +1,1645 @@
+2020-08-20 20:47:48,822 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2020-08-20 20:47:48,865 INFO o.a.j.JMeter: Loading user properties from: /Users/weikeqin1/SoftWare/apache-jmeter-5.3/bin/user.properties
+2020-08-20 20:47:48,867 INFO o.a.j.JMeter: Loading system properties from: /Users/weikeqin1/SoftWare/apache-jmeter-5.3/bin/system.properties
+2020-08-20 20:47:48,870 INFO o.a.j.JMeter: Copyright (c) 1998-2020 The Apache Software Foundation
+2020-08-20 20:47:48,870 INFO o.a.j.JMeter: Version 5.3
+2020-08-20 20:47:48,870 INFO o.a.j.JMeter: java.version=14.0.1
+2020-08-20 20:47:48,871 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2020-08-20 20:47:48,871 INFO o.a.j.JMeter: os.name=Mac OS X
+2020-08-20 20:47:48,871 INFO o.a.j.JMeter: os.arch=x86_64
+2020-08-20 20:47:48,871 INFO o.a.j.JMeter: os.version=10.13.6
+2020-08-20 20:47:48,871 INFO o.a.j.JMeter: file.encoding=UTF-8
+2020-08-20 20:47:48,871 INFO o.a.j.JMeter: java.awt.headless=true
+2020-08-20 20:47:48,871 INFO o.a.j.JMeter: Max memory     =1073741824
+2020-08-20 20:47:48,871 INFO o.a.j.JMeter: Available Processors =4
+2020-08-20 20:47:48,881 INFO o.a.j.JMeter: Default Locale=English (EN)
+2020-08-20 20:47:48,881 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2020-08-20 20:47:48,881 INFO o.a.j.JMeter: JMeterHome=/Users/weikeqin1/SoftWare/apache-jmeter-5.3
+2020-08-20 20:47:48,882 INFO o.a.j.JMeter: user.dir  =/Users/weikeqin1/WorkSpaces/blogs/blog/source
+2020-08-20 20:47:48,882 INFO o.a.j.JMeter: PWD       =/Users/weikeqin1/WorkSpaces/blogs/blog/source
+2020-08-20 20:47:48,884 INFO o.a.j.JMeter: IP: 10.0.60.127 Name: ZBMAC-C02PGMT0F.local FullName: 10.0.60.127
+2020-08-20 20:47:48,888 INFO o.a.j.JMeter: Setting property 'jmeter.reportgenerator.outputdir' to:'/Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/web_report_dir-20200818-v13'
+2020-08-20 20:47:48,893 INFO o.a.j.s.FileServer: Default base='/Users/weikeqin1/WorkSpaces/blogs/blog/source'
+2020-08-20 20:47:48,894 INFO o.a.j.s.FileServer: Set new base='/Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part'
+2020-08-20 20:47:49,084 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2020-08-20 20:47:49,112 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2020-08-20 20:47:49,118 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2020-08-20 20:47:49,125 INFO o.a.j.s.SaveService: Loading file: /Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/209_getCarIdsBySpuId.jmx
+2020-08-20 20:47:49,197 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2020-08-20 20:47:49,197 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2020-08-20 20:47:49,197 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2020-08-20 20:47:49,197 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2020-08-20 20:47:49,197 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2020-08-20 20:47:49,197 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2020-08-20 20:47:49,240 INFO o.a.j.JMeter: Creating summariser <summary>
+2020-08-20 20:47:49,247 INFO o.a.j.r.d.ReportGenerator: ReportGenerator will use for Parsing the separator: ','
+2020-08-20 20:47:49,247 INFO o.a.j.r.d.ReportGenerator: Will generate report at end of test from  results file: /Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/209_result-20200818-v13.txt
+2020-08-20 20:47:49,247 INFO o.a.j.r.d.ReportGenerator: Reading report generator properties from: /Users/weikeqin1/SoftWare/apache-jmeter-5.3/bin/reportgenerator.properties
+2020-08-20 20:47:49,249 INFO o.a.j.r.d.ReportGenerator: Merging with JMeter properties
+2020-08-20 20:47:49,258 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.temp_dir' not found, using default value 'temp' instead.
+2020-08-20 20:47:49,263 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.apdex_per_transaction' not found, using default value 'null' instead.
+2020-08-20 20:47:49,264 INFO o.a.j.r.c.ReportGeneratorConfiguration: apdex_per_transaction is empty, not APDEX per transaction customization
+2020-08-20 20:47:49,264 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.sample_filter' not found, using default value 'null' instead.
+2020-08-20 20:47:49,264 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.report_title' not found, using default value 'null' instead.
+2020-08-20 20:47:49,264 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.start_date' not found, using default value 'null' instead.
+2020-08-20 20:47:49,264 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.end_date' not found, using default value 'null' instead.
+2020-08-20 20:47:49,265 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.date_format' not found, using default value 'null' instead.
+2020-08-20 20:47:49,266 INFO o.a.j.r.c.ReportGeneratorConfiguration: Will use date range start date: null, end date: null
+2020-08-20 20:47:49,275 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.totalTPS.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,275 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.activeThreadsOverTime.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,276 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.timeVsThreads.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,276 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.responseTimeDistribution.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,276 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.transactionsPerSecond.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,276 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.responseTimePercentiles.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,277 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.responseTimePercentilesOverTime.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,277 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.responseTimesOverTime.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,277 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.connectTimeOverTime.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,278 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.graph.latenciesOverTime.exclude_controllers' not found, using default value 'false' instead.
+2020-08-20 20:47:49,279 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.json.filters_only_sample_series' not found, using default value 'true' instead.
+2020-08-20 20:47:49,279 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.json.series_filter' not found, using default value '' instead.
+2020-08-20 20:47:49,279 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.json.show_controllers_only' not found, using default value 'false' instead.
+2020-08-20 20:47:49,280 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.html.filters_only_sample_series' not found, using default value 'true' instead.
+2020-08-20 20:47:49,280 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.html.series_filter' not found, using default value '' instead.
+2020-08-20 20:47:49,281 INFO o.a.j.r.c.ReportGeneratorConfiguration: Property 'jmeter.reportgenerator.exporter.html.show_controllers_only' not found, using default value 'false' instead.
+2020-08-20 20:47:49,287 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2020-08-20 20:47:49,289 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2020-08-20 20:47:49,289 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2020-08-20 20:47:49,309 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2020-08-20 20:47:49,309 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2020-08-20 20:47:49,684 INFO o.a.j.JMeter: Running test (1597927669684)
+2020-08-20 20:47:49,717 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : 线程组
+2020-08-20 20:47:49,717 INFO o.a.j.e.StandardJMeterEngine: Starting 500 threads for group 线程组.
+2020-08-20 20:47:49,717 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2020-08-20 20:47:49,718 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=500 ramp-up=0 delayedStart=false
+2020-08-20 20:47:49,909 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-60
+2020-08-20 20:47:49,908 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-20
+2020-08-20 20:47:49,909 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-29
+2020-08-20 20:47:49,909 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-104
+2020-08-20 20:47:49,909 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-45
+2020-08-20 20:47:49,916 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-55
+2020-08-20 20:47:49,916 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-49
+2020-08-20 20:47:49,917 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-112
+2020-08-20 20:47:49,917 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-106
+2020-08-20 20:47:49,918 INFO o.a.j.s.FileServer: Stored: /Users/weikeqin1/Documents/05_excel_all/std_oil.csv
+2020-08-20 20:47:49,919 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-44
+2020-08-20 20:47:49,919 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-2
+2020-08-20 20:47:49,920 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-41
+2020-08-20 20:47:49,920 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-46
+2020-08-20 20:47:49,921 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-43
+2020-08-20 20:47:49,921 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-21
+2020-08-20 20:47:49,921 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-50
+2020-08-20 20:47:49,936 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-57
+2020-08-20 20:47:49,936 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-77
+2020-08-20 20:47:49,937 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-18
+2020-08-20 20:47:49,937 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-52
+2020-08-20 20:47:49,938 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-79
+2020-08-20 20:47:49,938 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-87
+2020-08-20 20:47:49,939 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-78
+2020-08-20 20:47:49,940 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-81
+2020-08-20 20:47:49,941 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-35
+2020-08-20 20:47:49,941 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-80
+2020-08-20 20:47:49,942 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-53
+2020-08-20 20:47:49,942 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-54
+2020-08-20 20:47:49,943 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-47
+2020-08-20 20:47:49,943 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-82
+2020-08-20 20:47:49,943 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-84
+2020-08-20 20:47:49,944 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-83
+2020-08-20 20:47:49,944 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-37
+2020-08-20 20:47:49,945 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-85
+2020-08-20 20:47:49,945 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-86
+2020-08-20 20:47:49,946 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-88
+2020-08-20 20:47:49,946 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-90
+2020-08-20 20:47:49,946 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-89
+2020-08-20 20:47:49,947 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-91
+2020-08-20 20:47:49,947 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-25
+2020-08-20 20:47:49,947 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-58
+2020-08-20 20:47:49,948 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-74
+2020-08-20 20:47:49,948 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-75
+2020-08-20 20:47:49,948 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-76
+2020-08-20 20:47:49,939 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-6
+2020-08-20 20:47:49,949 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-24
+2020-08-20 20:47:49,950 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-118
+2020-08-20 20:47:49,957 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-103
+2020-08-20 20:47:49,958 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-105
+2020-08-20 20:47:49,959 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-117
+2020-08-20 20:47:49,963 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-109
+2020-08-20 20:47:49,964 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-119
+2020-08-20 20:47:49,966 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-70
+2020-08-20 20:47:49,968 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-69
+2020-08-20 20:47:49,969 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-71
+2020-08-20 20:47:49,969 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-11
+2020-08-20 20:47:49,972 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-72
+2020-08-20 20:47:49,984 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-107
+2020-08-20 20:47:49,985 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-22
+2020-08-20 20:47:49,986 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-68
+2020-08-20 20:47:49,988 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-32
+2020-08-20 20:47:49,990 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-67
+2020-08-20 20:47:49,990 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-16
+2020-08-20 20:47:49,993 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-111
+2020-08-20 20:47:49,994 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-113
+2020-08-20 20:47:49,995 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-36
+2020-08-20 20:47:49,996 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-65
+2020-08-20 20:47:49,998 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-13
+2020-08-20 20:47:49,999 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-66
+2020-08-20 20:47:50,000 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-122
+2020-08-20 20:47:50,000 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-64
+2020-08-20 20:47:50,002 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-56
+2020-08-20 20:47:50,004 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-61
+2020-08-20 20:47:50,005 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-62
+2020-08-20 20:47:50,006 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-63
+2020-08-20 20:47:50,009 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-92
+2020-08-20 20:47:50,010 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-51
+2020-08-20 20:47:50,011 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-4
+2020-08-20 20:47:50,015 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-155
+2020-08-20 20:47:50,016 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-15
+2020-08-20 20:47:50,017 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-156
+2020-08-20 20:47:50,017 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-157
+2020-08-20 20:47:50,018 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-158
+2020-08-20 20:47:50,019 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-159
+2020-08-20 20:47:50,020 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-160
+2020-08-20 20:47:50,021 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-161
+2020-08-20 20:47:50,021 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-162
+2020-08-20 20:47:50,022 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-163
+2020-08-20 20:47:50,023 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-164
+2020-08-20 20:47:50,023 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-165
+2020-08-20 20:47:50,024 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-166
+2020-08-20 20:47:50,025 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-167
+2020-08-20 20:47:50,026 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-168
+2020-08-20 20:47:50,026 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-123
+2020-08-20 20:47:50,027 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-38
+2020-08-20 20:47:50,028 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-169
+2020-08-20 20:47:50,029 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-48
+2020-08-20 20:47:50,030 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-40
+2020-08-20 20:47:50,030 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-170
+2020-08-20 20:47:50,031 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-1
+2020-08-20 20:47:50,031 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-124
+2020-08-20 20:47:50,032 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-171
+2020-08-20 20:47:50,033 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-93
+2020-08-20 20:47:50,033 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-5
+2020-08-20 20:47:50,034 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-172
+2020-08-20 20:47:50,035 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-30
+2020-08-20 20:47:50,035 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-9
+2020-08-20 20:47:50,037 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-31
+2020-08-20 20:47:50,038 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-173
+2020-08-20 20:47:50,038 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-12
+2020-08-20 20:47:50,039 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-174
+2020-08-20 20:47:50,039 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-27
+2020-08-20 20:47:50,040 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-33
+2020-08-20 20:47:50,042 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-10
+2020-08-20 20:47:50,042 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-19
+2020-08-20 20:47:50,043 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-125
+2020-08-20 20:47:50,045 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-14
+2020-08-20 20:47:50,045 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-175
+2020-08-20 20:47:50,046 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-110
+2020-08-20 20:47:50,047 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-34
+2020-08-20 20:47:50,049 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-59
+2020-08-20 20:47:50,051 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-176
+2020-08-20 20:47:50,051 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-26
+2020-08-20 20:47:50,052 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-126
+2020-08-20 20:47:50,052 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-177
+2020-08-20 20:47:50,054 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-17
+2020-08-20 20:47:50,054 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-23
+2020-08-20 20:47:50,055 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-178
+2020-08-20 20:47:50,056 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-7
+2020-08-20 20:47:50,056 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-3
+2020-08-20 20:47:50,057 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-127
+2020-08-20 20:47:50,057 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-39
+2020-08-20 20:47:50,059 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-128
+2020-08-20 20:47:50,059 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-129
+2020-08-20 20:47:50,060 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-130
+2020-08-20 20:47:50,062 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-131
+2020-08-20 20:47:50,062 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-179
+2020-08-20 20:47:50,062 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-132
+2020-08-20 20:47:50,063 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-180
+2020-08-20 20:47:50,064 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-133
+2020-08-20 20:47:50,066 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-181
+2020-08-20 20:47:50,068 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-182
+2020-08-20 20:47:50,069 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-134
+2020-08-20 20:47:50,070 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-141
+2020-08-20 20:47:50,070 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-120
+2020-08-20 20:47:50,070 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-149
+2020-08-20 20:47:50,070 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-148
+2020-08-20 20:47:50,070 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-151
+2020-08-20 20:47:50,071 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-153
+2020-08-20 20:47:50,071 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-146
+2020-08-20 20:47:50,071 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-144
+2020-08-20 20:47:50,071 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-154
+2020-08-20 20:47:50,071 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-152
+2020-08-20 20:47:50,072 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-145
+2020-08-20 20:47:50,072 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-142
+2020-08-20 20:47:50,072 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-121
+2020-08-20 20:47:50,072 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-136
+2020-08-20 20:47:50,073 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-139
+2020-08-20 20:47:50,073 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-137
+2020-08-20 20:47:50,073 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-143
+2020-08-20 20:47:50,073 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-147
+2020-08-20 20:47:50,074 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-135
+2020-08-20 20:47:50,074 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-150
+2020-08-20 20:47:50,074 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-138
+2020-08-20 20:47:50,074 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-140
+2020-08-20 20:47:50,075 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-183
+2020-08-20 20:47:50,076 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-42
+2020-08-20 20:47:50,077 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-8
+2020-08-20 20:47:50,078 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-101
+2020-08-20 20:47:50,078 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-102
+2020-08-20 20:47:50,077 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-99
+2020-08-20 20:47:50,079 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-98
+2020-08-20 20:47:50,079 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-96
+2020-08-20 20:47:50,079 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-108
+2020-08-20 20:47:50,080 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-100
+2020-08-20 20:47:50,080 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-94
+2020-08-20 20:47:50,081 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-95
+2020-08-20 20:47:50,081 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-97
+2020-08-20 20:47:50,081 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-73
+2020-08-20 20:47:50,083 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-114
+2020-08-20 20:47:50,083 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-116
+2020-08-20 20:47:50,083 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-115
+2020-08-20 20:47:50,082 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-28
+2020-08-20 20:47:50,096 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-184
+2020-08-20 20:47:50,122 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-185
+2020-08-20 20:47:50,127 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-186
+2020-08-20 20:47:50,132 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-187
+2020-08-20 20:47:50,136 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-188
+2020-08-20 20:47:50,141 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-189
+2020-08-20 20:47:50,143 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-190
+2020-08-20 20:47:50,145 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-191
+2020-08-20 20:47:50,148 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-192
+2020-08-20 20:47:50,150 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-193
+2020-08-20 20:47:50,151 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-194
+2020-08-20 20:47:50,153 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-195
+2020-08-20 20:47:50,154 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-196
+2020-08-20 20:47:50,154 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-197
+2020-08-20 20:47:50,155 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-198
+2020-08-20 20:47:50,156 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-199
+2020-08-20 20:47:50,157 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-200
+2020-08-20 20:47:50,159 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-201
+2020-08-20 20:47:50,160 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-202
+2020-08-20 20:47:50,161 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-203
+2020-08-20 20:47:50,162 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-204
+2020-08-20 20:47:50,163 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-205
+2020-08-20 20:47:50,163 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-206
+2020-08-20 20:47:50,164 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-207
+2020-08-20 20:47:50,165 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-208
+2020-08-20 20:47:50,166 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-209
+2020-08-20 20:47:50,167 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-210
+2020-08-20 20:47:50,168 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-211
+2020-08-20 20:47:50,168 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-212
+2020-08-20 20:47:50,169 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-213
+2020-08-20 20:47:50,169 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-214
+2020-08-20 20:47:50,170 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-215
+2020-08-20 20:47:50,171 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-216
+2020-08-20 20:47:50,172 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-217
+2020-08-20 20:47:50,172 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-218
+2020-08-20 20:47:50,173 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-219
+2020-08-20 20:47:50,174 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-220
+2020-08-20 20:47:50,175 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-221
+2020-08-20 20:47:50,175 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-222
+2020-08-20 20:47:50,176 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-223
+2020-08-20 20:47:50,177 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-224
+2020-08-20 20:47:50,178 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-225
+2020-08-20 20:47:50,178 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-226
+2020-08-20 20:47:50,180 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-227
+2020-08-20 20:47:50,181 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-228
+2020-08-20 20:47:50,182 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-229
+2020-08-20 20:47:50,183 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-230
+2020-08-20 20:47:50,184 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-231
+2020-08-20 20:47:50,186 INFO o.a.j.p.h.s.HTTPHCAbstractImpl: Local host = ZBMAC-C02PGMT0F.local
+2020-08-20 20:47:50,186 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-232
+2020-08-20 20:47:50,187 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-233
+2020-08-20 20:47:50,188 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-234
+2020-08-20 20:47:50,190 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-235
+2020-08-20 20:47:50,191 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-236
+2020-08-20 20:47:50,193 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-237
+2020-08-20 20:47:50,195 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-238
+2020-08-20 20:47:50,196 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-239
+2020-08-20 20:47:50,198 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-240
+2020-08-20 20:47:50,199 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-241
+2020-08-20 20:47:50,200 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-242
+2020-08-20 20:47:50,201 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-243
+2020-08-20 20:47:50,202 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-244
+2020-08-20 20:47:50,204 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-245
+2020-08-20 20:47:50,206 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-246
+2020-08-20 20:47:50,208 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-247
+2020-08-20 20:47:50,210 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-248
+2020-08-20 20:47:50,212 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-249
+2020-08-20 20:47:50,213 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-250
+2020-08-20 20:47:50,214 INFO o.a.j.p.h.s.HTTPHC4Impl: HTTP request retry count = 0
+2020-08-20 20:47:50,215 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-251
+2020-08-20 20:47:50,216 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-252
+2020-08-20 20:47:50,218 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2020-08-20 20:47:50,218 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to ISO-8859-1
+2020-08-20 20:47:50,219 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2020-08-20 20:47:50,219 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2020-08-20 20:47:50,226 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-253
+2020-08-20 20:47:50,227 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-254
+2020-08-20 20:47:50,229 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-255
+2020-08-20 20:47:50,231 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-256
+2020-08-20 20:47:50,232 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-257
+2020-08-20 20:47:50,235 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-258
+2020-08-20 20:47:50,238 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-259
+2020-08-20 20:47:50,239 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-260
+2020-08-20 20:47:50,243 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-261
+2020-08-20 20:47:50,244 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-262
+2020-08-20 20:47:50,246 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-263
+2020-08-20 20:47:50,247 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-264
+2020-08-20 20:47:50,248 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-265
+2020-08-20 20:47:50,249 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-266
+2020-08-20 20:47:50,251 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-267
+2020-08-20 20:47:50,252 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-268
+2020-08-20 20:47:50,252 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-269
+2020-08-20 20:47:50,253 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-270
+2020-08-20 20:47:50,254 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-271
+2020-08-20 20:47:50,255 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-272
+2020-08-20 20:47:50,256 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-273
+2020-08-20 20:47:50,257 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-274
+2020-08-20 20:47:50,259 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-275
+2020-08-20 20:47:50,260 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-276
+2020-08-20 20:47:50,261 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-277
+2020-08-20 20:47:50,263 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-278
+2020-08-20 20:47:50,264 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-279
+2020-08-20 20:47:50,265 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-280
+2020-08-20 20:47:50,265 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-281
+2020-08-20 20:47:50,266 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-282
+2020-08-20 20:47:50,267 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-283
+2020-08-20 20:47:50,269 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-284
+2020-08-20 20:47:50,271 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-285
+2020-08-20 20:47:50,273 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-286
+2020-08-20 20:47:50,275 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-287
+2020-08-20 20:47:50,276 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-288
+2020-08-20 20:47:50,278 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-289
+2020-08-20 20:47:50,279 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-290
+2020-08-20 20:47:50,280 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-291
+2020-08-20 20:47:50,317 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-292
+2020-08-20 20:47:50,318 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-293
+2020-08-20 20:47:50,319 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-294
+2020-08-20 20:47:50,319 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-295
+2020-08-20 20:47:50,335 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-296
+2020-08-20 20:47:50,336 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-297
+2020-08-20 20:47:50,335 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-298
+2020-08-20 20:47:50,338 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-299
+2020-08-20 20:47:50,341 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-300
+2020-08-20 20:47:50,342 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-301
+2020-08-20 20:47:50,342 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-302
+2020-08-20 20:47:50,344 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-303
+2020-08-20 20:47:50,345 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-304
+2020-08-20 20:47:50,345 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-305
+2020-08-20 20:47:50,346 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-306
+2020-08-20 20:47:50,346 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-307
+2020-08-20 20:47:50,347 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-308
+2020-08-20 20:47:50,348 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-309
+2020-08-20 20:47:50,352 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-310
+2020-08-20 20:47:50,354 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-311
+2020-08-20 20:47:50,354 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-312
+2020-08-20 20:47:50,402 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-313
+2020-08-20 20:47:50,403 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-314
+2020-08-20 20:47:50,404 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-315
+2020-08-20 20:47:50,405 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-316
+2020-08-20 20:47:50,407 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-317
+2020-08-20 20:47:50,408 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-318
+2020-08-20 20:47:50,409 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-319
+2020-08-20 20:47:50,416 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-320
+2020-08-20 20:47:50,443 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-321
+2020-08-20 20:47:50,443 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-322
+2020-08-20 20:47:50,444 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-323
+2020-08-20 20:47:50,444 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-324
+2020-08-20 20:47:50,445 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-325
+2020-08-20 20:47:50,445 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-326
+2020-08-20 20:47:50,446 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-327
+2020-08-20 20:47:50,447 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-328
+2020-08-20 20:47:50,448 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-329
+2020-08-20 20:47:50,448 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-330
+2020-08-20 20:47:50,449 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-331
+2020-08-20 20:47:50,450 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-332
+2020-08-20 20:47:50,453 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-333
+2020-08-20 20:47:50,457 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-334
+2020-08-20 20:47:50,459 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-335
+2020-08-20 20:47:50,460 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-336
+2020-08-20 20:47:50,461 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-337
+2020-08-20 20:47:50,461 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-338
+2020-08-20 20:47:50,462 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-339
+2020-08-20 20:47:50,463 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-340
+2020-08-20 20:47:50,464 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-341
+2020-08-20 20:47:50,466 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-342
+2020-08-20 20:47:50,469 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-343
+2020-08-20 20:47:50,470 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-344
+2020-08-20 20:47:50,476 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-345
+2020-08-20 20:47:50,479 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-346
+2020-08-20 20:47:50,479 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-347
+2020-08-20 20:47:50,480 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-348
+2020-08-20 20:47:50,481 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-349
+2020-08-20 20:47:50,482 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-350
+2020-08-20 20:47:50,483 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-351
+2020-08-20 20:47:50,492 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-352
+2020-08-20 20:47:50,494 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-353
+2020-08-20 20:47:50,495 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-354
+2020-08-20 20:47:50,496 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-355
+2020-08-20 20:47:50,497 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-356
+2020-08-20 20:47:50,498 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-357
+2020-08-20 20:47:50,499 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-358
+2020-08-20 20:47:50,499 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-359
+2020-08-20 20:47:50,500 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-360
+2020-08-20 20:47:50,501 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-361
+2020-08-20 20:47:50,502 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-362
+2020-08-20 20:47:50,504 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-363
+2020-08-20 20:47:50,504 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-364
+2020-08-20 20:47:50,506 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-365
+2020-08-20 20:47:50,507 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-366
+2020-08-20 20:47:50,508 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-367
+2020-08-20 20:47:50,510 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-368
+2020-08-20 20:47:50,512 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-369
+2020-08-20 20:47:50,513 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-370
+2020-08-20 20:47:50,527 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-371
+2020-08-20 20:47:50,527 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-372
+2020-08-20 20:47:50,528 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-373
+2020-08-20 20:47:50,529 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-374
+2020-08-20 20:47:50,530 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-375
+2020-08-20 20:47:50,530 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-376
+2020-08-20 20:47:50,531 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-377
+2020-08-20 20:47:50,531 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-378
+2020-08-20 20:47:50,533 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-379
+2020-08-20 20:47:50,535 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-380
+2020-08-20 20:47:50,536 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-381
+2020-08-20 20:47:50,537 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-382
+2020-08-20 20:47:50,539 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-383
+2020-08-20 20:47:50,542 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-384
+2020-08-20 20:47:50,544 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-385
+2020-08-20 20:47:50,556 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-386
+2020-08-20 20:47:50,557 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-387
+2020-08-20 20:47:50,558 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-388
+2020-08-20 20:47:50,559 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-389
+2020-08-20 20:47:50,560 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-390
+2020-08-20 20:47:50,561 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-391
+2020-08-20 20:47:50,562 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-392
+2020-08-20 20:47:50,563 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-393
+2020-08-20 20:47:50,564 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-394
+2020-08-20 20:47:50,566 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-395
+2020-08-20 20:47:50,567 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-396
+2020-08-20 20:47:50,568 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-397
+2020-08-20 20:47:50,571 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-398
+2020-08-20 20:47:50,572 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-399
+2020-08-20 20:47:50,573 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-400
+2020-08-20 20:47:50,573 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-401
+2020-08-20 20:47:50,575 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-402
+2020-08-20 20:47:50,577 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-403
+2020-08-20 20:47:50,578 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-404
+2020-08-20 20:47:50,580 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-405
+2020-08-20 20:47:50,627 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-406
+2020-08-20 20:47:50,630 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-407
+2020-08-20 20:47:50,630 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-408
+2020-08-20 20:47:50,631 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-409
+2020-08-20 20:47:50,633 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-410
+2020-08-20 20:47:50,648 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-411
+2020-08-20 20:47:50,657 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-412
+2020-08-20 20:47:50,693 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-413
+2020-08-20 20:47:50,696 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-414
+2020-08-20 20:47:50,696 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-415
+2020-08-20 20:47:50,698 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-416
+2020-08-20 20:47:50,698 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-417
+2020-08-20 20:47:50,700 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-418
+2020-08-20 20:47:50,701 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-419
+2020-08-20 20:47:50,702 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-420
+2020-08-20 20:47:50,703 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-421
+2020-08-20 20:47:50,704 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-422
+2020-08-20 20:47:50,705 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-423
+2020-08-20 20:47:50,710 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-424
+2020-08-20 20:47:50,710 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-425
+2020-08-20 20:47:50,718 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-426
+2020-08-20 20:47:50,720 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-427
+2020-08-20 20:47:50,720 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-428
+2020-08-20 20:47:50,723 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-429
+2020-08-20 20:47:50,726 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-430
+2020-08-20 20:47:50,736 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-431
+2020-08-20 20:47:50,737 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-432
+2020-08-20 20:47:50,773 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-433
+2020-08-20 20:47:50,774 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-434
+2020-08-20 20:47:50,776 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-435
+2020-08-20 20:47:50,777 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-436
+2020-08-20 20:47:50,778 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-437
+2020-08-20 20:47:50,780 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-438
+2020-08-20 20:47:50,780 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-439
+2020-08-20 20:47:50,782 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-440
+2020-08-20 20:47:50,783 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-441
+2020-08-20 20:47:50,784 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-442
+2020-08-20 20:47:50,786 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-443
+2020-08-20 20:47:50,807 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-444
+2020-08-20 20:47:50,816 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-445
+2020-08-20 20:47:50,818 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-446
+2020-08-20 20:47:50,821 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-447
+2020-08-20 20:47:50,824 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-448
+2020-08-20 20:47:50,827 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-449
+2020-08-20 20:47:50,831 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-450
+2020-08-20 20:47:50,840 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-451
+2020-08-20 20:47:50,842 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-452
+2020-08-20 20:47:50,844 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-453
+2020-08-20 20:47:50,855 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-454
+2020-08-20 20:47:50,857 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-455
+2020-08-20 20:47:50,859 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-456
+2020-08-20 20:47:50,859 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-457
+2020-08-20 20:47:50,862 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-458
+2020-08-20 20:47:50,864 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-459
+2020-08-20 20:47:50,867 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-460
+2020-08-20 20:47:50,870 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-461
+2020-08-20 20:47:50,875 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-462
+2020-08-20 20:47:50,905 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-463
+2020-08-20 20:47:50,906 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-464
+2020-08-20 20:47:50,908 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-465
+2020-08-20 20:47:50,910 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-466
+2020-08-20 20:47:50,912 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-467
+2020-08-20 20:47:50,913 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-468
+2020-08-20 20:47:50,915 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-469
+2020-08-20 20:47:50,918 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-470
+2020-08-20 20:47:50,919 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-471
+2020-08-20 20:47:50,921 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-472
+2020-08-20 20:47:50,922 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-473
+2020-08-20 20:47:50,924 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-474
+2020-08-20 20:47:50,926 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-475
+2020-08-20 20:47:50,927 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-476
+2020-08-20 20:47:50,929 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-477
+2020-08-20 20:47:50,930 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-478
+2020-08-20 20:47:50,932 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-479
+2020-08-20 20:47:50,935 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-480
+2020-08-20 20:47:50,936 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-481
+2020-08-20 20:47:50,938 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-482
+2020-08-20 20:47:50,939 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-483
+2020-08-20 20:47:50,942 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-484
+2020-08-20 20:47:50,952 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-485
+2020-08-20 20:47:50,956 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-486
+2020-08-20 20:47:50,959 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-487
+2020-08-20 20:47:50,960 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-488
+2020-08-20 20:47:50,962 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-489
+2020-08-20 20:47:50,963 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-490
+2020-08-20 20:47:50,966 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-491
+2020-08-20 20:47:50,966 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-492
+2020-08-20 20:47:50,967 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-493
+2020-08-20 20:47:50,967 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-494
+2020-08-20 20:47:50,969 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-495
+2020-08-20 20:47:50,969 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-496
+2020-08-20 20:47:50,970 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-497
+2020-08-20 20:47:50,970 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-498
+2020-08-20 20:47:50,972 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-499
+2020-08-20 20:47:50,974 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2020-08-20 20:47:50,974 INFO o.a.j.t.JMeterThread: Thread started: 线程组 1-500
+2020-08-20 20:47:50,975 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2020-08-20 20:48:01,138 INFO o.a.j.r.Summariser: summary +      1 in 00:00:11 =    0.1/s Avg: 10328 Min: 10328 Max: 10328 Err:     0 (0.00%) Active: 500 Started: 500 Finished: 0
+2020-08-20 20:48:30,006 INFO o.a.j.r.Summariser: summary +  14039 in 00:00:29 =  486.4/s Avg:  1332 Min:     7 Max: 11300 Err:     0 (0.00%) Active: 500 Started: 500 Finished: 0
+2020-08-20 20:48:30,007 INFO o.a.j.r.Summariser: summary =  14040 in 00:00:40 =  348.2/s Avg:  1332 Min:     7 Max: 11300 Err:     0 (0.00%)
+2020-08-20 20:49:00,523 INFO o.a.j.r.Summariser: summary +  13189 in 00:00:31 =  432.2/s Avg:  1131 Min:     7 Max:  9600 Err:     0 (0.00%) Active: 500 Started: 500 Finished: 0
+2020-08-20 20:49:00,524 INFO o.a.j.r.Summariser: summary =  27229 in 00:01:11 =  384.4/s Avg:  1235 Min:     7 Max: 11300 Err:     0 (0.00%)
+2020-08-20 20:49:30,004 INFO o.a.j.r.Summariser: summary +  13369 in 00:00:29 =  453.5/s Avg:  1150 Min:     7 Max: 11278 Err:     0 (0.00%) Active: 500 Started: 500 Finished: 0
+2020-08-20 20:49:30,005 INFO o.a.j.r.Summariser: summary =  40598 in 00:01:40 =  404.7/s Avg:  1207 Min:     7 Max: 11300 Err:     0 (0.00%)
+2020-08-20 20:50:00,030 INFO o.a.j.r.Summariser: summary +  12969 in 00:00:30 =  431.9/s Avg:  1123 Min:     7 Max:  8532 Err:     0 (0.00%) Active: 500 Started: 500 Finished: 0
+2020-08-20 20:50:00,032 INFO o.a.j.r.Summariser: summary =  53567 in 00:02:10 =  411.0/s Avg:  1186 Min:     7 Max: 11300 Err:     0 (0.00%)
+2020-08-20 20:50:30,882 INFO o.a.j.r.Summariser: summary +  15892 in 00:00:31 =  515.1/s Avg:   959 Min:     7 Max: 10510 Err:     0 (0.00%) Active: 500 Started: 500 Finished: 0
+2020-08-20 20:50:30,884 INFO o.a.j.r.Summariser: summary =  69459 in 00:02:41 =  430.9/s Avg:  1134 Min:     7 Max: 11300 Err:     0 (0.00%)
+2020-08-20 20:50:40,895 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-118
+2020-08-20 20:50:40,896 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-118
+2020-08-20 20:50:41,360 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-121
+2020-08-20 20:50:41,361 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-121
+2020-08-20 20:50:43,960 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-272
+2020-08-20 20:50:43,961 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-272
+2020-08-20 20:50:44,919 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-274
+2020-08-20 20:50:44,920 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-274
+2020-08-20 20:50:47,049 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-95
+2020-08-20 20:50:47,050 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-95
+2020-08-20 20:50:49,593 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-351
+2020-08-20 20:50:49,597 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-351
+2020-08-20 20:50:51,041 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-364
+2020-08-20 20:50:51,043 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-364
+2020-08-20 20:50:51,355 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-253
+2020-08-20 20:50:51,355 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-253
+2020-08-20 20:50:53,248 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-27
+2020-08-20 20:50:53,248 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-27
+2020-08-20 20:50:56,610 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-124
+2020-08-20 20:50:56,610 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-124
+2020-08-20 20:50:57,153 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-378
+2020-08-20 20:50:57,153 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-378
+2020-08-20 20:50:57,344 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-494
+2020-08-20 20:50:57,344 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-494
+2020-08-20 20:50:58,361 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-90
+2020-08-20 20:50:58,362 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-90
+2020-08-20 20:50:58,730 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-415
+2020-08-20 20:50:58,730 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-415
+2020-08-20 20:50:59,063 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-88
+2020-08-20 20:50:59,064 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-88
+2020-08-20 20:50:59,162 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-199
+2020-08-20 20:50:59,162 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-199
+2020-08-20 20:50:59,353 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-39
+2020-08-20 20:50:59,354 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-39
+2020-08-20 20:50:59,358 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-211
+2020-08-20 20:50:59,358 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-211
+2020-08-20 20:50:59,718 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-55
+2020-08-20 20:50:59,718 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-55
+2020-08-20 20:51:00,358 INFO o.a.j.r.Summariser: summary +  14351 in 00:00:29 =  486.9/s Avg:  1048 Min:     7 Max: 12102 Err:     0 (0.00%) Active: 481 Started: 500 Finished: 19
+2020-08-20 20:51:00,360 INFO o.a.j.r.Summariser: summary =  83810 in 00:03:11 =  439.5/s Avg:  1120 Min:     7 Max: 12102 Err:     0 (0.00%)
+2020-08-20 20:51:00,502 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-173
+2020-08-20 20:51:00,502 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-173
+2020-08-20 20:51:00,547 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-233
+2020-08-20 20:51:00,547 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-233
+2020-08-20 20:51:00,548 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-421
+2020-08-20 20:51:00,549 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-421
+2020-08-20 20:51:00,754 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-8
+2020-08-20 20:51:00,755 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-8
+2020-08-20 20:51:01,379 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-170
+2020-08-20 20:51:01,380 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-170
+2020-08-20 20:51:02,954 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-316
+2020-08-20 20:51:02,954 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-316
+2020-08-20 20:51:03,181 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-291
+2020-08-20 20:51:03,182 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-291
+2020-08-20 20:51:03,386 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-50
+2020-08-20 20:51:03,387 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-50
+2020-08-20 20:51:03,553 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-350
+2020-08-20 20:51:03,553 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-350
+2020-08-20 20:51:03,689 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-92
+2020-08-20 20:51:03,689 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-92
+2020-08-20 20:51:03,718 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-270
+2020-08-20 20:51:03,719 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-270
+2020-08-20 20:51:04,861 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-406
+2020-08-20 20:51:04,861 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-406
+2020-08-20 20:51:05,026 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-449
+2020-08-20 20:51:05,028 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-449
+2020-08-20 20:51:05,758 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-467
+2020-08-20 20:51:05,759 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-467
+2020-08-20 20:51:06,045 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-314
+2020-08-20 20:51:06,045 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-314
+2020-08-20 20:51:06,148 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-192
+2020-08-20 20:51:06,148 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-192
+2020-08-20 20:51:06,166 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-382
+2020-08-20 20:51:06,166 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-382
+2020-08-20 20:51:06,760 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-399
+2020-08-20 20:51:06,760 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-399
+2020-08-20 20:51:06,950 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-376
+2020-08-20 20:51:06,951 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-376
+2020-08-20 20:51:06,951 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-251
+2020-08-20 20:51:06,951 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-251
+2020-08-20 20:51:07,022 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-217
+2020-08-20 20:51:07,023 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-217
+2020-08-20 20:51:07,098 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-145
+2020-08-20 20:51:07,098 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-145
+2020-08-20 20:51:07,151 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-153
+2020-08-20 20:51:07,151 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-153
+2020-08-20 20:51:07,259 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-87
+2020-08-20 20:51:07,259 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-87
+2020-08-20 20:51:07,358 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-38
+2020-08-20 20:51:07,358 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-38
+2020-08-20 20:51:07,360 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-265
+2020-08-20 20:51:07,360 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-265
+2020-08-20 20:51:08,362 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-323
+2020-08-20 20:51:08,362 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-323
+2020-08-20 20:51:08,477 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-486
+2020-08-20 20:51:08,478 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-486
+2020-08-20 20:51:08,646 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-277
+2020-08-20 20:51:08,646 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-277
+2020-08-20 20:51:08,693 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-320
+2020-08-20 20:51:08,693 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-320
+2020-08-20 20:51:09,090 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-165
+2020-08-20 20:51:09,092 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-165
+2020-08-20 20:51:09,096 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-463
+2020-08-20 20:51:09,096 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-463
+2020-08-20 20:51:09,158 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-203
+2020-08-20 20:51:09,158 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-203
+2020-08-20 20:51:09,344 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-485
+2020-08-20 20:51:09,344 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-485
+2020-08-20 20:51:09,495 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-37
+2020-08-20 20:51:09,495 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-37
+2020-08-20 20:51:09,548 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-208
+2020-08-20 20:51:09,548 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-208
+2020-08-20 20:51:09,594 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-370
+2020-08-20 20:51:09,594 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-370
+2020-08-20 20:51:09,846 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-19
+2020-08-20 20:51:09,846 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-19
+2020-08-20 20:51:09,990 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-292
+2020-08-20 20:51:09,990 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-292
+2020-08-20 20:51:10,145 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-420
+2020-08-20 20:51:10,146 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-420
+2020-08-20 20:51:10,255 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-43
+2020-08-20 20:51:10,256 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-43
+2020-08-20 20:51:10,296 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-65
+2020-08-20 20:51:10,296 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-65
+2020-08-20 20:51:10,591 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-142
+2020-08-20 20:51:10,591 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-142
+2020-08-20 20:51:10,978 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-423
+2020-08-20 20:51:10,978 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-423
+2020-08-20 20:51:11,183 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-495
+2020-08-20 20:51:11,184 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-495
+2020-08-20 20:51:11,346 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-215
+2020-08-20 20:51:11,346 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-215
+2020-08-20 20:51:11,575 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-456
+2020-08-20 20:51:11,575 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-456
+2020-08-20 20:51:11,580 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-206
+2020-08-20 20:51:11,580 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-206
+2020-08-20 20:51:11,583 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-490
+2020-08-20 20:51:11,584 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-490
+2020-08-20 20:51:11,598 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-174
+2020-08-20 20:51:11,598 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-174
+2020-08-20 20:51:11,677 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-159
+2020-08-20 20:51:11,678 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-159
+2020-08-20 20:51:11,842 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-189
+2020-08-20 20:51:11,843 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-189
+2020-08-20 20:51:11,848 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-59
+2020-08-20 20:51:11,848 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-59
+2020-08-20 20:51:11,948 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-216
+2020-08-20 20:51:11,948 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-216
+2020-08-20 20:51:11,968 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-63
+2020-08-20 20:51:11,968 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-63
+2020-08-20 20:51:12,948 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-149
+2020-08-20 20:51:12,948 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-149
+2020-08-20 20:51:12,950 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-330
+2020-08-20 20:51:12,950 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-330
+2020-08-20 20:51:13,051 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-338
+2020-08-20 20:51:13,051 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-338
+2020-08-20 20:51:13,051 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-400
+2020-08-20 20:51:13,052 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-400
+2020-08-20 20:51:13,092 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-36
+2020-08-20 20:51:13,092 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-36
+2020-08-20 20:51:13,093 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-41
+2020-08-20 20:51:13,093 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-41
+2020-08-20 20:51:13,114 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-452
+2020-08-20 20:51:13,114 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-452
+2020-08-20 20:51:13,186 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-5
+2020-08-20 20:51:13,186 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-5
+2020-08-20 20:51:13,244 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-261
+2020-08-20 20:51:13,244 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-261
+2020-08-20 20:51:13,307 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-135
+2020-08-20 20:51:13,308 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-135
+2020-08-20 20:51:13,345 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-56
+2020-08-20 20:51:13,345 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-56
+2020-08-20 20:51:13,347 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-478
+2020-08-20 20:51:13,348 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-478
+2020-08-20 20:51:13,702 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-178
+2020-08-20 20:51:13,702 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-178
+2020-08-20 20:51:13,782 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-375
+2020-08-20 20:51:13,782 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-375
+2020-08-20 20:51:13,848 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-433
+2020-08-20 20:51:13,848 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-433
+2020-08-20 20:51:13,898 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-497
+2020-08-20 20:51:13,898 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-497
+2020-08-20 20:51:14,072 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-235
+2020-08-20 20:51:14,073 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-235
+2020-08-20 20:51:14,076 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-117
+2020-08-20 20:51:14,076 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-117
+2020-08-20 20:51:14,250 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-469
+2020-08-20 20:51:14,251 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-469
+2020-08-20 20:51:14,475 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-71
+2020-08-20 20:51:14,476 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-71
+2020-08-20 20:51:14,814 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-15
+2020-08-20 20:51:14,814 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-15
+2020-08-20 20:51:14,868 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-52
+2020-08-20 20:51:14,868 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-52
+2020-08-20 20:51:15,005 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-352
+2020-08-20 20:51:15,005 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-352
+2020-08-20 20:51:15,018 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-340
+2020-08-20 20:51:15,018 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-340
+2020-08-20 20:51:15,109 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-78
+2020-08-20 20:51:15,109 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-78
+2020-08-20 20:51:15,119 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-186
+2020-08-20 20:51:15,119 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-186
+2020-08-20 20:51:15,153 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-393
+2020-08-20 20:51:15,153 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-393
+2020-08-20 20:51:15,155 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-225
+2020-08-20 20:51:15,155 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-225
+2020-08-20 20:51:15,217 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-161
+2020-08-20 20:51:15,217 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-161
+2020-08-20 20:51:15,239 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-345
+2020-08-20 20:51:15,239 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-345
+2020-08-20 20:51:15,246 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-125
+2020-08-20 20:51:15,246 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-125
+2020-08-20 20:51:15,255 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-392
+2020-08-20 20:51:15,256 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-392
+2020-08-20 20:51:15,256 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-12
+2020-08-20 20:51:15,256 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-12
+2020-08-20 20:51:15,256 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-496
+2020-08-20 20:51:15,256 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-496
+2020-08-20 20:51:15,281 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-318
+2020-08-20 20:51:15,281 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-318
+2020-08-20 20:51:15,287 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-147
+2020-08-20 20:51:15,287 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-147
+2020-08-20 20:51:15,301 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-422
+2020-08-20 20:51:15,301 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-422
+2020-08-20 20:51:15,349 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-269
+2020-08-20 20:51:15,349 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-269
+2020-08-20 20:51:15,446 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-110
+2020-08-20 20:51:15,446 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-110
+2020-08-20 20:51:15,448 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-381
+2020-08-20 20:51:15,448 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-381
+2020-08-20 20:51:15,506 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-459
+2020-08-20 20:51:15,506 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-459
+2020-08-20 20:51:15,749 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-148
+2020-08-20 20:51:15,750 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-148
+2020-08-20 20:51:15,841 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-302
+2020-08-20 20:51:15,841 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-302
+2020-08-20 20:51:16,216 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-402
+2020-08-20 20:51:16,216 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-402
+2020-08-20 20:51:16,258 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-143
+2020-08-20 20:51:16,258 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-143
+2020-08-20 20:51:16,324 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-284
+2020-08-20 20:51:16,324 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-284
+2020-08-20 20:51:16,341 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-213
+2020-08-20 20:51:16,341 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-213
+2020-08-20 20:51:16,346 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-152
+2020-08-20 20:51:16,346 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-152
+2020-08-20 20:51:16,348 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-100
+2020-08-20 20:51:16,348 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-100
+2020-08-20 20:51:16,448 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-266
+2020-08-20 20:51:16,448 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-266
+2020-08-20 20:51:16,490 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-180
+2020-08-20 20:51:16,490 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-180
+2020-08-20 20:51:16,646 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-120
+2020-08-20 20:51:16,646 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-120
+2020-08-20 20:51:16,651 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-209
+2020-08-20 20:51:16,651 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-209
+2020-08-20 20:51:16,771 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-313
+2020-08-20 20:51:16,771 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-313
+2020-08-20 20:51:16,841 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-299
+2020-08-20 20:51:16,842 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-299
+2020-08-20 20:51:17,997 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-212
+2020-08-20 20:51:17,998 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-212
+2020-08-20 20:51:18,051 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-255
+2020-08-20 20:51:18,051 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-255
+2020-08-20 20:51:18,051 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-337
+2020-08-20 20:51:18,051 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-337
+2020-08-20 20:51:18,147 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-294
+2020-08-20 20:51:18,147 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-294
+2020-08-20 20:51:18,187 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-308
+2020-08-20 20:51:18,187 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-308
+2020-08-20 20:51:18,243 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-231
+2020-08-20 20:51:18,243 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-231
+2020-08-20 20:51:18,289 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-70
+2020-08-20 20:51:18,289 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-70
+2020-08-20 20:51:18,340 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-440
+2020-08-20 20:51:18,340 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-440
+2020-08-20 20:51:18,455 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-138
+2020-08-20 20:51:18,455 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-138
+2020-08-20 20:51:18,542 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-333
+2020-08-20 20:51:18,542 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-333
+2020-08-20 20:51:18,551 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-144
+2020-08-20 20:51:18,551 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-144
+2020-08-20 20:51:18,609 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-228
+2020-08-20 20:51:18,609 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-228
+2020-08-20 20:51:18,819 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-283
+2020-08-20 20:51:18,819 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-283
+2020-08-20 20:51:18,943 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-493
+2020-08-20 20:51:18,943 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-493
+2020-08-20 20:51:18,949 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-436
+2020-08-20 20:51:18,949 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-436
+2020-08-20 20:51:19,042 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-9
+2020-08-20 20:51:19,042 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-9
+2020-08-20 20:51:19,247 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-155
+2020-08-20 20:51:19,247 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-155
+2020-08-20 20:51:19,248 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-443
+2020-08-20 20:51:19,248 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-443
+2020-08-20 20:51:19,410 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-390
+2020-08-20 20:51:19,411 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-390
+2020-08-20 20:51:19,441 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-275
+2020-08-20 20:51:19,441 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-275
+2020-08-20 20:51:19,486 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-413
+2020-08-20 20:51:19,486 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-413
+2020-08-20 20:51:19,535 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-481
+2020-08-20 20:51:19,535 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-481
+2020-08-20 20:51:19,545 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-168
+2020-08-20 20:51:19,545 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-168
+2020-08-20 20:51:19,585 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-411
+2020-08-20 20:51:19,585 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-411
+2020-08-20 20:51:19,977 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-359
+2020-08-20 20:51:19,977 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-359
+2020-08-20 20:51:19,995 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-158
+2020-08-20 20:51:19,995 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-158
+2020-08-20 20:51:20,054 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-355
+2020-08-20 20:51:20,054 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-355
+2020-08-20 20:51:20,067 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-35
+2020-08-20 20:51:20,067 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-35
+2020-08-20 20:51:20,093 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-150
+2020-08-20 20:51:20,093 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-150
+2020-08-20 20:51:20,253 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-428
+2020-08-20 20:51:20,254 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-428
+2020-08-20 20:51:20,271 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-260
+2020-08-20 20:51:20,271 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-260
+2020-08-20 20:51:20,319 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-477
+2020-08-20 20:51:20,320 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-477
+2020-08-20 20:51:20,321 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-185
+2020-08-20 20:51:20,321 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-185
+2020-08-20 20:51:20,419 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-44
+2020-08-20 20:51:20,420 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-44
+2020-08-20 20:51:20,442 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-245
+2020-08-20 20:51:20,442 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-245
+2020-08-20 20:51:20,448 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-474
+2020-08-20 20:51:20,448 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-474
+2020-08-20 20:51:20,451 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-197
+2020-08-20 20:51:20,451 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-197
+2020-08-20 20:51:20,452 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-363
+2020-08-20 20:51:20,452 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-363
+2020-08-20 20:51:20,511 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-276
+2020-08-20 20:51:20,511 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-276
+2020-08-20 20:51:20,511 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-252
+2020-08-20 20:51:20,511 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-252
+2020-08-20 20:51:20,547 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-89
+2020-08-20 20:51:20,547 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-89
+2020-08-20 20:51:20,563 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-285
+2020-08-20 20:51:20,563 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-285
+2020-08-20 20:51:20,702 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-385
+2020-08-20 20:51:20,702 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-385
+2020-08-20 20:51:20,704 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-200
+2020-08-20 20:51:20,704 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-200
+2020-08-20 20:51:21,454 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-377
+2020-08-20 20:51:21,455 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-431
+2020-08-20 20:51:21,455 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-377
+2020-08-20 20:51:21,455 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-431
+2020-08-20 20:51:21,458 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-190
+2020-08-20 20:51:21,458 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-190
+2020-08-20 20:51:21,463 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-461
+2020-08-20 20:51:21,464 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-461
+2020-08-20 20:51:21,477 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-47
+2020-08-20 20:51:21,478 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-47
+2020-08-20 20:51:21,488 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-72
+2020-08-20 20:51:21,488 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-72
+2020-08-20 20:51:21,539 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-310
+2020-08-20 20:51:21,539 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-310
+2020-08-20 20:51:21,544 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-374
+2020-08-20 20:51:21,544 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-374
+2020-08-20 20:51:21,549 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-447
+2020-08-20 20:51:21,549 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-447
+2020-08-20 20:51:21,572 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-49
+2020-08-20 20:51:21,572 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-49
+2020-08-20 20:51:21,577 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-187
+2020-08-20 20:51:21,578 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-187
+2020-08-20 20:51:21,587 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-69
+2020-08-20 20:51:21,587 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-69
+2020-08-20 20:51:21,618 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-28
+2020-08-20 20:51:21,618 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-230
+2020-08-20 20:51:21,619 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-28
+2020-08-20 20:51:21,619 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-230
+2020-08-20 20:51:21,751 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-11
+2020-08-20 20:51:21,751 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-11
+2020-08-20 20:51:21,942 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-163
+2020-08-20 20:51:21,943 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-163
+2020-08-20 20:51:22,025 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-488
+2020-08-20 20:51:22,025 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-488
+2020-08-20 20:51:22,243 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-250
+2020-08-20 20:51:22,244 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-250
+2020-08-20 20:51:22,309 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-101
+2020-08-20 20:51:22,309 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-101
+2020-08-20 20:51:22,352 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-223
+2020-08-20 20:51:22,352 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-223
+2020-08-20 20:51:22,353 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-109
+2020-08-20 20:51:22,353 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-109
+2020-08-20 20:51:22,397 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-489
+2020-08-20 20:51:22,397 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-489
+2020-08-20 20:51:22,960 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-307
+2020-08-20 20:51:22,960 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-307
+2020-08-20 20:51:22,965 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-356
+2020-08-20 20:51:22,965 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-356
+2020-08-20 20:51:22,967 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-164
+2020-08-20 20:51:22,968 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-164
+2020-08-20 20:51:22,967 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-112
+2020-08-20 20:51:22,968 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-112
+2020-08-20 20:51:23,000 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-282
+2020-08-20 20:51:23,000 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-282
+2020-08-20 20:51:23,041 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-408
+2020-08-20 20:51:23,041 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-408
+2020-08-20 20:51:23,044 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-40
+2020-08-20 20:51:23,044 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-40
+2020-08-20 20:51:23,052 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-103
+2020-08-20 20:51:23,052 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-103
+2020-08-20 20:51:23,068 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-237
+2020-08-20 20:51:23,068 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-237
+2020-08-20 20:51:23,070 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-409
+2020-08-20 20:51:23,070 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-409
+2020-08-20 20:51:23,071 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-130
+2020-08-20 20:51:23,071 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-130
+2020-08-20 20:51:23,144 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-324
+2020-08-20 20:51:23,144 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-324
+2020-08-20 20:51:23,149 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-258
+2020-08-20 20:51:23,149 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-258
+2020-08-20 20:51:23,153 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-194
+2020-08-20 20:51:23,154 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-194
+2020-08-20 20:51:23,252 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-311
+2020-08-20 20:51:23,252 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-460
+2020-08-20 20:51:23,252 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-311
+2020-08-20 20:51:23,253 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-460
+2020-08-20 20:51:23,308 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-30
+2020-08-20 20:51:23,308 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-30
+2020-08-20 20:51:23,313 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-425
+2020-08-20 20:51:23,313 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-425
+2020-08-20 20:51:23,396 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-86
+2020-08-20 20:51:23,396 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-86
+2020-08-20 20:51:23,446 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-132
+2020-08-20 20:51:23,446 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-132
+2020-08-20 20:51:23,452 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-492
+2020-08-20 20:51:23,453 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-492
+2020-08-20 20:51:23,454 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-256
+2020-08-20 20:51:23,454 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-256
+2020-08-20 20:51:23,516 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-396
+2020-08-20 20:51:23,516 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-396
+2020-08-20 20:51:23,518 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-319
+2020-08-20 20:51:23,518 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-319
+2020-08-20 20:51:23,520 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-244
+2020-08-20 20:51:23,520 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-244
+2020-08-20 20:51:23,549 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-246
+2020-08-20 20:51:23,550 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-246
+2020-08-20 20:51:23,550 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-75
+2020-08-20 20:51:23,550 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-75
+2020-08-20 20:51:23,550 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-298
+2020-08-20 20:51:23,553 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-298
+2020-08-20 20:51:23,553 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-123
+2020-08-20 20:51:23,553 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-123
+2020-08-20 20:51:23,567 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-156
+2020-08-20 20:51:23,567 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-156
+2020-08-20 20:51:23,608 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-111
+2020-08-20 20:51:23,608 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-111
+2020-08-20 20:51:23,640 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-432
+2020-08-20 20:51:23,641 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-432
+2020-08-20 20:51:23,647 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-368
+2020-08-20 20:51:23,647 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-238
+2020-08-20 20:51:23,647 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-368
+2020-08-20 20:51:23,647 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-238
+2020-08-20 20:51:23,652 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-398
+2020-08-20 20:51:23,652 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-398
+2020-08-20 20:51:23,655 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-343
+2020-08-20 20:51:23,655 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-343
+2020-08-20 20:51:23,678 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-290
+2020-08-20 20:51:23,678 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-290
+2020-08-20 20:51:23,709 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-371
+2020-08-20 20:51:23,709 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-371
+2020-08-20 20:51:23,716 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-108
+2020-08-20 20:51:23,717 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-108
+2020-08-20 20:51:23,750 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-341
+2020-08-20 20:51:23,750 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-341
+2020-08-20 20:51:23,792 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-429
+2020-08-20 20:51:23,792 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-429
+2020-08-20 20:51:23,855 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-54
+2020-08-20 20:51:23,855 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-54
+2020-08-20 20:51:23,856 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-427
+2020-08-20 20:51:23,857 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-427
+2020-08-20 20:51:23,857 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-21
+2020-08-20 20:51:23,857 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-21
+2020-08-20 20:51:23,894 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-448
+2020-08-20 20:51:23,895 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-448
+2020-08-20 20:51:23,919 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-13
+2020-08-20 20:51:23,919 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-13
+2020-08-20 20:51:23,946 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-154
+2020-08-20 20:51:23,946 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-154
+2020-08-20 20:51:23,948 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-234
+2020-08-20 20:51:23,948 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-234
+2020-08-20 20:51:23,990 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-102
+2020-08-20 20:51:23,990 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-102
+2020-08-20 20:51:24,086 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-91
+2020-08-20 20:51:24,087 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-91
+2020-08-20 20:51:24,091 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-85
+2020-08-20 20:51:24,092 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-85
+2020-08-20 20:51:24,094 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-331
+2020-08-20 20:51:24,094 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-331
+2020-08-20 20:51:24,214 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-483
+2020-08-20 20:51:24,215 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-483
+2020-08-20 20:51:24,247 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-259
+2020-08-20 20:51:24,247 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-259
+2020-08-20 20:51:24,286 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-444
+2020-08-20 20:51:24,286 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-444
+2020-08-20 20:51:24,287 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-263
+2020-08-20 20:51:24,287 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-263
+2020-08-20 20:51:24,289 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-98
+2020-08-20 20:51:24,289 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-98
+2020-08-20 20:51:24,287 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-146
+2020-08-20 20:51:24,289 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-146
+2020-08-20 20:51:24,291 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-438
+2020-08-20 20:51:24,291 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-438
+2020-08-20 20:51:24,385 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-288
+2020-08-20 20:51:24,385 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-288
+2020-08-20 20:51:24,396 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-312
+2020-08-20 20:51:24,396 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-312
+2020-08-20 20:51:24,511 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-18
+2020-08-20 20:51:24,511 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-18
+2020-08-20 20:51:24,585 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-169
+2020-08-20 20:51:24,585 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-169
+2020-08-20 20:51:24,767 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-193
+2020-08-20 20:51:24,767 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-193
+2020-08-20 20:51:24,770 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-357
+2020-08-20 20:51:24,770 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-357
+2020-08-20 20:51:24,794 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-67
+2020-08-20 20:51:24,794 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-67
+2020-08-20 20:51:24,984 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-407
+2020-08-20 20:51:24,985 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-407
+2020-08-20 20:51:25,022 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-10
+2020-08-20 20:51:25,022 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-10
+2020-08-20 20:51:25,052 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-210
+2020-08-20 20:51:25,052 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-210
+2020-08-20 20:51:25,062 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-77
+2020-08-20 20:51:25,062 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-77
+2020-08-20 20:51:25,149 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-315
+2020-08-20 20:51:25,149 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-221
+2020-08-20 20:51:25,149 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-221
+2020-08-20 20:51:25,149 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-315
+2020-08-20 20:51:25,178 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-328
+2020-08-20 20:51:25,178 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-328
+2020-08-20 20:51:25,289 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-278
+2020-08-20 20:51:25,290 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-278
+2020-08-20 20:51:25,303 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-222
+2020-08-20 20:51:25,303 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-222
+2020-08-20 20:51:25,342 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-179
+2020-08-20 20:51:25,342 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-179
+2020-08-20 20:51:25,348 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-31
+2020-08-20 20:51:25,349 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-31
+2020-08-20 20:51:25,351 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-372
+2020-08-20 20:51:25,352 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-372
+2020-08-20 20:51:25,374 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-29
+2020-08-20 20:51:25,374 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-29
+2020-08-20 20:51:25,447 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-445
+2020-08-20 20:51:25,448 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-445
+2020-08-20 20:51:25,484 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-195
+2020-08-20 20:51:25,484 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-195
+2020-08-20 20:51:25,507 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-336
+2020-08-20 20:51:25,507 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-336
+2020-08-20 20:51:25,725 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-99
+2020-08-20 20:51:25,726 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-99
+2020-08-20 20:51:25,748 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-97
+2020-08-20 20:51:25,748 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-97
+2020-08-20 20:51:25,751 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-353
+2020-08-20 20:51:25,751 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-353
+2020-08-20 20:51:25,755 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-404
+2020-08-20 20:51:25,755 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-404
+2020-08-20 20:51:25,757 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-476
+2020-08-20 20:51:25,757 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-476
+2020-08-20 20:51:25,778 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-34
+2020-08-20 20:51:25,778 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-34
+2020-08-20 20:51:25,812 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-42
+2020-08-20 20:51:25,812 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-42
+2020-08-20 20:51:25,816 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-248
+2020-08-20 20:51:25,816 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-248
+2020-08-20 20:51:25,827 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-160
+2020-08-20 20:51:25,827 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-160
+2020-08-20 20:51:25,914 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-122
+2020-08-20 20:51:25,914 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-122
+2020-08-20 20:51:25,948 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-458
+2020-08-20 20:51:25,948 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-458
+2020-08-20 20:51:25,958 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-451
+2020-08-20 20:51:25,959 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-451
+2020-08-20 20:51:25,959 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-305
+2020-08-20 20:51:25,959 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-305
+2020-08-20 20:51:25,960 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-498
+2020-08-20 20:51:25,960 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-498
+2020-08-20 20:51:25,961 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-354
+2020-08-20 20:51:25,961 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-354
+2020-08-20 20:51:25,982 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-4
+2020-08-20 20:51:25,982 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-4
+2020-08-20 20:51:25,997 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-79
+2020-08-20 20:51:25,997 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-79
+2020-08-20 20:51:26,037 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-32
+2020-08-20 20:51:26,037 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-32
+2020-08-20 20:51:26,040 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-362
+2020-08-20 20:51:26,040 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-362
+2020-08-20 20:51:26,051 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-219
+2020-08-20 20:51:26,051 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-219
+2020-08-20 20:51:26,064 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-236
+2020-08-20 20:51:26,064 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-236
+2020-08-20 20:51:26,066 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-226
+2020-08-20 20:51:26,067 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-226
+2020-08-20 20:51:26,068 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-468
+2020-08-20 20:51:26,068 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-468
+2020-08-20 20:51:26,156 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-106
+2020-08-20 20:51:26,156 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-106
+2020-08-20 20:51:26,170 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-33
+2020-08-20 20:51:26,170 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-33
+2020-08-20 20:51:26,210 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-93
+2020-08-20 20:51:26,210 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-93
+2020-08-20 20:51:26,486 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-412
+2020-08-20 20:51:26,486 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-412
+2020-08-20 20:51:26,543 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-464
+2020-08-20 20:51:26,543 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-464
+2020-08-20 20:51:26,580 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-434
+2020-08-20 20:51:26,580 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-434
+2020-08-20 20:51:27,480 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-281
+2020-08-20 20:51:27,480 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-281
+2020-08-20 20:51:27,485 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-240
+2020-08-20 20:51:27,485 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-240
+2020-08-20 20:51:27,514 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-119
+2020-08-20 20:51:27,514 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-119
+2020-08-20 20:51:27,592 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-349
+2020-08-20 20:51:27,592 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-349
+2020-08-20 20:51:27,600 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-262
+2020-08-20 20:51:27,600 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-262
+2020-08-20 20:51:27,645 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-309
+2020-08-20 20:51:27,645 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-26
+2020-08-20 20:51:27,645 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-26
+2020-08-20 20:51:27,645 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-309
+2020-08-20 20:51:27,649 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-113
+2020-08-20 20:51:27,649 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-113
+2020-08-20 20:51:27,651 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-389
+2020-08-20 20:51:27,651 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-389
+2020-08-20 20:51:27,665 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-500
+2020-08-20 20:51:27,665 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-500
+2020-08-20 20:51:27,666 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-317
+2020-08-20 20:51:27,666 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-317
+2020-08-20 20:51:27,676 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-332
+2020-08-20 20:51:27,676 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-332
+2020-08-20 20:51:27,697 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-227
+2020-08-20 20:51:27,697 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-227
+2020-08-20 20:51:27,698 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-257
+2020-08-20 20:51:27,698 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-257
+2020-08-20 20:51:27,742 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-383
+2020-08-20 20:51:27,742 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-383
+2020-08-20 20:51:27,752 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-454
+2020-08-20 20:51:27,753 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-454
+2020-08-20 20:51:27,770 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-181
+2020-08-20 20:51:27,770 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-181
+2020-08-20 20:51:27,842 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-232
+2020-08-20 20:51:27,842 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-232
+2020-08-20 20:51:27,848 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-491
+2020-08-20 20:51:27,848 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-3
+2020-08-20 20:51:27,848 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-491
+2020-08-20 20:51:27,849 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-3
+2020-08-20 20:51:27,850 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-64
+2020-08-20 20:51:27,850 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-64
+2020-08-20 20:51:27,878 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-247
+2020-08-20 20:51:27,878 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-247
+2020-08-20 20:51:27,894 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-441
+2020-08-20 20:51:27,894 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-441
+2020-08-20 20:51:27,908 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-196
+2020-08-20 20:51:27,908 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-196
+2020-08-20 20:51:27,952 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-184
+2020-08-20 20:51:27,952 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-184
+2020-08-20 20:51:27,952 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-300
+2020-08-20 20:51:27,953 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-300
+2020-08-20 20:51:28,246 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-466
+2020-08-20 20:51:28,246 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-466
+2020-08-20 20:51:28,249 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-437
+2020-08-20 20:51:28,249 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-437
+2020-08-20 20:51:28,249 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-301
+2020-08-20 20:51:28,250 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-301
+2020-08-20 20:51:28,251 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-361
+2020-08-20 20:51:28,252 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-361
+2020-08-20 20:51:28,258 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-201
+2020-08-20 20:51:28,258 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-201
+2020-08-20 20:51:28,278 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-182
+2020-08-20 20:51:28,279 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-182
+2020-08-20 20:51:28,331 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-24
+2020-08-20 20:51:28,331 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-24
+2020-08-20 20:51:28,393 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-386
+2020-08-20 20:51:28,393 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-386
+2020-08-20 20:51:28,445 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-346
+2020-08-20 20:51:28,445 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-346
+2020-08-20 20:51:28,449 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-188
+2020-08-20 20:51:28,449 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-188
+2020-08-20 20:51:28,450 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-462
+2020-08-20 20:51:28,450 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-462
+2020-08-20 20:51:28,450 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-116
+2020-08-20 20:51:28,451 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-116
+2020-08-20 20:51:28,452 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-25
+2020-08-20 20:51:28,452 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-25
+2020-08-20 20:51:28,453 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-171
+2020-08-20 20:51:28,453 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-171
+2020-08-20 20:51:28,489 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-62
+2020-08-20 20:51:28,489 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-82
+2020-08-20 20:51:28,489 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-82
+2020-08-20 20:51:28,489 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-62
+2020-08-20 20:51:28,491 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-450
+2020-08-20 20:51:28,491 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-450
+2020-08-20 20:51:28,536 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-472
+2020-08-20 20:51:28,537 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-472
+2020-08-20 20:51:28,545 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-414
+2020-08-20 20:51:28,545 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-414
+2020-08-20 20:51:28,591 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-293
+2020-08-20 20:51:28,591 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-140
+2020-08-20 20:51:28,591 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-360
+2020-08-20 20:51:28,591 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-360
+2020-08-20 20:51:28,591 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-293
+2020-08-20 20:51:28,591 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-140
+2020-08-20 20:51:28,749 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-417
+2020-08-20 20:51:28,749 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-14
+2020-08-20 20:51:28,749 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-417
+2020-08-20 20:51:28,749 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-14
+2020-08-20 20:51:28,842 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-470
+2020-08-20 20:51:28,842 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-470
+2020-08-20 20:51:28,846 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-271
+2020-08-20 20:51:28,846 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-271
+2020-08-20 20:51:28,889 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-114
+2020-08-20 20:51:28,889 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-114
+2020-08-20 20:51:29,185 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-358
+2020-08-20 20:51:29,185 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-358
+2020-08-20 20:51:29,345 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-471
+2020-08-20 20:51:29,345 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-471
+2020-08-20 20:51:29,347 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-430
+2020-08-20 20:51:29,347 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-430
+2020-08-20 20:51:29,348 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-126
+2020-08-20 20:51:29,348 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-126
+2020-08-20 20:51:29,388 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-183
+2020-08-20 20:51:29,388 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-183
+2020-08-20 20:51:29,445 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-424
+2020-08-20 20:51:29,445 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-424
+2020-08-20 20:51:29,589 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-453
+2020-08-20 20:51:29,590 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-453
+2020-08-20 20:51:29,595 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-457
+2020-08-20 20:51:29,595 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-457
+2020-08-20 20:51:29,624 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-480
+2020-08-20 20:51:29,624 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-480
+2020-08-20 20:51:29,646 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-329
+2020-08-20 20:51:29,646 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-329
+2020-08-20 20:51:29,720 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-475
+2020-08-20 20:51:29,720 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-475
+2020-08-20 20:51:29,744 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-137
+2020-08-20 20:51:29,745 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-137
+2020-08-20 20:51:29,758 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-297
+2020-08-20 20:51:29,758 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-297
+2020-08-20 20:51:29,846 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-115
+2020-08-20 20:51:29,846 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-115
+2020-08-20 20:51:29,942 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-446
+2020-08-20 20:51:29,942 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-446
+2020-08-20 20:51:29,945 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-84
+2020-08-20 20:51:29,945 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-84
+2020-08-20 20:51:29,945 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-241
+2020-08-20 20:51:29,945 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-241
+2020-08-20 20:51:29,947 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-304
+2020-08-20 20:51:29,947 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-304
+2020-08-20 20:51:29,959 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-249
+2020-08-20 20:51:29,959 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-249
+2020-08-20 20:51:29,968 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-66
+2020-08-20 20:51:29,968 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-66
+2020-08-20 20:51:30,047 INFO o.a.j.r.Summariser: summary +  14894 in 00:00:30 =  501.7/s Avg:   771 Min:     7 Max:  7957 Err:     0 (0.00%) Active: 121 Started: 500 Finished: 379
+2020-08-20 20:51:30,048 INFO o.a.j.r.Summariser: summary =  98704 in 00:03:40 =  447.9/s Avg:  1067 Min:     7 Max: 12102 Err:     0 (0.00%)
+2020-08-20 20:51:30,249 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-397
+2020-08-20 20:51:30,249 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-397
+2020-08-20 20:51:30,294 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-327
+2020-08-20 20:51:30,294 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-327
+2020-08-20 20:51:30,343 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-218
+2020-08-20 20:51:30,343 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-218
+2020-08-20 20:51:30,347 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-254
+2020-08-20 20:51:30,347 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-254
+2020-08-20 20:51:30,364 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-83
+2020-08-20 20:51:30,365 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-83
+2020-08-20 20:51:30,409 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-306
+2020-08-20 20:51:30,409 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-306
+2020-08-20 20:51:30,448 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-202
+2020-08-20 20:51:30,448 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-202
+2020-08-20 20:51:30,571 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-20
+2020-08-20 20:51:30,571 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-20
+2020-08-20 20:51:30,641 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-229
+2020-08-20 20:51:30,641 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-229
+2020-08-20 20:51:30,646 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-426
+2020-08-20 20:51:30,646 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-426
+2020-08-20 20:51:30,647 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-394
+2020-08-20 20:51:30,647 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-394
+2020-08-20 20:51:30,693 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-73
+2020-08-20 20:51:30,694 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-73
+2020-08-20 20:51:30,748 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-380
+2020-08-20 20:51:30,748 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-380
+2020-08-20 20:51:30,749 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-177
+2020-08-20 20:51:30,749 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-177
+2020-08-20 20:51:30,749 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-136
+2020-08-20 20:51:30,750 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-136
+2020-08-20 20:51:30,751 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-295
+2020-08-20 20:51:30,751 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-295
+2020-08-20 20:51:30,802 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-133
+2020-08-20 20:51:30,802 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-133
+2020-08-20 20:51:30,831 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-442
+2020-08-20 20:51:30,831 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-442
+2020-08-20 20:51:30,833 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-17
+2020-08-20 20:51:30,833 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-17
+2020-08-20 20:51:30,928 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-388
+2020-08-20 20:51:30,929 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-388
+2020-08-20 20:51:30,943 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-439
+2020-08-20 20:51:30,943 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-439
+2020-08-20 20:51:30,945 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-418
+2020-08-20 20:51:30,945 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-418
+2020-08-20 20:51:30,951 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-366
+2020-08-20 20:51:30,951 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-366
+2020-08-20 20:51:30,953 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-403
+2020-08-20 20:51:30,953 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-403
+2020-08-20 20:51:30,953 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-365
+2020-08-20 20:51:30,953 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-365
+2020-08-20 20:51:30,968 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-58
+2020-08-20 20:51:30,968 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-58
+2020-08-20 20:51:30,970 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-7
+2020-08-20 20:51:30,970 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-7
+2020-08-20 20:51:30,977 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-465
+2020-08-20 20:51:30,977 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-465
+2020-08-20 20:51:30,987 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-373
+2020-08-20 20:51:30,987 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-373
+2020-08-20 20:51:30,993 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-191
+2020-08-20 20:51:30,993 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-68
+2020-08-20 20:51:30,994 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-68
+2020-08-20 20:51:30,993 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-191
+2020-08-20 20:51:31,005 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-57
+2020-08-20 20:51:31,005 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-57
+2020-08-20 20:51:31,034 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-455
+2020-08-20 20:51:31,034 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-455
+2020-08-20 20:51:31,040 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-204
+2020-08-20 20:51:31,040 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-204
+2020-08-20 20:51:31,045 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-322
+2020-08-20 20:51:31,045 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-322
+2020-08-20 20:51:31,053 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-176
+2020-08-20 20:51:31,053 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-176
+2020-08-20 20:51:31,054 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-286
+2020-08-20 20:51:31,054 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-286
+2020-08-20 20:51:31,071 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-60
+2020-08-20 20:51:31,071 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-104
+2020-08-20 20:51:31,071 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-104
+2020-08-20 20:51:31,071 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-60
+2020-08-20 20:51:31,099 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-487
+2020-08-20 20:51:31,099 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-487
+2020-08-20 20:51:31,112 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-242
+2020-08-20 20:51:31,112 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-242
+2020-08-20 20:51:31,113 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-96
+2020-08-20 20:51:31,113 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-96
+2020-08-20 20:51:31,137 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-391
+2020-08-20 20:51:31,138 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-391
+2020-08-20 20:51:31,141 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-134
+2020-08-20 20:51:31,141 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-134
+2020-08-20 20:51:31,146 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-479
+2020-08-20 20:51:31,146 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-479
+2020-08-20 20:51:31,146 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-48
+2020-08-20 20:51:31,146 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-48
+2020-08-20 20:51:31,146 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-167
+2020-08-20 20:51:31,147 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-167
+2020-08-20 20:51:31,150 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-22
+2020-08-20 20:51:31,150 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-22
+2020-08-20 20:51:31,150 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-74
+2020-08-20 20:51:31,150 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-74
+2020-08-20 20:51:31,150 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-405
+2020-08-20 20:51:31,150 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-405
+2020-08-20 20:51:31,151 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-410
+2020-08-20 20:51:31,151 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-410
+2020-08-20 20:51:31,151 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-435
+2020-08-20 20:51:31,152 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-435
+2020-08-20 20:51:31,152 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-369
+2020-08-20 20:51:31,152 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-369
+2020-08-20 20:51:31,151 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-342
+2020-08-20 20:51:31,153 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-342
+2020-08-20 20:51:31,152 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-46
+2020-08-20 20:51:31,153 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-76
+2020-08-20 20:51:31,153 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-384
+2020-08-20 20:51:31,153 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-384
+2020-08-20 20:51:31,153 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-76
+2020-08-20 20:51:31,153 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-46
+2020-08-20 20:51:31,156 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-273
+2020-08-20 20:51:31,156 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-273
+2020-08-20 20:51:31,158 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-387
+2020-08-20 20:51:31,158 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-387
+2020-08-20 20:51:31,174 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-267
+2020-08-20 20:51:31,174 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-267
+2020-08-20 20:51:31,189 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-287
+2020-08-20 20:51:31,189 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-287
+2020-08-20 20:51:31,219 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-339
+2020-08-20 20:51:31,219 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-339
+2020-08-20 20:51:31,228 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-484
+2020-08-20 20:51:31,228 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-484
+2020-08-20 20:51:31,246 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-239
+2020-08-20 20:51:31,246 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-239
+2020-08-20 20:51:31,249 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-94
+2020-08-20 20:51:31,249 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-94
+2020-08-20 20:51:31,249 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-1
+2020-08-20 20:51:31,249 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-1
+2020-08-20 20:51:31,255 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-279
+2020-08-20 20:51:31,256 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-279
+2020-08-20 20:51:31,272 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-157
+2020-08-20 20:51:31,272 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-157
+2020-08-20 20:51:31,294 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-198
+2020-08-20 20:51:31,294 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-198
+2020-08-20 20:51:31,330 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-289
+2020-08-20 20:51:31,330 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-289
+2020-08-20 20:51:31,344 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-416
+2020-08-20 20:51:31,345 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-416
+2020-08-20 20:51:31,351 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-139
+2020-08-20 20:51:31,351 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-139
+2020-08-20 20:51:31,370 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-379
+2020-08-20 20:51:31,370 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-379
+2020-08-20 20:51:31,375 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-128
+2020-08-20 20:51:31,375 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-128
+2020-08-20 20:51:31,377 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-151
+2020-08-20 20:51:31,378 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-151
+2020-08-20 20:51:31,384 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-326
+2020-08-20 20:51:31,384 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-326
+2020-08-20 20:51:31,398 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-81
+2020-08-20 20:51:31,399 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-81
+2020-08-20 20:51:31,402 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-401
+2020-08-20 20:51:31,402 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-401
+2020-08-20 20:51:31,417 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-131
+2020-08-20 20:51:31,417 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-131
+2020-08-20 20:51:31,426 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-224
+2020-08-20 20:51:31,426 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-224
+2020-08-20 20:51:31,446 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-325
+2020-08-20 20:51:31,447 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-325
+2020-08-20 20:51:31,452 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-175
+2020-08-20 20:51:31,452 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-344
+2020-08-20 20:51:31,452 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-175
+2020-08-20 20:51:31,452 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-344
+2020-08-20 20:51:31,461 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-6
+2020-08-20 20:51:31,461 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-6
+2020-08-20 20:51:31,463 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-268
+2020-08-20 20:51:31,463 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-268
+2020-08-20 20:51:31,467 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-499
+2020-08-20 20:51:31,467 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-499
+2020-08-20 20:51:31,480 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-129
+2020-08-20 20:51:31,481 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-129
+2020-08-20 20:51:31,481 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-23
+2020-08-20 20:51:31,481 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-23
+2020-08-20 20:51:31,480 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-303
+2020-08-20 20:51:31,481 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-303
+2020-08-20 20:51:31,481 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-347
+2020-08-20 20:51:31,481 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-347
+2020-08-20 20:51:31,488 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-207
+2020-08-20 20:51:31,488 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-207
+2020-08-20 20:51:31,506 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-280
+2020-08-20 20:51:31,506 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-280
+2020-08-20 20:51:31,516 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-51
+2020-08-20 20:51:31,516 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-51
+2020-08-20 20:51:31,522 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-348
+2020-08-20 20:51:31,522 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-348
+2020-08-20 20:51:31,549 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-61
+2020-08-20 20:51:31,549 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-61
+2020-08-20 20:51:31,549 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-482
+2020-08-20 20:51:31,549 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-482
+2020-08-20 20:51:31,563 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-2
+2020-08-20 20:51:31,563 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-2
+2020-08-20 20:51:31,568 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-53
+2020-08-20 20:51:31,568 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-105
+2020-08-20 20:51:31,568 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-53
+2020-08-20 20:51:31,568 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-105
+2020-08-20 20:51:31,576 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-473
+2020-08-20 20:51:31,576 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-473
+2020-08-20 20:51:31,579 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-335
+2020-08-20 20:51:31,579 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-335
+2020-08-20 20:51:31,580 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-141
+2020-08-20 20:51:31,581 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-141
+2020-08-20 20:51:31,583 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-45
+2020-08-20 20:51:31,583 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-45
+2020-08-20 20:51:31,596 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-264
+2020-08-20 20:51:31,596 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-264
+2020-08-20 20:51:31,600 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-214
+2020-08-20 20:51:31,600 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-214
+2020-08-20 20:51:31,604 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-16
+2020-08-20 20:51:31,604 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-16
+2020-08-20 20:51:31,629 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-127
+2020-08-20 20:51:31,629 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-127
+2020-08-20 20:51:31,641 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-107
+2020-08-20 20:51:31,641 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-107
+2020-08-20 20:51:31,644 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-395
+2020-08-20 20:51:31,644 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-395
+2020-08-20 20:51:31,644 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-243
+2020-08-20 20:51:31,644 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-243
+2020-08-20 20:51:31,669 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-220
+2020-08-20 20:51:31,669 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-296
+2020-08-20 20:51:31,669 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-220
+2020-08-20 20:51:31,669 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-296
+2020-08-20 20:51:31,673 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-172
+2020-08-20 20:51:31,673 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-172
+2020-08-20 20:51:31,697 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-205
+2020-08-20 20:51:31,697 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-205
+2020-08-20 20:51:31,704 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-166
+2020-08-20 20:51:31,704 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-166
+2020-08-20 20:51:31,712 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-162
+2020-08-20 20:51:31,712 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-162
+2020-08-20 20:51:31,732 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-321
+2020-08-20 20:51:31,732 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-321
+2020-08-20 20:51:31,760 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-367
+2020-08-20 20:51:31,760 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-367
+2020-08-20 20:51:31,765 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-80
+2020-08-20 20:51:31,765 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-80
+2020-08-20 20:51:31,784 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-334
+2020-08-20 20:51:31,784 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-334
+2020-08-20 20:51:31,814 INFO o.a.j.t.JMeterThread: Thread is done: 线程组 1-419
+2020-08-20 20:51:31,814 INFO o.a.j.t.JMeterThread: Thread finished: 线程组 1-419
+2020-08-20 20:51:31,815 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2020-08-20 20:51:31,815 INFO o.a.j.s.FileServer: Close: /Users/weikeqin1/Documents/05_excel_all/std_oil.csv
+2020-08-20 20:51:31,817 INFO o.a.j.r.Summariser: summary +   1296 in 00:00:02 =  732.2/s Avg:   151 Min:     7 Max:  1654 Err:     0 (0.00%) Active: 0 Started: 500 Finished: 500
+2020-08-20 20:51:31,817 INFO o.a.j.r.Summariser: summary = 100000 in 00:03:42 =  450.2/s Avg:  1055 Min:     7 Max: 12102 Err:     0 (0.00%)
+2020-08-20 20:51:31,818 INFO o.a.j.JMeter: Generating Dashboard
+2020-08-20 20:51:31,818 INFO o.a.j.r.d.ReportGenerator: Flushing result collector before report Generation
+2020-08-20 20:51:31,856 INFO o.a.j.r.p.NormalizerSampleConsumer: Using format, 'ms', to parse timeStamp field
+2020-08-20 20:51:36,839 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.AggregateConsumer#stopProducing(): beginDate produced 0 samples
+2020-08-20 20:51:36,840 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.AggregateConsumer#stopProducing(): endDate produced 0 samples
+2020-08-20 20:51:36,847 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.ApdexSummaryConsumer#stopProducing(): apdexSummary produced 0 samples
+2020-08-20 20:51:36,847 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.RequestsSummaryConsumer#stopProducing(): requestsSummary produced 0 samples
+2020-08-20 20:51:36,879 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.StatisticsSummaryConsumer#stopProducing(): statisticsSummary produced 0 samples
+2020-08-20 20:51:36,883 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.Top5ErrorsBySamplerConsumer#stopProducing(): top5ErrorsBySampler produced 0 samples
+2020-08-20 20:51:36,883 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.ErrorsSummaryConsumer#stopProducing(): errorsSummary produced 0 samples
+2020-08-20 20:51:36,883 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.HitsPerSecondGraphConsumer#stopProducing(): hitsPerSecond produced 0 samples
+2020-08-20 20:51:37,578 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.LatencyVSRequestGraphConsumer#stopProducing(): latencyVsRequest produced 0 samples
+2020-08-20 20:51:37,592 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.SyntheticResponseTimeDistributionGraphConsumer#stopProducing(): syntheticResponseTimeDistribution produced 0 samples
+2020-08-20 20:51:37,592 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.BytesThroughputGraphConsumer#stopProducing(): bytesThroughputOverTime produced 0 samples
+2020-08-20 20:51:37,593 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.CodesPerSecondGraphConsumer#stopProducing(): codesPerSecond produced 0 samples
+2020-08-20 20:51:38,162 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimeVSRequestGraphConsumer#stopProducing(): responseTimeVsRequest produced 0 samples
+2020-08-20 20:51:38,171 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.FilterConsumer#stopProducing(): startIntervalControlerFilter produced 700000 samples
+2020-08-20 20:51:38,171 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.TotalTPSGraphConsumer#stopProducing(): totalTPS produced 0 samples
+2020-08-20 20:51:38,171 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ActiveThreadsGraphConsumer#stopProducing(): activeThreadsOverTime produced 0 samples
+2020-08-20 20:51:38,171 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.TimeVSThreadGraphConsumer#stopProducing(): timeVsThreads produced 0 samples
+2020-08-20 20:51:38,175 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimeDistributionGraphConsumer#stopProducing(): responseTimeDistribution produced 0 samples
+2020-08-20 20:51:38,176 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.TransactionsPerSecondGraphConsumer#stopProducing(): transactionsPerSecond produced 0 samples
+2020-08-20 20:51:38,176 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimePercentilesGraphConsumer#stopProducing(): responseTimePercentiles produced 0 samples
+2020-08-20 20:51:38,185 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimePercentilesOverTimeGraphConsumer#stopProducing(): responseTimePercentilesOverTime produced 0 samples
+2020-08-20 20:51:38,192 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ResponseTimeOverTimeGraphConsumer#stopProducing(): responseTimesOverTime produced 0 samples
+2020-08-20 20:51:38,193 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.ConnectTimeOverTimeGraphConsumer#stopProducing(): connectTimeOverTime produced 0 samples
+2020-08-20 20:51:38,193 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.graph.impl.LatencyOverTimeGraphConsumer#stopProducing(): latenciesOverTime produced 0 samples
+2020-08-20 20:51:38,193 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.FilterConsumer#stopProducing(): nameFilter produced 1500000 samples
+2020-08-20 20:51:38,193 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.FilterConsumer#stopProducing(): dateRangeFilter produced 300000 samples
+2020-08-20 20:51:38,193 INFO o.a.j.r.p.AbstractSampleConsumer: class org.apache.jmeter.report.processor.NormalizerSampleConsumer#stopProducing(): normalizer produced 100000 samples
+2020-08-20 20:51:38,194 INFO o.a.j.r.p.CsvFileSampleSource: produce(): 100000 samples produced in 6s 295 ms on channel 0
+2020-08-20 20:51:38,194 INFO o.a.j.r.d.ReportGenerator: Exporting data using exporter:'json' of className:'org.apache.jmeter.report.dashboard.JsonExporter'
+2020-08-20 20:51:38,198 INFO o.a.j.r.d.JsonExporter: Found data for consumer statisticsSummary in context
+2020-08-20 20:51:38,198 INFO o.a.j.r.d.JsonExporter: Creating statistics for overall
+2020-08-20 20:51:38,199 INFO o.a.j.r.d.JsonExporter: Creating statistics for other transactions
+2020-08-20 20:51:38,199 INFO o.a.j.r.d.JsonExporter: Checking output folder
+2020-08-20 20:51:38,200 INFO o.a.j.r.d.JsonExporter: Writing statistics JSON to /Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/web_report_dir-20200818-v13/statistics.json
+2020-08-20 20:51:38,742 INFO o.a.j.r.d.ReportGenerator: Exporting data using exporter:'html' of className:'org.apache.jmeter.report.dashboard.HtmlTemplateExporter'
+2020-08-20 20:51:38,747 INFO o.a.j.r.d.HtmlTemplateExporter: Will generate dashboard in folder: /Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/web_report_dir-20200818-v13
+2020-08-20 20:51:39,034 ERROR f.configuration: DefaultObjectWrapper.incompatibleImprovements was set to the object returned by Configuration.getVersion(). That defeats the purpose of incompatibleImprovements, and makes upgrading FreeMarker a potentially breaking change. Also, this probably won't be allowed starting from 2.4.0. Instead, set incompatibleImprovements to the highest concrete version that's known to be compatible with your application.
+2020-08-20 20:51:39,036 ERROR f.configuration: Configuration.incompatibleImprovements was set to the object returned by Configuration.getVersion(). That defeats the purpose of incompatibleImprovements, and makes upgrading FreeMarker a potentially breaking change. Also, this probably won't be allowed starting from 2.4.0. Instead, set incompatibleImprovements to the highest concrete version that's known to be compatible with your application.
+2020-08-20 20:51:39,067 INFO o.a.j.r.d.HtmlTemplateExporter: Report will be generated in: /Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/web_report_dir-20200818-v13, creating folder structure
+2020-08-20 20:51:39,075 INFO o.a.j.r.d.TemplateVisitor: Copying folder from '/Users/weikeqin1/SoftWare/apache-jmeter-5.3/bin/report-template' to '/Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/web_report_dir-20200818-v13', got message: /Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/web_report_dir-20200818-v13, found non empty folder with following content [/Users/weikeqin1/SoftWare/apache-jmeter-5.3/workspaces/part/web_report_dir-20200818-v13/statistics.json], will be ignored
+2020-08-20 20:51:39,831 INFO o.a.j.JMeter: Dashboard generated

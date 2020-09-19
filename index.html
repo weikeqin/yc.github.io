@@ -233,10 +233,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-08-16 20:14:46 / 修改时间：23:08:20" itemprop="dateCreated datePublished" datetime="2020-08-16T20:14:46+08:00">2020-08-16</time>
+              <time title="创建时间：2020-08-16 20:14:46" itemprop="dateCreated datePublished" datetime="2020-08-16T20:14:46+08:00">2020-08-16</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-17 18:06:39" itemprop="dateModified" datetime="2020-09-17T18:06:39+08:00">2020-09-17</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -266,11 +272,11 @@
 
       
           <p>  nginx 可以用于 反向代理、负载均衡、缓存加速、解决跨域 等场景。<br>  详细描述见 官网 <a href="http://nginx.org/en/" target="_blank" rel="noopener">http://nginx.org/en/</a></p>
-<h1 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h1><p>  下载地址  <a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a> </p>
-<blockquote>
+<h1 id="1-下载安装"><a href="#1-下载安装" class="headerlink" title="(1) 下载安装"></a>(1) 下载安装</h1><p>  下载地址  <a href="http://nginx.org/en/download.html" target="_blank" rel="noopener">http://nginx.org/en/download.html</a> </p>
+<h2 id="1-1-nginx依赖环境"><a href="#1-1-nginx依赖环境" class="headerlink" title="(1.1) nginx依赖环境"></a>(1.1) nginx依赖环境</h2><blockquote>
 <p>nginx依赖以下模块:<br> gzip模块需要 zlib 库 及其开发环境<br> rewrite模块需要 pcre 库及开发环境<br> ssl 功能需要openssl库及开发环境以及 yum install -y gcc-c++ 环境。</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ ./configure</span><br><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ make</span><br><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ make install</span><br></pre></td></tr></table></figure>
+<h2 id="1-2-nginx安装环境检查"><a href="#1-2-nginx安装环境检查" class="headerlink" title="(1.2) nginx安装环境检查"></a>(1.2) nginx安装环境检查</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ ./configure</span><br><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ make</span><br><span class="line">ZBMAC-C02PGMT0F:nginx-1.18.0 weikeqin1$ make install</span><br></pre></td></tr></table></figure>
 <p><code>./configure</code> 是用来检查安装环境。在configure阶段结束以后，将会出现如下信息：</p>
           <!--noindex-->
             <div class="post-button">
@@ -1157,7 +1163,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">198</span>
+          <span class="site-state-item-count">199</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

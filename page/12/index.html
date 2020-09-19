@@ -210,6 +210,86 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/20/concurrent-question/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="WKQ">
+      <meta itemprop="description" content="不积跬步无以至千里">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="沧海一粟">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/20/concurrent-question/" class="post-title-link" itemprop="url">并发 常见面试题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-04-20 09:31:18" itemprop="dateCreated datePublished" datetime="2018-04-20T09:31:18+08:00">2018-04-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-19 09:06:29" itemprop="dateModified" datetime="2019-08-19T09:06:29+08:00">2019-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/04/20/concurrent-question/" class="post-meta-item leancloud_visitors" data-flag-title="并发 常见面试题" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="什么是多线程并发和并行？"><a href="#什么是多线程并发和并行？" class="headerlink" title="什么是多线程并发和并行？"></a>什么是多线程并发和并行？</h1><h1 id="什么是线程安全问题？"><a href="#什么是线程安全问题？" class="headerlink" title="什么是线程安全问题？"></a>什么是线程安全问题？</h1><h1 id="什么是共享变量的内存可见性问题？"><a href="#什么是共享变量的内存可见性问题？" class="headerlink" title="什么是共享变量的内存可见性问题？"></a>什么是共享变量的内存可见性问题？</h1><h1 id="什么是Java中原子性操作？"><a href="#什么是Java中原子性操作？" class="headerlink" title="什么是Java中原子性操作？"></a>什么是Java中原子性操作？</h1><h1 id="什么是Java中的CAS操作-AtomicLong实现原理？"><a href="#什么是Java中的CAS操作-AtomicLong实现原理？" class="headerlink" title="什么是Java中的CAS操作,AtomicLong实现原理？"></a>什么是Java中的CAS操作,AtomicLong实现原理？</h1><h1 id="什么是Java指令重排序？"><a href="#什么是Java指令重排序？" class="headerlink" title="什么是Java指令重排序？"></a>什么是Java指令重排序？</h1><h1 id="Java中Synchronized关键字的内存语义是什么？"><a href="#Java中Synchronized关键字的内存语义是什么？" class="headerlink" title="Java中Synchronized关键字的内存语义是什么？"></a>Java中Synchronized关键字的内存语义是什么？</h1><h1 id="Java中Volatile关键字的内存语义是什么？"><a href="#Java中Volatile关键字的内存语义是什么？" class="headerlink" title="Java中Volatile关键字的内存语义是什么？"></a>Java中Volatile关键字的内存语义是什么？</h1><h1 id="什么是伪共享-为何会出现，以及如何避免？"><a href="#什么是伪共享-为何会出现，以及如何避免？" class="headerlink" title="什么是伪共享,为何会出现，以及如何避免？"></a>什么是伪共享,为何会出现，以及如何避免？</h1><h1 id="什么是可重入锁、乐观锁、悲观锁、公平锁、非公平锁、独占锁、共享锁？"><a href="#什么是可重入锁、乐观锁、悲观锁、公平锁、非公平锁、独占锁、共享锁？" class="headerlink" title="什么是可重入锁、乐观锁、悲观锁、公平锁、非公平锁、独占锁、共享锁？"></a>什么是可重入锁、乐观锁、悲观锁、公平锁、非公平锁、独占锁、共享锁？</h1><h1 id="讲讲ThreadLocal-的实现原理？"><a href="#讲讲ThreadLocal-的实现原理？" class="headerlink" title="讲讲ThreadLocal 的实现原理？"></a>讲讲ThreadLocal 的实现原理？</h1><h1 id="ThreadLocal-作为变量的线程隔离方式，其内部是如何做的？"><a href="#ThreadLocal-作为变量的线程隔离方式，其内部是如何做的？" class="headerlink" title="ThreadLocal 作为变量的线程隔离方式，其内部是如何做的？"></a>ThreadLocal 作为变量的线程隔离方式，其内部是如何做的？</h1><h1 id="说说InheritableThreadLocal-的实现原理？"><a href="#说说InheritableThreadLocal-的实现原理？" class="headerlink" title="说说InheritableThreadLocal 的实现原理？"></a>说说InheritableThreadLocal 的实现原理？</h1><h1 id="InheritableThreadLocal-是如何弥补-ThreadLocal-不支持继承的特性？"><a href="#InheritableThreadLocal-是如何弥补-ThreadLocal-不支持继承的特性？" class="headerlink" title="InheritableThreadLocal 是如何弥补 ThreadLocal 不支持继承的特性？"></a>InheritableThreadLocal 是如何弥补 ThreadLocal 不支持继承的特性？</h1><h1 id="CyclicBarrier内部的实现与-CountDownLatch-有何不同？"><a href="#CyclicBarrier内部的实现与-CountDownLatch-有何不同？" class="headerlink" title="CyclicBarrier内部的实现与 CountDownLatch 有何不同？"></a>CyclicBarrier内部的实现与 CountDownLatch 有何不同？</h1><h1 id="随机数生成器-Random-类如何使用-CAS-算法保证多线程下新种子的唯一性？"><a href="#随机数生成器-Random-类如何使用-CAS-算法保证多线程下新种子的唯一性？" class="headerlink" title="随机数生成器 Random 类如何使用 CAS 算法保证多线程下新种子的唯一性？"></a>随机数生成器 Random 类如何使用 CAS 算法保证多线程下新种子的唯一性？</h1><h1 id="ThreadLocalRandom-是如何利用-ThreadLocal-的原理来解决-Random-的局限性？"><a href="#ThreadLocalRandom-是如何利用-ThreadLocal-的原理来解决-Random-的局限性？" class="headerlink" title="ThreadLocalRandom 是如何利用 ThreadLocal 的原理来解决 Random 的局限性？"></a>ThreadLocalRandom 是如何利用 ThreadLocal 的原理来解决 Random 的局限性？</h1><h1 id="Spring-框架中如何使用-ThreadLocal-实现-request-scope-作用域-Bean？"><a href="#Spring-框架中如何使用-ThreadLocal-实现-request-scope-作用域-Bean？" class="headerlink" title="Spring 框架中如何使用 ThreadLocal 实现 request scope 作用域 Bean？"></a>Spring 框架中如何使用 ThreadLocal 实现 request scope 作用域 Bean？</h1><h1 id="并发包中锁的实现底层（对AQS的理解）？"><a href="#并发包中锁的实现底层（对AQS的理解）？" class="headerlink" title="并发包中锁的实现底层（对AQS的理解）？"></a>并发包中锁的实现底层（对AQS的理解）？</h1><h1 id="讲讲独占锁-ReentrantLock-原理？"><a href="#讲讲独占锁-ReentrantLock-原理？" class="headerlink" title="讲讲独占锁 ReentrantLock 原理？"></a>讲讲独占锁 ReentrantLock 原理？</h1><h1 id="谈谈读写锁-ReentrantReadWriteLock-原理？"><a href="#谈谈读写锁-ReentrantReadWriteLock-原理？" class="headerlink" title="谈谈读写锁 ReentrantReadWriteLock 原理？"></a>谈谈读写锁 ReentrantReadWriteLock 原理？</h1><h1 id="StampedLock-锁原理的理解？"><a href="#StampedLock-锁原理的理解？" class="headerlink" title="StampedLock 锁原理的理解？"></a>StampedLock 锁原理的理解？</h1><h1 id="谈下对基于链表的非阻塞无界队列-ConcurrentLinkedQueue-原理的理解？"><a href="#谈下对基于链表的非阻塞无界队列-ConcurrentLinkedQueue-原理的理解？" class="headerlink" title="谈下对基于链表的非阻塞无界队列 ConcurrentLinkedQueue 原理的理解？"></a>谈下对基于链表的非阻塞无界队列 ConcurrentLinkedQueue 原理的理解？</h1><h1 id="ConcurrentLinkedQueue-内部是如何使用-CAS-非阻塞算法来保证多线程下入队出队操作的线程安全？"><a href="#ConcurrentLinkedQueue-内部是如何使用-CAS-非阻塞算法来保证多线程下入队出队操作的线程安全？" class="headerlink" title="ConcurrentLinkedQueue 内部是如何使用 CAS 非阻塞算法来保证多线程下入队出队操作的线程安全？"></a>ConcurrentLinkedQueue 内部是如何使用 CAS 非阻塞算法来保证多线程下入队出队操作的线程安全？</h1><h1 id="基于链表的阻塞队列-LinkedBlockingQueue-原理。"><a href="#基于链表的阻塞队列-LinkedBlockingQueue-原理。" class="headerlink" title="基于链表的阻塞队列 LinkedBlockingQueue 原理。"></a>基于链表的阻塞队列 LinkedBlockingQueue 原理。</h1><h1 id="阻塞队列LinkedBlockingQueue-内部是如何使用两个独占锁-ReentrantLock-以及对应的条件变量保证多线程先入队出队操作的线程安全？"><a href="#阻塞队列LinkedBlockingQueue-内部是如何使用两个独占锁-ReentrantLock-以及对应的条件变量保证多线程先入队出队操作的线程安全？" class="headerlink" title="阻塞队列LinkedBlockingQueue 内部是如何使用两个独占锁 ReentrantLock 以及对应的条件变量保证多线程先入队出队操作的线程安全？"></a>阻塞队列LinkedBlockingQueue 内部是如何使用两个独占锁 ReentrantLock 以及对应的条件变量保证多线程先入队出队操作的线程安全？</h1><h1 id="分析下JUC-中倒数计数器-CountDownLatch-的使用与原理？"><a href="#分析下JUC-中倒数计数器-CountDownLatch-的使用与原理？" class="headerlink" title="分析下JUC 中倒数计数器 CountDownLatch 的使用与原理？"></a>分析下JUC 中倒数计数器 CountDownLatch 的使用与原理？</h1><h1 id="CountDownLatch-与线程的-Join-方法区别是什么？"><a href="#CountDownLatch-与线程的-Join-方法区别是什么？" class="headerlink" title="CountDownLatch 与线程的 Join 方法区别是什么？"></a>CountDownLatch 与线程的 Join 方法区别是什么？</h1><h1 id="讲讲对JUC-中回环屏障-CyclicBarrier-的使用？"><a href="#讲讲对JUC-中回环屏障-CyclicBarrier-的使用？" class="headerlink" title="讲讲对JUC 中回环屏障 CyclicBarrier 的使用？"></a>讲讲对JUC 中回环屏障 CyclicBarrier 的使用？</h1><h1 id="CyclicBarrier内部的实现与-CountDownLatch-有何不同？-1"><a href="#CyclicBarrier内部的实现与-CountDownLatch-有何不同？-1" class="headerlink" title="CyclicBarrier内部的实现与 CountDownLatch 有何不同？"></a>CyclicBarrier内部的实现与 CountDownLatch 有何不同？</h1><h1 id="Semaphore-的内部实现是怎样的？"><a href="#Semaphore-的内部实现是怎样的？" class="headerlink" title="Semaphore 的内部实现是怎样的？"></a>Semaphore 的内部实现是怎样的？</h1><h1 id="并发组件CopyOnWriteArrayList-是如何通过写时拷贝实现并发安全的-List？"><a href="#并发组件CopyOnWriteArrayList-是如何通过写时拷贝实现并发安全的-List？" class="headerlink" title="并发组件CopyOnWriteArrayList 是如何通过写时拷贝实现并发安全的 List？"></a>并发组件CopyOnWriteArrayList 是如何通过写时拷贝实现并发安全的 List？</h1>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2018/04/17/neo4j-apoc-use/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1276,99 +1356,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://weikeqin.com/2017/12/11/httpclient-error-notes/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="WKQ">
-      <meta itemprop="description" content="不积跬步无以至千里">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="沧海一粟">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/12/11/httpclient-error-notes/" class="post-title-link" itemprop="url">httpclient 错误 笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-12-11 10:29:42" itemprop="dateCreated datePublished" datetime="2017-12-11T10:29:42+08:00">2017-12-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-07-03 20:31:21" itemprop="dateModified" datetime="2019-07-03T20:31:21+08:00">2019-07-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/crawler/" itemprop="url" rel="index"><span itemprop="name">crawler</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/12/11/httpclient-error-notes/" class="post-meta-item leancloud_visitors" data-flag-title="httpclient 错误 笔记" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="No-permitted-“Access-Control-Allow-Origin”-header"><a href="#No-permitted-“Access-Control-Allow-Origin”-header" class="headerlink" title="No permitted “Access-Control-Allow-Origin” header."></a>No permitted “Access-Control-Allow-Origin” header.</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">net.sourceforge.htmlunit.corejs.javascript.WrappedException: Wrapped java.lang.RuntimeException: No permitted &quot;Access-Control-Allow-Origin&quot; header.</span><br><span class="line">	at net.sourceforge.htmlunit.corejs.javascript.Context.throwAsScriptRuntimeEx(Context.java:2052) ~[htmlunit-core-js-2.23.jar:na]</span><br><span class="line">	</span><br><span class="line">Caused by: java.lang.RuntimeException: No permitted &quot;Access-Control-Allow-Origin&quot; header.</span><br><span class="line">	... 9 common frames omitted</span><br></pre></td></tr></table></figure>
-<h1 id="java-security-ProviderException-java-security-KeyException"><a href="#java-security-ProviderException-java-security-KeyException" class="headerlink" title="java.security.ProviderException: java.security.KeyException"></a>java.security.ProviderException: java.security.KeyException</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Caused by: java.security.ProviderException: java.security.KeyException</span><br><span class="line">  </span><br><span class="line">Caused by: java.security.KeyException</span><br></pre></td></tr></table></figure>
-<p>我的JDK环境是sun的1.8.0，操作系统CentOS 6.5</p>
-<p>运行如下linux命令后程序可以完美运行，BUG解决：yum upgrade nss</p>
-<h1 id="java-net-SocketException-Permission-denied-connect"><a href="#java-net-SocketException-Permission-denied-connect" class="headerlink" title="java.net.SocketException: Permission denied: connect"></a>java.net.SocketException: Permission denied: connect</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.net.SocketException: Permission denied: connect</span><br><span class="line">	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method) ~[na:1.8.0_111]</span><br></pre></td></tr></table></figure>
-<p>被墙了</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2017/12/11/httpclient-error-notes/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1438,7 +1425,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">198</span>
+          <span class="site-state-item-count">199</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

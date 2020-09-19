@@ -2,9 +2,79 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://weikeqin.com/2019/08/12/kafka-notes/</loc>
+    
+    <lastmod>2020-09-18T09:19:56.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/09/09/mysql-transaction/</loc>
+    
+    <lastmod>2020-09-18T08:12:27.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/09/05/mysql-lock-table-solution/</loc>
+    
+    <lastmod>2020-09-18T08:07:36.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/09/09/mysql-index/</loc>
+    
+    <lastmod>2020-09-18T06:41:14.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/28/mysql-log/</loc>
+    
+    <lastmod>2020-09-17T10:06:57.343Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2019/03/17/mysql-architecture/</loc>
+    
+    <lastmod>2020-09-17T10:06:57.336Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2017/03/05/hello-world/</loc>
+    
+    <lastmod>2020-09-17T10:06:57.333Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/04/26/jmeter-notes/</loc>
+    
+    <lastmod>2020-09-17T10:06:47.055Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://weikeqin.com/2020/08/16/nginx-notes/</loc>
     
-    <lastmod>2020-08-16T15:08:20.563Z</lastmod>
+    <lastmod>2020-09-17T10:06:39.270Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/wkq/code.html</loc>
+    
+    <lastmod>2020-08-25T03:33:05.297Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://weikeqin.com/2020/06/09/jvm-config/</loc>
+    
+    <lastmod>2020-08-20T13:08:07.681Z</lastmod>
     
   </url>
   
@@ -12,20 +82,6 @@
     <loc>http://weikeqin.com/2020/08/08/jvm-jit/</loc>
     
     <lastmod>2020-08-16T15:03:26.502Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/06/09/jvm-config/</loc>
-    
-    <lastmod>2020-08-16T15:03:15.827Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2019/09/05/mysql-lock-table-solution/</loc>
-    
-    <lastmod>2020-08-16T14:55:39.256Z</lastmod>
     
   </url>
   
@@ -180,13 +236,6 @@
     <loc>http://weikeqin.com/2020/06/21/unique-id/</loc>
     
     <lastmod>2020-07-12T14:18:40.165Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2020/06/28/mysql-log/</loc>
-    
-    <lastmod>2020-07-12T14:17:06.422Z</lastmod>
     
   </url>
   
@@ -751,13 +800,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2019/08/12/kafka-notes/</loc>
-    
-    <lastmod>2020-01-19T03:45:11.056Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2019/03/26/kafka-install-use/</loc>
     
     <lastmod>2020-01-19T03:35:36.776Z</lastmod>
@@ -856,13 +898,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2019/09/09/mysql-index/</loc>
-    
-    <lastmod>2019-11-26T12:08:40.834Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/07/19/nlp-notes/</loc>
     
     <lastmod>2019-11-13T06:48:07.630Z</lastmod>
@@ -898,14 +933,14 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2017/05/04/text-analysis-application-scenarios/</loc>
+    <loc>http://weikeqin.com/2018/06/04/tf-idf/</loc>
     
     <lastmod>2019-11-04T06:36:52.403Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2018/06/04/tf-idf/</loc>
+    <loc>http://weikeqin.com/2017/05/04/text-analysis-application-scenarios/</loc>
     
     <lastmod>2019-11-04T06:36:52.403Z</lastmod>
     
@@ -961,13 +996,6 @@
   </url>
   
   <url>
-    <loc>http://weikeqin.com/2019/09/09/mysql-transaction/</loc>
-    
-    <lastmod>2019-11-04T06:36:52.387Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://weikeqin.com/2017/07/15/mysql-sqlserver-translate/</loc>
     
     <lastmod>2019-11-04T06:36:52.386Z</lastmod>
@@ -978,13 +1006,6 @@
     <loc>http://weikeqin.com/2017/05/04/mysql-install-and-config/</loc>
     
     <lastmod>2019-11-04T06:36:52.382Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2019/03/17/mysql-architecture/</loc>
-    
-    <lastmod>2019-11-04T06:36:52.378Z</lastmod>
     
   </url>
   
@@ -1074,13 +1095,6 @@
   
   <url>
     <loc>http://weikeqin.com/2017/04/27/git-backup-blog-and-theme/</loc>
-    
-    <lastmod>2019-11-04T06:36:52.356Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://weikeqin.com/2017/03/05/hello-world/</loc>
     
     <lastmod>2019-11-04T06:36:52.356Z</lastmod>
     

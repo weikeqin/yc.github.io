@@ -23,14 +23,14 @@
   <meta name="description" content="前几天同事在晚上上线的时候执行sql语句造成锁表，想总结一下以避免后续发生。 (1)  遇到锁表快速解决办法　　依次执行1-6步，运行第6步生成的语句即可。 　　如果特别着急，运行 1  2  6 步 以及第6步生成的kill语句 即可。     1.　 第1步　查看表是否在使用。   show open tables where in_use &amp;gt; 0 ;如果查询结果为空。则证明表没有在">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL 锁表后快速解决方法 及 锁表原因">
+<meta property="og:title" content="MySQL 锁表后快速解决方法 及 MySQL中的锁">
 <meta property="og:url" content="http://weikeqin.com/2019/09/05/mysql-lock-table-solution/index.html">
 <meta property="og:site_name" content="沧海一粟">
 <meta property="og:description" content="前几天同事在晚上上线的时候执行sql语句造成锁表，想总结一下以避免后续发生。 (1)  遇到锁表快速解决办法　　依次执行1-6步，运行第6步生成的语句即可。 　　如果特别着急，运行 1  2  6 步 以及第6步生成的kill语句 即可。     1.　 第1步　查看表是否在使用。   show open tables where in_use &amp;gt; 0 ;如果查询结果为空。则证明表没有在">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-16T14:55:39.256Z">
+<meta property="og:updated_time" content="2020-09-18T08:07:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL 锁表后快速解决方法 及 锁表原因">
+<meta name="twitter:title" content="MySQL 锁表后快速解决方法 及 MySQL中的锁">
 <meta name="twitter:description" content="前几天同事在晚上上线的时候执行sql语句造成锁表，想总结一下以避免后续发生。 (1)  遇到锁表快速解决办法　　依次执行1-6步，运行第6步生成的语句即可。 　　如果特别着急，运行 1  2  6 步 以及第6步生成的kill语句 即可。     1.　 第1步　查看表是否在使用。   show open tables where in_use &amp;gt; 0 ;如果查询结果为空。则证明表没有在">
 
 <link rel="canonical" href="http://weikeqin.com/2019/09/05/mysql-lock-table-solution/">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>MySQL 锁表后快速解决方法 及 锁表原因 | 沧海一粟</title>
+  <title>MySQL 锁表后快速解决方法 及 MySQL中的锁 | 沧海一粟</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113485469-1"></script>
     <script>
@@ -226,7 +226,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          MySQL 锁表后快速解决方法 及 锁表原因
+          MySQL 锁表后快速解决方法 及 MySQL中的锁
         </h1>
 
         <div class="post-meta">
@@ -243,7 +243,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-16 22:55:39" itemprop="dateModified" datetime="2020-08-16T22:55:39+08:00">2020-08-16</time>
+                <time title="修改时间：2020-09-18 16:07:36" itemprop="dateModified" datetime="2020-09-18T16:07:36+08:00">2020-09-18</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +256,7 @@
             </span>
 
           
-            <span id="/2019/09/05/mysql-lock-table-solution/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL 锁表后快速解决方法 及 锁表原因" title="阅读次数">
+            <span id="/2019/09/05/mysql-lock-table-solution/" class="post-meta-item leancloud_visitors" data-flag-title="MySQL 锁表后快速解决方法 及 MySQL中的锁" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -371,30 +371,49 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT   p.id,   p.time,         x.trx_id,       x.trx_state,    p.info FROM     INFORMATION_SCHEMA.PROCESSLIST p,       INFORMATION_SCHEMA.INNODB_TRX  x WHERE</span><br><span class="line">p.id = x.trx_mysql_thread_id  ;</span><br><span class="line">+<span class="comment">----+------+--------+-----------+-------------------------+</span></span><br><span class="line">| id | time | trx_id | trx_state | info                    |</span><br><span class="line">+<span class="comment">----+------+--------+-----------+-------------------------+</span></span><br><span class="line">| 42 |    3 | 23317  | <span class="keyword">LOCK</span> <span class="keyword">WAIT</span> | <span class="keyword">delete</span> <span class="keyword">from</span> t <span class="keyword">where</span> c=<span class="number">1</span> |</span><br><span class="line">| <span class="number">40</span> | <span class="number">1792</span> | <span class="number">23311</span>  | RUNNING   | <span class="literal">NULL</span>                    |</span><br><span class="line">+<span class="comment">----+------+--------+-----------+-------------------------+</span></span><br><span class="line"><span class="number">2</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
 <p>  然后同时杀掉 40  42 就可以。</p>
 <h1 id="3-MySQL中的锁"><a href="#3-MySQL中的锁" class="headerlink" title="(3) MySQL中的锁"></a>(3) MySQL中的锁</h1><blockquote>
-<p> 数据库锁设计的初衷是处理并发问题。作为多用户共享的资源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用来实现这些访问规则的重要数据结构。<br>根据加锁的范围，MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。</p>
+<p> 数据库锁设计的初衷是处理并发问题。作为多用户共享的资源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用来实现这些访问规则的重要数据结构。<br> 根据加锁的范围，MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类。</p>
 </blockquote>
-<h2 id="3-1-全局锁"><a href="#3-1-全局锁" class="headerlink" title="(3.1) 全局锁"></a>(3.1) 全局锁</h2><p>  全局锁就是对整个数据库实例加锁。MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。当你需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修改表结构等）和更新类事务的提交语句。</p>
-<p>  <strong> 全局锁的典型使用场景是，做全库逻辑备份。 </strong> 也就是把整库每个表都 select 出来存成文本。</p>
+<h2 id="3-1-全局锁"><a href="#3-1-全局锁" class="headerlink" title="(3.1) 全局锁"></a>(3.1) 全局锁</h2><blockquote>
+<p>全局锁就是对整个数据库实例加锁。MySQL 提供了一个加全局读锁的方法，命令是 Flush tables with read lock (FTWRL)。当你需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修改表结构等）和更新类事务的提交语句。</p>
+</blockquote>
+<blockquote>
+<p> <strong> 全局锁的典型使用场景是，做全库逻辑备份。 </strong> 也就是把整库每个表都 select 出来存成文本。</p>
+</blockquote>
 <p>  风险：<br>  1.如果在主库备份，在备份期间不能更新，业务停摆<br>  2.如果在从库备份，备份期间不能执行主库同步的binlog，导致主从延迟</p>
-<p>  官方自带的逻辑备份工具是 mysqldump。当 mysqldump 使用参数–single-transaction 的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。而由于 MVCC 的支持，这个过程中数据是可以正常更新的。<br>  你一定在疑惑，有了mysqldump这个功能，为什么还需要 FTWRL 呢？一致性读是好，但前提是引擎要支持这个隔离级别。比如，对于 MyISAM 这种不支持事务的引擎，如果备份过程中有更新，总是只能取到最新的数据，那么就破坏了备份的一致性。这时，我们就需要使用 FTWRL 命令了。<br>  比如，对于 MyISAM 这种不支持事务的引擎，如果备份过程中有更新，总是只能取到最新的数据，那么就破坏了备份的一致性。这时，我们就需要使用 FTWRL 命令了。<br>  single-transaction 方法只适用于所有的表使用事务引擎的库。如果有的表使用了不支持事务的引擎，那么备份就只能通过 FTWRL 方法。这往往是 DBA 要求业务开发人员使用 InnoDB 替代 MyISAM 的原因之一。</p>
-<p>  全局锁主要用在逻辑备份过程中。对于全部是 InnoDB 引擎的库，建议你选择使用 <code>–single-transaction</code> 参数，对应用会更友好。</p>
-<h2 id="3-2-表级锁"><a href="#3-2-表级锁" class="headerlink" title="(3.2) 表级锁"></a>(3.2) 表级锁</h2><p>  MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。</p>
-<p>  表锁是在Server层实现的。ALTER TABLE之类的语句会使用表锁，忽略存储引擎的锁机制。</p>
-<p>  <strong> 表锁的语法是 lock tables … read/write。</strong> 与 FTWRL 类似，可以用 unlock tables 主动释放锁，也可以在客户端断开的时候自动释放。需要注意，lock tables 语法除了会限制别的线程的读写外，也限定了本线程接下来的操作对象。</p>
-<p>  举个例子, 如果在某个线程 A 中执行 lock tables t1 read, t2 write; 这个语句，则其他线程写 t1、读写 t2 的语句都会被阻塞。同时，线程 A 在执行 unlock tables 之前，也只能执行读 t1、读写 t2 的操作。连写 t1 都不允许，自然也不能访问其他表。</p>
-<p>  在还没有出现更细粒度的锁的时候，表锁是最常用的处理并发的方式。而对于 InnoDB 这种支持行锁的引擎，一般不使用 lock tables 命令来控制并发，毕竟锁住整个表的影响面还是太大。</p>
-<p>  <strong> 另一类表级的锁是 MDL（metadata lock)。 </strong><br>  MDL 不需要显式使用，在访问一个表的时候会被自动加上。MDL 的作用是，保证读写的正确性。你可以想象一下，如果一个查询正在遍历一个表中的数据，而执行期间另一个线程对这个表结构做变更，删了一列，那么查询线程拿到的结果跟表结构对不上，肯定是不行的。</p>
-<p>  因此，在 MySQL 5.5 版本中引入了 MDL，当对一个表做增删改查操作的时候，加 MDL 读锁；当要对表做结构变更操作的时候，加 MDL 写锁。</p>
-<p>  读锁之间不互斥，因此你可以有多个线程同时对一张表增删改查。</p>
-<p>  读写锁之间、写锁之间是互斥的，用来保证变更表结构操作的安全性。因此，如果有两个线程要同时给一个表加字段，其中一个要等另一个执行完才能开始执行。</p>
-<p>  你现在应该知道了，事务中的 MDL 锁，在语句执行开始时申请，但是语句结束后并不会马上释放，而会等到整个事务提交后再释放。</p>
-<p>  给一个表加字段，或者修改字段，或者加索引，需要扫描全表的数据。在对大表操作的时候，你肯定会特别小心，以免对线上服务造成影响。而实际上，即使是小表，操作不慎也会出问题。在修改表的时候会持有MDL写锁，如果这个表上的查询语句频繁，而且客户端有重试机制，也就是说超时后会再起一个新 session 再请求的话，这个库的线程很快就会爆满。</p>
-<p>  如何安全地给表加字段？<br>  首先我们要解决长事务，事务不提交，就会一直占着 MDL 锁。在 MySQL 的 information_schema 库的 innodb_trx 表中，你可以查到当前执行中的事务。如果你要做 DDL 变更的表刚好有长事务在执行，要考虑先暂停 DDL，或者 kill 掉这个长事务。<br>  这时候 kill 可能未必管用，因为新的请求马上就来了。比较理想的机制是，在 alter table 语句里面设定等待时间，如果在这个指定的等待时间里面能够拿到 MDL 写锁最好，拿不到也不要阻塞后面的业务语句，先放弃。之后开发人员或者 DBA 再通过重试命令重复这个过程。<br>  MariaDB 已经合并了 AliSQL 的这个功能，所以这两个开源分支目前都支持 DDL NOWAIT/WAIT n 这个语法。<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">NOWAIT</span> <span class="keyword">add</span> <span class="keyword">column</span> ...</span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> tbl_name <span class="keyword">WAIT</span> N <span class="keyword">add</span> <span class="keyword">column</span> ...</span><br></pre></td></tr></table></figure></p>
-<p>  MDL 是并发情况下维护数据的一致性,在表上有事务的时候,不可以对元数据经行写入操作,并且这个是在server层面实现的<br>  当你做 dml 时候增加的 MDL 读锁, update table set id=Y where id=X; 并且由于隔离级别的原因 读锁之间不冲突</p>
-<p>  当你DDL 时候 增加对表的写锁, 同时操作两个alter table 操作 这个要出现等待情况。</p>
-<p>  但是 如果是 dml 与ddl 之间的交互 就更容易出现不可读写情况,这个情况容易session 爆满,session是占用内存的,也会导致内存升高<br>  MDL 释放的情况就是 事务提交.</p>
-<h2 id="3-3-行锁"><a href="#3-3-行锁" class="headerlink" title="(3.3) 行锁"></a>(3.3) 行锁</h2><p>  MySQL 的行锁是在引擎层由各个引擎自己实现的。但并不是所有的引擎都支持行锁，比如 MyISAM 引擎就不支持行锁。不支持行锁意味着并发控制只能使用表锁，对于这种引擎的表，同一张表上任何时刻只能有一个更新在执行，这就会影响到业务并发度。InnoDB 是支持行锁的，这也是 MyISAM 被 InnoDB 替代的重要原因之一。</p>
-<p>  在 InnoDB 事务中，行锁是在需要的时候才加上的，但并不是不需要了就立刻释放，而是要等到事务结束时才释放。这个就是两阶段锁协议。<br>  知道了这个设定，对我们使用事务有什么帮助呢？那就是，如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放。  </p>
+<blockquote>
+<p> 官方自带的逻辑备份工具是 mysqldump。当 mysqldump 使用参数–single-transaction 的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。而由于 MVCC 的支持，这个过程中数据是可以正常更新的。</p>
+</blockquote>
+<blockquote>
+<p> 全局锁主要用在逻辑备份过程中。对于全部是 InnoDB 引擎的库，建议你选择使用 <code>–single-transaction</code> 参数，对应用会更友好。</p>
+</blockquote>
+<h2 id="3-2-表级锁"><a href="#3-2-表级锁" class="headerlink" title="(3.2) 表级锁"></a>(3.2) 表级锁</h2><blockquote>
+<p> MySQL 里面表级别的锁有两种：一种是表锁，一种是元数据锁（meta data lock，MDL)。</p>
+</blockquote>
+<h3 id="3-2-1-表锁"><a href="#3-2-1-表锁" class="headerlink" title="(3.2.1) 表锁"></a>(3.2.1) 表锁</h3><blockquote>
+<p> 表锁是在Server层实现的。ALTER TABLE之类的语句会使用表锁，忽略存储引擎的锁机制。</p>
+</blockquote>
+<blockquote>
+<p> <strong> 表锁的语法是 lock tables … read/write。</strong> 与 FTWRL 类似，可以用 unlock tables 主动释放锁，也可以在客户端断开的时候自动释放。需要注意，lock tables 语法除了会限制别的线程的读写外，也限定了本线程接下来的操作对象。<br> 举个例子, 如果在某个线程 A 中执行 lock tables t1 read, t2 write; 这个语句，则其他线程写 t1、读写 t2 的语句都会被阻塞。同时，线程 A 在执行 unlock tables 之前，也只能执行读 t1、读写 t2 的操作。连写 t1 都不允许，自然也不能访问其他表。<br> 在还没有出现更细粒度的锁的时候，表锁是最常用的处理并发的方式。而对于 InnoDB 这种支持行锁的引擎，一般不使用 lock tables 命令来控制并发，毕竟锁住整个表的影响面还是太大。</p>
+</blockquote>
+<h3 id="3-2-1-metadata-lock"><a href="#3-2-1-metadata-lock" class="headerlink" title="(3.2.1) metadata lock"></a>(3.2.1) metadata lock</h3><p>  <strong> 另一类表级的锁是 MDL（metadata lock)。 </strong></p>
+<blockquote>
+<p> MDL 不需要显式使用，在访问一个表的时候会被自动加上。<br> MDL 的作用是并发情况下维护数据的一致性，保证读写的正确性。(避免加字段删字段导致查询结果异常)<br> 因此，在 MySQL 5.5 版本中引入了 MDL，当对一个表做增删改查操作的时候，加 MDL 读锁；<br> 当要对表做结构变更操作的时候，加 MDL 写锁。</p>
+</blockquote>
+<blockquote>
+<p> 读锁之间不互斥，因此你可以有多个线程同时对一张表增删改查。<br> 读写锁之间、写锁之间是互斥的，用来保证变更表结构操作的安全性。<br> 因此，如果有两个线程要同时给一个表加字段，其中一个要等另一个执行完才能开始执行。</p>
+</blockquote>
+<blockquote>
+<p> 事务中的 MDL 锁，在语句执行开始时申请，但是语句结束后并不会马上释放，而会等到整个事务提交后再释放。</p>
+</blockquote>
+<p>  给一个表加字段，或者修改字段，或者加索引，需要扫描全表的数据。<br>  而实际上，即使是小表，操作不慎也会出问题。在修改表的时候会持有MDL写锁，如果这个表上的查询语句频繁，而且客户端有重试机制，也就是说超时后会再起一个新 session 再请求的话，这个库的线程很快就会爆满。</p>
+<p>  MDL 是并发情况下维护数据的一致性，在表上有事务的时候,不可以对元数据经行写入操作,并且这个是在server层面实现的</p>
+<h2 id="3-3-行锁"><a href="#3-3-行锁" class="headerlink" title="(3.3) 行锁"></a>(3.3) 行锁</h2><blockquote>
+<p> MySQL 的行锁是在引擎层由各个引擎自己实现的。<br> 但并不是所有的引擎都支持行锁，比如 MyISAM 引擎就不支持行锁。<br> InnoDB 是支持行锁的，这也是 MyISAM 被 InnoDB 替代的重要原因之一。<br> InnoDB行锁包括 Record Lock 、 Gap Lock、 Next-Key Lock </p>
+</blockquote>
+<blockquote>
+<p> 在 InnoDB 事务中，行锁是在需要的时候才加上的，但并不是不需要了就立刻释放，而是要等到事务结束时才释放。这个就是两阶段锁协议。</p>
+</blockquote>
+<p>  知道了这个设定，对我们使用事务有什么帮助呢？那就是，如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放。  </p>
 <p>  假设你负责实现一个电影票在线交易业务，顾客 A 要在影院 B 购买电影票。我们简化一点，这个业务需要涉及到以下操作：</p>
 <ol>
 <li>从顾客 A 账户余额中扣除电影票价；</li>
@@ -403,15 +422,64 @@
 <p>试想如果同时有另外一个顾客 C 要在影院 B 买票，那么这两个事务冲突的部分就是语句 2 了。因为它们要更新同一个影院账户的余额，需要修改同一行数据。<br>根据两阶段锁协议，不论你怎样安排语句顺序，所有的操作需要的行锁都是在事务提交的时候才释放的。所以，如果你把语句 2 安排在最后，比如按照 3、1、2 这样的顺序，那么影院账户余额这一行的锁时间就最少。这就最大程度地减少了事务之间的锁等待，提升了并发度。</p>
 </li>
 </ol>
-<p> 当并发系统中不同线程出现循环资源依赖，涉及的线程都在等待别的线程释放资源时，就会导致这几个线程都进入无限等待的状态，称为死锁。这里我用数据库中的行锁举个例子。</p>
+<h3 id="3-3-1-MySQL-InnoDB的加锁过程"><a href="#3-3-1-MySQL-InnoDB的加锁过程" class="headerlink" title="(3.3.1) MySQL/InnoDB的加锁过程"></a>(3.3.1) MySQL/InnoDB的加锁过程</h3><p>Read Committed (RC)<br>Repeatable Read (RR) </p>
+<blockquote>
+<p>InnoDB的加锁分析前提条件<br> 前提一： 查询列是不是主键？<br> 前提二： 当前系统的隔离级别是什么？<br> 前提三： 查询列上有索引吗？<br> 前提四： 查询列是唯一索引吗？<br> 前提五： 两个SQL的执行计划是什么？索引扫描？全表扫描？</p>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">update</span> t1 <span class="keyword">set</span> update_time = <span class="keyword">now</span>() <span class="keyword">where</span> k = <span class="number">10</span> ;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 组合一： k列是主键，RC隔离级别<br> 组合二： k列是二级唯一索引，RC隔离级别<br> 组合三： k列是二级非唯一索引，RC隔离级别<br> 组合四： k列上没有索引，RC隔离级别<br> 组合五： k列是主键，RR隔离级别<br> 组合六： k列是二级唯一索引，RR隔离级别<br> 组合七： k列是二级非唯一索引，RR隔离级别<br> 组合八： k列上没有索引，RR隔离级别<br> 组合九： Serializable隔离级别</p>
+</blockquote>
+<blockquote>
+<p> 组合一: Read Committed 隔离级别，k列是主键，给定SQL：update t1 set update_time = now() where k = 10; 只需要将主键上 k = 10的记录加上X锁即可</p>
+</blockquote>
+<blockquote>
+<p> 组合二: Read Committed 隔离级别，k列有unique索引，unique索引上的k=10一条记录加上X锁，同时，会根据读取到的列，回主键索引(聚簇索引)，然后将聚簇索引上对应的主键索引项加X锁。</p>
+</blockquote>
+<blockquote>
+<p> 组合三: Read Committed 隔离级别，k列上有索引，那么对应的所有满足SQL查询条件的记录，都会被加锁。同时，这些记录在主键索引上的记录，然后将聚簇索引上对应的主键索引项加X锁。</p>
+</blockquote>
+<blockquote>
+<p> 组合四: Read Committed 隔离级别，若k列上没有索引，SQL会走聚簇索引的全扫描进行过滤，由于过滤是由MySQL Server层面进行的。因此每条记录，无论是否满足条件，都会被加上X锁。但是，为了效率考量，MySQL做了优化，对于不满足条件的记录，会在判断后放锁，最终持有的，是满足条件的记录上的锁，但是不满足条件的记录上的加锁/放锁动作不会省略。同时，优化也违背了2PL的约束。</p>
+</blockquote>
+<blockquote>
+<p> 组合五: Repeatable Read 隔离级别，k列是主键列，给定SQL update t1 set update_time = now() where k = 10; 只需要将主键上 k = 10的记录加上X锁即可。</p>
+</blockquote>
+<blockquote>
+<p> 组合六: Repeatable Read 隔离级别，k列有unique索引，unique索引上的k=10一条记录加上X锁，同时，会根据读取到的列，回主键索引(聚簇索引)，然后将聚簇索引上对应的主键索引项加X锁。</p>
+</blockquote>
+<blockquote>
+<p> 组合七：Repeatable Read 隔离级别，k列有索引， 通过索引定位到第一条满足查询条件的记录，加记录上的X锁，加GAP上的GAP锁，然后加主键聚簇索引上的记录X锁，然后返回；然后读取下一条，重复进行。直至进行到第一条不满足条件的记录，此时，不需要加记录X锁，但是仍旧需要加GAP锁，最后返回结束。</p>
+<p> 考虑到B+树索引的有序性，满足条件的项一定是连续存放的。如果要插入一条记录，肯定会插入在相同位置，为了保证两次查询查到的值一致，MySQL选择了用GAP锁，将 查询值范围前、查询值范围、查询值范围后 三个GAP给锁起来。</p>
+<p> GAP锁的目的，是为了防止同一事务的两次当前读，出现幻读的情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> k           | 7  | 8  | 10 | 10 | 40 | 50 |</span><br><span class="line">primary id   | 1  | 2  | 3  | 4  | 5  | 6  |</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<p> 为了保证[8,2]与[10,3]间，[10,3]与[10,4]间，[10,4]与[40,5]不会插入新的满足条件的记录，MySQL选择了用GAP锁，将这三个GAP给锁起来。</p>
+</blockquote>
+<blockquote>
+<p> 组合八： 在Repeatable Read隔离级别下，如果进行全表扫描的当前读，那么会锁上表中的所有记录，同时会锁上聚簇索引内的所有GAP，杜绝所有的并发 更新/删除/插入 操作<br>　　聚簇索引上的所有记录，都被加上了X锁。其次，聚簇索引每条记录间的间隙(GAP)，也同时被加上了GAP锁。</p>
+</blockquote>
+<blockquote>
+<p> 组合九：Serializable隔离级别下直接用加锁的方式来避免并行访问。</p>
+<p> 在RC，RR隔离级别下，都是快照读，不加锁。<br> Serializable隔离级别，读不加锁就不再成立，所有的读操作，都是当前读。</p>
+</blockquote>
+<h2 id="3-4-死锁"><a href="#3-4-死锁" class="headerlink" title="(3.4) 死锁"></a>(3.4) 死锁</h2><blockquote>
+<p>当并发系统中不同线程出现循环资源依赖，涉及的线程都在等待别的线程释放资源时，就会导致这几个线程都进入无限等待的状态，称为死锁。</p>
+</blockquote>
+<blockquote>
 <p>当出现死锁以后，有两种策略：</p>
 <ol>
 <li>一种策略是，直接进入等待，直到超时。这个超时时间可以通过参数 <code>innodb_lock_wait_timeout</code> 来设置。 </li>
-<li><p>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数 <code>innodb_deadlock_detect</code> 设置为 on，表示开启这个逻辑。</p>
-<p>在 InnoDB 中，innodb_lock_wait_timeout 的默认值是 50s，意味着如果采用第一个策略，当出现死锁以后，第一个被锁住的线程要过 50s 才会超时退出，然后其他线程才有可能继续执行。对于在线服务来说，这个等待时间往往是无法接受的。</p>
-</li>
+<li>另一种策略是，发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数 <code>innodb_deadlock_detect</code> 设置为 on，表示开启这个逻辑。</li>
 </ol>
-<p>  你可以考虑通过将一行改成逻辑上的多行来减少锁冲突。还是以影院账户为例，可以考虑放在多条记录上，比如 10 个记录，影院的账户总额等于这 10 个记录的值的总和。这样每次要给影院账户加金额的时候，随机选其中一条记录来加。这样每次冲突概率变成原来的 1/10，可以减少锁等待个数，也就减少了死锁检测的 CPU 消耗。</p>
+</blockquote>
+<blockquote>
+<p> 在 InnoDB 中，innodb_lock_wait_timeout 的默认值是 50s，意味着如果采用第一个策略，当出现死锁以后，第一个被锁住的线程要过 50s 才会超时退出，然后其他线程才有可能继续执行。对于在线服务来说，这个等待时间往往是无法接受的。<br>可以考虑通过将一行改成逻辑上的多行来减少锁冲突。还是以影院账户为例，可以考虑放在多条记录上，比如 10 个记录，影院的账户总额等于这 10 个记录的值的总和。这样每次要给影院账户加金额的时候，随机选其中一条记录来加。这样每次冲突概率变成原来的 1/10，可以减少锁等待个数，也就减少了死锁检测的 CPU 消耗。</p>
+</blockquote>
+<blockquote>
+<p> 如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁的申请时机尽量往后放。</p>
+</blockquote>
 <h1 id="4-可能遇到的问题"><a href="#4-可能遇到的问题" class="headerlink" title="(4) 可能遇到的问题"></a>(4) 可能遇到的问题</h1><h2 id="4-1-备份一般都会在备库上执行，你在用–single-transaction-方法做逻辑备份的过程中，如果主库上的一个小表做了一个-DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？"><a href="#4-1-备份一般都会在备库上执行，你在用–single-transaction-方法做逻辑备份的过程中，如果主库上的一个小表做了一个-DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？" class="headerlink" title="(4.1) 备份一般都会在备库上执行，你在用–single-transaction 方法做逻辑备份的过程中，如果主库上的一个小表做了一个 DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？"></a>(4.1) 备份一般都会在备库上执行，你在用–single-transaction 方法做逻辑备份的过程中，如果主库上的一个小表做了一个 DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？</h2><p>  备份一般都会在备库上执行，你在用–single-transaction 方法做逻辑备份的过程中，如果主库上的一个小表做了一个 DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？</p>
 <p>假设这个 DDL 是针对表 t1 的， 这里我把备份过程中几个关键的语句列出来：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Q1:<span class="keyword">SET</span> <span class="keyword">SESSION</span> <span class="keyword">TRANSACTION</span> <span class="keyword">ISOLATION</span> <span class="keyword">LEVEL</span> REPEATABLE <span class="keyword">READ</span>;</span><br><span class="line">Q2:<span class="keyword">START</span> <span class="keyword">TRANSACTION</span>  <span class="keyword">WITH</span> <span class="keyword">CONSISTENT</span> <span class="keyword">SNAPSHOT</span>；</span><br><span class="line"><span class="comment">/* other tables */</span></span><br><span class="line">Q3:<span class="keyword">SAVEPOINT</span> sp;</span><br><span class="line"><span class="comment">/* 时刻 1 */</span></span><br><span class="line">Q4:<span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span> <span class="string">`t1`</span>;</span><br><span class="line"><span class="comment">/* 时刻 2 */</span></span><br><span class="line">Q5:<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`t1`</span>;</span><br><span class="line"><span class="comment">/* 时刻 3 */</span></span><br><span class="line">Q6:<span class="keyword">ROLLBACK</span> <span class="keyword">TO</span> <span class="keyword">SAVEPOINT</span> sp;</span><br><span class="line"><span class="comment">/* 时刻 4 */</span></span><br><span class="line"><span class="comment">/* other tables */</span></span><br></pre></td></tr></table></figure></p>
 <p>在备份开始的时候，为了确保 RR（可重复读）隔离级别，再设置一次 RR 隔离级别 (Q1);<br>启动事务，这里用 WITH CONSISTENT SNAPSHOT 确保这个语句执行完就可以得到一个一致性视图（Q2)；<br>设置一个保存点，这个很重要（Q3）；<br>show create 是为了拿到表结构 (Q4)，然后正式导数据 （Q5），回滚到 SAVEPOINT sp，在这里的作用是释放 t1 的 MDL 锁 （Q6）。当然这部分属于“超纲”，上文正文里面都没提到。<br>DDL 从主库传过来的时间按照效果不同，我打了四个时刻。题目设定为小表，我们假定到达后，如果开始执行，则很快能够执行完成。</p>
@@ -434,7 +502,7 @@
 </ol>
 <h2 id="4-4-转义导致死锁问题"><a href="#4-4-转义导致死锁问题" class="headerlink" title="(4.4) 转义导致死锁问题"></a>(4.4) 转义导致死锁问题</h2><p>前天在开发中，还遇到过一次死锁，是在一个批处理中，要删除1000条数据，5个线程，200条数据commit一次，<br>sol：delete from 表A where id =15426169754750004759008 STORAGEDB<br>(id是主键)<br>我同事解决了，说原因是id 是char 类型，但是没有加单引号，所以没有进入id索引中，然后锁表了，所以导致死锁。</p>
 <p>这个问题的出现，应该是人为只要并发导致锁冲突吧？但是为什么不加单引号会死锁，加了单引号就能正常跑呢？  </p>
-<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/dujianxiong/article/details/90770301" target="_blank" rel="noopener">Mysql 锁、事务强制手动kill/释放</a><br>[2] <a href="https://time.geekbang.org/column/article/74687" target="_blank" rel="noopener">19 | 为什么我只查一行的语句，也执行这么慢？MySQL实战45讲 </a><br>[3] <a href="https://time.geekbang.org/column/article/69862" target="_blank" rel="noopener">06 | 全局锁和表锁 ：给表加个字段怎么有这么多阻碍？MySQL实战45讲 </a><br>[4] <a href="https://time.geekbang.org/column/article/70215" target="_blank" rel="noopener">07 | 行锁功过：怎么减少行锁对性能的影响？MySQL实战45讲</a><br>[5] <a href="https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html" target="_blank" rel="noopener">mysql 5.7 lock-tables</a><br>[6] 《高性能MySQL》 O’REILLY<br>[7] <a href="https://dev.mysql.com/doc/refman/5.7/en/show-open-tables.html" target="_blank" rel="noopener">mysql-show-open-tables</a><br>[8] <a href="https://dev.mysql.com/doc/refman/5.7/en/show-processlist.html" target="_blank" rel="noopener">mysql-show-processlist</a></p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><p>[1] <a href="https://blog.csdn.net/dujianxiong/article/details/90770301" target="_blank" rel="noopener">Mysql 锁、事务强制手动kill/释放</a><br>[2] <a href="https://time.geekbang.org/column/article/74687" target="_blank" rel="noopener">19 | 为什么我只查一行的语句，也执行这么慢？MySQL实战45讲 </a><br>[3] <a href="https://time.geekbang.org/column/article/69862" target="_blank" rel="noopener">06 | 全局锁和表锁 ：给表加个字段怎么有这么多阻碍？MySQL实战45讲 </a><br>[4] <a href="https://time.geekbang.org/column/article/70215" target="_blank" rel="noopener">07 | 行锁功过：怎么减少行锁对性能的影响？MySQL实战45讲</a><br>[5] <a href="https://dev.mysql.com/doc/refman/5.7/en/lock-tables.html" target="_blank" rel="noopener">mysql 5.7 lock-tables</a><br>[6] 《高性能MySQL》 O’REILLY<br>[7] <a href="https://dev.mysql.com/doc/refman/5.7/en/show-open-tables.html" target="_blank" rel="noopener">mysql-show-open-tables</a><br>[8] <a href="https://dev.mysql.com/doc/refman/5.7/en/show-processlist.html" target="_blank" rel="noopener">mysql-show-processlist</a><br>[9] <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-locking.html" target="_blank" rel="noopener">innodb-locking</a><br>[10] <a href="https://dev.mysql.com/doc/refman/5.7/en/innodb-index-types.html" target="_blank" rel="noopener">innodb-index-types</a><br>[11] <a href="https://mp.weixin.qq.com/s/uoUS2NCG0Z7cmC2WkDh6MA" target="_blank" rel="noopener">面试官：同学，分析一下MySQL/InnoDB的加锁过程吧</a></p>
 <!--
 插入10万数据
 
@@ -452,65 +520,7 @@ delimiter ;
 
 call idata();
 -->
-<!--
-____    __    ____  _______  __      __  ___  _______      ______      __  .__   __. 
-\   \  /  \  /   / |   ____||  |    |  |/  / |   ____|    /  __  \    |  | |  \ |  | 
- \   \/    \/   /  |  |__   |  |    |  '  /  |  |__      |  |  |  |   |  | |   \|  | 
-  \            /   |   __|  |  |    |    <   |   __|     |  |  |  |   |  | |  . `  | 
-   \    /\    /    |  |____ |  |    |  .  \  |  |____    |  `--'  '--.|  | |  |\   | 
-    \__/  \__/     |_______||__|    |__|\__\ |_______|    \_____\_____\__| |__| \__| 
 
-
-
-             _   _               _      
- _ _ _  ___ <_> | |__ ___   ___ <_>._ _ 
-| | | |/ ._>| | | / // ._> / . || || ' |
-|__/_/ \___.|_| |_\_\\___. \_  ||_||_|_|
-                             |_|        
-
-
- __    __  ____ __    __ __  ____      ___   __ __  __
- ||    || ||    ||    || // ||        // \\  || ||\ ||
- \\ /\ // ||==  ||    ||<<  ||==     ((   )) || ||\\||
-  \V/\V/  ||___ ||    || \\ ||___     \\_/X| || || \||
-
-
-
-
-
-
-                                                           iiii       kkkkkkkk                                                       iiii                   
-                                                          i::::i      k::::::k                                                      i::::i                  
-                                                           iiii       k::::::k                                                       iiii                   
-                                                                      k::::::k                                                                              
-wwwwwww           wwwww           wwwwwww eeeeeeeeeeee   iiiiiii       k:::::k    kkkkkkk eeeeeeeeeeee            qqqqqqqqq   qqqqqiiiiiiinnnn  nnnnnnnn    
- w:::::w         w:::::w         w:::::wee::::::::::::ee i:::::i       k:::::k   k:::::kee::::::::::::ee         q:::::::::qqq::::qi:::::in:::nn::::::::nn  
-  w:::::w       w:::::::w       w:::::we::::::eeeee:::::eei::::i       k:::::k  k:::::ke::::::eeeee:::::ee      q:::::::::::::::::q i::::in::::::::::::::nn 
-   w:::::w     w:::::::::w     w:::::we::::::e     e:::::ei::::i       k:::::k k:::::ke::::::e     e:::::e     q::::::qqqqq::::::qq i::::inn:::::::::::::::n
-    w:::::w   w:::::w:::::w   w:::::w e:::::::eeeee::::::ei::::i       k::::::k:::::k e:::::::eeeee::::::e     q:::::q     q:::::q  i::::i  n:::::nnnn:::::n
-     w:::::w w:::::w w:::::w w:::::w  e:::::::::::::::::e i::::i       k:::::::::::k  e:::::::::::::::::e      q:::::q     q:::::q  i::::i  n::::n    n::::n
-      w:::::w:::::w   w:::::w:::::w   e::::::eeeeeeeeeee  i::::i       k:::::::::::k  e::::::eeeeeeeeeee       q:::::q     q:::::q  i::::i  n::::n    n::::n
-       w:::::::::w     w:::::::::w    e:::::::e           i::::i       k::::::k:::::k e:::::::e                q::::::q    q:::::q  i::::i  n::::n    n::::n
-        w:::::::w       w:::::::w     e::::::::e         i::::::i     k::::::k k:::::ke::::::::e               q:::::::qqqqq:::::q i::::::i n::::n    n::::n
-         w:::::w         w:::::w       e::::::::eeeeeeee i::::::i     k::::::k  k:::::ke::::::::eeeeeeee        q::::::::::::::::q i::::::i n::::n    n::::n
-          w:::w           w:::w         ee:::::::::::::e i::::::i     k::::::k   k:::::kee:::::::::::::e         qq::::::::::::::q i::::::i n::::n    n::::n
-           www             www            eeeeeeeeeeeeee iiiiiiii     kkkkkkkk    kkkkkkk eeeeeeeeeeeeee           qqqqqqqq::::::q iiiiiiii nnnnnn    nnnnnn
-                                                                                                                           q:::::q                          
-                                                                                                                           q:::::q                          
-                                                                                                                          q:::::::q                         
-                                                                                                                          q:::::::q                         
-                                                                                                                          q:::::::q                         
-                                                                                                                          qqqqqqqqq                         
-
-██╗    ██╗███████╗██╗    ██╗  ██╗███████╗     ██████╗ ██╗███╗   ██╗
-██║    ██║██╔════╝██║    ██║ ██╔╝██╔════╝    ██╔═══██╗██║████╗  ██║
-██║ █╗ ██║█████╗  ██║    █████╔╝ █████╗      ██║   ██║██║██╔██╗ ██║
-██║███╗██║██╔══╝  ██║    ██╔═██╗ ██╔══╝      ██║▄▄ ██║██║██║╚██╗██║
-╚███╔███╔╝███████╗██║    ██║  ██╗███████╗    ╚██████╔╝██║██║ ╚████║
- ╚══╝╚══╝ ╚══════╝╚═╝    ╚═╝  ╚═╝╚══════╝     ╚══▀▀═╝ ╚═╝╚═╝  ╚═══╝
-
-
--->
     </div>
 
     
@@ -593,7 +603,7 @@ wwwwwww           wwwww           wwwwwww eeeeeeeeeeee   iiiiiii       k:::::k  
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-遇到锁表快速解决办法"><span class="nav-number">1.</span> <span class="nav-text">(1)  遇到锁表快速解决办法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-复盘"><span class="nav-number">2.</span> <span class="nav-text">(2) 复盘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-创建表t并插入2条数据"><span class="nav-number">2.1.</span> <span class="nav-text">(2.1) 创建表t并插入2条数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-准备多个shell模拟锁表"><span class="nav-number">2.2.</span> <span class="nav-text">(2.2) 准备多个shell模拟锁表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-模拟锁表"><span class="nav-number">2.3.</span> <span class="nav-text">(2.3) 模拟锁表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-锁表后查看"><span class="nav-number">2.4.</span> <span class="nav-text">(2.4) 锁表后查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-查看是否锁表"><span class="nav-number">2.4.1.</span> <span class="nav-text">(2.4.1)查看是否锁表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-查看数据库当前的进程"><span class="nav-number">2.4.2.</span> <span class="nav-text">(2.4.2) 查看数据库当前的进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-当前运行的所有事务"><span class="nav-number">2.4.3.</span> <span class="nav-text">(2.4.3) 当前运行的所有事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-4-当前出现的锁"><span class="nav-number">2.4.4.</span> <span class="nav-text">(2.4.4) 当前出现的锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-5-锁等待的对应关系"><span class="nav-number">2.4.5.</span> <span class="nav-text">(2.4.5) 锁等待的对应关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-6-删除事务表中的事务"><span class="nav-number">2.4.6.</span> <span class="nav-text">(2.4.6) 删除事务表中的事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-7-kill掉锁表的语句"><span class="nav-number">2.4.7.</span> <span class="nav-text">(2.4.7) kill掉锁表的语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-MySQL中的锁"><span class="nav-number">3.</span> <span class="nav-text">(3) MySQL中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-全局锁"><span class="nav-number">3.1.</span> <span class="nav-text">(3.1) 全局锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-表级锁"><span class="nav-number">3.2.</span> <span class="nav-text">(3.2) 表级锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-行锁"><span class="nav-number">3.3.</span> <span class="nav-text">(3.3) 行锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-可能遇到的问题"><span class="nav-number">4.</span> <span class="nav-text">(4) 可能遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-备份一般都会在备库上执行，你在用–single-transaction-方法做逻辑备份的过程中，如果主库上的一个小表做了一个-DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？"><span class="nav-number">4.1.</span> <span class="nav-text">(4.1) 备份一般都会在备库上执行，你在用–single-transaction 方法做逻辑备份的过程中，如果主库上的一个小表做了一个 DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-删数据问题"><span class="nav-number">4.2.</span> <span class="nav-text">(4.2) 删数据问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-问题3"><span class="nav-number">4.3.</span> <span class="nav-text">(4.3) 问题3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-转义导致死锁问题"><span class="nav-number">4.4.</span> <span class="nav-text">(4.4) 转义导致死锁问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-遇到锁表快速解决办法"><span class="nav-number">1.</span> <span class="nav-text">(1)  遇到锁表快速解决办法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-复盘"><span class="nav-number">2.</span> <span class="nav-text">(2) 复盘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-创建表t并插入2条数据"><span class="nav-number">2.1.</span> <span class="nav-text">(2.1) 创建表t并插入2条数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-准备多个shell模拟锁表"><span class="nav-number">2.2.</span> <span class="nav-text">(2.2) 准备多个shell模拟锁表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-模拟锁表"><span class="nav-number">2.3.</span> <span class="nav-text">(2.3) 模拟锁表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-锁表后查看"><span class="nav-number">2.4.</span> <span class="nav-text">(2.4) 锁表后查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-查看是否锁表"><span class="nav-number">2.4.1.</span> <span class="nav-text">(2.4.1)查看是否锁表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-查看数据库当前的进程"><span class="nav-number">2.4.2.</span> <span class="nav-text">(2.4.2) 查看数据库当前的进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-当前运行的所有事务"><span class="nav-number">2.4.3.</span> <span class="nav-text">(2.4.3) 当前运行的所有事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-4-当前出现的锁"><span class="nav-number">2.4.4.</span> <span class="nav-text">(2.4.4) 当前出现的锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-5-锁等待的对应关系"><span class="nav-number">2.4.5.</span> <span class="nav-text">(2.4.5) 锁等待的对应关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-6-删除事务表中的事务"><span class="nav-number">2.4.6.</span> <span class="nav-text">(2.4.6) 删除事务表中的事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-7-kill掉锁表的语句"><span class="nav-number">2.4.7.</span> <span class="nav-text">(2.4.7) kill掉锁表的语句</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-MySQL中的锁"><span class="nav-number">3.</span> <span class="nav-text">(3) MySQL中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-全局锁"><span class="nav-number">3.1.</span> <span class="nav-text">(3.1) 全局锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-表级锁"><span class="nav-number">3.2.</span> <span class="nav-text">(3.2) 表级锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-表锁"><span class="nav-number">3.2.1.</span> <span class="nav-text">(3.2.1) 表锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-1-metadata-lock"><span class="nav-number">3.2.2.</span> <span class="nav-text">(3.2.1) metadata lock</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-行锁"><span class="nav-number">3.3.</span> <span class="nav-text">(3.3) 行锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-MySQL-InnoDB的加锁过程"><span class="nav-number">3.3.1.</span> <span class="nav-text">(3.3.1) MySQL/InnoDB的加锁过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-4-死锁"><span class="nav-number">3.4.</span> <span class="nav-text">(3.4) 死锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-可能遇到的问题"><span class="nav-number">4.</span> <span class="nav-text">(4) 可能遇到的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-备份一般都会在备库上执行，你在用–single-transaction-方法做逻辑备份的过程中，如果主库上的一个小表做了一个-DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？"><span class="nav-number">4.1.</span> <span class="nav-text">(4.1) 备份一般都会在备库上执行，你在用–single-transaction 方法做逻辑备份的过程中，如果主库上的一个小表做了一个 DDL，比如给一个表上加了一列。这时候，从备库上会看到什么现象呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-删数据问题"><span class="nav-number">4.2.</span> <span class="nav-text">(4.2) 删数据问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-问题3"><span class="nav-number">4.3.</span> <span class="nav-text">(4.3) 问题3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-转义导致死锁问题"><span class="nav-number">4.4.</span> <span class="nav-text">(4.4) 转义导致死锁问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -607,7 +617,7 @@ wwwwwww           wwwww           wwwwwww eeeeeeeeeeee   iiiiiii       k:::::k  
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">198</span>
+          <span class="site-state-item-count">199</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
